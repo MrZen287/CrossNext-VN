@@ -34,5 +34,6 @@ class ToolsActivity final : public Activity {
   int originalOrientation = 0;
   void action(freeink::ui::ActionId, int value = 0);
   void updateTime(bool resetMonth);
+  void lookupDate(bool lunar);
   void persist();
 };

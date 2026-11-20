@@ -34,7 +34,7 @@ void naming(toybox::Screen& s, const Model& m, Work& w, fui::Rect r) {
   const int side = std::min(112, int(preview.width) / 3);
   const auto image = rect(preview.right() - side - 12, preview.y + 10, side, preview.height - 20);
   const auto copy = rect(preview.x + UI_INSET, preview.y + 16, preview.width - side - 40, preview.height - 32);
-  art(s, m, image, unsigned(m.choice), speciesIcon(m.choice), false);
+  art(s, m, image, pet::eggArt(m.choice), speciesIcon(m.choice), false);
   text(s, rect(copy.x, copy.y, copy.width, 27), eggName(m.choice), 0);
   prose(s, rect(copy.x, copy.y + 38, copy.width, copy.height - 38), tr(STR_PET_NAME_COMPANION), 3);
   frame(s, field);

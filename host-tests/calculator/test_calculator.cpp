@@ -12,6 +12,7 @@
 #include <cstring>
 
 #include "CalcEngine.h"
+#include "CalcExpression.h"
 #include "CalcFormat.h"
 #include "CalcStyle.h"
 
@@ -41,7 +42,8 @@ static int failures = 0;
 namespace {
 
 // Press a run of keys written the way a person would say them.
-void type(Engine& e, const char* keys) {
+template <typename Calculator>
+void type(Calculator& e, const char* keys) {
   for (const char* p = keys; *p; ++p) {
     switch (*p) {
       case '0':
@@ -74,6 +76,12 @@ void type(Engine& e, const char* keys) {
       case '=':
         e.press(Key::Equals);
         break;
+      case '(':
+        e.press(Key::OpenGroup);
+        break;
+      case ')':
+        e.press(Key::CloseGroup);
+        break;
       case '%':
         e.press(Key::Percent);
         break;
@@ -98,10 +106,33 @@ void type(Engine& e, const char* keys) {
   }
 }
 
-const char* run(Engine& e, const char* keys) {
+template <typename Calculator>
+const char* run(Calculator& e, const char* keys) {
   e.press(Key::ClearAll);
   type(e, keys);
   return e.display();
+}
+
+void testExpressionEditingAndPrecedence() {
+  ExpressionEngine e;
+  CHECK_TEXT(run(e, "2+3x4="), "14");
+  CHECK_TEXT(run(e, "(2+3)x4="), "20");
+  CHECK_TEXT(run(e, "2x(3+(4x5))="), "46");
+  CHECK_TEXT(run(e, "8/2x3="), "12");
+  CHECK_TEXT(run(e, "0.1+0.2-0.3="), "0");
+  CHECK_TEXT(run(e, "2+35<<4x3="), "14");
+  CHECK_TEXT(run(e, "1/0="), "DIVIDE BY 0");
+  CHECK_TEXT(e.pending(), "1÷0");
+  type(e, "<2=");
+  CHECK_TEXT(e.display(), "0.5");
+  CHECK_TEXT(run(e, "2+3=="), "8");
+  CHECK_TEXT(run(e, "1/3=x3="), "1");
+  CHECK_TEXT(run(e, "200+10%="), "220");
+  CHECK_TEXT(run(e, "200x10%="), "20");
+  CHECK_TEXT(run(e, "2x(3+4)n="), "-14");
+  CHECK_TEXT(run(e, "2x-3="), "-6");
+  CHECK_TEXT(run(e, "2x3E4="), "8");
+  CHECK_TEXT(run(e, "2(3+4)="), "14");
 }
 
 // --- the arithmetic is decimal ----------------------------------------------
@@ -286,6 +317,21 @@ void testTheFourFunctions() {
   // (2+3)x4. This is what a pocket calculator does and what the pads that are
   // not EXPRESSION promise.
   CHECK_TEXT(run(e, "2+3x4="), "20");
+}
+
+void testParentheses() {
+  Engine e;
+  CHECK_TEXT(run(e, "2x(3+4)="), "14");
+  CHECK_TEXT(run(e, "(2+3)x4="), "20");
+  CHECK_TEXT(run(e, "2+(3x(4+1))="), "17");
+  CHECK_TEXT(run(e, "2(3+4)="), "14");
+  CHECK_TEXT(run(e, "(0.1+0.2)x(1+2)="), "0.9");
+  CHECK_TEXT(run(e, "2x(3+4="), "14");
+  CHECK_TEXT(run(e, "2x(3+)"), "BAD INPUT");
+  CHECK_TEXT(run(e, "2x()"), "BAD INPUT");
+  CHECK_TEXT(run(e, "2)"), "BAD INPUT");
+  CHECK_TEXT(run(e, "1+(2/0)"), "DIVIDE BY 0");
+  CHECK_TEXT(run(e, "(((((((((1"), "BAD INPUT");
 }
 
 // Pressing = again repeats the last operator AND the last operand. Every
@@ -531,8 +577,9 @@ void testNothingIsLeftOver() {
   if (b.bottom() - last.bottom() >= kPad.rows) {
     std::printf("  %d px of unexplained panel under the pad\n", b.bottom() - last.bottom());
   }
-  const Rect16 rightmost = keyRect(kPad, g, kPad.cols - 1);
+  const Rect16 rightmost = keyRect(kPad, g, kPad.cols - 2);
   CHECK(b.right() - rightmost.right() < kPad.cols);
+  CHECK(rightmost.w == 2 * g.cellW + g.gap);
   // The display's bands have to add up to the height it declared, and this used
   // to "check" that by restating displayHeight()'s own body -- a line that
   // cannot fail. What CAN fail is the height being too small for what
@@ -549,8 +596,8 @@ void testThePadCanActuallyCalculate() {
   const int cells = kPad.cols * kPad.rows;
   for (int i = 0; i < cells; ++i) seen[static_cast<int>(kPad.keys[i].key)] = true;
   for (int d = 0; d < 10; ++d) CHECK(seen[static_cast<int>(Key::D0) + d]);
-  const Key required[] = {Key::Dot,    Key::Add,      Key::Sub,       Key::Mul,    Key::Div,
-                          Key::Equals, Key::ClearAll, Key::Backspace, Key::Negate, Key::Percent};
+  const Key required[] = {Key::Dot, Key::Add, Key::Sub, Key::Mul, Key::Div, Key::Equals, Key::ClearAll,
+                          Key::Backspace, Key::Negate, Key::Percent, Key::OpenGroup, Key::CloseGroup};
   for (const Key k : required) {
     CHECK(seen[static_cast<int>(k)]);
     if (!seen[static_cast<int>(k)]) std::printf("  the pad is missing key %d\n", static_cast<int>(k));
@@ -658,12 +705,14 @@ int main(int argc, char** argv) {
     return 0;
   }
   testTheArithmeticIsDecimalRatherThanBinary();
+  testExpressionEditingAndPrecedence();
   testGuardDigitsMakeAThirdTimesThreeCountAsOne();
   testTenSignificantDigits();
   testTheDisplayFormatter();
   testTheFormatterCanNeverExceedItsBudget();
   testTypingANumber();
   testTheFourFunctions();
+  testParentheses();
   testRepeatedEquals();
   testOperatorReplacement();
   testPercentReadsThePendingOperator();

@@ -382,6 +382,10 @@ bool MappedInputManager::decodeSwipe(int& sx, int& sy, int& ex, int& ey) const {
 MappedInputManager::SwipeDir MappedInputManager::wasSwipe() const {
   int sx = 0;
   int sy = 0;
+  return wasSwipe(sx, sy);
+}
+
+MappedInputManager::SwipeDir MappedInputManager::wasSwipe(int& sx, int& sy) const {
   int ex = 0;
   int ey = 0;
   if (!decodeSwipe(sx, sy, ex, ey)) return SwipeDir::None;

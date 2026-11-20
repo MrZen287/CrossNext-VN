@@ -21,9 +21,10 @@ const char* I18n::get(StrId id) const {
     return "???";
   }
 
+  const auto base = getLanguageStrings(Language::EN);
   if (externalActive) {
     const char* text = externalPack.get(index);
-    return text ? text : STRINGS_EN_DATA + OFFSETS_EN[index];
+    return text ? text : base.data + base.offsets[index];
   }
 
   // Use generated helper function - no hardcoded switch needed!
@@ -31,11 +32,14 @@ const char* I18n::get(StrId id) const {
 
   // If bit 31 of the offset is set, apply the offset to the English lookup table
   const uint32_t off = lang.offsets[index];
-  if (off & 0x80000000) return STRINGS_EN_DATA + (off & 0x7FFFFFFF);
+  if (off & 0x80000000) return base.data + (off & 0x7FFFFFFF);
   return lang.data + off;
 }
 
 void I18n::setLanguage(Language lang) {
+#ifdef CROSSNEXT_VIETNAMESE_ONLY
+  lang = Language::VI;
+#endif
   if (lang >= Language::_COUNT) {
     return;
   }
@@ -44,6 +48,10 @@ void I18n::setLanguage(Language lang) {
 }
 
 bool I18n::loadLanguagePack(const char* filename) {
+#ifdef CROSSNEXT_VIETNAMESE_ONLY
+  (void)filename;
+  return false;
+#else
   if (externalPack.loaded()) return false;
   if (!externalPack.load(filename)) {
     _language = Language::EN;
@@ -53,6 +61,7 @@ bool I18n::loadLanguagePack(const char* filename) {
   _language = languageFromCode(externalPack.info().code);
   externalActive = true;
   return true;
+#endif
 }
 
 const char* I18n::getLanguageName() const {

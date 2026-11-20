@@ -79,7 +79,7 @@ bool BookCoverPainter::paintBitmap(fui::Rect slot, int taper) {
   renderer.preserveImagePolarity(slot.x, slot.y, slot.width, slot.height);
   return true;
 }
-void BookCoverPainter::paint(const RecentBook& book, fui::Rect slot, int taper) {
+void BookCoverPainter::paint(const RecentBook& book, fui::Rect slot, int taper, Fit fit) {
   bool drawn = false;
   char thumb[112]{};
   const bool xtc = FsHelpers::hasXtcExtension(book.path);
@@ -101,7 +101,18 @@ void BookCoverPainter::paint(const RecentBook& book, fui::Rect slot, int taper) 
     path = fallback.c_str();
   }
   if (*path && Storage.openFileForRead("HOME", path, coverFile)) {
-    if (coverBitmap.parseHeaders() == BmpReaderError::Ok) drawn = paintBitmap(slot, taper);
+    if (coverBitmap.parseHeaders() == BmpReaderError::Ok) {
+      const int w = coverBitmap.getWidth(), h = coverBitmap.getHeight();
+      if (fit == Fit::Contain && w > 0 && h > 0) {
+        int width = slot.width, height = slot.height;
+        if (int64_t(w) * height > int64_t(h) * width)
+          height = std::max(1, int(int64_t(h) * width / w));
+        else
+          width = std::max(1, int(int64_t(w) * height / h));
+        slot = fui::makeRect(slot.x + (slot.width - width) / 2, slot.y + (slot.height - height) / 2, width, height);
+      }
+      drawn = paintBitmap(slot, taper);
+    }
     homecover::recordSource(path, coverFile, drawn);
     coverFile.close();
   } else {

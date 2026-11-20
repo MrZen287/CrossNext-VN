@@ -107,7 +107,8 @@ enum : fui::ActionId {
   WarmthStep,
   Tile,
   ToggleWarmth,
-  OpenSettings
+  OpenSettings,
+  LightProfile
 };
 enum class SettingsDestination : int16_t { Bluetooth, Wifi };
 struct Model {
@@ -116,7 +117,7 @@ struct Model {
   uint8_t shortcuts[4] = {0, 1, 2, 3};
   bluetoothui::State bluetooth = bluetoothui::State::Off;
   bool wifiConnected = false, charging = false, shadeBackdrop = true;
-  bool rotateRight = false;
+  bool rotateRight = false, nightProfile = false;
   bool light = true, temperature = true, night = false, touch = true, touchOn = true, lightOn = true;
 };
 struct Work {
@@ -125,7 +126,7 @@ struct Work {
   char label[96]{};
 };
 struct Layout {
-  fui::Rect header, tiles, brightness, warmth;
+  fui::Rect header, tiles, profiles, brightness, warmth;
   int bottom = 0;
 };
 inline bool hasBluetoothStatus(bluetoothui::State state) {
@@ -150,6 +151,8 @@ inline Layout layout(const fui::DeviceContext& device, bool light, bool temperat
   if (chrome::lightHeader) {
     int y = out.header.bottom() + (bluetooth ? 20 : 6);
     if (light) {
+      out.profiles = fui::makeRect(x, y, width, 44);
+      y = out.profiles.bottom() + 6;
       const int rowWidth = wide && temperature ? (width - 24) / 2 : width;
       out.brightness = fui::makeRect(x, y, rowWidth, 92);
       if (temperature)
@@ -165,6 +168,8 @@ inline Layout layout(const fui::DeviceContext& device, bool light, bool temperat
                             touch ? (wide ? (bluetooth ? 120 : 128) : 152) : 0);
   int y = out.tiles.bottom() + (touch ? (bluetooth ? (wide ? 16 : kBluetoothSpacing.sectionGap) : 24) : 8);
   if (light) {
+    out.profiles = fui::makeRect(x, y, width, 44);
+    y = out.profiles.bottom() + 6;
     const int rowW = wide && temperature ? (width - 24) / 2 : width;
     out.brightness = fui::makeRect(x, y, rowW, 120);
     if (temperature)
@@ -176,13 +181,15 @@ inline Layout layout(const fui::DeviceContext& device, bool light, bool temperat
   return out;
 }
 template <typename Screen>
-void button(Screen& screen, Work& work, fui::Rect rect, const char* label, fui::ActionId action, int value = 0) {
+void button(Screen& screen, Work& work, fui::Rect rect, const char* label, fui::ActionId action, int value = 0,
+            bool selected = false) {
   work.button = {};
   auto& p = work.button;
   p.styles = chrome::lightHeader ? lightui::controlStyles(true) : pixelui::buttonStyles();
   p.action = action;
   p.value = value;
   p.label = label;
+  p.state = selected ? fui::StateSelected : fui::StateNormal;
   p.text.font = chrome::lightHeader ? pixelui::kBody : pixelui::kSmall;
   p.text.align = fui::TextAlign::Center;
   p.minTouchSize = 0;
@@ -355,6 +362,11 @@ void build(Screen& screen, const Model& model, Work& work) {
                            fui::Paint::solid(fui::Color::Black));
   }
   if (model.light) {
+    const int half = g.profiles.width / 2;
+    button(screen, work, fui::makeRect(g.profiles.x, g.profiles.y, half - 4, g.profiles.height),
+           tr(STR_LIGHT_DAY), LightProfile, 0, !model.nightProfile);
+    button(screen, work, fui::makeRect(g.profiles.x + half + 4, g.profiles.y, half - 4, g.profiles.height),
+           tr(STR_LIGHT_NIGHT), LightProfile, 1, model.nightProfile);
     slider(screen, model, work, g.brightness, false);
     if (model.temperature) slider(screen, model, work, g.warmth, true);
   }

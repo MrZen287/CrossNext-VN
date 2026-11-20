@@ -168,8 +168,9 @@ inline const freeink::Icon& speciesIcon(pet::Species value) {
       return extra_moon_64;
     case pet::Species::Ember:
       return extra_reading_flame_64;
+    default:
+      return icon_cat_animals_32;
   }
-  return icon_cat_animals_32;
 }
 inline void cross(toybox::Screen& s, fui::Rect r, bool inverse = false) {
   static constexpr fui::Point points[] = {{4, 0},  {8, 0}, {8, 4}, {12, 4}, {12, 8}, {8, 8}, {8, 12},
@@ -250,13 +251,13 @@ inline void art(toybox::Screen& s, const Model& m, fui::Rect r, unsigned id, con
 }
 inline unsigned creatureArt(const pet::Profile& p) {
   const auto life = pet::stage(p.readingSeconds);
-  if (life == pet::Stage::Egg) return unsigned(p.species);
+  if (life == pet::Stage::Egg) return pet::eggArt(p.species);
   const unsigned mood =
       p.lifeStatus != pet::LifeStatus::Active || p.illness != pet::Illness::Healthy || p.resting || p.energy < 25 ? 3
       : p.saciety < 30                                                                                            ? 2
       : p.joy >= 75                                                                                               ? 1
                                                                                                                   : 0;
-  return 3 + unsigned(p.species) * 16 + (unsigned(life) - 1) * 4 + mood;
+  return pet::creatureGraphic(p.species, life, mood);
 }
 inline fui::Rect portraitBody(const pet::Profile& p, fui::Rect r) {
   static constexpr int scale[] = {100, 82, 88, 94, 100};
@@ -361,7 +362,7 @@ inline void identity(toybox::Screen& s, const Model& m, Work& w, fui::Rect r, in
   text(s, rect(r.right() - genWidth, r.y, genWidth, r.height), w.secondary, 3, false, fui::TextAlign::Right);
 }
 inline bool portraitBackground(toybox::Screen& s, const Model& m, fui::Rect r) {
-  if (!m.portraitBackgrounds || !m.scenes.draw) return false;
+  if (!m.portraitBackgrounds || !m.scenes.draw || m.profile->species == pet::Species::Chicken) return false;
   const int width = (int(r.width) - 4) & ~1;
   const int height = width * 144 / 448;
   if (width <= 0 || height <= 0 || r.height <= 156) return false;
@@ -592,7 +593,7 @@ inline void project(toybox::Screen& s, const Model& m, Work& w, fui::Rect r, boo
     const int side = std::min(100, int(r.height) - 85);
     const auto picture = rect(r.x + 16, r.y + 50, side, side);
     if (hatching)
-      art(s, m, picture, unsigned(p.species), speciesIcon(p.species), false);
+      art(s, m, picture, pet::eggArt(p.species), speciesIcon(p.species), false);
     else
       object(s, m, picture, p.project);
     const int copyX = r.x + side + 32, copyW = r.right() - copyX - 16;

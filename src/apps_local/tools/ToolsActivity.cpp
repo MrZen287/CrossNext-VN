@@ -12,6 +12,8 @@
 #include "../reading/ReadingStatsStore.h"
 #include "../ui/PixelMenuTheme.h"
 #include "../ui/Rotation.h"
+#include "CalendarLookup.h"
+#include "activities/util/KeyboardEntryActivity.h"
 #include "components/SideButtonNavigation.h"
 namespace fui = freeink::ui;
 namespace {
@@ -46,7 +48,7 @@ void ToolsActivity::onEnter() {
     renderer.setOrientation(static_cast<GfxRenderer::Orientation>(state.orientation));
   }
   updateTime(true);
-  model.selected = model.today;
+  model.selected = model.validTime ? model.today : readingstats::dayIndex({model.year, model.month, 1});
   requestUpdate();
 }
 void ToolsActivity::onExit() {
@@ -76,19 +78,24 @@ void ToolsActivity::updateTime(bool resetMonth) {
 }
 void ToolsActivity::action(fui::ActionId a, int value) {
   using namespace toolsui;
+  if (a != 0) model.invalidLookup = false;
   switch (a) {
     case Previous:
     case Next: {
       int n = model.year * 12 + model.month - 1 + (a == Next ? 1 : -1);
-      n = std::max(2020 * 12, std::min(2199 * 12 + 11, n));
+      n = std::clamp(n, 1970 * 12, 2199 * 12 + 11);
       model.year = n / 12;
       model.month = n % 12 + 1;
       break;
     }
     case Today:
       updateTime(true);
-      model.selected = model.today;
+      model.selected = model.validTime ? model.today : readingstats::dayIndex({model.year, model.month, 1});
       break;
+    case GoToSolar:
+    case GoToLunar:
+      lookupDate(a == GoToLunar);
+      return;
     case SelectDay:
       if (value < 1 || value > readingstats::daysInMonth(model.year, model.month)) return;
       model.selected = readingstats::dayIndex({model.year, model.month, value});
@@ -153,6 +160,29 @@ void ToolsActivity::action(fui::ActionId a, int value) {
   model.count = state.count;
   if (a != Add && a != Subtract && a != Undo) ready = false;
   requestUpdate();
+}
+
+void ToolsActivity::lookupDate(bool lunar) {
+  auto keyboard = makeUniqueNoThrow<KeyboardEntryActivity>(
+      renderer, mappedInput,
+      I18N.get(lunar ? StrId::STR_CALENDAR_ENTER_LUNAR : StrId::STR_CALENDAR_ENTER_SOLAR), "", 11);
+  if (!keyboard) {
+    LOG_ERR("TOOLS", "OOM: date entry");
+    return;
+  }
+  keyboard->startOnSymbols();
+  ready = false;
+  startActivityForResult(std::move(keyboard), [this, lunar](const ActivityResult& result) {
+    if (result.isCancelled) return;
+    const auto* value = std::get_if<KeyboardResult>(&result.data);
+    const auto day = value ? calendarlookup::dayIndex(value->text, lunar) : std::nullopt;
+    model.invalidLookup = !day;
+    if (!day) return;
+    const auto date = readingstats::dateFromDay(*day);
+    model.year = date.year;
+    model.month = date.month;
+    model.selected = *day;
+  });
 }
 void ToolsActivity::counterLoop() {
   using Kind = tools::CounterInput::Kind;

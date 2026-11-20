@@ -56,7 +56,7 @@ int PresentationSettingsActivity::listCount() const {
   if (showingCoverHelp) return 0;
   switch (kind) {
     case Kind::Theme:
-      return CrossPointSettings::HOME_LAYOUT_COUNT + 4;
+      return CrossPointSettings::HOME_LAYOUT_COUNT + 3;
     case Kind::CoverLoading:
       return CrossPointSettings::HOME_LAYOUT_COUNT;
     case Kind::ReadingFormats:
@@ -220,7 +220,7 @@ void PresentationSettingsActivity::buildScreen(UiScreen& screen) {
                   unsigned(SETTINGS.homeRecentBookCount));
     const auto actions = settingsui::appearanceActions(body, body.y + height, wide);
     const int themeAction = CrossPointSettings::HOME_LAYOUT_COUNT;
-    const int recentAction = themeAction + 1, fontAction = themeAction + 2;
+    const int recentAction = themeAction + 1, coverAction = themeAction + 2;
     const auto focused = [&](int index) {
       return (!mappedInput.hasTouch() || buttonFocus) && activeNav().selected == index;
     };
@@ -233,21 +233,10 @@ void PresentationSettingsActivity::buildScreen(UiScreen& screen) {
                       focused(recentAction), 0);
     if (!chrome::lightHeader) screen.target().stroke(recent, dashboard::ink, pixelui::kBorder);
     screen.frame().hit(recent, ACTION_ROW, recentAction, fui::InputTouch);
-    pixelui::copyNatural(labels[CrossPointSettings::HOME_LAYOUT_COUNT + 1],
-                         sizeof(labels[CrossPointSettings::HOME_LAYOUT_COUNT + 1]), tr(STR_MENU_FONT));
-    if (!chrome::lightHeader)
-      pixelui::copyCaps(labels[CrossPointSettings::HOME_LAYOUT_COUNT + 1],
-                        sizeof(labels[CrossPointSettings::HOME_LAYOUT_COUNT + 1]), tr(STR_MENU_FONT));
-    const auto font = actions.font;
-    dashboard::action(screen.target(), font, labels[CrossPointSettings::HOME_LAYOUT_COUNT + 1], &navicons::Text32,
-                      focused(fontAction), 0);
-    if (!chrome::lightHeader) screen.target().stroke(font, dashboard::ink, pixelui::kBorder);
-    screen.frame().hit(font, ACTION_ROW, fontAction, fui::InputTouch);
-    const int coverAction = themeAction + 3;
-    dashboard::action(screen.target(), actions.covers, tr(STR_HOME_COVER_LOADING_NOTICE), &navicons::Library32,
+    dashboard::action(screen.target(), actions.font, tr(STR_HOME_COVER_LOADING_NOTICE), &navicons::Library32,
                       focused(coverAction), 0);
-    if (!chrome::lightHeader) screen.target().stroke(actions.covers, dashboard::ink, pixelui::kBorder);
-    screen.frame().hit(actions.covers, ACTION_ROW, coverAction, fui::InputTouch);
+    if (!chrome::lightHeader) screen.target().stroke(actions.font, dashboard::ink, pixelui::kBorder);
+    screen.frame().hit(actions.font, ACTION_ROW, coverAction, fui::InputTouch);
     activeNav().top = 0;
     activeNav().followPending = false;
     p.topIndex = 0;
@@ -272,7 +261,7 @@ void PresentationSettingsActivity::activateIndex(int n) {
       return;
     }
     case Kind::Theme:
-      if (n == CrossPointSettings::HOME_LAYOUT_COUNT + 3) {
+      if (n == CrossPointSettings::HOME_LAYOUT_COUNT + 2) {
         auto picker = makeUniqueNoThrow<PresentationSettingsActivity>(renderer, mappedInput, Kind::CoverLoading);
         if (!picker) {
           LOG_ERR("SET", "OOM: Home cover notice settings");
@@ -288,18 +277,6 @@ void PresentationSettingsActivity::activateIndex(int n) {
         auto picker = makeUniqueNoThrow<PresentationSettingsActivity>(renderer, mappedInput, Kind::ThemeOverview);
         if (!picker) {
           LOG_ERR("SET", "OOM: interface theme settings");
-          return;
-        }
-        startActivityForResult(std::move(picker), [this](const ActivityResult&) {
-          resetUi();
-          requestUpdate();
-        });
-        return;
-      }
-      if (n == CrossPointSettings::HOME_LAYOUT_COUNT + 2) {
-        auto picker = makeUniqueNoThrow<PresentationSettingsActivity>(renderer, mappedInput, Kind::FontOverview);
-        if (!picker) {
-          LOG_ERR("SET", "OOM: menu font picker");
           return;
         }
         startActivityForResult(std::move(picker), [this](const ActivityResult&) {

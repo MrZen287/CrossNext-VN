@@ -10,6 +10,7 @@
 #include <Xtc.h>
 
 #include <algorithm>
+#include <climits>
 #include <cstdio>
 #include <cstring>
 #include <functional>
@@ -22,7 +23,31 @@ namespace {
 uint32_t readLe32(const uint8_t* p) {
   return uint32_t(p[0]) | (uint32_t(p[1]) << 8) | (uint32_t(p[2]) << 16) | (uint32_t(p[3]) << 24);
 }
+void progressPathFor(char* out, size_t size, const std::string& path, bool epub) {
+  std::snprintf(out, size, "/.crosspoint/%s_%lu/progress.bin", epub ? "epub" : "xtc",
+                static_cast<unsigned long>(std::hash<std::string>{}(path)));
+}
 }  // namespace
+
+BookPosition loadBookPosition(const std::string& path) {
+  const bool epub = FsHelpers::hasReflowableBookExtension(path);
+  if (!epub && !FsHelpers::hasXtcExtension(path)) return {};
+  char progressPath[96];
+  progressPathFor(progressPath, sizeof(progressPath), path, epub);
+  HalFile file;
+  if (!Storage.openFileForRead("HOME", progressPath, file)) return {};
+  uint8_t bytes[10]{};
+  const int size = file.read(bytes, sizeof(bytes));
+  if (!epub) {
+    if (size != 4) return {};
+    const auto page = readLe32(bytes);
+    return page < INT_MAX ? BookPosition{0, static_cast<int>(page) + 1} : BookPosition{};
+  }
+  if (size != 4 && size != 6 && size != 10) return {};
+  const int section = bytes[0] | (bytes[1] << 8);
+  const int page = bytes[2] | (bytes[3] << 8);
+  return page == UINT16_MAX ? BookPosition{} : BookPosition{section + 1, page + 1};
+}
 
 namespace {
 bookprogress::Cache* progressCache() {
@@ -96,7 +121,7 @@ int loadBookProgress(const std::string& path) {
     return loadBookProgressUncached(path);
   char filePath[96];
   const auto hash = static_cast<unsigned long>(std::hash<std::string>{}(path));
-  std::snprintf(filePath, sizeof(filePath), "/.crosspoint/%s_%lu/progress.bin", epub ? "epub" : "xtc", hash);
+  progressPathFor(filePath, sizeof(filePath), path, epub);
   const auto live = liveProgressStamp(filePath);
   if (cache) {
     const int percent = cache->findLive(path.c_str(), live);
@@ -149,7 +174,7 @@ int loadBookProgress(const std::string& path) {
   if (cache) {
     const int percent = cache->find(path.c_str(), stamp);
     if (percent >= 0) {
-      std::snprintf(filePath, sizeof(filePath), "/.crosspoint/%s_%lu/progress.bin", epub ? "epub" : "xtc", hash);
+      progressPathFor(filePath, sizeof(filePath), path, epub);
       if (live == liveProgressStamp(filePath)) cache->bindLive(path.c_str(), live);
       return percent;
     }
@@ -157,7 +182,7 @@ int loadBookProgress(const std::string& path) {
   const int percent = loadBookProgressUncached(path);
   if (cache) {
     cache->store(path.c_str(), stamp, percent);
-    std::snprintf(filePath, sizeof(filePath), "/.crosspoint/%s_%lu/progress.bin", epub ? "epub" : "xtc", hash);
+    progressPathFor(filePath, sizeof(filePath), path, epub);
     if (live == liveProgressStamp(filePath)) cache->bindLive(path.c_str(), live);
   }
   return percent;
@@ -167,7 +192,6 @@ void publishBookProgress(const std::string& path, int percent) {
   const bool epub = FsHelpers::hasReflowableBookExtension(path);
   if (!epub && !FsHelpers::hasXtcExtension(path)) return;
   char progressPath[96];
-  std::snprintf(progressPath, sizeof(progressPath), "/.crosspoint/%s_%lu/progress.bin", epub ? "epub" : "xtc",
-                static_cast<unsigned long>(std::hash<std::string>{}(path)));
+  progressPathFor(progressPath, sizeof(progressPath), path, epub);
   if (auto* cache = progressCache()) cache->publish(path.c_str(), liveProgressStamp(progressPath), percent);
 }

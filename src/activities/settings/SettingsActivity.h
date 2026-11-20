@@ -25,7 +25,6 @@ enum class SettingAction {
   ClearCache,
   PrepareBooks,
   ImportCrossInk,
-  CheckForUpdates,
   SdFirmwareUpdate,
   Language,
   DownloadFonts,
@@ -39,6 +38,7 @@ enum class SettingAction {
   ReadingFormats,
   About,
   Manga,
+  ReadingBackup,
 };
 
 struct SettingInfo {

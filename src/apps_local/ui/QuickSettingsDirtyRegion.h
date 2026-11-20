@@ -25,6 +25,7 @@ inline fui::Rect dirtyRegion(const Model& before, const Model& after, const Layo
   if (std::strcmp(before.time, after.time) || before.battery != after.battery || before.charging != after.charging ||
       before.bluetooth != after.bluetooth || before.wifiConnected != after.wifiConnected)
     add(layout.header);
+  if (before.nightProfile != after.nightProfile) add(layout.profiles);
   if (before.brightness != after.brightness || before.lightOn != after.lightOn) add(layout.brightness);
   if (before.warmth != after.warmth || before.lightOn != after.lightOn) add(layout.warmth);
   if (before.lightOn != after.lightOn || (before.warmth == 0) != (after.warmth == 0) ||

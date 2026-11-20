@@ -48,7 +48,7 @@ inline void celebrationPicture(toybox::Screen& s, const Model& m, fui::Rect r, b
   const auto age = pet::stage(p.readingSeconds);
   const unsigned body = petsleep::bodyIndex(p.species, age, petsleep::Pose::Happy, 0);
   if (!m.sleepArt.draw || !m.sleepArt.draw(m.sleepArt.context, s.target(), image, body + 1, false))
-    art(s, m, image, 3 + unsigned(p.species) * 16 + (unsigned(age) - 1) * 4 + 1, speciesIcon(p.species), false);
+    art(s, m, image, pet::creatureGraphic(p.species, age, 1), speciesIcon(p.species), false);
   icon(s, rect(r.right() - 56, r.y + 4, 32, 32), icon_hearts_32);
 }
 }  // namespace petui::widget

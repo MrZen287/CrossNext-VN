@@ -350,9 +350,10 @@ bool absenceExpired(const Profile& p, int64_t now) {
 }
 unsigned homeScene(const Profile& p) {
   const auto life = stage(p.readingSeconds);
-  if (life == Stage::Egg) return unsigned(p.species);
+  const unsigned layoutSpecies = p.species == Species::Chicken ? 0 : unsigned(p.species);
+  if (life == Stage::Egg) return layoutSpecies;
   const unsigned pose = p.illness != Illness::Healthy ? 2 : p.resting || p.lifeStatus != LifeStatus::Active ? 1 : 0;
-  return 3 + unsigned(p.species) * 12 + (unsigned(life) - 1) * 3 + pose;
+  return 3 + layoutSpecies * 12 + (unsigned(life) - 1) * 3 + pose;
 }
 unsigned nameLength(const char* text) {
   unsigned count = 0;
@@ -477,7 +478,7 @@ bool decode(const uint8_t* in, Profile& p, size_t bytes) {
   const bool expanded = current || !std::memcmp(in, "PET4", 4);
   const bool named = expanded || !std::memcmp(in, "PET3", 4);
   if ((!legacy && !named && std::memcmp(in, "PET2", 4)) || get(in + bytes - 4, 4) != checksum(in, bytes - 4) ||
-      in[60] > 2 || in[61] > 3 || in[63] > 100 || in[64] > 100 || in[65] > 100 || in[66] >= OBJECT_COUNT ||
+      in[60] >= SPECIES_COUNT || in[61] > 3 || in[63] > 100 || in[64] > 100 || in[65] > 100 || in[66] >= OBJECT_COUNT ||
       in[71] > 3 || in[72] >= (extraFood ? FOOD_CHOICE_COUNT : 6) || in[73] > 4 || in[74] > 1 || in[75] > 1 ||
       (expanded && (in[DEATH_NOTICE_OFFSET] > 1 || in[MOMENTS_VERSION_OFFSET] > (detailed ? 2 : 1))) ||
       (!expanded && (get(in + 52, 2) > 4095 || in[66] >= 12)))

@@ -29,7 +29,8 @@ inline constexpr uint8_t CrossPointSettings::* FIELDS[] = {&CrossPointSettings::
                                                            &CrossPointSettings::homeButtonLongPressAction};
 inline constexpr const char* KEYS[] = {"homeButtonTapAction", "homeButtonDoubleTapAction", "homeButtonLongPressAction"};
 inline constexpr StrId TIMING_LABELS[] = {StrId::STR_HOME_TAP_350, StrId::STR_HOME_TAP_450, StrId::STR_HOME_TAP_550,
-                                          StrId::STR_HOME_TAP_650, StrId::STR_HOME_TAP_750};
+                                          StrId::STR_HOME_TAP_650, StrId::STR_HOME_TAP_750,
+                                          StrId::STR_HOME_TAP_IMMEDIATE};
 static_assert(sizeof(TIMING_LABELS) / sizeof(TIMING_LABELS[0]) == HomeButtonInput::TAP_WINDOW_COUNT);
 inline bool opensShortcut(HomeButtonAction action) {
   return action == HomeButtonAction::OpenShortcut || action == HomeButtonAction::OpenDoubleShortcut ||

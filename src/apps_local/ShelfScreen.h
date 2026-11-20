@@ -11,7 +11,11 @@ enum : fui::ActionId {
   ActionGoToPage = 3,
   ActionChoose = 4,
   ActionToggleShown = 5,
+  ActionGridOpen = 6,
 };
+inline constexpr int kGridColumns = 3;
+inline constexpr int kGridRows = 5;
+inline constexpr int kGridSlots = kGridColumns * kGridRows;
 extern const UiLabel kDoneChip;
 struct Paging {
   int rowsPerPage;
@@ -28,9 +32,11 @@ struct MenuModel {
   int selected = 0;
   int page = 0;
   int pageCount = 1;
+  bool grid = false;
 };
-Paging pagingFor(const fui::DeviceContext& device, int count);
+Paging pagingFor(const fui::DeviceContext& device, int count, bool grid = false);
 fui::Rect listBand(const fui::DeviceContext& device, bool hasPages);
+int gridIndexAt(const fui::DeviceContext& device, bool hasPages, int x, int y);
 int pageFor(int selected, int rowsPerPage);
 int pageCountFor(int itemCount, int rowsPerPage);
 int rowForPage(int page, int rowsPerPage);

@@ -249,6 +249,7 @@ class CrossPointSettings : public PersistableStore<CrossPointSettings> {
 
   // Sleep screen settings
   uint8_t sleepScreen = DARK;
+  uint8_t lunarSleepCalendar = 1;
   // Night mode: inverted output polarity, applied to every activity per
   // render by ActivityManager. The sleep screen opts out itself.
   uint8_t screenInverted = 0;
@@ -477,6 +478,11 @@ class CrossPointSettings : public PersistableStore<CrossPointSettings> {
   uint8_t frontlightWarmthMemory = 50;
   uint8_t frontlightWarmth = 50;  // 0 = cool .. 100 = warm
   uint8_t frontlightOn = 0;
+  uint8_t frontlightNightProfile = 0;
+  uint8_t frontlightDayBrightness = 60;
+  uint8_t frontlightDayWarmth = 50;
+  uint8_t frontlightNightBrightness = 12;
+  uint8_t frontlightNightWarmth = 85;
   // Restore the saved on/off state after a normal boot or wake. Brightness and
   // warmth are always remembered even when this is disabled.
   uint8_t frontlightRestoreOnWake = 1;
@@ -491,7 +497,12 @@ class CrossPointSettings : public PersistableStore<CrossPointSettings> {
   uint16_t keyboardLayouts = 0;
   uint64_t keyboardLanguageLayouts = 0;
   // Quick Resume: keep current content visible with moon icon instead of showing a static sleep screen.
-  uint8_t quickResumeSleepScreen = QUICK_RESUME_NEVER;
+  uint8_t quickResumeSleepScreen = QUICK_RESUME_AFTER_TIMEOUT;
+  bool retainSleepFrame(bool fromTimeout, bool fromReader) const {
+    const bool keepOnTimeout = fromTimeout && quickResumeSleepScreen == QUICK_RESUME_AFTER_TIMEOUT;
+    if (lunarSleepCalendar) return keepOnTimeout && fromReader;
+    return sleepScreen == QUICK_RESUME || keepOnTimeout;
+  }
 
   static constexpr uint8_t MIN_SLEEP_TIMEOUT_MINUTES = 1;
   static constexpr uint8_t SLEEP_TIMEOUT_NEVER_MINUTES = 31;

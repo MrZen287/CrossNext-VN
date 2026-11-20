@@ -773,7 +773,18 @@ STR_TEXT_WEIGHT_REGULAR: "Regular"
 STR_TEXT_WEIGHT_BOLD: "Bold"
 STR_CAT_INTERFACE: "Interface"
 STR_HOME_LAYOUT: "Home screen layout"
-STR_HOME_FRAMED: "Framed"
+STR_HOME_FRAMED: "Reading desk"
+STR_HOME_DESK_READING: "Reading now"
+STR_HOME_DESK_DAY: "%s, %d/%d"
+STR_HOME_DESK_LUNAR: "Lunar %d/%d%s"
+STR_HOME_DESK_POSITION: "Section %d · Page %d"
+STR_HOME_DESK_PAGE: "Page %d"
+STR_HOME_DESK_RESUME: "Continue reading"
+STR_CALENDAR_GO_SOLAR: "Solar date"
+STR_CALENDAR_GO_LUNAR: "Lunar date"
+STR_CALENDAR_ENTER_SOLAR: "Solar date (d/m/yyyy)"
+STR_CALENDAR_ENTER_LUNAR: "Lunar date (d/m/yyyy, * for leap)"
+STR_CALENDAR_INVALID_DATE: "Invalid or unsupported date"
 STR_HOME_FOCUS_CAROUSEL: "Carousel"
 STR_HOME_FRAMED_CAROUSEL: "Framed carousel"
 STR_WORDLE_NAME: "WORDLE"
@@ -3581,6 +3592,32 @@ STR_MATCH_WON: "You won!"
 STR_MATCH_CONTINUE: "Continue"
 
 STR_TOOLS_SELECTED_DATE: "%s, %d %s"
+STR_TOOLS_LUNAR_DATE: "Lunar %d/%d/%d"
+STR_TOOLS_LUNAR_LEAP_DATE: "Lunar %d/%d/%d (leap)"
+STR_LUNAR_SLEEP_CALENDAR: "Lunar calendar on sleep screen"
+STR_LUNAR_TET: "Lunar New Year"
+STR_LUNAR_HUNG_KINGS: "Hung Kings' Day"
+STR_LUNAR_MID_AUTUMN: "Mid-Autumn Festival"
+STR_LUNAR_COVER_DATE: "Day %d / Month %d / Year %d"
+STR_XIANGQI_TOUCH_HINT: "Tap a piece, then a destination"
+STR_FALLING_BLOCKS: "Falling Blocks"
+STR_FALLING_BLOCKS_HINT: "Move and rotate blocks to fill a row"
+STR_BLOCKS_ROTATE: "Rotate"
+STR_XIANGQI_TITLE: "Xiangqi"
+STR_XIANGQI_CHOOSE: "Choose a mode to start a new game."
+STR_XIANGQI_TWO: "Two players"
+STR_XIANGQI_CPU: "Vs computer"
+STR_XIANGQI_RED_TURN: "Red to move"
+STR_XIANGQI_BLACK_TURN: "Black to move"
+STR_XIANGQI_RED_WINS: "Red wins"
+STR_XIANGQI_BLACK_WINS: "Black wins"
+STR_XIANGQI_CHECK: "Check"
+STR_XIANGQI_PIECES: "G General  S Advisor  V Elephant  M Horse\nX Rook  P Cannon  B Soldier"
+STR_SNAKE_TITLE: "Snake"
+STR_SNAKE_SCORES: "Score %d  /  Best %d"
+STR_SNAKE_INPUT: "Swipe to steer or turn with the side buttons"
+STR_SNAKE_SLOW: "Slow"
+STR_NEWGAMES_SAVE_FAILED: "Could not save to the card"
 
 STR_CLOCK_12_HOUR: "12 hours"
 
@@ -3728,7 +3765,7 @@ STR_SETTINGS_ABOUT_HELP: "Device information"
 
 STR_SETTINGS_FINISHED_HELP: "When finishing a book"
 
-STR_HOME_FRAMED_HELP: "Framed shortcuts"
+STR_HOME_FRAMED_HELP: "Current book and recent books"
 
 STR_HOME_CAROUSEL_HELP: "Reading in the foreground"
 
@@ -9135,3 +9172,59 @@ STR_HOME_COVER_NOTICE_ADVANTAGE: "This means less waiting when you leave a book 
 STR_WORDS_STORAGE_ERROR: "Could not access saved words. Check that the SD card is inserted and writable."
 STR_WORDS_RECORDS_SKIPPED: "Some saved entries could not be read. They were skipped, not deleted."
 STR_WORDS_NOTICE_SAVE_ERROR: "Could not remember your choice. Check the SD card's free space and write access."
+
+STR_HOME_TAP_IMMEDIATE: "On release"
+
+STR_PET_EGG_CHICKEN: "Chicken Egg"
+STR_PET_CHICKEN_DESC: "A curious chick that grows as you read."
+
+STR_LIGHT_DAY: "Day"
+STR_LIGHT_NIGHT: "Night"
+
+STR_CHICKEN_GAME: "Raise a Chicken"
+
+STR_CHICKEN_EGG_COUNT: "Incubation %u/4"
+
+STR_CHICKEN_STATS: "Food %u%%  ·  Joy %u%%  ·  Energy %u%%"
+
+STR_CHICKEN_FED: "Your chicken enjoyed its meal."
+
+STR_CHICKEN_FOUND: "You found the seed!"
+
+STR_CHICKEN_MISSED: "The seed was in another bowl."
+
+STR_CHICKEN_HUNGRY: "Feed your chicken before playing."
+
+STR_CHICKEN_TIRED: "Your chicken needs a rest."
+
+STR_CHICKEN_FULL: "Your chicken is already full."
+
+STR_CHICKEN_SAVE_ERROR: "Could not save to microSD."
+
+STR_CHICKEN_PICK: "Which bowl hides the seed?"
+
+STR_CHICKEN_WARM: "Warm the egg"
+
+STR_CHICKEN_FEED: "Feed"
+
+STR_CHICKEN_PLAY: "Find the seed"
+
+STR_CHICKEN_REST: "Let it rest"
+
+STR_CHICKEN_WAKE: "Wake up"
+
+STR_READING_BACKUP: "microSD Backup"
+
+STR_READING_BACKUP_CREATE: "Create backup"
+
+STR_READING_BACKUP_RESTORE: "Restore"
+
+STR_READING_BACKUP_CONFIRM: "Replace data from this backup? A safety copy is created first."
+
+STR_READING_BACKUP_SAVED: "Saved to Sao-luu-CrossNext."
+
+STR_READING_BACKUP_FAILED: "Check the archive and microSD space."
+
+STR_READING_BACKUP_DONE: "Restore complete. Restart to load the restored data."
+
+STR_READING_BACKUP_INCOMPLETE: "Restore stopped. The previous data is in the safety backup."

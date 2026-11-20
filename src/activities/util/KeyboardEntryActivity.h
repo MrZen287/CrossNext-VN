@@ -33,6 +33,7 @@ class KeyboardEntryActivity : public Activity {
 
   void onEnter() override;
   void setCenteredText(bool centered) { centerInputText = centered; }
+  void startOnSymbols() { initialSymbols = true; }
   void setPasswordVisible(bool visible) { passwordVisible = inputType == InputType::Password && visible; }
   void onExit() override;
   void loop() override;
@@ -61,6 +62,7 @@ class KeyboardEntryActivity : public Activity {
   // screen, and currentLayout() runs on every loop pass.
   bool showLangKey = false;
   bool centerInputText = false;
+  bool initialSymbols = false;
   LanguageKeyboard languageKeyboard;
   bool useLanguageKeyboard = false;
   PinyinInput pinyin;

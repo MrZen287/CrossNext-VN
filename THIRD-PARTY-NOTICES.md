@@ -175,3 +175,13 @@ Source: https://github.com/bitbank2/AnimatedGIF
 The decoder includes local bounds and palette-initialization patches in
 `scripts/patch_animatedgif.py`. The license is included in
 `licenses/AnimatedGIF-Apache-2.0.txt`.
+
+## CrossNext-VN
+
+- Roboto, SIL Open Font License 1.1. See [Roboto-OFL.txt](licenses/Roboto-OFL.txt).
+- The Vietnamese Home and lock-screen proverb collection retains attribution and
+  the CC BY-SA 4.0 notice for protected Wikisource contributions. See
+  [VietnameseHomeQuotes.txt](licenses/VietnameseHomeQuotes.txt).
+- The Vietnamese lunar calendar table is generated offline with Astronomy Engine
+  2.1.19, MIT. See [Data and build notes](docs/vietnamese-lunar-data.md) and
+  [AstronomyEngine-MIT.txt](licenses/AstronomyEngine-MIT.txt).

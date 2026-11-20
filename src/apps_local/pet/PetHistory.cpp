@@ -96,7 +96,7 @@ bool decodeHistory(const uint8_t* in, History& h, size_t bytes) {
   h.count = in[8];
   for (unsigned i = 0; i < h.count; ++i) {
     const auto* entry = in + 12 + i * (legacy ? 32 : ENTRY_BYTES);
-    if (!get(entry, 4) || entry[22] > 2 || entry[23] < 1 || entry[23] > 2 || get(entry + 12, 8) < 1577836800 ||
+    if (!get(entry, 4) || entry[22] >= SPECIES_COUNT || entry[23] < 1 || entry[23] > 2 || get(entry + 12, 8) < 1577836800 ||
         get(entry + 12, 8) > INT64_MAX)
       return false;
     auto& record = h.records[i];

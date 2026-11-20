@@ -35,6 +35,9 @@ uint16_t layoutBit(const freeink::ui::KeyboardLayoutId id) {
 }  // namespace
 
 uint16_t enabled() {
+#ifdef CROSSNEXT_VIETNAMESE_ONLY
+  return layoutBit(freeink::ui::KeyboardLayoutId::QwertyEn);
+#else
   // Drop bits naming no layout: the mask comes from a hand-editable file and
   // survives downgrades, so it can carry bits this build does not have. Left
   // in, such a mask would read as "configured" while enabling nothing.
@@ -48,6 +51,7 @@ uint16_t enabled() {
   // to one layout and the language key disappears -- there is nowhere to go.
   return static_cast<uint16_t>(layoutBit(forLanguage(I18N.getLanguage())) |
                                layoutBit(freeink::ui::KeyboardLayoutId::QwertyEn));
+#endif
 }
 
 freeink::ui::KeyboardLayoutId startingLayout() {
@@ -78,6 +82,9 @@ uint64_t scanCardLayouts() {
   uint64_t mask = 0;
   char path[80];
   for (uint8_t n = 0; n < getLanguageCount(); ++n) {
+#ifdef CROSSNEXT_VIETNAMESE_ONLY
+    if (static_cast<Language>(n) != Language::VI) continue;
+#endif
     if (builtinLanguage(static_cast<Language>(n))) continue;
     std::snprintf(path, sizeof(path), "/languages/keyboards/%s.cpkbd", LANGUAGE_CODES[n]);
     if (!Storage.exists(path)) continue;

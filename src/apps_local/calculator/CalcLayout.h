@@ -68,14 +68,14 @@ inline PadGeom padGeom(const Layout& layout, const Rect16& body, const int16_t g
   return g;
 }
 
-// The rect of the key at `index`. Every key is one cell: the pad is uniform so
-// the grid is uniform, which is also why the plus-minus sits in the corner where
-// the iPhone puts a double-width zero.
+// The rect and hit target of the key at index, including any covered columns.
 inline Rect16 keyRect(const Layout& layout, const PadGeom& g, const int index) {
   const int col = index % layout.cols;
   const int row = index / layout.cols;
+  const int span = layout.keys[index].columns;
   return Rect16{static_cast<int16_t>(g.grid.x + col * (g.cellW + g.gap)),
-                static_cast<int16_t>(g.grid.y + row * (g.cellH + g.gap)), g.cellW, g.cellH};
+                static_cast<int16_t>(g.grid.y + row * (g.cellH + g.gap)),
+                static_cast<int16_t>(g.cellW * span + g.gap * (span - 1)), g.cellH};
 }
 
 // Which key a tap landed on, or -1. Derived from keyRect() and nothing else, so
@@ -113,14 +113,15 @@ constexpr const char* kMinus = "\xE2\x88\x92";  // U+2212, not a hyphen
 constexpr const char* kPlusMinus = "\xC2\xB1";  // U+00B1, absent from Jersey
 
 constexpr KeyDef kPadKeys[] = {
-    {Key::ClearAll, "AC"},  {Key::Backspace, "DEL"}, {Key::Percent, "%"}, {Key::Div, kDiv, true},
+    {Key::ClearAll, "AC"},  {Key::ClearEntry, "CE"}, {Key::Backspace, "DEL", false, 2}, {Key::None},
+    {Key::OpenGroup, "("},  {Key::CloseGroup, ")"},  {Key::Percent, "%"}, {Key::Div, kDiv, true},
     {Key::D7, "7"},         {Key::D8, "8"},          {Key::D9, "9"},      {Key::Mul, kMul, true},
     {Key::D4, "4"},         {Key::D5, "5"},          {Key::D6, "6"},      {Key::Sub, kMinus, true},
     {Key::D1, "1"},         {Key::D2, "2"},          {Key::D3, "3"},      {Key::Add, "+", true},
     {Key::Negate, nullptr}, {Key::D0, "0"},          {Key::Dot, "."},     {Key::Equals, "=", true},
 };
-constexpr Layout kPad{4, 5, kPadKeys};
+constexpr Layout kPad{4, 6, kPadKeys};
 
-static_assert(sizeof(kPadKeys) / sizeof(kPadKeys[0]) == 4u * 5u, "the pad table must fill its grid exactly");
+static_assert(sizeof(kPadKeys) / sizeof(kPadKeys[0]) == kPad.cols * kPad.rows, "the pad table must fill its grid exactly");
 
 }  // namespace calc

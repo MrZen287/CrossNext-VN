@@ -93,6 +93,19 @@ int main() {
     for (uint32_t start : {100u, 0xfffffff0u}) {
       HomeButtonInput timed;
       timed.setWindow(setting);
+      if (window == 0) {
+        check(timed.update(start, true, false, false, false, Action::Home, Action::ToggleFrontlight, Action::ReaderMenu) ==
+                  Action::Home,
+              "Immediate mode emits the configured action on release");
+        check(timed.nextActionDelayMs(start, 1000) == 1000, "Immediate mode leaves no polling deadline");
+        check(timed.update(start + 20, true, false, false, false, Action::Home, Action::ToggleFrontlight,
+                           Action::ReaderMenu) == Action::Home,
+              "Second tap remains a separate single tap in immediate mode");
+        check(timed.update(start + 1000, false, true, false, true, Action::Home, Action::ToggleFrontlight,
+                           Action::ReaderMenu) == Action::ReaderMenu,
+              "Immediate mode preserves the configured long press");
+        continue;
+      }
       check(timed.update(start, true, false, false, false, Action::Home, Action::ToggleFrontlight, Action::Ignore) ==
                 Action::Ignore,
             "Configured first tap waits");

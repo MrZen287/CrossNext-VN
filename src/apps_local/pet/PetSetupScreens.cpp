@@ -5,7 +5,7 @@ namespace petui {
 using namespace widget;
 namespace {
 const char* description(pet::Species value) {
-  static constexpr StrId labels[] = {StrId::STR_PET_SILVA_DESC, StrId::STR_PET_NOX_DESC, StrId::STR_PET_EMBER_DESC};
+  static constexpr StrId labels[] = {StrId::STR_PET_SILVA_DESC, StrId::STR_PET_NOX_DESC, StrId::STR_PET_EMBER_DESC, StrId::STR_PET_CHICKEN_DESC};
   return I18N.get(labels[unsigned(value)]);
 }
 void ruleCard(toybox::Screen& s, fui::Rect r, const char* title, const char* body, const freeink::Icon& mark,
@@ -73,13 +73,13 @@ void setup(toybox::Screen& s, const Model& m, Work& w, fui::Rect r) {
   const int cardsH = wide ? r.height - 95 - footerH - GAP : std::max(176, int(r.height) * 40 / 100);
   const int cardsWidth = wide ? r.width * 59 / 100 : r.width;
   const auto cards = rect(r.x, r.y + 89, cardsWidth, cardsH);
-  for (int i = 0; i < 3; ++i) {
-    const auto box = cell(cards, i, 3, 7);
-    const bool selected = int(m.choice) == i;
+  for (unsigned i = 0; i < pet::SPECIES_COUNT; ++i) {
+    const auto box = cell(cards, i, pet::SPECIES_COUNT, 5);
+    const bool selected = unsigned(m.choice) == i;
     const bool inverse = button(s, w, box, "", SelectSpecies, i);
     if (selected) s.target().stroke(box, ink, chrome::lightHeader ? 3 : 8, lightui::radius());
     const auto image = rect(box.x + 10, box.y + 12, box.width - 20, box.height - 86);
-    art(s, m, image, unsigned(i), speciesIcon(pet::Species(i)), false, inverse);
+    art(s, m, image, pet::eggArt(pet::Species(i)), speciesIcon(pet::Species(i)), false, inverse);
     pixelui::copyCaps(w.label, sizeof(w.label), eggName(pet::Species(i)));
     fui::TextStyle caption;
     caption.font = 3;
@@ -100,7 +100,7 @@ void setup(toybox::Screen& s, const Model& m, Work& w, fui::Rect r) {
         description(m.choice), wide ? 3 : 4);
   if (!wide)
     art(s, m, rect(features.x + infoW, features.y + 12, features.width - infoW - UI_INSET, features.height - 24),
-        3 + unsigned(m.choice) * 16, icon_cat_animals_32, false);
+        pet::creatureGraphic(m.choice, pet::Stage::Newborn), icon_cat_animals_32, false);
   const auto configuration = rect(about.x, features.bottom() + UI_GAP, about.width, configH);
   const bool inverse = button(s, w, configuration, "", OpenSettings);
   const int mark = wide ? 28 : 34;

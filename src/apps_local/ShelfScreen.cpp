@@ -26,7 +26,8 @@ int pagerReserve() { return chrome::lightHeader ? 60 : kPagerReserve; }
 fui::Rect listBand(const fui::DeviceContext& device, bool hasPages) {
   return pixelui::geometry(device, hasPages ? pagerReserve() : 0).body;
 }
-Paging pagingFor(const fui::DeviceContext& device, int count) {
+Paging pagingFor(const fui::DeviceContext& device, int count, bool grid) {
+  if (grid) return {kGridSlots, pageCountFor(count, kGridSlots)};
   const int whole = std::min(9, std::max(1, int(listBand(device, false).height) / rowHeight()));
   if (count <= whole) return {whole, 1};
   const int paged = std::min(9, std::max(1, int(listBand(device, true).height) / rowHeight()));
@@ -71,6 +72,40 @@ int pageStepClamped(const int page, const int pageCount, const int delta) {
 }
 
 namespace {
+fui::Rect gridCell(fui::Rect band, int index) {
+  const int column = index % kGridColumns;
+  const int row = index / kGridColumns;
+  const int left = band.x + column * band.width / kGridColumns;
+  const int right = band.x + (column + 1) * band.width / kGridColumns;
+  const int top = band.y + row * band.height / kGridRows;
+  const int bottom = band.y + (row + 1) * band.height / kGridRows;
+  return fui::makeRect(left, top, right - left, bottom - top);
+}
+
+void buildGrid(toybox::Screen& screen, const MenuModel& model) {
+  auto& target = screen.target();
+  const auto band = screen.body();
+  const auto ink = fui::Paint::solid(fui::Color::Black);
+  const auto background = fui::Paint::dither(fui::Color::LightGray);
+  for (int n = 0; n < model.count; ++n) {
+    const auto tile = gridCell(band, n);
+    const int diameter = std::min({72, int(tile.width) - 12, int(tile.height) - 32});
+    const int y = tile.y + std::max(3, (int(tile.height) - diameter - 32) / 2);
+    const auto circle = fui::makeRect(tile.x + (tile.width - diameter) / 2, y, diameter, diameter);
+    if (!circle.empty() && model.icons && model.icons[n]) {
+      target.fill(circle, background, diameter / 2);
+      const int pad = std::max(3, diameter / 7);
+      target.bitmap(circle.inset({int16_t(pad), int16_t(pad), int16_t(pad), int16_t(pad)}),
+                    fui::bitmapFromIcon(*model.icons[n]), fui::BitmapMode::Contain, ink);
+    }
+    const int textTop = std::max(tile.y, circle.bottom()) + 4;
+    pixelui::text(target, fui::makeRect(tile.x + 4, textTop, tile.width - 8, tile.bottom() - textTop - 2),
+                  model.items[n].label, pixelui::kSmall, fui::Color::Black, fui::TextAlign::Center);
+    if (n == model.selected) target.stroke(tile.inset({2, 2, 2, 2}), ink, 2);
+  }
+  screen.frame().hit(band, ActionGridOpen, 0, fui::InputTouch | fui::InputPointerOnly);
+}
+
 struct Rows {
   const MenuModel& model;
   char label[96]{};
@@ -88,6 +123,15 @@ struct Rows {
   }
 };
 }  // namespace
+
+int gridIndexAt(const fui::DeviceContext& device, bool hasPages, int x, int y) {
+  const auto band = listBand(device, hasPages);
+  for (int i = 0; i < kGridSlots; ++i) {
+    const auto cell = gridCell(band, i);
+    if (x >= cell.x && x < cell.right() && y >= cell.y && y < cell.bottom()) return i;
+  }
+  return -1;
+}
 
 void buildMenu(toybox::Screen& screen, const MenuModel& model) {
   const bool choosing = model.checks != nullptr;
@@ -119,7 +163,8 @@ void buildMenu(toybox::Screen& screen, const MenuModel& model) {
   pixelui::begin(screen, model.pageCount > 1 ? pagerReserve() : 0);
   if (model.pageCount > 1) {
     const auto body = pixelui::geometry(device).body;
-    const int rowsBottom = body.y + std::min(9, int(screen.body().height) / rowHeight()) * pixelui::kRowHeight;
+    const int rowsBottom = model.grid ? screen.body().bottom()
+                                      : body.y + std::min(9, int(screen.body().height) / rowHeight()) * pixelui::kRowHeight;
     if (chrome::lightHeader) {
       const auto band = fui::makeRect(body.x, body.bottom() - 48, body.width, 48);
       const auto ink = fui::Paint::solid(fui::Color::Black);
@@ -162,6 +207,7 @@ void buildMenu(toybox::Screen& screen, const MenuModel& model) {
                          tr(STR_UI_TAP_TO_CHOOSE_WHAT_THIS_FOLDER_40CD3E), hint);
     return;
   }
+  if (model.grid) return buildGrid(screen, model);
   Rows source{model, {}};
   fui::ListProps props;
   pixelui::styleList(props);

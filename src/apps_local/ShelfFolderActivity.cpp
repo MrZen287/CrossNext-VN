@@ -32,10 +32,7 @@ int ShelfFolderActivity::itemAtRow(const int row) const {
 
 void ShelfFolderActivity::buildPage(const int first, const int count) {
   const shelf::Folder& self = shelf::folders()[folder];
-  // Cannot happen on this panel: the tallest band a folder can have fits ten
-  // rows and the array holds sixteen. Logged rather than clamped in silence
-  // because a page that quietly drew fewer rows than it was asked for is
-  // exactly the failure the registry cap used to have.
+  // The buffer holds one full grid page. Log bad page bounds before slicing.
   if (count > kMaxRowsPerPage) LOG_ERR("SHELF", "Page of %d exceeds %d rows", count, kMaxRowsPerPage);
   for (int i = 0; i < count && i < kMaxRowsPerPage; ++i) {
     const int item = itemAtRow(first + i);
@@ -116,6 +113,7 @@ bool ShelfFolderActivity::showPage(const int page) {
   if (landing < 0 || landing >= itemCount || landing == selected) return false;
   // Within this screen the page is DERIVED from the selection and held nowhere
   // else, so changing page means moving the selection onto the page's first row.
+  interactionsReady = false;
   selected = landing;
   requestUpdate();
   return true;
@@ -184,6 +182,14 @@ void ShelfFolderActivity::loop() {
       continue;
     }
     if (!itemCount) continue;
+    if (!choosing && command.kind == Kind::Step) {
+      const int next = buttonCursorVisible ? std::clamp(selected + command.amount, 0, itemCount - 1) : selected;
+      moved |= !buttonCursorVisible || next != selected;
+      buttonCursorVisible = true;
+      if (shelfui::pageFor(next, rowsPerPage) != shelfui::pageFor(selected, rowsPerPage)) interactionsReady = false;
+      selected = next;
+      continue;
+    }
     if (command.kind == Kind::Section || command.kind == Kind::Step) {
       const int target = std::clamp(shelfui::pageFor(selected, rowsPerPage) + command.amount, 0,
                                     shelfui::pageCountFor(itemCount, rowsPerPage) - 1);
@@ -229,6 +235,17 @@ void ShelfFolderActivity::loop() {
     if (item >= 0) shelf::openItem(folder, item, renderer, mappedInput);
     return;
   }
+  if (event.action == shelfui::ActionGridOpen) {
+    const auto device = toybox::makeTarget(renderer).deviceContext();
+    const int page = shelfui::pageFor(selected, rowsPerPage);
+    const int index = shelfui::gridIndexAt(device, itemCount > rowsPerPage, tapX, tapY);
+    if (index >= 0) {
+      const int row = shelfui::rowForPage(page, rowsPerPage) + index;
+      const int item = itemAtRow(row);
+      if (item >= 0) shelf::openItem(folder, item, renderer, mappedInput);
+    }
+    return;
+  }
   if (event.action == shelfui::ActionChoose) {
     setChoosing(!choosing);
     return;
@@ -268,7 +285,7 @@ void ShelfFolderActivity::render(RenderLock&&) {
   // the fold would otherwise be styled on a row that is never drawn.
   //
   // Derive the page from the current row so button and touch navigation agree.
-  const shelfui::Paging paging = shelfui::pagingFor(device, itemCount);
+  const shelfui::Paging paging = shelfui::pagingFor(device, itemCount, !choosing);
   rowsPerPage = paging.rowsPerPage;
   const int page = shelfui::pageFor(selected, rowsPerPage);
   const int first = shelfui::rowForPage(page, rowsPerPage);
@@ -288,7 +305,7 @@ void ShelfFolderActivity::render(RenderLock&&) {
   shouted[n] = '\0';
 
   shelfui::MenuModel model;
-  model.title = shouted;
+  model.title = choosing ? shouted : shelf::label(self.title);
   model.mark = self.mark;
   model.items = items;
   model.icons = icons;
@@ -298,6 +315,7 @@ void ShelfFolderActivity::render(RenderLock&&) {
   model.selected = buttonCursorVisible ? selected - first : -1;
   model.page = page;
   model.pageCount = paging.pageCount;
+  model.grid = !choosing;
   shelfui::buildMenu(screen, model);
 
   interactionsReady = true;

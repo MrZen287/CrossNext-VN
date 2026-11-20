@@ -147,7 +147,7 @@ void KeyboardEntryActivity::onEnter() {
   showLangKey = useLanguageKeyboard || (enabledLayouts & (enabledLayouts - 1)) != 0 ||
                 (SETTINGS.keyboardLanguageLayouts & cardLayouts) != 0;
   shifted = false;
-  symbols = false;
+  symbols = initialSymbols;
   urlPanel = false;
   cursorMode = false;
   togglePos = false;

@@ -3,8 +3,8 @@
 // The calculator itself: what a key press does to the numbers.
 //
 // Immediate execution, the way every pocket calculator since the 1970s works: an
-// operator key completes the sum so far and shows it, rather than waiting for a
-// closing bracket.
+// operator key completes the sum so far and shows it. Parentheses each run a
+// nested calculation and return one operand to the surrounding calculation.
 //
 // THE ARITHMETIC IS DECIMAL, NOT BINARY. IBM decNumber, vendored at
 // lib/decNumber, ICU licence. That is the whole reason this file is not fifty
@@ -31,6 +31,7 @@
 
 #include <DecNumber.h>
 
+#include <array>
 #include <cstdint>
 #include <cstdio>
 #include <cstring>
@@ -69,6 +70,18 @@ static_assert(kMaxEntryDigits <= kWorkingDigits, "an operand longer than the wor
 constexpr int kMaxExponent = 99;
 constexpr size_t kTextMax = 32;
 
+inline void formatResult(const decNumber& value, decContext context, char* out, size_t size) {
+  context.digits = kSignificantDigits;
+  context.status = 0;
+  decNumber rounded;
+  decNumberPlus(&rounded, &value, &context);
+  uint8_t bcd[DECNUMDIGITS + 1];
+  decNumberGetBCD(&rounded, bcd);
+  const Decimal shape{bcd, rounded.digits, rounded.exponent, decNumberIsNegative(&rounded) != 0};
+  const int budget = size - 1 < kMaxDisplayChars ? static_cast<int>(size) - 1 : kMaxDisplayChars;
+  if (formatDecimal(shape, budget, out, static_cast<int>(size)) == 0) std::snprintf(out, size, "OVERFLOW");
+}
+
 class Engine {
  public:
   Engine() {
@@ -92,6 +105,7 @@ class Engine {
   const char* display() const { return display_; }
   const char* pending() const { return pending_; }
   bool hasError() const { return error_; }
+  size_t openGroups() const { return groupDepth_; }
 
   // --- what the pad does ----------------------------------------------------
 
@@ -110,7 +124,13 @@ class Engine {
       case Key::Div:
         return pressOperator(k);
       case Key::Equals:
+        while (groupDepth_ && !error_) closeGroup();
+        if (error_) return;
         return pressEquals();
+      case Key::OpenGroup:
+        return openGroup();
+      case Key::CloseGroup:
+        return closeGroup();
       case Key::Percent:
         return pressPercent();
       case Key::Negate:
@@ -131,6 +151,8 @@ class Engine {
     decNumberZero(&acc_);
     decNumberZero(&operand_);
     operandLive_ = false;
+    groupedOperand_ = false;
+    groupDepth_ = 0;
     decNumberZero(&repeatOperand_);
     pendingOp_ = Key::None;
     repeatOp_ = Key::None;
@@ -141,6 +163,51 @@ class Engine {
   }
 
  private:
+  struct Group {
+    decNumber accumulator;
+    Key op;
+  };
+
+  void openGroup() {
+    if (groupDepth_ == groups_.size()) {
+      fail("BAD INPUT");
+      return;
+    }
+    if (entryLive_ || operandLive_) {
+      groupedOperand_ = operandLive_;
+      pressOperator(Key::Mul);
+      if (error_) return;
+    }
+    groups_[groupDepth_++] = {acc_, pendingOp_};
+    decNumberZero(&acc_);
+    pendingOp_ = repeatOp_ = Key::None;
+    pending_[0] = '\0';
+    resetEntry();
+    refresh();
+  }
+
+  void closeGroup() {
+    if (!groupDepth_ || (!entryLive_ && !operandLive_)) {
+      fail("BAD INPUT");
+      return;
+    }
+    decNumber value, result;
+    currentValue(&value);
+    if (!apply(pendingOp_, acc_, value, &result)) return;
+    const auto& parent = groups_[--groupDepth_];
+    acc_ = parent.accumulator;
+    pendingOp_ = parent.op;
+    repeatOp_ = Key::None;
+    resetEntry();
+    operand_ = result;
+    operandLive_ = groupedOperand_ = true;
+    if (pendingOp_ != Key::None)
+      writePending();
+    else
+      pending_[0] = '\0';
+    refresh();
+  }
+
   void resetEntry() {
     entry_[0] = '0';
     entry_[1] = '\0';
@@ -168,6 +235,7 @@ class Engine {
     resetEntry();
     entryLive_ = true;
     operandLive_ = false;
+    groupedOperand_ = false;
     refresh();
   }
 
@@ -189,6 +257,7 @@ class Engine {
     decNumberCopy(&acc_, &value);
     entryLive_ = false;
     operandLive_ = false;
+    groupedOperand_ = false;
     refresh();
   }
 
@@ -219,6 +288,7 @@ class Engine {
 
   void pressDigit(const int d) {
     operandLive_ = false;
+    groupedOperand_ = false;
     if (!entryLive_) {
       entry_[0] = '\0';
       entryDigits_ = 0;
@@ -245,6 +315,7 @@ class Engine {
 
   void pressDot() {
     operandLive_ = false;
+    groupedOperand_ = false;
     if (!entryLive_) {
       std::snprintf(entry_, sizeof(entry_), "0");
       entryDigits_ = 0;
@@ -318,7 +389,7 @@ class Engine {
   void pressOperator(const Key op) {
     // Two operators in a row replace rather than stack: the second one is what
     // you meant, and every calculator on every desk behaves this way.
-    if (!entryLive_ && pendingOp_ != Key::None) {
+    if (!entryLive_ && !groupedOperand_ && pendingOp_ != Key::None) {
       pendingOp_ = op;
       writePending();
       refresh();
@@ -336,6 +407,7 @@ class Engine {
     pendingOp_ = op;
     entryLive_ = false;
     operandLive_ = false;
+    groupedOperand_ = false;
     repeatOp_ = Key::None;
     writePending();
     refresh();
@@ -442,24 +514,7 @@ class Engine {
   // number becomes text, so nothing on the panel can be longer than the display
   // can hold.
   void writeNumber(const decNumber& value, char* out, const size_t n) const {
-    // Rounded to the SHOWN precision first. The guard digits exist so the
-    // arithmetic is right; showing them is what would put 0.9999999999 on the
-    // panel where a calculator says 1.
-    decContext shown = ctx_;
-    shown.digits = kSignificantDigits;
-    shown.status = 0;
-    decNumber rounded;
-    decNumberPlus(&rounded, &value, &shown);
-
-    uint8_t bcd[DECNUMDIGITS + 1];
-    decNumberGetBCD(&rounded, bcd);
-    Decimal shape;
-    shape.coeff = bcd;
-    shape.digits = rounded.digits;
-    shape.exponent = rounded.exponent;
-    shape.negative = decNumberIsNegative(&rounded) != 0;
-    const int budget = static_cast<int>(n) - 1 < kMaxDisplayChars ? static_cast<int>(n) - 1 : kMaxDisplayChars;
-    if (formatDecimal(shape, budget, out, static_cast<int>(n)) == 0) std::snprintf(out, n, "OVERFLOW");
+    formatResult(value, ctx_, out, n);
   }
 
   void writePending() {
@@ -495,6 +550,9 @@ class Engine {
   // would throw away the sum it is a percentage OF.
   decNumber operand_{};
   bool operandLive_ = false;
+  bool groupedOperand_ = false;
+  std::array<Group, 8> groups_{};
+  size_t groupDepth_ = 0;
   decNumber repeatOperand_{};
   char entry_[kTextMax] = {};
   char display_[kTextMax * 2] = {};

@@ -1,5 +1,7 @@
 #include "PetActivity.h"
 
+#include "../ui/ChickenArt.h"
+
 #include <I18n.h>
 #include <Logging.h>
 #include <Memory.h>
@@ -649,7 +651,7 @@ void PetActivity::action(fui::ActionId action, int value) {
       }
       return;
     case petui::SelectSpecies:
-      if (value >= 0 && value < 3 && (!profile.created || profile.lifeStatus != pet::LifeStatus::Active)) {
+      if (value >= 0 && value < int(pet::SPECIES_COUNT) && (!profile.created || profile.lifeStatus != pet::LifeStatus::Active)) {
         chosenSpecies = pet::Species(value);
         show(pet::View::New);
       }
@@ -1239,6 +1241,11 @@ void PetActivity::loop() {
 }
 bool PetActivity::drawPetArt(void* context, fui::DrawTarget& target, fui::Rect box, uint32_t id, bool inverse) {
   auto& app = *static_cast<PetActivity*>(context);
+  if (id >= pet::CHICKEN_EGG_ART && id <= pet::CHICKEN_EGG_ART + 16) {
+    const auto offset = id - pet::CHICKEN_EGG_ART;
+    chickenart::draw(target, box, offset ? (offset + 3) / 4 : 0, offset ? (offset - 1) % 4 : 0, inverse);
+    return true;
+  }
   if (id == petui::PETTING_HAND_ART && !app.pettingHandAvailable) return false;
   return drawArt(&app.art, target, box, id, inverse);
 }
@@ -1284,7 +1291,7 @@ void PetActivity::render(RenderLock&&) {
     name.confirmLabel = tr(STR_PET_NAME_CONFIRM);
     name.artContext = this;
     name.drawArt = drawPetArt;
-    name.artId = unsigned(chosenSpecies);
+    name.artId = pet::eggArt(chosenSpecies);
     name.enabled = writable && today != 0 && !historyChanged;
     nameKeyboard.drawName(screen, tr(STR_PET_APP), name);
     ready = true;

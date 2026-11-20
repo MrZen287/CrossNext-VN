@@ -27,6 +27,7 @@
 #include "../../apps_local/library/LibraryLoadingNotice.h"
 #include "../../apps_local/reading/ReadingStatsActivity.h"
 #include "../../apps_local/ui/PixelMenuTheme.h"
+#include "../../apps_local/ui/VietnameseQuotes.h"
 #include "CrossPointSettings.h"
 #include "CrossPointState.h"
 #include "HapticFeedback.h"
@@ -52,6 +53,25 @@ bool availableRecent(const RecentBook& book) {
     shelfCatalog.rememberPresent(library::clixPathHash(book.path.c_str(), book.path.size()), book.path);
   return present;
 }
+
+bool openShelfIndex(library::LibraryIndexFile& index, GfxRenderer& renderer, bool showProgress = true) {
+  const bool metadata = SETTINGS.libraryUseMetadata != 0;
+  const bool opened = index.open(library::libraryIndexPath());
+  bool rebuild = !opened || library::isLibraryIndexDirty() || index.header().metadataEnabled != metadata ||
+                 index.header().reserved[0] != content::VISIBILITY_VERSION;
+  static bool cardChecked = false;
+  if (opened && !rebuild && !cardChecked) {
+    const auto result = library::checkLibraryCard(index.header());
+    rebuild = result == library::CardCheck::Changed;
+    cardChecked = result == library::CardCheck::Unchanged;
+  }
+  if (!rebuild) return true;
+  index.close();
+  if (showProgress) GUI.drawLoadingScreen(renderer, tr(STR_LIBRARY_INITIAL_INDEX));
+  library::BuildStats stats;
+  if (library::buildLibraryIndex("/", stats, metadata)) cardChecked = true;
+  return index.open(library::libraryIndexPath());
+}
 }  // namespace
 
 int HomeActivity::getMenuItemCount() const {
@@ -67,7 +87,7 @@ int HomeActivity::getMenuItemCount() const {
 void HomeActivity::loadRecentBooks(int maxBooks) {
   recentBooks.clear();
   const auto& books = RECENT_BOOKS.getBooks();
-  if (!coverGridUi) {
+  if (!coverGridUi && !readingDeskEnabled()) {
     recentBooks.reserve(1);
     recentBookCount = 0;
     recentBookIndex = 0;
@@ -117,23 +137,7 @@ void HomeActivity::loadShelfPage() {
   const bool catalogHit = catalogReady;
   bool opened = false;
   if (!catalogReady) {
-    opened = reader->index.open(library::libraryIndexPath());
-    bool rebuild = !opened || library::isLibraryIndexDirty() ||
-                   reader->index.header().metadataEnabled != (SETTINGS.libraryUseMetadata != 0) ||
-                   reader->index.header().reserved[0] != content::VISIBILITY_VERSION;
-    static bool cardChecked = false;
-    if (opened && !rebuild && !cardChecked) {
-      const auto result = library::checkLibraryCard(reader->index.header());
-      rebuild = result == library::CardCheck::Changed;
-      cardChecked = result == library::CardCheck::Unchanged;
-    }
-    if (rebuild) {
-      reader->index.close();
-      GUI.drawLoadingScreen(renderer, tr(STR_LIBRARY_INITIAL_INDEX));
-      library::BuildStats stats;
-      if (library::buildLibraryIndex("/", stats, SETTINGS.libraryUseMetadata != 0)) cardChecked = true;
-      opened = reader->index.open(library::libraryIndexPath());
-    }
+    opened = openShelfIndex(reader->index, renderer);
     if (opened && shelfCatalog.begin(library::libraryContentRevision(), homecover::sceneRevision(),
                                      SETTINGS.libraryUseMetadata != 0, shelfLimit)) {
       bool complete = true;
@@ -347,6 +351,18 @@ bool HomeActivity::loadRecentCovers(int coverHeight) {
 
 void HomeActivity::onEnter() {
   Activity::onEnter();
+  if (readingDeskEnabled()) {
+    deskQuote = vietnamesequotes::next();
+    loadRecentBooks(1);
+    deskPrepared = -2;
+    loadDeskShelfPage(0, false);
+    setEdgeBackEnabled(false);
+    shelf::takeHomeReturn();
+    shelf::autostartFromEnv(renderer, mappedInput);
+    entryPhase = EntryPhase::Painting;
+    requestUpdate();
+    return;
+  }
   libraryWarmInputAt = millis();
   libraryWarmMediaRevision = Storage.mediaRevision();
   libraryWarmRevision = library::libraryContentRevision();
@@ -465,6 +481,10 @@ void HomeActivity::freeCoverBuffer() {
 }
 
 void HomeActivity::loop() {
+  if (readingDeskEnabled()) {
+    if (entryPhase == EntryPhase::Ready) loopReadingDesk();
+    return;
+  }
   if (entryPhase != EntryPhase::Ready) {
     if (entryPhase == EntryPhase::Preparing) activityManager.requestIdleWork(*this);
     return;
@@ -698,6 +718,177 @@ void HomeActivity::loop() {
   }
 }
 
+void HomeActivity::loopReadingDesk() {
+  using Button = MappedInputManager::Button;
+  using Swipe = MappedInputManager::SwipeDir;
+  int swipeX = 0, swipeY = 0;
+  const auto swipe = mappedInput.wasSwipe(swipeX, swipeY);
+  const bool horizontal = swipe == Swipe::Left || swipe == Swipe::Right;
+  int x = 0, y = 0;
+  const bool tapped = mappedInput.wasScreenTapped(x, y);
+  const bool confirm = mappedInput.wasReleased(Button::Confirm);
+  const bool resume = mappedInput.wasReleased(Button::Back);
+  const int direction = mappedInput.wasReleased(Button::NavNext) || swipe == Swipe::Left     ? 1
+                        : mappedInput.wasReleased(Button::NavPrevious) || swipe == Swipe::Right ? -1
+                                                                                               : 0;
+  const bool interacting = tapped || confirm || resume || direction;
+  RenderLock lock(interacting ? RenderLock::Mode::Blocking : RenderLock::Mode::Try);
+  if (!lock.ownsLock()) return;
+  if (horizontal && deskLayout.shelf.contains(swipeX, swipeY)) {
+    activateReadingDesk(swipe == Swipe::Left ? readingdesk::Next : readingdesk::Previous);
+    return;
+  }
+  if (tapped) {
+    deskFocus = readingdesk::None;
+    activateReadingDesk(deskLayout.at(x, y));
+    return;
+  }
+  if (resume || confirm) {
+    const auto fallback = deskBook() ? readingdesk::Resume : readingdesk::Library;
+    activateReadingDesk(resume || deskFocus == readingdesk::None ? fallback : deskFocus);
+    return;
+  }
+  if (direction) {
+    deskFocus = deskLayout.move(deskFocus, direction);
+    requestUpdate();
+    return;
+  }
+  const auto minute = millis() / 60000;
+  if (minute != deskMinute) {
+    deskMinute = minute;
+    requestUpdate();
+  }
+  if (deskLibraryPending || (deskBook() && (deskPrepared != deskFeatured || deskCoverHeight != deskLayout.cover.height)) ||
+      nextDeskShelfCover() >= 0 ||
+      (deskNextPageStart >= 0 && (!deskPrefetch.valid || deskPrefetchCover < int(deskPrefetch.books.size()))))
+    activityManager.requestIdleWork(*this);
+}
+
+HomeActivity::DeskPage HomeActivity::collectDeskPage(int start, bool useLibrary) {
+  auto index = useLibrary ? makeUniqueNoThrow<library::LibraryIndexFile>() : nullptr;
+  const bool opened = index && openShelfIndex(*index, renderer, false);
+  const auto& recents = RECENT_BOOKS.getBooks();
+  const int recentCount = static_cast<int>(recents.size());
+  const int rowCount = recentCount + (opened ? index->bookCount() : 0);
+  std::vector<RecentBook> books;
+  books.reserve(readingdesk::shelfSize);
+  int next = -1;
+  for (int row = start; row < rowCount; ++row) {
+    RecentBook book;
+    if (row < recentCount) {
+      book = recents[row];
+      if (!recentBooks.empty() && recentBooks.front() == book) continue;
+    } else {
+      library::ClixRecord record;
+      const auto ordinal = index->ordinalForRow(library::SortOrder::DateAddedDesc, static_cast<uint16_t>(row - recentCount));
+      if (!index->readRecord(ordinal, record) || !index->readPath(record, book.path)) {
+        if (index->ioFailed()) break;
+        continue;
+      }
+      if (std::find(recents.begin(), recents.end(), book) != recents.end()) continue;
+      if (!index->readTitle(record, book.title) && !index->readName(record, book.title)) continue;
+      index->readAuthor(record, book.author);
+      if (index->ioFailed()) break;
+    }
+    if (!availableRecent(book)) continue;
+    if (books.size() == readingdesk::shelfSize) {
+      next = row;
+      break;
+    }
+    books.push_back(std::move(book));
+  }
+  return {std::move(books), start, next, start == 0 || !(opened ? index->ioFailed() : start >= recentCount)};
+}
+
+void HomeActivity::loadDeskShelfPage(int page, bool useLibrary) {
+  if (page < 0 || (page > deskPage && deskNextPageStart < 0)) return;
+  const auto revision = library::libraryContentRevision();
+  const bool sameLibrary = revision == deskShelfRevision;
+  if (!sameLibrary) page = 0;
+  const int start = page == 0 ? 0 : page < int(deskPageStarts.size()) ? deskPageStarts[page] : deskNextPageStart;
+  const bool prefetched = sameLibrary && page > deskPage && deskPrefetch.valid && deskPrefetch.start == start;
+  auto result = prefetched ? std::move(deskPrefetch) : collectDeskPage(start, useLibrary);
+  const int warmed = prefetched ? deskPrefetchCover : 0;
+  deskPrefetch = {};
+  deskPrefetchCover = 0;
+  if (!result.valid) {
+    if (page > deskPage) deskNextPageStart = -1;
+    return;
+  }
+  if (page > 0 && result.books.empty()) {
+    if (page > deskPage) deskNextPageStart = -1;
+    return;
+  }
+  const bool sameCovers = page == deskPage && result.books == deskShelf;
+  const bool changed = !sameCovers || (deskNextPageStart < 0) != (result.next < 0);
+  deskPageStarts.resize(page + 1);
+  deskPageStarts[page] = start;
+  deskPage = page;
+  deskNextPageStart = result.next;
+  deskShelfRevision = revision;
+  if (!changed) return;
+  if (!sameCovers) {
+    deskShelf = std::move(result.books);
+    deskFeatured = -1;
+    deskPrepared = -2;
+    deskShelfHeights.fill(0);
+    for (int n = 0; n < warmed; ++n) deskShelfHeights[n] = deskLayout.hits[readingdesk::Recent1 + n].height;
+  }
+  deskFocus = readingdesk::None;
+  entryPhase = EntryPhase::Painting;
+}
+
+RecentBook* HomeActivity::deskBook() {
+  if (deskFeatured >= 0) return &deskShelf[deskFeatured];
+  return recentBooks.empty() ? nullptr : &recentBooks.front();
+}
+
+int HomeActivity::nextDeskShelfCover() const {
+  for (int n = 0; n < static_cast<int>(deskShelf.size()); ++n) {
+    const int height = deskLayout.hits[readingdesk::Recent1 + n].height;
+    if (height > 0 && deskShelfHeights[n] != height) return n;
+  }
+  return -1;
+}
+
+void HomeActivity::activateReadingDesk(readingdesk::Action action) {
+  switch (action) {
+    case readingdesk::Settings: onSettingsOpen(); return;
+    case readingdesk::Library: onLibraryOpen(); return;
+    case readingdesk::Apps: shelf::openFolder(1, renderer, mappedInput); return;
+    case readingdesk::Games: shelf::openFolder(0, renderer, mappedInput); return;
+    case readingdesk::Calendar: {
+      const auto& folder = shelf::folders()[1];
+      for (int n = 0; n < folder.count; ++n) {
+        if (std::strcmp(folder.items[n].title, "CALENDAR") == 0) {
+          shelf::openItem(1, n, renderer, mappedInput, shelf::LaunchOrigin::Home);
+          return;
+        }
+      }
+      return;
+    }
+    case readingdesk::Resume:
+      if (const auto* book = deskBook()) onSelectBook(book->path);
+      return;
+    case readingdesk::Previous:
+    case readingdesk::Next:
+      if (deskLayout.hits[action].empty()) return;
+      loadDeskShelfPage(deskPage + (action == readingdesk::Next ? 1 : -1));
+      requestUpdate();
+      return;
+    case readingdesk::Recent1:
+    case readingdesk::Recent2:
+    case readingdesk::Recent3: {
+      const int selected = action - readingdesk::Recent1;
+      if (selected >= static_cast<int>(deskShelf.size())) return;
+      deskFeatured = deskFeatured == selected ? -1 : selected;
+      requestUpdate();
+      return;
+    }
+    default: return;
+  }
+}
+
 bool HomeActivity::prepareGridCover(RecentBook& book, int height) {
   if (FsHelpers::hasReflowableBookExtension(book.path)) {
     auto epub = makeUniqueNoThrow<Epub>(book.path, "/.crosspoint");
@@ -741,6 +932,43 @@ bool HomeActivity::continueLibraryWarmup(void* context) {
 }
 
 void HomeActivity::runIdleWork() {
+  if (readingDeskEnabled()) {
+    if (entryPhase != EntryPhase::Ready) return;
+    auto* book = deskBook();
+    const int height = deskLayout.cover.height;
+    if (deskLibraryPending) {
+      deskLibraryPending = false;
+      loadDeskShelfPage(deskPage);
+      if (entryPhase == EntryPhase::Painting) requestUpdate();
+      return;
+    }
+    const auto warm = [this](RecentBook& candidate, int size) {
+      const auto before = candidate.coverBmpPath;
+      const bool visible = !before.empty() && Storage.exists(UITheme::getCoverThumbPath(before, size).c_str());
+      return prepareGridCover(candidate, size) && (!visible || before != candidate.coverBmpPath);
+    };
+    if (book && height > 0 && (deskPrepared != deskFeatured || deskCoverHeight != height)) {
+      deskPrepared = deskFeatured;
+      deskCoverHeight = height;
+      if (warm(*book, height)) requestUpdate();
+    } else if (const int n = nextDeskShelfCover(); n >= 0) {
+      deskShelfHeights[n] = deskLayout.hits[readingdesk::Recent1 + n].height;
+      if (warm(deskShelf[n], deskShelfHeights[n])) requestUpdate();
+    } else if (deskNextPageStart >= 0) {
+      if (!deskPrefetch.valid) {
+        deskPrefetch = collectDeskPage(deskNextPageStart, true);
+        if (!deskPrefetch.valid || deskPrefetch.books.empty()) {
+          deskNextPageStart = -1;
+          requestUpdate();
+        }
+      } else if (deskPrefetchCover < int(deskPrefetch.books.size())) {
+        const int height = deskLayout.hits[readingdesk::Recent1 + deskPrefetchCover].height;
+        if (height > 0) prepareGridCover(deskPrefetch.books[deskPrefetchCover], height);
+        ++deskPrefetchCover;
+      }
+    }
+    return;
+  }
   if (entryPhase == EntryPhase::Preparing) {
     initializeContent();
     entryPhase = EntryPhase::Painting;
@@ -829,6 +1057,18 @@ void HomeActivity::runIdleWork() {
 
 void HomeActivity::render(RenderLock&&) {
   if (entryPhase == EntryPhase::Blocking) return;
+  if (readingDeskEnabled()) {
+    auto target = toybox::makeTarget(renderer);
+    const auto* book = deskBook();
+    deskLayout = readingdesk::layout(target.deviceContext().safeRect(), static_cast<int>(deskShelf.size()), book != nullptr,
+                                     deskPage > 0, deskNextPageStart >= 0);
+    readingdesk::draw(renderer, deskLayout, book, deskShelf, deskFeatured, deskFocus, deskQuote);
+    renderer.displayBuffer(cleanInitialRefresh && !firstRenderDone ? HalDisplay::HALF_REFRESH
+                                                                   : HalDisplay::FAST_REFRESH);
+    firstRenderDone = true;
+    entryPhase = EntryPhase::Ready;
+    return;
+  }
   if (entryPhase == EntryPhase::Shell || entryPhase == EntryPhase::Preparing) {
     renderer.clearScreen();
     if (coverGridUi) {

@@ -50,6 +50,8 @@ void forEachBaseSetting(SettingVisitor visit, void* context) {
   }();
 
   // --- Display ---
+  emit(SettingInfo::Toggle(StrId::STR_LUNAR_SLEEP_CALENDAR, &CrossPointSettings::lunarSleepCalendar,
+                           "lunarSleepCalendar", StrId::STR_CAT_DISPLAY));
   emit(SettingInfo::StaticEnum(StrId::STR_SLEEP_SCREEN, &CrossPointSettings::sleepScreen, sleepScreenValues,
                                "sleepScreen", StrId::STR_CAT_DISPLAY));
   emit(SettingInfo::Enum(StrId::STR_SLEEP_COVER_MODE, &CrossPointSettings::sleepScreenCoverMode,
@@ -328,6 +330,15 @@ void forEachBaseSetting(SettingVisitor visit, void* context) {
   emit(SettingInfo::Value(StrId::STR_WARMTH, &CrossPointSettings::frontlightWarmth, {0, 100, 5}, "frontlightWarmth"));
 #endif
   emit(SettingInfo::Toggle(StrId::STR_FRONTLIGHT, &CrossPointSettings::frontlightOn, "frontlightOn"));
+  emit(SettingInfo::Toggle(StrId::STR_LIGHT_NIGHT, &CrossPointSettings::frontlightNightProfile, "frontlightNightProfile"));
+  emit(SettingInfo::Value(StrId::STR_BRIGHTNESS, &CrossPointSettings::frontlightDayBrightness, {1, 100, 1},
+                          "frontlightDayBrightness"));
+  emit(SettingInfo::Value(StrId::STR_BRIGHTNESS, &CrossPointSettings::frontlightNightBrightness, {1, 100, 1},
+                          "frontlightNightBrightness"));
+  emit(SettingInfo::Value(StrId::STR_WARMTH, &CrossPointSettings::frontlightDayWarmth, {0, 100, 1},
+                          "frontlightDayWarmth"));
+  emit(SettingInfo::Value(StrId::STR_WARMTH, &CrossPointSettings::frontlightNightWarmth, {0, 100, 1},
+                          "frontlightNightWarmth"));
 
   // --- KOReader Sync (web-only, uses KOReaderCredentialStore) ---
   emit(SettingInfo::DynamicString(

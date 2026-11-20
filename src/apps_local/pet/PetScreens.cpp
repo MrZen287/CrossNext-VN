@@ -31,7 +31,8 @@ const char* playBlockText(pet::PlayBlock reason) {
 }
 using namespace widget;
 const char* eggName(pet::Species value) {
-  static constexpr StrId keys[] = {StrId::STR_PET_EGG_A, StrId::STR_PET_EGG_B, StrId::STR_PET_EGG_C};
+  static constexpr StrId keys[] = {StrId::STR_PET_EGG_A, StrId::STR_PET_EGG_B, StrId::STR_PET_EGG_C,
+                                  StrId::STR_PET_EGG_CHICKEN};
   return I18N.get(keys[unsigned(value)]);
 }
 const char* displayName(const char* name, pet::Species species) { return name[0] ? name : eggName(species); }
@@ -166,9 +167,10 @@ void care(toybox::Screen& s, const Model& m, Work& w, fui::Rect r) {
     const unsigned sleeping = age == pet::Stage::Egg
                                   ? petsleep::eggIndex(unsigned(p.species), 0)
                                   : ((unsigned(p.species) * 4 + unsigned(age) - 1) * petsleep::FRAMES) * 2;
-    if (!m.sleepArt.draw || !m.sleepArt.draw(m.sleepArt.context, s.target(), picture, sleeping + 1, false))
+    if (p.species == pet::Species::Chicken || !m.sleepArt.draw ||
+        !m.sleepArt.draw(m.sleepArt.context, s.target(), picture, sleeping + 1, false))
       art(s, m, picture,
-          age == pet::Stage::Egg ? unsigned(p.species) : 3 + unsigned(p.species) * 16 + (unsigned(age) - 1) * 4 + 3,
+          pet::creatureGraphic(p.species, age, 3),
           speciesIcon(p.species), false);
     sparkle(s, picture.x + 12, picture.y + picture.height / 3, 18);
     sparkle(s, picture.right() - 12, picture.y + 14, 15);

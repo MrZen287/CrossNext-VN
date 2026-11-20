@@ -73,6 +73,28 @@ void FrontlightPanelActivity::onEnter() {
   app.on(ACTION_BRIGHTNESS_STEP, &FrontlightPanelActivity::onBrightnessStepEvent, this);
   app.on(ACTION_WARMTH_STEP, &FrontlightPanelActivity::onWarmthStepEvent, this);
   app.on(ACTION_TILE, &FrontlightPanelActivity::onTileEvent, this);
+  app.on(quickui::LightProfile, [](const fui::ActionEvent& event, void* user) {
+    auto& self = *static_cast<FrontlightPanelActivity*>(user);
+    const bool night = event.value == 1;
+    if (!Frontlight.present() || night == (SETTINGS.frontlightNightProfile != 0)) return;
+    auto& outgoingBrightness = night ? SETTINGS.frontlightDayBrightness : SETTINGS.frontlightNightBrightness;
+    auto& outgoingWarmth = night ? SETTINGS.frontlightDayWarmth : SETTINGS.frontlightNightWarmth;
+    outgoingBrightness = std::clamp<int>(Frontlight.brightness(), 1, 100);
+    outgoingWarmth = Frontlight.warmth();
+    SETTINGS.frontlightNightProfile = night;
+    const auto nextBrightness = night ? SETTINGS.frontlightNightBrightness : SETTINGS.frontlightDayBrightness;
+    const auto nextWarmth = night ? SETTINGS.frontlightNightWarmth : SETTINGS.frontlightDayWarmth;
+    Frontlight.setBrightness(std::clamp<int>(nextBrightness, 1, 100));
+    Frontlight.setWarmth(std::min<int>(nextWarmth, 100));
+    self.syncLightState();
+    SETTINGS.frontlightBrightness = self.brightness;
+    SETTINGS.frontlightWarmth = self.warmth;
+    SETTINGS.frontlightWarmthMemory = self.rememberedWarmth;
+    SETTINGS.frontlightOn = self.lightOn;
+    SETTINGS.saveToFile();
+    self.app.clearTapFlash();
+    self.requestUpdate();
+  }, this);
   app.on(quickui::OpenSettings, &FrontlightPanelActivity::onSettingsEvent, this);
   app.setScreen(&FrontlightPanelActivity::panelScreen, this);
   requestUpdate();
@@ -483,6 +505,7 @@ void FrontlightPanelActivity::preparePanelModel() {
   model.light = Frontlight.present();
   model.temperature = Frontlight.hasColorTemperature();
   model.night = SETTINGS.screenInverted;
+  model.nightProfile = SETTINGS.frontlightNightProfile;
   model.touch = mappedInput.hasTouch();
   model.touchOn = !mappedInput.isTouchscreenLocked();
   model.lightOn = lightOn;

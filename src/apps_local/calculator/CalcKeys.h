@@ -34,6 +34,8 @@ enum class Key : uint8_t {
   ClearAll,    // AC / C: everything, including a pending operator
   ClearEntry,  // CE: the number being typed, nothing else
   Backspace,   // one digit off the number being typed
+  OpenGroup,
+  CloseGroup,
 };
 
 // One key: what it means, what it says, and whether it is one of the five that
@@ -47,6 +49,7 @@ struct KeyDef {
   Key key = Key::None;
   const char* label = nullptr;
   bool emphasis = false;  // an operator or equals: the keys drawn a weight heavier
+  uint8_t columns = 1;
 };
 
 inline bool isDigit(const Key k) { return k >= Key::D0 && k <= Key::D9; }

@@ -123,9 +123,7 @@ void evolution(toybox::Screen& s, const Model& m, Work& w, fui::Rect r) {
     const auto value = i ? current : p.noticedStage;
     const auto card = rect(i ? stages.right() - stageW : stages.x, stages.y, stageW, stages.height);
     frame(s, card);
-    const unsigned artId = value == pet::Stage::Egg
-                               ? unsigned(p.species)
-                               : 3 + unsigned(p.species) * 16 + (unsigned(value) - 1) * 4 + (i ? 1 : 0);
+    const unsigned artId = pet::creatureGraphic(p.species, value, i ? 1 : 0);
     art(s, m, rect(card.x + 8, card.y + 8, card.width - 16, card.height - 54), artId, speciesIcon(p.species), false);
     const auto caption = rect(card.x + 6, card.bottom() - 39, card.width - 12, 33);
     if (!born) lightui::surface(s.target(), caption, ink);

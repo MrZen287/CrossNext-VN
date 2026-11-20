@@ -6,17 +6,18 @@
 #include <cstring>
 
 #include "../ui/Dashboard.h"
+#include "../ui/FitText.h"
 
 namespace calculatorui {
 namespace fui = freeink::ui;
 namespace {
 fui::Rect rect(calc::Rect16 value) { return fui::makeRect(value.x, value.y, value.w, value.h); }
-const char* errorLabel(const calc::Engine& engine) {
+const char* errorLabel(const calc::ExpressionEngine& engine) {
   if (std::strcmp(engine.display(), "DIVIDE BY 0") == 0) return tr(STR_CALCULATOR_DIVIDE_ZERO);
   if (std::strcmp(engine.display(), "OVERFLOW") == 0) return tr(STR_CALCULATOR_OVERFLOW);
   return tr(STR_CALCULATOR_INVALID);
 }
-void result(toybox::Screen& screen, fui::Rect box, const calc::Engine& engine) {
+void result(toybox::Screen& screen, fui::Rect box, const calc::ExpressionEngine& engine) {
   if (engine.hasError()) {
     fui::TextStyle text;
     text.font = pixelui::kBody;
@@ -29,7 +30,7 @@ void result(toybox::Screen& screen, fui::Rect box, const calc::Engine& engine) {
   for (const unsigned char* p = reinterpret_cast<const unsigned char*>(engine.display()); *p; ++p)
     scalable = scalable && numerals::glyph(*p);
   if (scalable) {
-    const int height = std::min(int(box.height), 82);
+    const int height = std::min(int(box.height), 92);
     numerals::draw(screen.target(), box, engine.display(), fui::Color::Black, numerals::activeFace(),
                    height * 1024 / numerals::digitHeight(), true);
   } else {
@@ -40,10 +41,13 @@ void result(toybox::Screen& screen, fui::Rect box, const calc::Engine& engine) {
 calc::PadGeom geometry(const fui::DeviceContext& device) {
   const auto body = pixelui::geometry(device).body;
   const bool wide = body.width > body.height;
-  const int height = wide ? 86 : 150;
-  return calc::padGeom(calc::kPad, {body.x, body.y, body.width, body.height}, wide ? 8 : 12, height);
+  const int gap = wide ? 6 : 9;
+  const int height = std::clamp(body.height - calc::kPad.rows * (44 + gap), 60, wide ? 96 : 226);
+  return calc::padGeom(calc::kPad, {body.x, body.y, body.width, body.height}, gap, height);
 }
-void build(toybox::Screen& screen, const calc::Engine& engine) {
+int expressionDividerY(const calc::PadGeom& pad) { return pad.display.y + pad.display.h * 44 / 100; }
+
+void build(toybox::Screen& screen, const calc::ExpressionEngine& engine) {
   pixelui::Header header;
   header.title = tr(STR_CALCULATOR_APP);
   header.back = true;
@@ -52,15 +56,25 @@ void build(toybox::Screen& screen, const calc::Engine& engine) {
   const auto display = rect(pad.display);
   lightui::surface(screen.target(), display, dashboard::paper);
   lightui::outline(screen.target(), display, dashboard::ink, pixelui::kBorder);
-  pixelui::text(screen.target(), fui::makeRect(display.x + 16, display.y + 8, display.width - 32, 26), engine.pending(),
-                3, fui::Color::Black, fui::TextAlign::Right, false, pixelui::LabelCase::Preserve);
-  result(screen, fui::makeRect(display.x + 16, display.y + 38, display.width - 32, display.height - 50), engine);
+  const int split = expressionDividerY(pad);
+  fui::TextStyle expression;
+  expression.font = display.height >= 130 ? pixelui::kTitle : pixelui::kBody;
+  expression.align = fui::TextAlign::Right;
+  fittext::draw(screen.target(), fui::makeRect(display.x + 16, display.y + 3, display.width - 32, split - display.y - 6),
+                engine.pending(), expression, 2);
+  screen.target().fill(fui::makeRect(display.x + 16, split, display.width - 32, 1),
+                       fui::Paint::dither(fui::Color::DarkGray));
+  result(screen, fui::makeRect(display.x + 16, split + 3, display.width - 32, display.bottom() - split - 8), engine);
   for (int n = 0; n < calc::kPad.cols * calc::kPad.rows; ++n) {
     const auto& key = calc::kPad.keys[n];
+    if (key.key == calc::Key::None) continue;
     const auto box = rect(calc::keyRect(calc::kPad, pad, n));
     const bool selected = key.key == calc::Key::Equals;
-    lightui::surface(screen.target(), box, selected ? dashboard::ink : dashboard::paper);
-    lightui::outline(screen.target(), box, dashboard::ink, pixelui::kBorder);
+    const bool utility = n < 2 * calc::kPad.cols || calc::isBinaryOp(key.key);
+    const auto background = selected ? dashboard::ink
+                                     : utility ? fui::Paint::dither(fui::Color::LightGray) : dashboard::paper;
+    screen.target().fill(box, background, 3);
+    screen.target().stroke(box, dashboard::ink, 1, 3);
     if (key.key == calc::Key::Backspace) {
       const int cx = box.x + box.width / 2, cy = box.y + box.height / 2;
       const auto ink = dashboard::ink;
@@ -94,7 +108,7 @@ void build(toybox::Screen& screen, const calc::Engine& engine) {
           break;
       }
     } else {
-      pixelui::text(screen.target(), box.inset({8, 4, 8, 4}), key.label ? key.label : "+/-", pixelui::kBody,
+      pixelui::text(screen.target(), box.inset({3, 4, 3, 4}), key.label ? key.label : calc::kPlusMinus, pixelui::kBody,
                     selected ? fui::Color::White : fui::Color::Black, fui::TextAlign::Center, false,
                     pixelui::LabelCase::Preserve);
     }

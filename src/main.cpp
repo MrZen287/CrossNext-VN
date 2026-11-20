@@ -21,11 +21,6 @@
 #include <VectorFontSupport.h>
 #include <WiFi.h>
 #include <XteinkDetect.h>
-#include <builtinFonts/notosans_8_regular.h>
-#include <builtinFonts/ubuntu_10_bold.h>
-#include <builtinFonts/ubuntu_10_regular.h>
-#include <builtinFonts/ubuntu_12_bold.h>
-#include <builtinFonts/ubuntu_12_regular.h>
 #include <driver/gpio.h>
 #include <esp_sntp.h>
 #include <soc/soc_caps.h>
@@ -54,6 +49,7 @@
 #include "apps_local/powerprobe/PowerProbe.h"
 #include "apps_local/ui/RemoteBindingActions.h"
 #include "apps_local/ui/RemoteShortcutChoices.h"
+#include "apps_local/ui/ToyboxFonts.h"
 #include "apps_local/words/DictionaryDefaults.h"
 
 // How long the device sleeps before waking itself, in microseconds. 0 means
@@ -127,18 +123,6 @@ constexpr unsigned long X4PRO_POWER_CLICK_MAX_HOLD_MS = 300;
 // A wake hold must never become an in-app power-button action.  Boot may continue
 // while the button is held; swallow the one release that ends that wake gesture.
 static bool wakePowerReleasePending = false;
-
-// Fonts
-EpdFont smallFont(&notosans_8_regular);
-EpdFontFamily smallFontFamily(&smallFont);
-
-EpdFont ui10RegularFont(&ubuntu_10_regular);
-EpdFont ui10BoldFont(&ubuntu_10_bold);
-EpdFontFamily ui10FontFamily(&ui10RegularFont, &ui10BoldFont);
-
-EpdFont ui12RegularFont(&ubuntu_12_regular);
-EpdFont ui12BoldFont(&ubuntu_12_bold);
-EpdFontFamily ui12FontFamily(&ui12RegularFont, &ui12BoldFont);
 
 // Preserve an unattended timer wake across an aborted sleep entry.
 RTC_NOINIT_ATTR uint32_t unattendedWakeMagic;
@@ -663,9 +647,7 @@ void enterDeepSleep(bool fromTimeout = false, bool unattended = false) {
   // the game or the book they left. Everything from here to the teardown is
   // the attended sleep's business.
   const bool isQuickResumeSleep =
-      !unattended && (SETTINGS.sleepScreen == CrossPointSettings::SLEEP_SCREEN_MODE::QUICK_RESUME ||
-                      (fromTimeout && SETTINGS.quickResumeSleepScreen ==
-                                          CrossPointSettings::QUICK_RESUME_SLEEP_SCREEN::QUICK_RESUME_AFTER_TIMEOUT));
+      !unattended && SETTINGS.retainSleepFrame(fromTimeout, activityManager.isReaderActivity());
   if (!unattended) {
     APP_STATE.lastSleepFromReader = activityManager.isReaderActivity();
     // Every sleep mode leaves a complete retained frame on the e-ink panel. Keep
@@ -681,7 +663,7 @@ void enterDeepSleep(bool fromTimeout = false, bool unattended = false) {
   // Commit to sleeping before goToSleep() runs the outgoing activity's onExit():
   // a WiFi activity would otherwise silentRestart() here and reboot instead.
   deepSleepInProgress = true;
-  activityManager.goToSleep(fromTimeout);
+  if (!unattended || !SETTINGS.lunarSleepCalendar) activityManager.goToSleep(fromTimeout);
 
   if (isQuickResumeSleep) {
     saveSleepFrameBuffer();
@@ -733,9 +715,7 @@ void setupDisplayAndFonts(bool seamless = false) {
   }
   fontCacheManager.setFontDecompressor(&fontDecompressor);
   renderer.setFontCacheManager(&fontCacheManager);
-  renderer.insertFont(UI_10_FONT_ID, ui10FontFamily);
-  renderer.insertFont(UI_12_FONT_ID, ui12FontFamily);
-  renderer.insertFont(SMALL_FONT_ID, smallFontFamily);
+  toybox::registerSystemFonts(renderer);
 
   // Discover and load SD card fonts
   sdFontSystem.begin(renderer);
@@ -882,8 +862,9 @@ void setup() {
   // Push the saved timezone's POSIX rule into the clock (migrating the legacy
   // UTC-offset setting on first boot after the update).
   timezones::applyToClock();
-  I18N.setLanguage(static_cast<Language>(SETTINGS.language));
-  if (SETTINGS.languagePack[0]) I18N.loadLanguagePack(SETTINGS.languagePack);
+  SETTINGS.language = static_cast<uint8_t>(Language::VI);
+  SETTINGS.languagePack[0] = '\0';
+  I18N.setLanguage(Language::VI);
   if (dictionarydefaults::apply(SETTINGS)) SETTINGS.saveToFile();
   UITheme::getInstance().reload();
   ButtonNavigator::setMappedInputManager(mappedInputManager);

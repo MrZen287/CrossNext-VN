@@ -18,7 +18,9 @@ enum : freeink::ui::ActionId {
   CancelReset,
   SetClock,
   SelectDay,
-  HourFormat
+  HourFormat,
+  GoToSolar,
+  GoToLunar
 };
 struct Model {
   Kind kind = Kind::Calendar;
@@ -27,6 +29,7 @@ struct Model {
   int64_t count = 0;
   bool twelveHour = false;
   bool rotateRight = false;
+  bool invalidLookup = false;
   bool sunday = false, analog = false, validTime = false, confirm = false, failed = false;
 };
 struct Work {

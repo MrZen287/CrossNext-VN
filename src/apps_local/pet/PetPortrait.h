@@ -4,6 +4,7 @@
 
 #include "PetHabitatData.h"
 #include "PetScreens.h"
+#include "../ui/ChickenArt.h"
 #include "PetSleepAnimation.h"
 
 namespace petui {
@@ -11,6 +12,11 @@ namespace petui {
 inline bool fullCreature(const Model& m, fui::DrawTarget& target, fui::Rect area, bool inverse = false,
                          bool opaqueFallback = false) {
   const auto& p = *m.profile;
+  if (p.species == pet::Species::Chicken) {
+    const auto age = unsigned(pet::stage(p.readingSeconds));
+    chickenart::draw(target, area, age, p.resting ? 3 : std::min(unsigned(petsleep::bodyPose(p)), 3u), inverse);
+    return true;
+  }
   const unsigned step =
       pet::stage(p.readingSeconds) == pet::Stage::Egg && petsleep::breathing(p, m.view) ? m.sleepStep : 0;
   const auto mask = petsleep::fullBodyIndex(p, step);

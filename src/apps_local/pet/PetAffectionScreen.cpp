@@ -84,12 +84,12 @@ void picture(toybox::Screen& s, const Model& m, fui::Rect r) {
   }
   const bool sleeping = m.affection.reaction == pet::Need::Sleeping;
   const unsigned mask = sleeping ? petsleep::artIndex(p, 0) : petsleep::bodyIndex(p.species, age, pose, 0);
-  const unsigned id = 3 + unsigned(p.species) * 16 + (unsigned(age) - 1) * 4 + std::min(unsigned(pose), 3u);
+  const unsigned id = pet::creatureGraphic(p.species, age, sleeping ? 3 : std::min(unsigned(pose), 3u));
   const bool compact = r.height < 220;
   const int band = compact ? 60 : 74;
   const auto image = rect(r.x + 30, r.y + band, r.width - 60, r.height - band - 2);
-  bool drawn = m.sleepArt.draw && m.sleepArt.draw(m.sleepArt.context, s.target(), image, mask + 1, false);
-  if (!drawn && (sleeping || pose == petsleep::Pose::Sick)) {
+  bool drawn = p.species != pet::Species::Chicken && m.sleepArt.draw && m.sleepArt.draw(m.sleepArt.context, s.target(), image, mask + 1, false);
+  if (!drawn && p.species != pet::Species::Chicken && (sleeping || pose == petsleep::Pose::Sick)) {
     const unsigned scene = 3 + unsigned(p.species) * 12 + (unsigned(age) - 1) * 3 + (sleeping ? 1 : 2);
     drawn = (m.habitat.draw && m.habitat.draw(m.habitat.context, s.target(), image, 483 + scene * 2, false)) ||
             (m.scenes.draw && m.scenes.draw(m.scenes.context, s.target(), image, scene, false));

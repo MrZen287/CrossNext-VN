@@ -1,4 +1,34 @@
-# CrossNext 2.0.4
+# CrossNext-VN
+
+CrossNext-VN là bản firmware tiếng Việt cho **Xteink X4 Pro**, phát triển
+từ [CrossNext 2.0.4](https://github.com/manuelx900/CrossNext/tree/2.0.4).
+
+[Tải firmware và tài nguyên microSD](https://github.com/MrZen287/CrossNext-VN/releases) ·
+[Nguồn dữ liệu lịch âm](docs/vietnamese-lunar-data.md)
+
+- Giao diện tiếng Việt tích hợp và phông Roboto.
+- Home có kệ sách vuốt ngang, ưu tiên bìa sẵn có và nạp thêm bìa khi rảnh.
+- Lịch âm và châm ngôn ở màn hình khóa. Khi máy tự ngủ lúc đang đọc, có thể giữ trang sách.
+- Chọn đèn Ngày hoặc Đêm với độ sáng và độ ấm riêng.
+- Sao lưu vị trí đọc, dấu trang, trích đoạn, thống kê, cài đặt và dữ liệu nuôi gà qua microSD.
+- Thú cưng có Trứng gà lớn theo thời gian đọc. Trò chơi Nuôi gà lưu tiến trình riêng.
+
+## Cài đặt bản tiếng Việt
+
+1. Sao lưu microSD, gồm thư mục `/.crosspoint/`.
+2. Giải nén bộ cài của bản phát hành. Chép tệp `.bin` vào gốc thẻ, rồi gộp
+   hai thư mục `apps` và `languages` cùng các tệp giấy phép đi kèm.
+3. Vào **Cài đặt → Hệ thống → Cập nhật chương trình cơ sở** và chọn tệp
+   `.bin`. Cách này cần một firmware X4 Pro có trình cập nhật qua microSD tương thích.
+
+Mã nguồn kế thừa giấy phép MIT. Phông chữ, dữ liệu và tài nguyên đi kèm
+có giấy phép riêng, ghi trong [thông báo bên thứ ba](THIRD-PARTY-NOTICES.md).
+
+## Tài liệu của CrossNext gốc
+
+
+
+### CrossNext 2.0.4
 
 [![Support CrossNext on Ko-fi](site/assets/support-ko-fi.svg)](https://ko-fi.com/manuelx900)
 

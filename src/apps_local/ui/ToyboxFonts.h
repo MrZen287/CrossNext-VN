@@ -10,6 +10,7 @@
 namespace toybox {
 menufont::Style interfaceFontStyle();
 void syncInterfaceFonts(GfxRenderer& renderer);
+void registerSystemFonts(GfxRenderer& renderer);
 
 // Arbitrary ids that cannot collide with fontIds.h, which are FNV-ish hashes of
 // the generated font names.

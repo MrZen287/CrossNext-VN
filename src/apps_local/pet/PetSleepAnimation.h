@@ -86,7 +86,7 @@ inline unsigned fullBodyIndex(const pet::Profile& p, unsigned step) {
 }
 inline unsigned headWidth(pet::Species species) {
   static constexpr uint8_t widths[] = {56, 60, 58};
-  return widths[unsigned(species)];
+  return widths[species == pet::Species::Chicken ? 0 : unsigned(species)];
 }
 inline unsigned headIndex(const pet::Profile& p) {
   const unsigned age = unsigned(pet::stage(p.readingSeconds));

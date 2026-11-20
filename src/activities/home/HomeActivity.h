@@ -1,6 +1,7 @@
 #pragma once
 #include <Bitmap.h>
 
+#include <array>
 #include <atomic>
 #include <functional>
 #include <vector>
@@ -8,6 +9,7 @@
 #include "../../apps_local/home/HomeDashboardUi.h"
 #include "../../apps_local/home/HomeMenuInput.h"
 #include "../../apps_local/home/HomeMenuIntegration.h"
+#include "../../apps_local/home/ReadingDesk.h"
 #include "../../apps_local/library/PreparedCoverCache.h"
 #include "./FileBrowserActivity.h"
 #include "CrossPointSettings.h"
@@ -47,6 +49,31 @@ class HomeActivity final : public Activity {
   ButtonNavigator buttonNavigator{140, 400};
   homeui::MenuInput menuInput;
   HomeDashboardUi dashboard;
+  readingdesk::Layout deskLayout{};
+  readingdesk::Action deskFocus = readingdesk::None;
+  std::vector<RecentBook> deskShelf;
+  std::vector<int> deskPageStarts;
+  struct DeskPage {
+    std::vector<RecentBook> books;
+    int start = 0, next = -1;
+    bool valid = false;
+  };
+  DeskPage deskPrefetch;
+  int deskPrefetchCover = 0;
+  bool deskLibraryPending = true;
+  int deskPage = 0, deskNextPageStart = -1;
+  uint32_t deskShelfRevision = 0;
+  int deskFeatured = -1, deskPrepared = -2, deskCoverHeight = 0;
+  std::array<int, readingdesk::shelfSize> deskShelfHeights{};
+  const char* deskQuote = "";
+  uint32_t deskMinute = 0;
+  static bool readingDeskEnabled() { return SETTINGS.homeLayout == CrossPointSettings::HOME_FRAMED; }
+  void loopReadingDesk();
+  DeskPage collectDeskPage(int start, bool useLibrary);
+  void loadDeskShelfPage(int page, bool useLibrary = true);
+  RecentBook* deskBook();
+  int nextDeskShelfCover() const;
+  void activateReadingDesk(readingdesk::Action action);
   int selectorIndex = 0;
   int recentBookIndex = 0;
   int recentBookCount = 0;
@@ -137,6 +164,7 @@ class HomeActivity final : public Activity {
   void onExit() override;
   void loop() override;
   std::optional<uint32_t> nextLoopWakeDelayMs(uint32_t) const override {
+    if (readingDeskEnabled()) return entryPhase == EntryPhase::Ready ? 1000 : 20;
     return entryPhase != EntryPhase::Ready || recentsLoading || libraryWarmIndex.load() < 9 || nativeShelfPending()
                ? 20
                : 1000;

@@ -67,6 +67,11 @@ inline void vignette(toybox::Screen& s, const Model& m, fui::Rect r, unsigned id
   const auto drawPet = [&] {
     const auto age = memoryStage(*m.profile, id);
     const unsigned species = unsigned(m.profile->species), pose = captured ? unsigned(pet::momentPose(snapshot)) : 0;
+    if (m.profile->species == pet::Species::Chicken) {
+      const auto picture = habitatlayout::scale(area, habitatlayout::memoryPet(age, 0));
+      chickenart::draw(target, picture, unsigned(age), pose >= 4 ? 3 : pose);
+      return;
+    }
     const unsigned scene = age == pet::Stage::Egg ? species
                                                   : 3 + species * 12 + (unsigned(age) - 1) * 3 +
                                                         (pose == 4   ? 2
@@ -271,7 +276,7 @@ inline void stages(toybox::Screen& s, const Model& m, fui::Rect r) {
                     static_cast<unsigned long long>(seconds / 60 + unsigned(seconds % 60 != 0)));
       text(s, rect(box.x, lock.bottom() + 5, box.width, 22), remaining, 3, false, fui::TextAlign::Center);
     } else
-      art(s, m, image, i ? 3 + unsigned(m.profile->species) * 16 + (i - 1) * 4 : unsigned(m.profile->species),
+      art(s, m, image, pet::creatureGraphic(m.profile->species, pet::Stage(i)),
           speciesIcon(m.profile->species), false);
     const auto label = rect(box.x - 5, box.bottom() - labelH, box.width + 10, labelH);
     caption(s, label, stageName(pet::Stage(i)), 2, false, labelFont, i == current && labelFont == 4);

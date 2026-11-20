@@ -7,6 +7,7 @@
 #include "PetCompanionData.h"
 #include "PetDecorationInk.h"
 #include "PetFarewell.h"
+#include "../ui/ChickenArt.h"
 #include "PetHabitatData.h"
 #include "PetMoodMarks.h"
 #include "PetPortrait.h"
@@ -302,7 +303,7 @@ inline void habitatFigures(toybox::Screen& screen, const Model& m, fui::Rect are
   auto celebrationActor = picture;
   const auto age =
       m.view == pet::View::Evolution ? petreact::growthStage(p, m.reactionPhase) : pet::stage(p.readingSeconds);
-  if (m.view == pet::View::Evolution) {
+  if (m.view == pet::View::Evolution && p.species != pet::Species::Chicken) {
     const unsigned scene =
         age == pet::Stage::Egg ? unsigned(p.species) : 3 + unsigned(p.species) * 12 + (unsigned(age) - 1) * 3;
     celebrationActor = scale(area, memoryPet(age, scene));
@@ -331,6 +332,15 @@ inline void habitatFigures(toybox::Screen& screen, const Model& m, fui::Rect are
     return;
   }
   const bool eating = petfeed::eating(m.feedingPhase) && pet::canCare(p);
+  if (p.species == pet::Species::Chicken) {
+    const unsigned mood = p.resting ? 3 : eating || m.reactionKind == petreact::Kind::Petting
+                                             ? 1 : std::min(unsigned(petsleep::bodyPose(p)), 3u);
+    chickenart::draw(target, picture, unsigned(age), mood, inverse);
+    if (groundEnvironment) drawItem(3);
+    drawItem(2);
+    roomeffects::paint(screen, m, picture);
+    return;
+  }
   const auto pair = [&](fui::Rect box, unsigned mask) {
     return m.feedingArt != petfeed::Art::Legacy && m.sleepArt.draw &&
            m.sleepArt.draw(m.sleepArt.context, target, box, mask, true) &&

@@ -99,7 +99,7 @@ inline void objective(toybox::Screen& s, const Model& m, Work& w, fui::Rect r) {
   cardCopy(s, rect(copyX, content.y, copyW, content.height - 30), egg ? tr(STR_PET_HATCH_GOAL) : objectName(p.project),
            inverse, 3, fui::TextAlign::Left);
   if (egg)
-    art(s, m, image, unsigned(p.species), speciesIcon(p.species), false, inverse);
+    art(s, m, image, pet::eggArt(p.species), speciesIcon(p.species), false, inverse);
   else
     object(s, m, image, p.project, inverse);
   const uint64_t value = egg ? p.readingSeconds : progress.value;

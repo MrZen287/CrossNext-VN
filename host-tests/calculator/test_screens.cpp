@@ -78,7 +78,7 @@ int main(int argc, char** argv) {
           toybox::Interactions interactions;
           toybox::Frame frame(target, target.deviceContext(), input, interactions);
           toybox::Screen screen(frame);
-          calc::Engine engine;
+          calc::ExpressionEngine engine;
           engine.press(calc::Key::D1);
           engine.press(calc::Key::Dot);
           engine.press(calc::Key::D2);
@@ -89,10 +89,11 @@ int main(int argc, char** argv) {
           CHECK(std::strcmp(engine.display(), "4.92") == 0);
           calculatorui::build(screen, engine);
           CHECK(!interactions.overflowed());
-          CHECK(interactions.count() == 20);
+          CHECK(interactions.count() == 23);
           const auto pad = calculatorui::geometry(target.deviceContext());
           CHECK(pad.cellH >= 44 && pad.cellW >= 44);
-          for (int i = 0; i < 20; ++i) {
+          for (int i = 0; i < calc::kPad.cols * calc::kPad.rows; ++i) {
+            if (calc::kPad.keys[i].key == calc::Key::None) continue;
             const auto key = calc::keyRect(calc::kPad, pad, i);
             CHECK(key.x >= 0 && key.y > pad.display.bottom());
             CHECK(key.right() <= width && key.bottom() <= height);
@@ -103,11 +104,11 @@ int main(int argc, char** argv) {
           int previousHeight = 0;
           for (int digits : {1, 2, 3, 4, 12}) {
             std::fill(bits.begin(), bits.end(), 255);
-            calc::Engine number;
+            calc::ExpressionEngine number;
             for (int n = 0; n < digits; ++n) number.press(calc::Key::D8);
             calculatorui::build(screen, number);
             const int left = pad.display.x + 16, right = pad.display.right() - 16;
-            const int top = pad.display.y + 38, bottom = pad.display.bottom() - 12;
+            const int top = calculatorui::expressionDividerY(pad) + 3, bottom = pad.display.bottom() - 5;
             int first = bottom, last = top;
             for (int y = top; y < bottom; ++y)
               for (int x = left; x < right; ++x)
@@ -150,5 +151,5 @@ int main(int argc, char** argv) {
           outside.touchY = 100;
           CHECK(interactions.route(outside).action == fui::NO_ACTION);
         }
-  std::printf("Calculator UI/modal: %u checks, 0 failed; engine=%zu bytes\n", checks, sizeof(calc::Engine));
+  std::printf("Calculator UI/modal: %u checks, 0 failed; engine=%zu bytes\n", checks, sizeof(calc::ExpressionEngine));
 }

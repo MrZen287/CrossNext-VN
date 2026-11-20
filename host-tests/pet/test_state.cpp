@@ -214,6 +214,20 @@ static void testMilestones() {
 }
 
 int main() {
+  for (unsigned species = 0; species < pet::SPECIES_COUNT; ++species) {
+    pet::Profile original;
+    original.created = true;
+    original.species = pet::Species(species);
+    original.readingSeconds = 72000;
+    uint8_t encoded[pet::STATE_BYTES]{};
+    pet::encode(original, encoded);
+    pet::Profile loaded;
+    assert(testDecode(encoded, loaded));
+    assert(loaded.species == original.species && loaded.readingSeconds == original.readingSeconds);
+    assert(pet::homeScene(loaded) < 39);
+    const auto picture = pet::creatureGraphic(loaded.species, pet::Stage::Adult, 3);
+    assert(species == unsigned(pet::Species::Chicken) ? picture == pet::CHICKEN_EGG_ART + 16 : picture < 51);
+  }
   {
     pet::Profile source, decoded;
     uint8_t bytes[pet::STATE_BYTES];

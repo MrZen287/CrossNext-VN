@@ -11,6 +11,8 @@
 #include "../ui/PixelMenu.h"
 #include "../ui/ToolsDigits.h"
 #include "../ui/ToyboxIcons.h"
+#include "VietnameseLunar.h"
+#include "CalendarLabels.h"
 
 namespace toolsui {
 namespace fui = freeink::ui;
@@ -89,9 +91,21 @@ void calendar(toybox::Screen& s, const Model& m, Work& w, fui::Rect body) {
         fui::makeRect(x, y, grid.x + (col + 1) * grid.width / 7 - x, grid.y + (row + 1) * grid.height / rows - y);
     const bool selected = first + d - 1 == m.selected;
     if (selected) s.target().fill(cell, ink);
+    const auto color = selected ? fui::Color::White : fui::Color::Black;
+    const auto lunar = vietnameselunar::fromCivilDay(first + d - 1, m.year);
+    const int solarHeight = lunar.day ? cell.height / 2 : cell.height;
     std::snprintf(w.label, sizeof(w.label), "%d", d);
-    pixelui::text(s.target(), cell, w.label, 1, selected ? fui::Color::White : fui::Color::Black,
+    pixelui::text(s.target(), fui::makeRect(cell.x, cell.y, cell.width, solarHeight), w.label, 1, color,
                   fui::TextAlign::Center);
+    if (lunar.day) {
+      if (lunar.day == 1) {
+        std::snprintf(w.label, sizeof(w.label), "1/%d%s", lunar.month, lunar.leap ? "*" : "");
+      } else {
+        std::snprintf(w.label, sizeof(w.label), "%d", lunar.day);
+      }
+      pixelui::text(s.target(), fui::makeRect(cell.x, cell.y + solarHeight, cell.width, cell.height - solarHeight),
+                    w.label, 0, color, fui::TextAlign::Center);
+    }
   }
   for (int col = 1; col < 7; ++col)
     s.target().line({int16_t(grid.x + col * grid.width / 7), grid.y},
@@ -108,20 +122,39 @@ void calendar(toybox::Screen& s, const Model& m, Work& w, fui::Rect body) {
   std::snprintf(date, sizeof(date), tr(STR_TOOLS_SELECTED_DATE), I18N.get(weekdays[readingstats::weekday(m.selected)]),
                 selected.day, I18N.get(months[selected.month - 1]));
   const int y = grid.bottom() + gap, half = (body.width - gap) / 2;
+  const auto lunar = vietnameselunar::fromCivilDay(m.selected, selected.year);
+  char lunarDate[160]{};
+  const char* holiday = calendarlabels::holiday(lunar);
+  if (lunar.day) {
+    char converted[96];
+    std::snprintf(converted, sizeof(converted),
+                  lunar.leap ? tr(STR_TOOLS_LUNAR_LEAP_DATE) : tr(STR_TOOLS_LUNAR_DATE), lunar.day, lunar.month,
+                  lunar.year);
+    std::snprintf(lunarDate, sizeof(lunarDate), "%s%s%s", converted, holiday ? " / " : "", holiday ? holiday : "");
+  }
+  const int side = wide ? body.width * 22 / 100 : 0;
+  const int dateX = body.x + (wide ? side + gap : 0);
+  const int dateWidth = body.width - (wide ? 2 * (side + gap) : 0);
+  const int dateHeight = lunar.day || m.invalidLookup ? rotateH / 2 : rotateH;
+  text(s, fui::makeRect(dateX, y, dateWidth, dateHeight), date, 0);
+  if (lunar.day || m.invalidLookup) {
+    text(s, fui::makeRect(dateX, y + dateHeight, dateWidth, rotateH - dateHeight),
+         m.invalidLookup ? tr(STR_CALENDAR_INVALID_DATE) : lunarDate, 0);
+  }
   if (wide) {
-    const int side = body.width * 22 / 100;
     button(s, w, fui::makeRect(body.x, y, side, rotateH), tr(STR_TODAY), Today);
-    text(s, fui::makeRect(body.x + side + gap, y, body.width - 2 * side - 2 * gap, rotateH), date, 0);
     button(s, w, fui::makeRect(body.right() - side, y, side, rotateH),
            m.sunday ? tr(STR_WEEK_SUNDAY) : tr(STR_WEEK_MONDAY), WeekStart);
   } else {
-    text(s, fui::makeRect(body.x, y, body.width, rotateH), date, 0);
     button(s, w, fui::makeRect(body.x, y + rotateH + gap, half, rotateH), tr(STR_TODAY), Today);
     button(s, w, fui::makeRect(body.x + half + gap, y + rotateH + gap, half, rotateH),
            m.sunday ? tr(STR_WEEK_SUNDAY) : tr(STR_WEEK_MONDAY), WeekStart);
   }
-  control(s, w, fui::makeRect(body.x, body.bottom() - rotateH, body.width, rotateH), tr(STR_QUICK_ROTATE), Rotate, 0,
-          false, m.rotateRight ? &extra_rotate_cw_32 : &extra_rotate_ccw_32);
+  const int third = (body.width - 2 * gap) / 3;
+  const int actionsY = body.bottom() - rotateH;
+  button(s, w, fui::makeRect(body.x, actionsY, third, rotateH), tr(STR_CALENDAR_GO_SOLAR), GoToSolar);
+  button(s, w, fui::makeRect(body.x + third + gap, actionsY, third, rotateH), tr(STR_CALENDAR_GO_LUNAR), GoToLunar);
+  button(s, w, fui::makeRect(body.right() - third, actionsY, third, rotateH), tr(STR_QUICK_ROTATE), Rotate);
 }
 void face(toybox::Screen& s, fui::Rect box, const Model& m) {
   const int size = std::min(int(box.width), int(box.height)), cx = box.x + box.width / 2, cy = box.y + box.height / 2,

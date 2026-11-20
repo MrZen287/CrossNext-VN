@@ -7,8 +7,18 @@
 
 namespace pet {
 inline constexpr unsigned FOOD_CHOICE_COUNT = 9;
-enum class Species : uint8_t { Silva, Nox, Ember };
+enum class Species : uint8_t { Silva, Nox, Ember, Chicken, Count };
+constexpr unsigned SPECIES_COUNT = unsigned(Species::Count);
+
+// The original resource pack indexes stay unchanged.
+constexpr unsigned CHICKEN_EGG_ART = 0x1000;
+constexpr unsigned eggArt(Species species) { return species == Species::Chicken ? CHICKEN_EGG_ART : unsigned(species); }
 enum class Stage : uint8_t { Egg, Newborn, Baby, Juvenile, Adult };
+constexpr unsigned creatureGraphic(Species species, Stage age, unsigned mood = 0) {
+  if (age == Stage::Egg) return eggArt(species);
+  const unsigned offset = (unsigned(age) - 1) * 4 + mood;
+  return species == Species::Chicken ? CHICKEN_EGG_ART + 1 + offset : 3 + unsigned(species) * 16 + offset;
+}
 enum class Mode : uint8_t { Relaxed, Normal, Hard, Extreme };
 enum class Illness : uint8_t { Healthy, Cold, Malaise };
 enum class LifeStatus : uint8_t { Active, Lost, Retired };

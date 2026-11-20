@@ -10,7 +10,7 @@ inline void farewellPicture(toybox::Screen& screen, const Model& m, fui::Rect ar
   if (area.width < 8 || area.height < 8) return;
   if (petfarewell::floating(*m.profile, m.view) && m.farewellArt.draw) area.y += petfarewell::offset(m.sleepStep);
   const unsigned mask = unsigned(m.profile->species) * 2;
-  if (m.farewellArt.draw && m.farewellArt.draw(m.farewellArt.context, screen.target(), area, mask, !inverse) &&
+  if (m.profile->species != pet::Species::Chicken && m.farewellArt.draw && m.farewellArt.draw(m.farewellArt.context, screen.target(), area, mask, !inverse) &&
       m.farewellArt.draw(m.farewellArt.context, screen.target(), area, mask + 1, inverse))
     return;
   // A missing optional pack must still distinguish death from sleep.

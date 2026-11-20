@@ -3,7 +3,7 @@
 
 #include "../../activities/Activity.h"
 #include "../ui/ToyboxScreen.h"
-#include "CalcEngine.h"
+#include "CalcExpression.h"
 
 class CalculatorActivity final : public Activity {
  public:
@@ -14,7 +14,7 @@ class CalculatorActivity final : public Activity {
   void render(RenderLock&&) override;
 
  private:
-  calc::Engine engine;
+  calc::ExpressionEngine engine;
   toybox::Interactions interactions;
   bool ready = false;
 };

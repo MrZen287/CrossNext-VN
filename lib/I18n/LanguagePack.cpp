@@ -281,7 +281,8 @@ bool Pack::load(const char* filename) {
     previousHash = hash;
     const size_t id = stringId(hash);
     if (id < STRING_COUNT) {
-      const char* english = i18n_strings::STRINGS_EN_DATA + i18n_strings::OFFSETS_EN[id];
+      const auto base = getLanguageStrings(Language::EN);
+      const char* english = base.data + base.offsets[id];
       if (!formatsMatch(english, reinterpret_cast<const char*>(text + offset))) {
         LOG_ERR("I18N", "Unsafe translation format: %u", static_cast<unsigned>(id));
         return false;

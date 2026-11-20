@@ -8,8 +8,9 @@ class GfxRenderer;
 struct RecentBook;
 class BookCoverPainter {
  public:
+  enum class Fit { Crop, Contain };
   BookCoverPainter(GfxRenderer& renderer, freeink::ui::DrawTarget& target) : renderer(renderer), target(target) {}
-  void paint(const RecentBook& book, freeink::ui::Rect slot, int taper = 0);
+  void paint(const RecentBook& book, freeink::ui::Rect slot, int taper = 0, Fit fit = Fit::Crop);
 
  private:
   GfxRenderer& renderer;

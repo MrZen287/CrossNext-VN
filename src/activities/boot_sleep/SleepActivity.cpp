@@ -1,4 +1,5 @@
 #include "SleepActivity.h"
+#include "LunarSleepCalendar.h"
 
 #include <BitmapHelpers.h>
 #include <Epub.h>
@@ -527,16 +528,18 @@ void releaseSdFontCachesForDecode(const GfxRenderer& renderer) {
 void SleepActivity::onEnter() {
   Activity::onEnter();
 
-  const bool renderQuickResume =
-      SETTINGS.sleepScreen == CrossPointSettings::SLEEP_SCREEN_MODE::QUICK_RESUME ||
-      (fromTimeout &&
-       SETTINGS.quickResumeSleepScreen == CrossPointSettings::QUICK_RESUME_SLEEP_SCREEN::QUICK_RESUME_AFTER_TIMEOUT);
-
-  if (renderQuickResume) {
-    // Quick Resume keeps the current frame as-is, so the driver's inversion
-    // state stays too: a night-mode page sleeps in night polarity, and the
-    // moon icon inverts with it at transfer like any other draw.
+  if (SETTINGS.retainSleepFrame(fromTimeout, APP_STATE.lastSleepFromReader)) {
     return renderLastScreenSleepScreen();
+  }
+
+  if (SETTINGS.lunarSleepCalendar) {
+    display.setInverted(false);
+    renderer.setOrientation(GfxRenderer::Orientation::Portrait);
+    if (lunarSleepCalendar::draw(renderer)) {
+      renderer.displayBuffer(HalDisplay::FULL_REFRESH);
+      return;
+    }
+    return renderDefaultSleepScreen();
   }
 
   const bool frameWasInverted = display.isInverted();

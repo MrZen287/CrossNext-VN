@@ -3196,8 +3196,7 @@ void EpubReaderActivity::renderOverlay() {
     text.listLabel = [](const void* context, int n, char* out, size_t size) {
       const auto* self = static_cast<const EpubReaderActivity*>(context);
       if (self->textSheetTab == 2) {
-        const auto item = self->epub->getTocItem(n);
-        std::snprintf(out, size, "%s", item.title.c_str());
+        self->epub->copyTocTitle(n, out, size);
       } else if (n < int(self->moreItems.size())) {
         std::snprintf(out, size, "%s", I18N.get(self->moreItems[n].labelId));
       }

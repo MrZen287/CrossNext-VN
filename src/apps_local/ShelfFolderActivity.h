@@ -1,17 +1,13 @@
 #pragma once
 
-// One folder of the shelf, on screen. GAMES and APPS are the same activity with
-// a different index: a folder is a title and a list, and nothing about drawing
-// one depends on what kind of things are in it.
-//
-// Deliberately thin. The list, its scrolling and its hit-testing are a FreeInkUI
-// list component, so this class is a registry read plus an action switch.
+// Both shelf folders browse a grid and use the list when choosing which items to show.
 
 #include <Icon.h>
 
 #include <memory>
 
 #include "../activities/Activity.h"
+#include "ShelfScreen.h"
 #include "ui/SectionNavigation.h"
 #include "ui/ToyboxScreen.h"
 
@@ -61,12 +57,7 @@ class ShelfFolderActivity final : public Activity {
 
   // One screen's worth of rows, not one folder's worth of items.
   //
-  // This used to be sized by the registry, so the folder's size was bounded by
-  // an activity's array and a seventeenth game could not exist. Now that the
-  // screen is handed a page at a time, only the page is ever copied, and a
-  // folder can hold as many games as Mario writes down. The oriented pixel layout determines capacity; the slack is
-  // there so a token change cannot silently overflow it, and static_assert catches it if one does.
-  static constexpr int kMaxRowsPerPage = 16;
+  static constexpr int kMaxRowsPerPage = shelfui::kGridSlots;
 
   const int folder;
   freeink::ui::ListItem items[kMaxRowsPerPage] = {};
@@ -78,7 +69,7 @@ class ShelfFolderActivity final : public Activity {
   // shows, which is not the registry once something is hidden.
   int itemCount = 0;
   // The current row determines the visible page and its inverted row.
-  // Side keys still page; touch opens the row that was tapped.
+  // Side keys move the focus; touch opens the item that was tapped.
   int selected = 0;
   bool buttonCursorVisible = false;
   sectionnav::Input navigation;

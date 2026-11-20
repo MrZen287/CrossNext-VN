@@ -35,7 +35,7 @@ constexpr bool readerHomeAction(HomeButtonAction action) {
 class HomeButtonInput {
  public:
   static constexpr uint32_t DOUBLE_TAP_MS = 350;
-  static constexpr uint16_t TAP_WINDOWS_MS[] = {350, 450, 550, 650, 750};
+  static constexpr uint16_t TAP_WINDOWS_MS[] = {350, 450, 550, 650, 750, 0};
   static constexpr unsigned TAP_WINDOW_COUNT = sizeof(TAP_WINDOWS_MS) / sizeof(TAP_WINDOWS_MS[0]);
   static constexpr uint32_t windowFor(unsigned index) { return TAP_WINDOWS_MS[index < TAP_WINDOW_COUNT ? index : 0]; }
   void setWindow(unsigned index) { doubleTapMs = windowFor(index); }
@@ -66,7 +66,7 @@ class HomeButtonInput {
     }
     if (pending && pressed) secondContact = true;
     if (!tapped) return HomeButtonAction::Ignore;
-    if (doubleTap == HomeButtonAction::Ignore) {
+    if (doubleTapMs == 0 || doubleTap == HomeButtonAction::Ignore) {
       reset();
       return tap;
     }

@@ -36,7 +36,7 @@ void lifeButton(toybox::Screen& s, Work& w, fui::Rect r, const char* label, fui:
 void lifePicture(toybox::Screen& s, const Model& m, fui::Rect r, const pet::LifeRecord& life, bool inverse = false) {
   const auto stage = pet::stage(life.readingSeconds);
   const auto id =
-      stage == pet::Stage::Egg ? unsigned(life.species) : 3 + unsigned(life.species) * 16 + (unsigned(stage) - 1) * 4;
+      pet::creatureGraphic(life.species, stage);
   art(s, m, r, id, speciesIcon(life.species), false, inverse);
 }
 void lifeTile(toybox::Screen& s, const Model& m, Work& w, fui::Rect box, int index, bool horizontal) {

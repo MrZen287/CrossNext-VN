@@ -1,5 +1,7 @@
 #include "SettingsActivity.h"
 
+#include "ReadingBackupActivity.h"
+
 #include <BoardConfig.h>
 #include <ChromeRegion.h>
 #include <GfxRenderer.h>
@@ -25,10 +27,8 @@
 #include "HomeButtonSettingsActivity.h"
 #include "KOReaderSettingsActivity.h"
 #include "KeyboardLayoutsActivity.h"
-#include "LanguageSelectActivity.h"
 #include "MappedInputManager.h"
 #include "OpdsServerListActivity.h"
-#include "OtaUpdateActivity.h"
 #include "SdCardFontSystem.h"
 #include "SdFirmwareUpdateActivity.h"
 #include "SettingsList.h"
@@ -280,14 +280,11 @@ void SettingsActivity::rebuildSettingsLists() {
   systemSettings.push_back(SettingInfo::Action(StrId::STR_OPDS_SERVERS, SettingAction::OPDSBrowser));
   systemSettings.push_back(SettingInfo::Action(StrId::STR_CLEAR_READING_CACHE, SettingAction::ClearCache));
   systemSettings.push_back(SettingInfo::Action(StrId::STR_PREPARE_BOOKS, SettingAction::PrepareBooks));
-  if (BoardConfig::isX4Pro())
-    systemSettings.push_back(SettingInfo::Action(StrId::STR_CHECK_UPDATES, SettingAction::CheckForUpdates));
+  systemSettings.push_back(SettingInfo::Action(StrId::STR_READING_BACKUP, SettingAction::ReadingBackup));
   systemSettings.push_back(SettingInfo::Action(StrId::STR_SD_FIRMWARE_UPDATE, SettingAction::SdFirmwareUpdate));
   systemSettings.push_back(SettingInfo::Action(StrId::STR_PLUGINS, SettingAction::Plugins));
   systemSettings.push_back(SettingInfo::Action(StrId::STR_CROSSINK_IMPORT, SettingAction::ImportCrossInk));
-  systemSettings.push_back(SettingInfo::Action(StrId::STR_KEYBOARD_LAYOUTS, SettingAction::KeyboardLayouts));
   systemSettings.push_back(SettingInfo::Action(StrId::STR_ABOUT, SettingAction::About));
-  systemSettings.push_back(SettingInfo::Action(StrId::STR_LANGUAGE, SettingAction::Language));
   // The fork's own System rows go last, under every upstream row, so a reader
   // looking for a CrossPoint setting never scrolls past one of ours to reach
   // it. host-tests/settingsorder/ holds the line. See LOCAL_SCOPE.md.
@@ -431,7 +428,6 @@ void SettingsActivity::rebuildRowItems() {
                   : s.valuePtr == &CrossPointSettings::imageRendering      ? settingsart::Picture
                   : s.nameId == StrId::STR_WORD_TRANSLATION_DICT           ? settingsart::Translate
                   : s.action == SettingAction::CustomiseStatusBar          ? settingsart::Status
-                  : s.action == SettingAction::CheckForUpdates             ? settingsart::Wifi
                   : s.action == SettingAction::SdFirmwareUpdate            ? settingsart::Sd
                   : s.action == SettingAction::Plugins                     ? settingsart::Puzzle
                   : s.action == SettingAction::About                       ? settingsart::Info
@@ -810,15 +806,6 @@ void SettingsActivity::toggleCurrentSetting() {
           LOG_ERR("SETTINGS", "OOM: book preparation");
         break;
       }
-      case SettingAction::CheckForUpdates: {
-        auto updater = makeUniqueNoThrow<OtaUpdateActivity>(renderer, mappedInput);
-        if (!updater) {
-          LOG_ERR("SET", "OOM: OTA update screen");
-          break;
-        }
-        startActivityForResult(std::move(updater), resultHandler);
-        break;
-      }
       case SettingAction::SdFirmwareUpdate:
         startActivityForResult(std::make_unique<SdFirmwareUpdateActivity>(renderer, mappedInput), resultHandler);
         break;
@@ -842,15 +829,9 @@ void SettingsActivity::toggleCurrentSetting() {
                                  rebuildSettingsLists();
                                });
         break;
-      case SettingAction::Language:
-        // Row labels are translated once in rebuildRowItems() and don't
-        // re-run on Pop (see ActivityManager::loop()), so a language switch
-        // needs an explicit rebuild here rather than the generic resultHandler.
-        if (auto selector = makeUniqueNoThrow<LanguageSelectActivity>(renderer, mappedInput)) {
-          startActivityForResult(std::move(selector), [this](const ActivityResult&) { rebuildSettingsLists(); });
-        } else {
-          LOG_ERR("SETTINGS", "OOM: LanguageSelectActivity");
-        }
+      case SettingAction::Language: break;
+      case SettingAction::ReadingBackup:
+        startActivityForResult(std::make_unique<ReadingBackupActivity>(renderer, mappedInput), resultHandler);
         break;
       case SettingAction::ImportCrossInk: {
         auto activity = makeUniqueNoThrow<ReadingStatsSyncActivity>(renderer, mappedInput, true);

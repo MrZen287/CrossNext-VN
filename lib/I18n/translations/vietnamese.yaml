@@ -93,7 +93,7 @@ STR_CAT_SYSTEM: "Hệ thống"
 STR_SLEEP_SCREEN: "Hình nền giấc ngủ"
 STR_TOUCH_TOGGLE: "Chạm vào"
 STR_NIGHT_MODE: "Chế độ ban đêm"
-STR_QUICK_RESUME_TIMEOUT: "Sơ yếu lý lịch nhanh"
+STR_QUICK_RESUME_TIMEOUT: "Giữ trang sách khi tự ngủ"
 STR_SLEEP_COVER_MODE: "Hình nền phù hợp"
 STR_HIDE_BATTERY: "Ẩn pin"
 STR_EXTRA_SPACING: "Giãn cách đoạn văn bổ sung"
@@ -772,7 +772,18 @@ STR_TEXT_WEIGHT_REGULAR: "Thông thường"
 STR_TEXT_WEIGHT_BOLD: "In đậm"
 STR_CAT_INTERFACE: "Giao diện"
 STR_HOME_LAYOUT: "Bố cục màn hình chính"
-STR_HOME_FRAMED: "Đóng khung"
+STR_HOME_FRAMED: "Góc đọc sách"
+STR_HOME_DESK_READING: "Đang đọc"
+STR_HOME_DESK_DAY: "%s, %d tháng %d"
+STR_HOME_DESK_LUNAR: "%d/%d%s âm lịch"
+STR_HOME_DESK_POSITION: "Mục %d · Trang %d"
+STR_HOME_DESK_PAGE: "Trang %d"
+STR_HOME_DESK_RESUME: "Đọc tiếp"
+STR_CALENDAR_GO_SOLAR: "Ngày dương"
+STR_CALENDAR_GO_LUNAR: "Ngày âm"
+STR_CALENDAR_ENTER_SOLAR: "Ngày dương (d/m/yyyy)"
+STR_CALENDAR_ENTER_LUNAR: "Ngày âm (d/m/yyyy, * nếu nhuận)"
+STR_CALENDAR_INVALID_DATE: "Ngày không hợp lệ hoặc ngoài phạm vi"
 STR_HOME_FOCUS_CAROUSEL: "Băng chuyền"
 STR_HOME_FRAMED_CAROUSEL: "Băng chuyền có khung"
 STR_WORDLE_NAME: "Lời"
@@ -3340,6 +3351,32 @@ STR_DRAUGHTS_RETRY: "Hãy thử chiến lược khác trong trò chơi tiếp th
 STR_MATCH_WON: "Bạn đã thắng!"
 STR_MATCH_CONTINUE: "Tiếp tục"
 STR_TOOLS_SELECTED_DATE: "%s , %d %s"
+STR_TOOLS_LUNAR_DATE: "Âm lịch %d/%d/%d"
+STR_TOOLS_LUNAR_LEAP_DATE: "Âm lịch %d/%d/%d (nhuận)"
+STR_LUNAR_SLEEP_CALENDAR: "Lịch âm trên màn hình khóa"
+STR_LUNAR_TET: "Tết Nguyên Đán"
+STR_LUNAR_HUNG_KINGS: "Giỗ Tổ Hùng Vương"
+STR_LUNAR_MID_AUTUMN: "Tết Trung Thu"
+STR_LUNAR_COVER_DATE: "Ngày %d tháng %d năm %d"
+STR_XIANGQI_TOUCH_HINT: "Chạm quân cờ rồi chạm điểm đến"
+STR_FALLING_BLOCKS: "Xếp khối"
+STR_FALLING_BLOCKS_HINT: "Di chuyển và xoay khối để lấp đầy hàng"
+STR_BLOCKS_ROTATE: "Xoay"
+STR_XIANGQI_TITLE: "Cờ tướng"
+STR_XIANGQI_CHOOSE: "Chọn chế độ để bắt đầu ván mới."
+STR_XIANGQI_TWO: "Hai người"
+STR_XIANGQI_CPU: "Đấu máy"
+STR_XIANGQI_RED_TURN: "Đến lượt Đỏ"
+STR_XIANGQI_BLACK_TURN: "Đến lượt Đen"
+STR_XIANGQI_RED_WINS: "Đỏ thắng"
+STR_XIANGQI_BLACK_WINS: "Đen thắng"
+STR_XIANGQI_CHECK: "Chiếu"
+STR_XIANGQI_PIECES: "G Tướng  S Sĩ  V Tượng  M Mã\nX Xe  P Pháo  B Tốt"
+STR_SNAKE_TITLE: "Rắn săn mồi"
+STR_SNAKE_SCORES: "Điểm %d  /  Kỷ lục %d"
+STR_SNAKE_INPUT: "Vuốt để lái hoặc dùng nút cạnh để rẽ"
+STR_SNAKE_SLOW: "Chậm"
+STR_NEWGAMES_SAVE_FAILED: "Không lưu được vào thẻ"
 STR_CLOCK_12_HOUR: "12 giờ"
 STR_TOOLS_ADD: "THÊM"
 STR_WORDS_PENDING: "Để xem xét"
@@ -3413,7 +3450,7 @@ STR_SETTINGS_SD_HELP: "Từ thẻ microSD"
 STR_SETTINGS_PLUGINS_HELP: "Quản lý tiện ích mở rộng"
 STR_SETTINGS_ABOUT_HELP: "Thông tin thiết bị"
 STR_SETTINGS_FINISHED_HELP: "Khi đọc xong một cuốn sách"
-STR_HOME_FRAMED_HELP: "Phím tắt có khung"
+STR_HOME_FRAMED_HELP: "Sách đang đọc và sách gần đây"
 STR_HOME_CAROUSEL_HELP: "Đọc ở phía trước"
 STR_SETTINGS_SUSPENSION: "Ngủ đi"
 STR_HOME_THEME_LABEL: "Chủ đề trang chủ"
@@ -8484,3 +8521,59 @@ STR_HOME_COVER_NOTICE_ADVANTAGE: "Nhờ vậy, khi thoát sách hoặc mục kh�
 STR_WORDS_STORAGE_ERROR: "Không thể truy cập các từ đã lưu. Kiểm tra xem thẻ SD đã được lắp và có thể ghi dữ liệu hay chưa."
 STR_WORDS_RECORDS_SKIPPED: "Không đọc được một số mục đã lưu. Các mục đó được bỏ qua, không bị xóa."
 STR_WORDS_NOTICE_SAVE_ERROR: "Không thể lưu lựa chọn của bạn. Kiểm tra dung lượng trống và quyền ghi của thẻ SD."
+
+STR_HOME_TAP_IMMEDIATE: "Ngay khi nhả nút"
+
+STR_PET_EGG_CHICKEN: "Trứng gà"
+STR_PET_CHICKEN_DESC: "Một chú gà tò mò lớn lên cùng những giờ đọc sách của bạn."
+
+STR_LIGHT_DAY: "Ngày"
+STR_LIGHT_NIGHT: "Đêm"
+
+STR_CHICKEN_GAME: "Nuôi gà"
+
+STR_CHICKEN_EGG_COUNT: "Ấp trứng %u/4"
+
+STR_CHICKEN_STATS: "No %u%%  ·  Vui %u%%  ·  Sức %u%%"
+
+STR_CHICKEN_FED: "Gà ăn ngon miệng."
+
+STR_CHICKEN_FOUND: "Tìm được hạt rồi!"
+
+STR_CHICKEN_MISSED: "Hạt nằm ở bát khác."
+
+STR_CHICKEN_HUNGRY: "Cho gà ăn trước khi chơi."
+
+STR_CHICKEN_TIRED: "Gà cần nghỉ một lát."
+
+STR_CHICKEN_FULL: "Gà đang no."
+
+STR_CHICKEN_SAVE_ERROR: "Không lưu được vào microSD."
+
+STR_CHICKEN_PICK: "Bát nào có hạt?"
+
+STR_CHICKEN_WARM: "Ủ ấm trứng"
+
+STR_CHICKEN_FEED: "Cho ăn"
+
+STR_CHICKEN_PLAY: "Tìm hạt"
+
+STR_CHICKEN_REST: "Cho nghỉ"
+
+STR_CHICKEN_WAKE: "Đánh thức"
+
+STR_READING_BACKUP: "Sao lưu microSD"
+
+STR_READING_BACKUP_CREATE: "Tạo bản sao lưu"
+
+STR_READING_BACKUP_RESTORE: "Khôi phục"
+
+STR_READING_BACKUP_CONFIRM: "Khôi phục từ bản này? Máy sẽ lưu một bản dữ liệu hiện tại trước khi ghi đè."
+
+STR_READING_BACKUP_SAVED: "Đã lưu vào thư mục Sao-luu-CrossNext."
+
+STR_READING_BACKUP_FAILED: "Không hoàn tất. Kiểm tra bản sao lưu và dung lượng microSD."
+
+STR_READING_BACKUP_DONE: "Đã khôi phục. Máy sẽ khởi động lại để đọc dữ liệu."
+
+STR_READING_BACKUP_INCOMPLETE: "Khôi phục bị gián đoạn. Dữ liệu trước đó nằm trong bản sao lưu vừa tạo."

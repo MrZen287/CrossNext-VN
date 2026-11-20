@@ -22,25 +22,21 @@
 #include "chess/ChessActivity.h"
 #include "connectfour/ConnectFourActivity.h"
 #include "flashcards/FlashcardsActivity.h"
-#include "focus/FocusActivity.h"
 #include "forehead/ForeheadActivity.h"
 #include "game2048/Game2048Activity.h"
 #include "go/GoActivity.h"
-#include "habits/HabitsActivity.h"
 #include "hackernews/HackerNewsActivity.h"
 #include "hearts/HeartsActivity.h"
 #include "instapaper/InstapaperActivity.h"
 #include "intercept/InterceptActivity.h"
 #include "minesweeper/MinesweeperActivity.h"
 #include "murdle/MurdleActivity.h"
-#include "notes/NotesActivity.h"
 #include "pet/PetActivity.h"
+#include "chicken/ChickenGame.h"
 #include "picross/PicrossActivity.h"
 #include "player/PlayerActivity.h"
 #include "pocketgames/PocketGamesActivity.h"
-#include "pomodoro/PomodoroActivity.h"
 #include "quest/ReadingQuestActivity.h"
-#include "quotes/QuotesActivity.h"
 #include "solitaire/SolitaireActivity.h"
 #include "study/StudyActivity.h"
 #include "sudoku/SudokuActivity.h"
@@ -51,7 +47,6 @@
 #include "wallpapers/WallpapersActivity.h"
 #include "wikipedia/WikipediaActivity.h"
 #include "wordle/WordleActivity.h"
-#include "words/WordsActivity.h"
 #include "xkcd/XkcdActivity.h"
 
 namespace {
@@ -74,22 +69,15 @@ constexpr shelf::Item kGames[] = {
     {"CONNECT FOUR", &gameicons::ConnectFour40, &ConnectFourActivity::create},
     {"SUDOKU", &gameicons::Sudoku40, &SudokuActivity::create},
     {"OTHELLO", &navicons::Othello32, &PocketGamesActivity::createOthello},
+    {"CHICKEN GAME", &navicons::Paw32, &ChickenGame::create},
 };
 constexpr shelf::Item kApps[] = {
     {"READING QUEST", &navicons::BookOpen32, &ReadingQuestActivity::create},
     {"PET", &navicons::Paw32, &PetActivity::create},
-    {"HABITS", &navicons::Check32, &HabitsActivity::create},
-    {"TO DO LIST", &navicons::List32, &NotesActivity::createTodo},
-    {"NOTES", &navicons::Note32, &NotesActivity::create},
-    {"POMODORO", &navicons::Timer32, &PomodoroActivity::create},
     {"WALLPAPERS", &navicons::Image32, &WallpapersActivity::create},
-    {"QUOTES", &navicons::Books32, &QuotesActivity::create},
     {"FLASHCARDS", &navicons::Cards32, &FlashcardsActivity::create},
-    {"WORDS", &navicons::Books32, &WordsActivity::create},
     {"CALENDAR", &navicons::Calendar32, &ToolsActivity::calendar},
     {"CLOCK", &navicons::Clock32, &ToolsActivity::clock},
-    {"COUNTER", &navicons::Counter32, &ToolsActivity::counter},
-    {"FOCUS", &navicons::Focus32, &FocusActivity::create},
     {"CALCULATOR", &navicons::Calculator32, &CalculatorActivity::create},
 };
 
@@ -422,6 +410,7 @@ const char* label(const char* stableTitle) {
   if (std::strcmp(stableTitle, "FOREHEAD") == 0) return tr(STR_UI_FOREHEAD_82AFB5);
   if (std::strcmp(stableTitle, "THE INTERCEPT") == 0) return tr(STR_INTERCEPT_NAME);
   if (std::strcmp(stableTitle, "READING QUEST") == 0) return tr(STR_UI_READING_QUEST_6AD39C);
+  if (std::strcmp(stableTitle, "CHICKEN GAME") == 0) return tr(STR_CHICKEN_GAME);
   if (std::strcmp(stableTitle, "PET") == 0) return tr(STR_PET_APP);
   if (std::strcmp(stableTitle, "FLASHCARDS") == 0) return tr(STR_UI_FLASHCARDS_E0439E);
   if (std::strcmp(stableTitle, "CARNIVORO") == 0) return tr(STR_CAR_TITLE);
