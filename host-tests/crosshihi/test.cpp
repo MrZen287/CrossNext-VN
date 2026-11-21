@@ -29,6 +29,8 @@ int main(){
   }
   for(int n=0;n<count;++n)assert(normal.hits[Recent1+n].right()<normal.mascot.x);
   assert(normal.shelf.bottom()<=800);
+  assert(normal.cat.y>normal.status.bottom()+4);
+  assert(normal.cover.bottom()<normal.quote.y);
  }
  std::cout<<"CrossHihi version, overlay, tap targets and stationary mascot checks passed\n";
 }

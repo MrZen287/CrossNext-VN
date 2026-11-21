@@ -36,7 +36,7 @@ Layout layout(fui::Rect safe,int count,bool hasBook,bool prev,bool next,bool men
   g.shelf=makeRect(x,safe.bottom()-shelfH-10,w,shelfH);
   const int quoteH=wide?58:66;
   g.quote=makeRect(x,g.shelf.y-quoteH-8,w,quoteH);
-  g.reading=makeRect(x,g.heading.bottom()+24,w,g.quote.y-g.heading.bottom()-30);
+  g.reading=makeRect(x,g.heading.bottom()+44,w,g.quote.y-g.heading.bottom()-50);
   const int coverH=std::min(int(g.reading.height)-10,wide?170:340);
   const int coverW=std::min(w*45/100,coverH*2/3);
   g.cover=makeRect(x,g.reading.y,coverW,coverH);
