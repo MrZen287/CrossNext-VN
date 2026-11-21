@@ -39,7 +39,7 @@ void text(fui::DrawTarget& t,fui::Rect r,const char* s,int font=0,int lines=1,bo
   t.text(r,s,style);
 }
 }
-void draw(GfxRenderer& r,const Layout& g,const RecentBook* featured,const std::vector<RecentBook>& shelf,
+void draw(GfxRenderer& r,Layout& g,const RecentBook* featured,const std::vector<RecentBook>& shelf,
           int,Action focus,const char* quote,unsigned pose) {
   r.clearScreen();auto t=toybox::makeTarget(r);pixelui::bindFonts(t,r);
   char s[160]{};halClock.formatTime(s,sizeof(s),SETTINGS.clockFormat==1);text(t,g.status,s);
@@ -62,6 +62,7 @@ void draw(GfxRenderer& r,const Layout& g,const RecentBook* featured,const std::v
   if(!featured) text(t,g.reading,vi?"Mở một cuốn sách từ Thư viện":"Open a book from Library",1,2,false,fui::TextAlign::Center);
   else {
     BookCoverPainter painter(r,t);painter.paint(*featured,g.cover,0,BookCoverPainter::Fit::Contain);
+    g.cat=catForCover(painter.paintedBounds());
     companionart::cat(t,g.cat,pose);
     text(t,g.title,featured->title.c_str(),1,2,true);
     text(t,g.author,featured->author.c_str(),0,2);

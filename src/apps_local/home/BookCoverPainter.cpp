@@ -118,6 +118,7 @@ void BookCoverPainter::paint(const RecentBook& book, fui::Rect slot, int taper, 
   } else {
     homecover::recordSource(path, coverFile, false);
   }
+  lastBounds = slot;
   if (!drawn) GUI.drawCoverPlaceholder(renderer, Rect{slot.x, slot.y, slot.width, slot.height});
   if (!taper) {
     renderer.drawRect(slot.x, slot.y, slot.width, slot.height);

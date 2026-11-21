@@ -46,7 +46,7 @@ Layout layout(fui::Rect safe,int count,bool hasBook,bool prev,bool next,bool men
   g.position=makeRect(copyX,g.author.bottom()+10,copyW,32);
   g.progress=makeRect(copyX,g.position.bottom()+10,copyW,32);
   if(hasBook)g.hits[Resume]=makeRect(copyX,std::max(g.progress.bottom()+8,g.cover.bottom()-48),copyW,46);
-  g.cat=makeRect(g.cover.right()-68,g.cover.y-78,84,84);
+  g.cat=catForCover(g.cover);
   const int perch=wide?60:68;
   g.mascot=makeRect(g.shelf.right()-perch,g.shelf.bottom()-perch,perch,perch);
   g.hits[Menu]=makeRect(g.mascot.x-4,g.mascot.y-4,g.mascot.width+8,g.mascot.height+8);

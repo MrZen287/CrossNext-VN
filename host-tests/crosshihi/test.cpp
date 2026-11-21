@@ -32,5 +32,10 @@ int main(){
   assert(normal.cat.y>normal.status.bottom()+4);
   assert(normal.cover.bottom()<normal.quote.y);
  }
+ for(auto cover : {freeink::ui::makeRect(18,137,199,340),freeink::ui::makeRect(18,156,199,301),freeink::ui::makeRect(18,205,199,199),freeink::ui::makeRect(50,137,135,340)}) {
+  auto cat=catForCover(cover);
+  assert(cat.bottom()==cover.y+6);
+  assert(cat.right()==cover.right()+16);
+ }
  std::cout<<"CrossHihi version, overlay, tap targets and stationary mascot checks passed\n";
 }

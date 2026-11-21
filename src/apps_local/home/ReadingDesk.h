@@ -13,6 +13,9 @@ struct Layout {
   Action at(int x,int y) const;
   Action move(Action current,int direction) const;
 };
+inline freeink::ui::Rect catForCover(freeink::ui::Rect cover) {
+  return freeink::ui::makeRect(cover.right()-68,cover.y-78,84,84);
+}
 Layout layout(freeink::ui::Rect safe,int shelfCount,bool hasBook,bool hasPrevious,bool hasNext,bool menu=false);
-void draw(GfxRenderer&,const Layout&,const RecentBook*,const std::vector<RecentBook>&,int,Action,const char*,unsigned pose=0);
+void draw(GfxRenderer&,Layout&,const RecentBook*,const std::vector<RecentBook>&,int,Action,const char*,unsigned pose=0);
 }
