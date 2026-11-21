@@ -26,6 +26,7 @@ enum class SettingAction {
   PrepareBooks,
   ImportCrossInk,
   SdFirmwareUpdate,
+  CrossHihiOta,
   Language,
   DownloadFonts,
   TextSettings,

@@ -17,7 +17,7 @@ namespace fui = freeink::ui;
 
 namespace {
 constexpr char STORE[] = "/.crosspoint/";
-constexpr char ARCHIVES[] = "/Sao-luu-CrossNext";
+constexpr char ARCHIVES[] = "/Sao-luu-CrossHihi";
 constexpr char FORMAT[8] = {'C', 'N', 'B', 'K', '0', '1', '\r', '\n'};
 constexpr const char* TOP_FILES[] = {"settings.json", "state.json", "recent.json", "chicken-a.bin", "chicken-b.bin"};
 constexpr const char* DATA_DIRS[] = {"bookmarks", "clippings", "reading-history", "pet-v2"};

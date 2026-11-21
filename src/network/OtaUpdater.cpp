@@ -18,6 +18,7 @@
 #include "FirmwareBoardTag.h"
 #include "FirmwareFlasher.h"
 #include "ReleaseSources.h"
+#include "CrossHihiVersion.h"
 
 OtaUpdater::OtaUpdaterError OtaUpdater::checkForUpdate() {
   updateAvailable = false;
@@ -64,7 +65,8 @@ OtaUpdater::OtaUpdaterError OtaUpdater::checkForUpdate() {
       continue;
     }
     tagged = true;
-    hasFirmware = parser.foundFirmware();
+    if (!parser.foundFirmware()) continue;
+    hasFirmware = true;
     tag = parser.getTagName();
     firmwareUrl = parser.getFirmwareUrl();
     firmwareSize = parser.getFirmwareSize();
@@ -107,46 +109,7 @@ bool OtaUpdater::isUpdateNewer() const {
     return false;
   }
 
-  int currentMajor = 0, currentMinor = 0, currentPatch = 0;
-  int latestMajor = 0, latestMinor = 0, latestPatch = 0;
-
-  const auto currentVersion = CROSSPOINT_VERSION;
-
-  // semantic version check (only match on 3 segments). A tag that does not
-  // parse as three numbers is not an update this device can reason about, so
-  // it is refused rather than compared as garbage.
-  if (sscanf(latestVersion.c_str(), "%d.%d.%d", &latestMajor, &latestMinor, &latestPatch) != 3) {
-    return false;
-  }
-  sscanf(currentVersion, "%d.%d.%d", &currentMajor, &currentMinor, &currentPatch);
-
-  /*
-   * Compare major versions.
-   * If they differ, return true if latest major version greater than current major version
-   * otherwise return false.
-   */
-  if (latestMajor != currentMajor) return latestMajor > currentMajor;
-
-  /*
-   * Compare minor versions.
-   * If they differ, return true if latest minor version greater than current minor version
-   * otherwise return false.
-   */
-  if (latestMinor != currentMinor) return latestMinor > currentMinor;
-
-  /*
-   * Check patch versions.
-   */
-  if (latestPatch != currentPatch) return latestPatch > currentPatch;
-
-  // If we reach here, it means all segments are equal.
-  // One final check, if we're on an RC build (contains "-rc"), we should consider the latest version as newer even if
-  // the segments are equal, since RC builds are pre-release versions.
-  if (strstr(currentVersion, "-rc") != nullptr) {
-    return true;
-  }
-
-  return false;
+  return crosshihi::newerVersion(latestVersion.c_str(), CROSSPOINT_VERSION);
 }
 
 const std::string& OtaUpdater::getLatestVersion() const { return latestVersion; }

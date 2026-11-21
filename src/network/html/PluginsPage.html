@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Plugins - CrossNext</title>
+  <title>Plugins - CrossHihi</title>
   <style>
     :root {
       --font-color: #333;
@@ -280,7 +280,7 @@
 <!--#include file="shared/UiText.html.inc" -->
 </head>
 <body>
-  <h1>CrossNext</h1>
+  <h1>CrossHihi</h1>
 
   <div class="nav-links">
     <a href="/" data-ui>Home</a>
@@ -302,7 +302,7 @@
     if (response.ok) ui = (await response.json()).pluginUi || {};
   } catch (_) { /* Plugin discovery does not depend on status. */ }
   document.getElementById('plugins-nav').textContent = ui.title || '🔌';
-  document.title = 'CrossNext · ' + (ui.title || '🔌');
+  document.title = 'CrossHihi · ' + (ui.title || '🔌');
   const ok = await loadPlugins('settings');
   if (ok && document.getElementById('plugin-container').children.length) return;
   const message = document.createElement('p');

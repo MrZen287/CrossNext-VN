@@ -13,7 +13,7 @@ namespace {
 EpdFont sans8Regular(&sans08), sans8Bold(&sans08b);
 EpdFont sans10Regular(&sans10), sans10Bold(&sans10b);
 EpdFont sans12Regular(&sans12), sans12Bold(&sans12b), sans12Italic(&sans12i), sans12BoldItalic(&sans12bi);
-EpdFont sans18Bold(&sans18b), sans28Bold(&sans28b), sans38Bold(&sans38b);
+EpdFont sans18Bold(&sans18b), sans28Bold(&sans28b);
 EpdFont readingRegular(&sans13), readingBold(&sans13b), readingItalic(&sans13i);
 
 EpdFontFamily smallSans(&sans8Regular, &sans8Bold);
@@ -21,7 +21,8 @@ EpdFontFamily labelSans(&sans10Regular, &sans10Bold);
 EpdFontFamily bodySans(&sans12Regular, &sans12Bold, &sans12Italic, &sans12BoldItalic);
 EpdFontFamily titleSans(&sans18Bold);
 EpdFontFamily largeSans(&sans28Bold);
-EpdFontFamily hugeSans(&sans38Bold);
+// Share the two oversized app-display aliases; retain the entire glyph repertoire.
+EpdFontFamily hugeSans(&sans28Bold);
 EpdFontFamily readingFamily(&readingRegular, &readingBold, &readingItalic);
 EpdFontFamily boldLabel(&sans10Bold);
 EpdFontFamily boldReading(&readingBold);

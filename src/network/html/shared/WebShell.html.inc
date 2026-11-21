@@ -41,7 +41,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   if (document.body.hasAttribute('data-standalone')) return;
-  const nav = document.createElement('nav'); nav.className = 'fm-tabs'; nav.setAttribute('aria-label','CrossNext');
+  const nav = document.createElement('nav'); nav.className = 'fm-tabs'; nav.setAttribute('aria-label','CrossHihi');
   const paths = ['/files','/settings','/fonts','/'];
   const labels = [uiText('Library'),uiText('Settings'),uiText('Fonts'),uiText('Home')];
   const shapes = ['<path d="M5 3h15l-3 16H4a2 2 0 0 1 0-4h14M5 3 3 16M8 7h8M7 11h8"/>',

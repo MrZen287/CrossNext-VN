@@ -16,7 +16,7 @@
 
 namespace fui = freeink::ui;
 namespace {
-constexpr Language BUILTIN_LANGUAGES[] = {Language::EN, Language::ES};
+constexpr Language BUILTIN_LANGUAGES[] = {Language::VI, Language::EN};
 }
 
 LanguageSelectActivity::LanguageSelectActivity(GfxRenderer& renderer, MappedInputManager& mappedInput)
@@ -24,7 +24,7 @@ LanguageSelectActivity::LanguageSelectActivity(GfxRenderer& renderer, MappedInpu
 
 void LanguageSelectActivity::onEnter() {
   UiListActivity::onEnter();
-  catalogFailed = !catalog.scan();
+  catalogFailed = false;
   nav.selected = 0;
   for (int index = 0; index < listCount(); ++index) {
     if (isActive(index)) {

@@ -179,7 +179,7 @@ Result Uploader::global() {
   const auto& s = projection.data().summary;
   if (s.seconds > 9007199254740991ULL || s.pages > 9007199254740991ULL) return Result::LimitExceeded;
   doc["device_id"] = device;
-  doc["device"] = "CrossNext X4 Pro";
+  doc["device"] = "CrossHihi X4 Pro";
   doc["v"] = 5;
   doc["seconds"] = s.seconds;
   doc["pages"] = s.pages;

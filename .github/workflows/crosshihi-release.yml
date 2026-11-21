@@ -1,0 +1,54 @@
+name: CrossHihi build and release
+on:
+  push:
+    branches: [crosshihi]
+    paths-ignore: ['ota.json']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: crosshihi-release
+  cancel-in-progress: false
+jobs:
+  x4pro:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.platformio
+            .pio
+          key: crosshihi-x4pro-${{ runner.os }}-${{ hashFiles('platformio.ini', 'platformio.sim.ini') }}
+      - name: Install build tools
+        run: |
+          pip install git+https://github.com/pioarduino/platformio-core.git
+          pip install -r requirements.txt
+      - name: Verify Home interactions, version ordering and original app catalog
+        run: |
+          sh host-tests/crosshihi/run.sh
+          python scripts_local/verify_crosshihi.py
+      - name: Build X4 Pro application
+        run: |
+          set -o pipefail
+          pio run -e gh_release_x4pro 2>&1 | tee crosshihi-build.log
+      - name: Package licensed SD resources and verify ESP image
+        run: |
+          curl --fail --location --retry 3 -o /tmp/crosshihi-resources.zip https://github.com/MrZen287/CrossNext-VN/releases/download/v2.0.4-vn.1/CrossNext-VN-X4Pro-v2.0.4-vn.1.zip
+          python scripts_local/package_crosshihi.py --resources /tmp/crosshihi-resources.zip
+          cp crosshihi-build.log dist/CrossHihi/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: CrossHihi-X4Pro-1.1.1.1
+          path: dist/CrossHihi/
+      - name: Publish tested build as a public pre-release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create v1.1.1.1 --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title "CrossHihi 1.1.1.1 — Bản thử X4 Pro" --notes-file docs/crosshihi/release-1.1.1.1.md --prerelease --draft
+          gh release upload v1.1.1.1 dist/CrossHihi/* docs/crosshihi/demo-concept.png --repo "$GITHUB_REPOSITORY"
+          gh release edit v1.1.1.1 --repo "$GITHUB_REPOSITORY" --draft=false

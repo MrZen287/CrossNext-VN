@@ -6,6 +6,7 @@
 #include <strings.h>
 
 #include <cstdio>
+#include <array>
 #include <cstdlib>
 #include <cstring>
 #include <string>
@@ -85,9 +86,15 @@ constexpr shelf::Item kApps[] = {
 // these sit in upstream's Home list and have to look like it; the folder screen
 // shouts its own header, which is our side of the line. A third folder is one row here and
 // nothing else: the Home hook counts this table rather than knowing its length.
+constexpr auto kAllApps = [] {
+  std::array<shelf::Item, std::size(kApps)+std::size(kGames)> all{};
+  size_t n=0; for(const auto& item:kApps) all[n++]=item;
+  for(const auto& item:kGames) all[n++]=item; return all;
+}();
 constexpr shelf::Folder kFolders[] = {
     {"Games", UIIcon::Games, &navicons::Gear32, kGames, static_cast<int>(sizeof(kGames) / sizeof(shelf::Item))},
     {"Apps", UIIcon::Apps, &navicons::Gear32, kApps, static_cast<int>(sizeof(kApps) / sizeof(shelf::Item))},
+    {"APP", UIIcon::Apps, &navicons::Gear32, kAllApps.data(), static_cast<int>(kAllApps.size())},
 };
 
 constexpr int kFolderCount = static_cast<int>(sizeof(kFolders) / sizeof(kFolders[0]));
@@ -540,6 +547,18 @@ int orderedItem(const int folder, const int row) {
   if (folder < 0 || folder >= kFolderCount) return -1;
   ensureOrderLoaded();
   return itemOrder[folder].at(row);
+}
+
+bool pinItemToFront(int folder,int item) {
+  if(folder<0||folder>=kFolderCount)return false;
+  ensureOrderLoaded();
+  auto& order=itemOrder[folder];const auto before=order;
+  int row=0;while(row<order.count&&order.at(row)!=item)++row;
+  if(row>=order.count)return false;
+  if(row==0)return true;
+  while(row>0){order.move(row,-1);--row;}
+  if(saveItemOrder())return true;
+  order=before;return false;
 }
 
 bool moveOrderedItem(const int folder, const int row, const int delta) {

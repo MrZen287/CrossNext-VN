@@ -862,9 +862,10 @@ void setup() {
   // Push the saved timezone's POSIX rule into the clock (migrating the legacy
   // UTC-offset setting on first boot after the update).
   timezones::applyToClock();
-  SETTINGS.language = static_cast<uint8_t>(Language::VI);
+  if (SETTINGS.language != static_cast<uint8_t>(Language::EN) && SETTINGS.language != static_cast<uint8_t>(Language::VI))
+    SETTINGS.language = static_cast<uint8_t>(Language::VI);
   SETTINGS.languagePack[0] = '\0';
-  I18N.setLanguage(Language::VI);
+  I18N.setLanguage(static_cast<Language>(SETTINGS.language));
   if (dictionarydefaults::apply(SETTINGS)) SETTINGS.saveToFile();
   UITheme::getInstance().reload();
   ButtonNavigator::setMappedInputManager(mappedInputManager);
@@ -998,7 +999,7 @@ void setup() {
   }
 
   // First serial output only here to avoid timing inconsistencies for power button press duration verification
-  LOG_DBG("MAIN", "Starting CrossNext version " CROSSPOINT_VERSION);
+  LOG_DBG("MAIN", "Starting CrossHihi version " CROSSPOINT_VERSION);
 
   // Resolve the single boot-presentation decision. Skipping the splash also
   // skips the panel-clearing pass and the X3 initial-full-sync arming (see

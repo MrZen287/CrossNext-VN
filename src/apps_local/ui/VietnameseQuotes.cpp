@@ -5,6 +5,7 @@
 #endif
 
 #include <cstdio>
+#include <I18n.h>
 #include <iterator>
 
 #include "../home/VietnameseHomeQuotes.h"
@@ -13,24 +14,41 @@
 
 namespace vietnamesequotes {
 const char* next() {
-  constexpr size_t count = std::size(readingdesk::vietnameseQuotes);
+  static constexpr const char* english[] = {
+    "A quiet page can open a wider world.", "Make room for one more page.",
+    "Small reading moments become a rich life.", "Let curiosity choose the next chapter.",
+    "Every page leaves a little light behind.", "Slow down. A good story will wait.",
+    "Read a little, wonder a little more.", "Keep a book close and your mind open.",
+    "One chapter today, new paths tomorrow.", "A book is a place you can carry."
+  };
+  const bool vi = I18N.getLanguage()==Language::VI;
+  const size_t count = vi ? std::size(readingdesk::vietnameseQuotes) : std::size(english);
   static size_t previous = count;
 #ifdef SIMULATOR
   const uint32_t random = toybox::seed();
 #else
   const uint32_t random = esp_random();
 #endif
-  previous = previous < count ? (previous + 1 + random % (count - 1)) % count : random % count;
-  return readingdesk::vietnameseQuotes[previous];
+  const size_t start = random % count;
+  for (size_t n=0;n<count;++n) {
+    const size_t candidate=(start+n)%count;
+    const char* value=vi?readingdesk::vietnameseQuotes[candidate]:english[candidate];
+    size_t glyphs=0;
+    for(const unsigned char* p=reinterpret_cast<const unsigned char*>(value);*p;++p)
+      if((*p&0xc0)!=0x80)++glyphs;
+    if(candidate!=previous && glyphs<=82) {previous=candidate;return value;}
+  }
+  return vi?"Đi một ngày đàng, học một sàng khôn.":"Make room for one more page.";
 }
 
 void draw(freeink::ui::DrawTarget& target, freeink::ui::Rect box, const char* quote, freeink::ui::FontId font) {
-  char text[224];
+  char text[384];
   std::snprintf(text, sizeof(text), "“%s”", quote);
   freeink::ui::TextStyle style;
   style.font = font;
   style.italic = true;
   style.align = freeink::ui::TextAlign::Center;
-  fittext::draw(target, box, text, style, 3);
+  style.maxLines=2;
+  target.text(box,text,style);
 }
 }  // namespace vietnamesequotes

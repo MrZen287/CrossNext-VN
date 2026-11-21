@@ -16,7 +16,6 @@
 #include "apps_local/readerbars/ReaderBars.h"
 #include "components/CoverGridHomeUi.h"
 #include "components/themes/BaseTheme.h"
-#include "components/themes/lyra/Lyra3CoversTheme.h"
 #include "components/themes/lyra/LyraTheme.h"
 #include "util/InterfaceThemeStyle.h"
 
@@ -43,37 +42,12 @@ bool UITheme::hasCoverGridHome() {
 void UITheme::drawCoverGridHome(CoverGridHomeUi& home) { home.renderUi(); }
 
 void UITheme::setTheme(CrossPointSettings::UI_THEME type) {
+  // CrossHihi has one fixed presentation; legacy saved theme IDs are ignored.
+  (void)type;
   setInterfaceSection(interfaceSection);
-  if (type == CrossPointSettings::COVER_GRID && !supportsCoverGrid()) type = CrossPointSettings::LYRA;
-
-  switch (type) {
-    case CrossPointSettings::UI_THEME::CLASSIC:
-      LOG_DBG("UI", "Using Classic theme");
-      currentTheme = std::make_unique<BaseTheme>();
-      currentMetrics = &BaseMetrics::values;
-      break;
-    case CrossPointSettings::UI_THEME::COVER_GRID:
-    // Preserve old settings files without reintroducing rounded controls.
-    case CrossPointSettings::UI_THEME::ROUNDEDRAFF:
-    case CrossPointSettings::UI_THEME::LYRA: {
-      // The cover home owns its screen-lifetime UI state; other screens retain Lyra styling.
-      auto theme = makeUniqueNoThrow<LyraTheme>();
-      if (!theme) {
-        LOG_ERR("UI", "OOM: Lyra theme");
-        return;
-      }
-      currentTheme = std::move(theme);
-      currentMetrics = &LyraMetrics::values;
-      LOG_DBG("UI", "Using Lyra theme");
-      break;
-    }
-    case CrossPointSettings::UI_THEME::LYRA_3_COVERS:
-      LOG_DBG("UI", "Using Lyra 3 Covers theme");
-      currentTheme = std::make_unique<Lyra3CoversTheme>();
-      currentMetrics = &Lyra3CoversMetrics::values;
-      break;
-  }
-  metricsValid = false;
+  currentTheme=std::make_unique<LyraTheme>();
+  currentMetrics=&LyraMetrics::values;
+  metricsValid=false;
 }
 
 void UITheme::setInterfaceSection(menufont::Section section) {

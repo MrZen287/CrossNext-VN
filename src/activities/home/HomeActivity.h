@@ -65,9 +65,11 @@ class HomeActivity final : public Activity {
   uint32_t deskShelfRevision = 0;
   int deskFeatured = -1, deskPrepared = -2, deskCoverHeight = 0;
   std::array<int, readingdesk::shelfSize> deskShelfHeights{};
+  bool deskMenuOpen = false;
+  unsigned deskCatPose = 0;
   const char* deskQuote = "";
   uint32_t deskMinute = 0;
-  static bool readingDeskEnabled() { return SETTINGS.homeLayout == CrossPointSettings::HOME_FRAMED; }
+  static bool readingDeskEnabled() { return true; }
   void loopReadingDesk();
   DeskPage collectDeskPage(int start, bool useLibrary);
   void loadDeskShelfPage(int page, bool useLibrary = true);

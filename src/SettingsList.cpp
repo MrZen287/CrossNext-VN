@@ -5,6 +5,11 @@
 
 void forEachBaseSetting(SettingVisitor visit, void* context) {
   const auto emit = [visit, context](SettingInfo info) {
+    if (info.valuePtr == &CrossPointSettings::homeLayout || info.valuePtr == &CrossPointSettings::uiTheme ||
+        info.valuePtr == &CrossPointSettings::lunarSleepCalendar || info.valuePtr == &CrossPointSettings::sleepScreen ||
+        info.valuePtr == &CrossPointSettings::sleepScreenCoverMode || info.valuePtr == &CrossPointSettings::sleepScreenCoverFilter ||
+        info.valuePtr == &CrossPointSettings::quickResumeSleepScreen || info.valuePtr == &CrossPointSettings::sleepReadingGoal ||
+        info.valuePtr == &CrossPointSettings::homeRecentBookCount) return;
     if (!BoardConfig::isX4Pro() && info.nameId == StrId::STR_DBL_CLICK_PWR_LIGHT) return;
     if (!halTiltSensor.isAvailable() && info.nameId == StrId::STR_TILT_PAGE_TURN) return;
     if (!BoardConfig::hasTouch() &&

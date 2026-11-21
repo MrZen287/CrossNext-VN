@@ -158,3 +158,6 @@ GEMINI.md
 /site/showcase/languages/
 /site/showcase/catalog.json
 /docs/images/spiflash/
+
+# Local CrossHihi test binaries
+.crosshihi-test/

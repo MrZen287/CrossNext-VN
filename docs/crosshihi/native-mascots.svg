@@ -1,0 +1,2829 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1000' height='340' viewBox='0 0 1000 340'><rect width='1000' height='340' fill='white'/>
+<path d='M95 124L117 124L116 128Z' fill='white'/>
+<path d='M95 124L116 128L115 134Z' fill='white'/>
+<path d='M95 124L115 134L112 138Z' fill='white'/>
+<path d='M95 124L112 138L110 143Z' fill='white'/>
+<path d='M95 124L110 143L107 145Z' fill='white'/>
+<path d='M95 124L107 145L103 148Z' fill='white'/>
+<path d='M95 124L103 148L99 150Z' fill='white'/>
+<path d='M95 124L99 150L95 150Z' fill='white'/>
+<path d='M95 124L95 150L92 150Z' fill='white'/>
+<path d='M95 124L92 150L87 148Z' fill='white'/>
+<path d='M95 124L87 148L84 145Z' fill='white'/>
+<path d='M95 124L84 145L81 143Z' fill='white'/>
+<path d='M95 124L81 143L78 138Z' fill='white'/>
+<path d='M95 124L78 138L76 134Z' fill='white'/>
+<path d='M95 124L76 134L75 128Z' fill='white'/>
+<path d='M95 124L75 128L74 124Z' fill='white'/>
+<path d='M95 124L74 124L75 120Z' fill='white'/>
+<path d='M95 124L75 120L76 114Z' fill='white'/>
+<path d='M95 124L76 114L78 109Z' fill='white'/>
+<path d='M95 124L78 109L81 105Z' fill='white'/>
+<path d='M95 124L81 105L84 102Z' fill='white'/>
+<path d='M95 124L84 102L87 99Z' fill='white'/>
+<path d='M95 124L87 99L92 98Z' fill='white'/>
+<path d='M95 124L92 98L95 98Z' fill='white'/>
+<path d='M95 124L95 98L99 98Z' fill='white'/>
+<path d='M95 124L99 98L103 99Z' fill='white'/>
+<path d='M95 124L103 99L107 102Z' fill='white'/>
+<path d='M95 124L107 102L110 105Z' fill='white'/>
+<path d='M95 124L110 105L112 109Z' fill='white'/>
+<path d='M95 124L112 109L115 114Z' fill='white'/>
+<path d='M95 124L115 114L116 120Z' fill='white'/>
+<path d='M95 124L116 120L117 124Z' fill='white'/>
+<path d='M117 124L116 128' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M116 128L115 134' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M115 134L112 138' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M112 138L110 143' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M110 143L107 145' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M107 145L103 148' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M103 148L99 150' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M99 150L95 150' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M95 150L92 150' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M92 150L87 148' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M87 148L84 145' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M84 145L81 143' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M81 143L78 138' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M78 138L76 134' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M76 134L75 128' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M75 128L74 124' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M74 124L75 120' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M75 120L76 114' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M76 114L78 109' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M78 109L81 105' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M81 105L84 102' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M84 102L87 99' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M87 99L92 98' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M92 98L95 98' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M95 98L99 98' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M99 98L103 99' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M103 99L107 102' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M107 102L110 105' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M110 105L112 109' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M112 109L115 114' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M115 114L116 120' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M116 120L117 124' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M111 140L127 127' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M127 127L130 102' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M41 73L43 30L69 56Z' fill='black'/>
+<path d='M87 53L117 33L114 82Z' fill='black'/>
+<path d='M46 62L47 42L61 58Z' fill='white'/>
+<path d='M94 59L111 43L108 71Z' fill='white'/>
+<path d='M78 88L118 88L117 94Z' fill='white'/>
+<path d='M78 88L117 94L115 101Z' fill='white'/>
+<path d='M78 88L115 101L111 107Z' fill='white'/>
+<path d='M78 88L111 107L106 112Z' fill='white'/>
+<path d='M78 88L106 112L100 117Z' fill='white'/>
+<path d='M78 88L100 117L93 120Z' fill='white'/>
+<path d='M78 88L93 120L85 122Z' fill='white'/>
+<path d='M78 88L85 122L78 122Z' fill='white'/>
+<path d='M78 88L78 122L71 122Z' fill='white'/>
+<path d='M78 88L71 122L63 120Z' fill='white'/>
+<path d='M78 88L63 120L57 117Z' fill='white'/>
+<path d='M78 88L57 117L51 112Z' fill='white'/>
+<path d='M78 88L51 112L45 107Z' fill='white'/>
+<path d='M78 88L45 107L42 101Z' fill='white'/>
+<path d='M78 88L42 101L39 94Z' fill='white'/>
+<path d='M78 88L39 94L38 88Z' fill='white'/>
+<path d='M78 88L38 88L39 82Z' fill='white'/>
+<path d='M78 88L39 82L42 75Z' fill='white'/>
+<path d='M78 88L42 75L45 69Z' fill='white'/>
+<path d='M78 88L45 69L51 63Z' fill='white'/>
+<path d='M78 88L51 63L57 59Z' fill='white'/>
+<path d='M78 88L57 59L63 56Z' fill='white'/>
+<path d='M78 88L63 56L71 53Z' fill='white'/>
+<path d='M78 88L71 53L78 53Z' fill='white'/>
+<path d='M78 88L78 53L85 53Z' fill='white'/>
+<path d='M78 88L85 53L93 56Z' fill='white'/>
+<path d='M78 88L93 56L100 59Z' fill='white'/>
+<path d='M78 88L100 59L106 63Z' fill='white'/>
+<path d='M78 88L106 63L111 69Z' fill='white'/>
+<path d='M78 88L111 69L115 75Z' fill='white'/>
+<path d='M78 88L115 75L117 82Z' fill='white'/>
+<path d='M78 88L117 82L118 88Z' fill='white'/>
+<path d='M118 88L117 94' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M117 94L115 101' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M115 101L111 107' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M111 107L106 112' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M106 112L100 117' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M100 117L93 120' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M93 120L85 122' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M85 122L78 122' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M78 122L71 122' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M71 122L63 120' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M63 120L57 117' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M57 117L51 112' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M51 112L45 107' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M45 107L42 101' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M42 101L39 94' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M39 94L38 88' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M38 88L39 82' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M39 82L42 75' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M42 75L45 69' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M45 69L51 63' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M51 63L57 59' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M57 59L63 56' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M63 56L71 53' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M71 53L78 53' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M78 53L85 53' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M85 53L93 56' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M93 56L100 59' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M100 59L106 63' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M106 63L111 69' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M111 69L115 75' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M115 75L117 82' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M117 82L118 88' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M94 62L106 62L104 63Z' fill='black'/>
+<path d='M94 62L104 63L104 65Z' fill='black'/>
+<path d='M94 62L104 65L103 66Z' fill='black'/>
+<path d='M94 62L103 66L102 68Z' fill='black'/>
+<path d='M94 62L102 68L100 68Z' fill='black'/>
+<path d='M94 62L100 68L98 69Z' fill='black'/>
+<path d='M94 62L98 69L95 69Z' fill='black'/>
+<path d='M94 62L95 69L94 71Z' fill='black'/>
+<path d='M94 62L94 71L93 69Z' fill='black'/>
+<path d='M94 62L93 69L91 69Z' fill='black'/>
+<path d='M94 62L91 69L88 68Z' fill='black'/>
+<path d='M94 62L88 68L86 68Z' fill='black'/>
+<path d='M94 62L86 68L85 66Z' fill='black'/>
+<path d='M94 62L85 66L84 65Z' fill='black'/>
+<path d='M94 62L84 65L84 63Z' fill='black'/>
+<path d='M94 62L84 63L83 62Z' fill='black'/>
+<path d='M94 62L83 62L84 61Z' fill='black'/>
+<path d='M94 62L84 61L84 59Z' fill='black'/>
+<path d='M94 62L84 59L85 58Z' fill='black'/>
+<path d='M94 62L85 58L86 56Z' fill='black'/>
+<path d='M94 62L86 56L88 56Z' fill='black'/>
+<path d='M94 62L88 56L91 55Z' fill='black'/>
+<path d='M94 62L91 55L93 55Z' fill='black'/>
+<path d='M94 62L93 55L94 53Z' fill='black'/>
+<path d='M94 62L94 53L95 55Z' fill='black'/>
+<path d='M94 62L95 55L98 55Z' fill='black'/>
+<path d='M94 62L98 55L100 56Z' fill='black'/>
+<path d='M94 62L100 56L102 56Z' fill='black'/>
+<path d='M94 62L102 56L103 58Z' fill='black'/>
+<path d='M94 62L103 58L104 59Z' fill='black'/>
+<path d='M94 62L104 59L104 61Z' fill='black'/>
+<path d='M94 62L104 61L106 62Z' fill='black'/>
+<path d='M53 85L60 79' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M59 79L65 85' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M87 85L93 79' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M93 79L100 85' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M74 95L78 95' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M78 95L76 99' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M76 99L71 105' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M76 99L82 105' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M49 98L27 92' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M47 105L26 108' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M106 98L131 92' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M107 105L132 108' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M53 130L65 130L63 131Z' fill='white'/>
+<path d='M53 130L63 131L63 133Z' fill='white'/>
+<path d='M53 130L63 133L62 134Z' fill='white'/>
+<path d='M53 130L62 134L61 135Z' fill='white'/>
+<path d='M53 130L61 135L59 137Z' fill='white'/>
+<path d='M53 130L59 137L57 138Z' fill='white'/>
+<path d='M53 130L57 138L54 138Z' fill='white'/>
+<path d='M53 130L54 138L53 138Z' fill='white'/>
+<path d='M53 130L53 138L52 138Z' fill='white'/>
+<path d='M53 130L52 138L50 138Z' fill='white'/>
+<path d='M53 130L50 138L47 137Z' fill='white'/>
+<path d='M53 130L47 137L45 135Z' fill='white'/>
+<path d='M53 130L45 135L44 134Z' fill='white'/>
+<path d='M53 130L44 134L43 133Z' fill='white'/>
+<path d='M53 130L43 133L43 131Z' fill='white'/>
+<path d='M53 130L43 131L42 130Z' fill='white'/>
+<path d='M53 130L42 130L43 128Z' fill='white'/>
+<path d='M53 130L43 128L43 127Z' fill='white'/>
+<path d='M53 130L43 127L44 125Z' fill='white'/>
+<path d='M53 130L44 125L45 124Z' fill='white'/>
+<path d='M53 130L45 124L47 122Z' fill='white'/>
+<path d='M53 130L47 122L50 121Z' fill='white'/>
+<path d='M53 130L50 121L52 121Z' fill='white'/>
+<path d='M53 130L52 121L53 121Z' fill='white'/>
+<path d='M53 130L53 121L54 121Z' fill='white'/>
+<path d='M53 130L54 121L57 121Z' fill='white'/>
+<path d='M53 130L57 121L59 122Z' fill='white'/>
+<path d='M53 130L59 122L61 124Z' fill='white'/>
+<path d='M53 130L61 124L62 125Z' fill='white'/>
+<path d='M53 130L62 125L63 127Z' fill='white'/>
+<path d='M53 130L63 127L63 128Z' fill='white'/>
+<path d='M53 130L63 128L65 130Z' fill='white'/>
+<path d='M65 130L63 131' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M63 131L63 133' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M63 133L62 134' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M62 134L61 135' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M61 135L59 137' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M59 137L57 138' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M57 138L54 138' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M54 138L53 138' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M53 138L52 138' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M52 138L50 138' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M50 138L47 137' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M47 137L45 135' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M45 135L44 134' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M44 134L43 133' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M43 133L43 131' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M43 131L42 130' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M42 130L43 128' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M43 128L43 127' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M43 127L44 125' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M44 125L45 124' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M45 124L47 122' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M47 122L50 121' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M50 121L52 121' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M52 121L53 121' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M53 121L54 121' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M54 121L57 121' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M57 121L59 122' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M59 122L61 124' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M61 124L62 125' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M62 125L63 127' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M63 127L63 128' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M63 128L65 130' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M98 130L109 130L108 131Z' fill='white'/>
+<path d='M98 130L108 131L108 133Z' fill='white'/>
+<path d='M98 130L108 133L107 134Z' fill='white'/>
+<path d='M98 130L107 134L106 135Z' fill='white'/>
+<path d='M98 130L106 135L103 137Z' fill='white'/>
+<path d='M98 130L103 137L101 138Z' fill='white'/>
+<path d='M98 130L101 138L99 138Z' fill='white'/>
+<path d='M98 130L99 138L98 138Z' fill='white'/>
+<path d='M98 130L98 138L96 138Z' fill='white'/>
+<path d='M98 130L96 138L94 138Z' fill='white'/>
+<path d='M98 130L94 138L92 137Z' fill='white'/>
+<path d='M98 130L92 137L90 135Z' fill='white'/>
+<path d='M98 130L90 135L88 134Z' fill='white'/>
+<path d='M98 130L88 134L87 133Z' fill='white'/>
+<path d='M98 130L87 133L87 131Z' fill='white'/>
+<path d='M98 130L87 131L86 130Z' fill='white'/>
+<path d='M98 130L86 130L87 128Z' fill='white'/>
+<path d='M98 130L87 128L87 127Z' fill='white'/>
+<path d='M98 130L87 127L88 125Z' fill='white'/>
+<path d='M98 130L88 125L90 124Z' fill='white'/>
+<path d='M98 130L90 124L92 122Z' fill='white'/>
+<path d='M98 130L92 122L94 121Z' fill='white'/>
+<path d='M98 130L94 121L96 121Z' fill='white'/>
+<path d='M98 130L96 121L98 121Z' fill='white'/>
+<path d='M98 130L98 121L99 121Z' fill='white'/>
+<path d='M98 130L99 121L101 121Z' fill='white'/>
+<path d='M98 130L101 121L103 122Z' fill='white'/>
+<path d='M98 130L103 122L106 124Z' fill='white'/>
+<path d='M98 130L106 124L107 125Z' fill='white'/>
+<path d='M98 130L107 125L108 127Z' fill='white'/>
+<path d='M98 130L108 127L108 128Z' fill='white'/>
+<path d='M98 130L108 128L109 130Z' fill='white'/>
+<path d='M109 130L108 131' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M108 131L108 133' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M108 133L107 134' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M107 134L106 135' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M106 135L103 137' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M103 137L101 138' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M101 138L99 138' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M99 138L98 138' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M98 138L96 138' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M96 138L94 138' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M94 138L92 137' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M92 137L90 135' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M90 135L88 134' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M88 134L87 133' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M87 133L87 131' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M87 131L86 130' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M86 130L87 128' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M87 128L87 127' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M87 127L88 125' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M88 125L90 124' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M90 124L92 122' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M92 122L94 121' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M94 121L96 121' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M96 121L98 121' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M98 121L99 121' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M99 121L101 121' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M101 121L103 122' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M103 122L106 124' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M106 124L107 125' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M107 125L108 127' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M108 127L108 128' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M108 128L109 130' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M31 50L25 39' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M123 53L135 48' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M211 166L219 166L218 169Z' fill='white'/>
+<path d='M211 166L218 169L218 171Z' fill='white'/>
+<path d='M211 166L218 171L217 174Z' fill='white'/>
+<path d='M211 166L217 174L216 176Z' fill='white'/>
+<path d='M211 166L216 176L215 179Z' fill='white'/>
+<path d='M211 166L215 179L214 180Z' fill='white'/>
+<path d='M211 166L214 180L212 180Z' fill='white'/>
+<path d='M211 166L212 180L211 181Z' fill='white'/>
+<path d='M211 166L211 181L210 180Z' fill='white'/>
+<path d='M211 166L210 180L208 180Z' fill='white'/>
+<path d='M211 166L208 180L206 179Z' fill='white'/>
+<path d='M211 166L206 179L205 176Z' fill='white'/>
+<path d='M211 166L205 176L204 174Z' fill='white'/>
+<path d='M211 166L204 174L203 171Z' fill='white'/>
+<path d='M211 166L203 171L203 169Z' fill='white'/>
+<path d='M211 166L203 169L202 166Z' fill='white'/>
+<path d='M211 166L202 166L203 163Z' fill='white'/>
+<path d='M211 166L203 163L203 160Z' fill='white'/>
+<path d='M211 166L203 160L204 157Z' fill='white'/>
+<path d='M211 166L204 157L205 156Z' fill='white'/>
+<path d='M211 166L205 156L206 153Z' fill='white'/>
+<path d='M211 166L206 153L208 151Z' fill='white'/>
+<path d='M211 166L208 151L210 151Z' fill='white'/>
+<path d='M211 166L210 151L211 150Z' fill='white'/>
+<path d='M211 166L211 150L212 151Z' fill='white'/>
+<path d='M211 166L212 151L214 151Z' fill='white'/>
+<path d='M211 166L214 151L215 153Z' fill='white'/>
+<path d='M211 166L215 153L216 156Z' fill='white'/>
+<path d='M211 166L216 156L217 157Z' fill='white'/>
+<path d='M211 166L217 157L218 160Z' fill='white'/>
+<path d='M211 166L218 160L218 163Z' fill='white'/>
+<path d='M211 166L218 163L219 166Z' fill='white'/>
+<path d='M219 166L218 169' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M218 169L218 171' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M218 171L217 174' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M217 174L216 176' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M216 176L215 179' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M215 179L214 180' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M214 180L212 180' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M212 180L211 181' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M211 181L210 180' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M210 180L208 180' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M208 180L206 179' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M206 179L205 176' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M205 176L204 174' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M204 174L203 171' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M203 171L203 169' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M203 169L202 166' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M202 166L203 163' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M203 163L203 160' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M203 160L204 157' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M204 157L205 156' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M205 156L206 153' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M206 153L208 151' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M208 151L210 151' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M210 151L211 150' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M211 150L212 151' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M212 151L214 151' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M214 151L215 153' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M215 153L216 156' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M216 156L217 157' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M217 157L218 160' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M218 160L218 163' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M218 163L219 166' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M198 163L207 163L206 166Z' fill='white'/>
+<path d='M198 163L206 166L206 169Z' fill='white'/>
+<path d='M198 163L206 169L205 171Z' fill='white'/>
+<path d='M198 163L205 171L204 173Z' fill='white'/>
+<path d='M198 163L204 173L203 176Z' fill='white'/>
+<path d='M198 163L203 176L201 177Z' fill='white'/>
+<path d='M198 163L201 177L199 177Z' fill='white'/>
+<path d='M198 163L199 177L198 179Z' fill='white'/>
+<path d='M198 163L198 179L197 177Z' fill='white'/>
+<path d='M198 163L197 177L195 177Z' fill='white'/>
+<path d='M198 163L195 177L194 176Z' fill='white'/>
+<path d='M198 163L194 176L193 173Z' fill='white'/>
+<path d='M198 163L193 173L192 171Z' fill='white'/>
+<path d='M198 163L192 171L191 169Z' fill='white'/>
+<path d='M198 163L191 169L191 166Z' fill='white'/>
+<path d='M198 163L191 166L190 163Z' fill='white'/>
+<path d='M198 163L190 163L191 160Z' fill='white'/>
+<path d='M198 163L191 160L191 157Z' fill='white'/>
+<path d='M198 163L191 157L192 154Z' fill='white'/>
+<path d='M198 163L192 154L193 153Z' fill='white'/>
+<path d='M198 163L193 153L194 150Z' fill='white'/>
+<path d='M198 163L194 150L195 148Z' fill='white'/>
+<path d='M198 163L195 148L197 148Z' fill='white'/>
+<path d='M198 163L197 148L198 147Z' fill='white'/>
+<path d='M198 163L198 147L199 148Z' fill='white'/>
+<path d='M198 163L199 148L201 148Z' fill='white'/>
+<path d='M198 163L201 148L203 150Z' fill='white'/>
+<path d='M198 163L203 150L204 153Z' fill='white'/>
+<path d='M198 163L204 153L205 154Z' fill='white'/>
+<path d='M198 163L205 154L206 157Z' fill='white'/>
+<path d='M198 163L206 157L206 160Z' fill='white'/>
+<path d='M198 163L206 160L207 163Z' fill='white'/>
+<path d='M207 163L206 166' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M206 166L206 169' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M206 169L205 171' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M205 171L204 173' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M204 173L203 176' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M203 176L201 177' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M201 177L199 177' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M199 177L198 179' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M198 179L197 177' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M197 177L195 177' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M195 177L194 176' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M194 176L193 173' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M193 173L192 171' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M192 171L191 169' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M191 169L191 166' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M191 166L190 163' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M190 163L191 160' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M191 160L191 157' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M191 157L192 154' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M192 154L193 153' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M193 153L194 150' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M194 150L195 148' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M195 148L197 148' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M197 148L198 147' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M198 147L199 148' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M199 148L201 148' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M201 148L203 150' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M203 150L204 153' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M204 153L205 154' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M205 154L206 157' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M206 157L206 160' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M206 160L207 163' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M186 160L195 160L194 163Z' fill='white'/>
+<path d='M186 160L194 163L194 166Z' fill='white'/>
+<path d='M186 160L194 166L193 169Z' fill='white'/>
+<path d='M186 160L193 169L192 170Z' fill='white'/>
+<path d='M186 160L192 170L191 173Z' fill='white'/>
+<path d='M186 160L191 173L189 174Z' fill='white'/>
+<path d='M186 160L189 174L187 174Z' fill='white'/>
+<path d='M186 160L187 174L186 176Z' fill='white'/>
+<path d='M186 160L186 176L185 174Z' fill='white'/>
+<path d='M186 160L185 174L183 174Z' fill='white'/>
+<path d='M186 160L183 174L181 173Z' fill='white'/>
+<path d='M186 160L181 173L180 170Z' fill='white'/>
+<path d='M186 160L180 170L179 169Z' fill='white'/>
+<path d='M186 160L179 169L178 166Z' fill='white'/>
+<path d='M186 160L178 166L178 163Z' fill='white'/>
+<path d='M186 160L178 163L177 160Z' fill='white'/>
+<path d='M186 160L177 160L178 157Z' fill='white'/>
+<path d='M186 160L178 157L178 154Z' fill='white'/>
+<path d='M186 160L178 154L179 151Z' fill='white'/>
+<path d='M186 160L179 151L180 150Z' fill='white'/>
+<path d='M186 160L180 150L181 147Z' fill='white'/>
+<path d='M186 160L181 147L183 145Z' fill='white'/>
+<path d='M186 160L183 145L185 145Z' fill='white'/>
+<path d='M186 160L185 145L186 144Z' fill='white'/>
+<path d='M186 160L186 144L187 145Z' fill='white'/>
+<path d='M186 160L187 145L189 145Z' fill='white'/>
+<path d='M186 160L189 145L191 147Z' fill='white'/>
+<path d='M186 160L191 147L192 150Z' fill='white'/>
+<path d='M186 160L192 150L193 151Z' fill='white'/>
+<path d='M186 160L193 151L194 154Z' fill='white'/>
+<path d='M186 160L194 154L194 157Z' fill='white'/>
+<path d='M186 160L194 157L195 160Z' fill='white'/>
+<path d='M195 160L194 163' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M194 163L194 166' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M194 166L193 169' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M193 169L192 170' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M192 170L191 173' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M191 173L189 174' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M189 174L187 174' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M187 174L186 176' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M186 176L185 174' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M185 174L183 174' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M183 174L181 173' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M181 173L180 170' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M180 170L179 169' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M179 169L178 166' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M178 166L178 163' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M178 163L177 160' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M177 160L178 157' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M178 157L178 154' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M178 154L179 151' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M179 151L180 150' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M180 150L181 147' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M181 147L183 145' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M183 145L185 145' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M185 145L186 144' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M186 144L187 145' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M187 145L189 145' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M189 145L191 147' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M191 147L192 150' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M192 150L193 151' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M193 151L194 154' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M194 154L194 157' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M194 157L195 160' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M174 157L182 157L181 160Z' fill='white'/>
+<path d='M174 157L181 160L181 163Z' fill='white'/>
+<path d='M174 157L181 163L180 166Z' fill='white'/>
+<path d='M174 157L180 166L179 167Z' fill='white'/>
+<path d='M174 157L179 167L178 170Z' fill='white'/>
+<path d='M174 157L178 170L176 171Z' fill='white'/>
+<path d='M174 157L176 171L175 171Z' fill='white'/>
+<path d='M174 157L175 171L174 173Z' fill='white'/>
+<path d='M174 157L174 173L173 171Z' fill='white'/>
+<path d='M174 157L173 171L171 171Z' fill='white'/>
+<path d='M174 157L171 171L169 170Z' fill='white'/>
+<path d='M174 157L169 170L168 167Z' fill='white'/>
+<path d='M174 157L168 167L167 166Z' fill='white'/>
+<path d='M174 157L167 166L166 163Z' fill='white'/>
+<path d='M174 157L166 163L166 160Z' fill='white'/>
+<path d='M174 157L166 160L165 157Z' fill='white'/>
+<path d='M174 157L165 157L166 154Z' fill='white'/>
+<path d='M174 157L166 154L166 151Z' fill='white'/>
+<path d='M174 157L166 151L167 148Z' fill='white'/>
+<path d='M174 157L167 148L168 147Z' fill='white'/>
+<path d='M174 157L168 147L169 144Z' fill='white'/>
+<path d='M174 157L169 144L171 143Z' fill='white'/>
+<path d='M174 157L171 143L173 143Z' fill='white'/>
+<path d='M174 157L173 143L174 141Z' fill='white'/>
+<path d='M174 157L174 141L175 143Z' fill='white'/>
+<path d='M174 157L175 143L176 143Z' fill='white'/>
+<path d='M174 157L176 143L178 144Z' fill='white'/>
+<path d='M174 157L178 144L179 147Z' fill='white'/>
+<path d='M174 157L179 147L180 148Z' fill='white'/>
+<path d='M174 157L180 148L181 151Z' fill='white'/>
+<path d='M174 157L181 151L181 154Z' fill='white'/>
+<path d='M174 157L181 154L182 157Z' fill='white'/>
+<path d='M182 157L181 160' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M181 160L181 163' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M181 163L180 166' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M180 166L179 167' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M179 167L178 170' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M178 170L176 171' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M176 171L175 171' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M175 171L174 173' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M174 173L173 171' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M173 171L171 171' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M171 171L169 170' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M169 170L168 167' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M168 167L167 166' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M167 166L166 163' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M166 163L166 160' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M166 160L165 157' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M165 157L166 154' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M166 154L166 151' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M166 151L167 148' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M167 148L168 147' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M168 147L169 144' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M169 144L171 143' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M171 143L173 143' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M173 143L174 141' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M174 141L175 143' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M175 143L176 143' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M176 143L178 144' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M178 144L179 147' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M179 147L180 148' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M180 148L181 151' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M181 151L181 154' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M181 154L182 157' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M166 148L182 148L182 154Z' fill='white'/>
+<path d='M166 148L182 154L181 160Z' fill='white'/>
+<path d='M166 148L181 160L179 166Z' fill='white'/>
+<path d='M166 148L179 166L177 170Z' fill='white'/>
+<path d='M166 148L177 170L175 174Z' fill='white'/>
+<path d='M166 148L175 174L172 177Z' fill='white'/>
+<path d='M166 148L172 177L169 180Z' fill='white'/>
+<path d='M166 148L169 180L166 180Z' fill='white'/>
+<path d='M166 148L166 180L163 180Z' fill='white'/>
+<path d='M166 148L163 180L160 177Z' fill='white'/>
+<path d='M166 148L160 177L157 174Z' fill='white'/>
+<path d='M166 148L157 174L155 170Z' fill='white'/>
+<path d='M166 148L155 170L153 166Z' fill='white'/>
+<path d='M166 148L153 166L151 160Z' fill='white'/>
+<path d='M166 148L151 160L150 154Z' fill='white'/>
+<path d='M166 148L150 154L150 148Z' fill='white'/>
+<path d='M166 148L150 148L150 143Z' fill='white'/>
+<path d='M166 148L150 143L151 137Z' fill='white'/>
+<path d='M166 148L151 137L153 131Z' fill='white'/>
+<path d='M166 148L153 131L155 127Z' fill='white'/>
+<path d='M166 148L155 127L157 122Z' fill='white'/>
+<path d='M166 148L157 122L160 120Z' fill='white'/>
+<path d='M166 148L160 120L163 117Z' fill='white'/>
+<path d='M166 148L163 117L166 117Z' fill='white'/>
+<path d='M166 148L166 117L169 117Z' fill='white'/>
+<path d='M166 148L169 117L172 120Z' fill='white'/>
+<path d='M166 148L172 120L175 122Z' fill='white'/>
+<path d='M166 148L175 122L177 127Z' fill='white'/>
+<path d='M166 148L177 127L179 131Z' fill='white'/>
+<path d='M166 148L179 131L181 137Z' fill='white'/>
+<path d='M166 148L181 137L182 143Z' fill='white'/>
+<path d='M166 148L182 143L182 148Z' fill='white'/>
+<path d='M182 148L182 154' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M182 154L181 160' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M181 160L179 166' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M179 166L177 170' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M177 170L175 174' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M175 174L172 177' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M172 177L169 180' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M169 180L166 180' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M166 180L163 180' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M163 180L160 177' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M160 177L157 174' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M157 174L155 170' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M155 170L153 166' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M153 166L151 160' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M151 160L150 154' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M150 154L150 148' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M150 148L150 143' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M150 143L151 137' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M151 137L153 131' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M153 131L155 127' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M155 127L157 122' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M157 122L160 120' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M160 120L163 117' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M163 117L166 117' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M166 117L169 117' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M169 117L172 120' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M172 120L175 122' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M175 122L177 127' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M177 127L179 131' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M179 131L181 137' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M181 137L182 143' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M182 143L182 148' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M159 114L182 114L182 120Z' fill='white'/>
+<path d='M159 114L182 120L180 125Z' fill='white'/>
+<path d='M159 114L180 125L178 130Z' fill='white'/>
+<path d='M159 114L178 130L176 135Z' fill='white'/>
+<path d='M159 114L176 135L172 138Z' fill='white'/>
+<path d='M159 114L172 138L168 141Z' fill='white'/>
+<path d='M159 114L168 141L163 144Z' fill='white'/>
+<path d='M159 114L163 144L159 144Z' fill='white'/>
+<path d='M159 114L159 144L156 144Z' fill='white'/>
+<path d='M159 114L156 144L151 141Z' fill='white'/>
+<path d='M159 114L151 141L147 138Z' fill='white'/>
+<path d='M159 114L147 138L143 135Z' fill='white'/>
+<path d='M159 114L143 135L140 130Z' fill='white'/>
+<path d='M159 114L140 130L138 125Z' fill='white'/>
+<path d='M159 114L138 125L137 120Z' fill='white'/>
+<path d='M159 114L137 120L137 114Z' fill='white'/>
+<path d='M159 114L137 114L137 108Z' fill='white'/>
+<path d='M159 114L137 108L138 102Z' fill='white'/>
+<path d='M159 114L138 102L140 98Z' fill='white'/>
+<path d='M159 114L140 98L143 92Z' fill='white'/>
+<path d='M159 114L143 92L147 89Z' fill='white'/>
+<path d='M159 114L147 89L151 86Z' fill='white'/>
+<path d='M159 114L151 86L156 84Z' fill='white'/>
+<path d='M159 114L156 84L159 84Z' fill='white'/>
+<path d='M159 114L159 84L163 84Z' fill='white'/>
+<path d='M159 114L163 84L168 86Z' fill='white'/>
+<path d='M159 114L168 86L172 89Z' fill='white'/>
+<path d='M159 114L172 89L176 92Z' fill='white'/>
+<path d='M159 114L176 92L178 98Z' fill='white'/>
+<path d='M159 114L178 98L180 102Z' fill='white'/>
+<path d='M159 114L180 102L182 108Z' fill='white'/>
+<path d='M159 114L182 108L182 114Z' fill='white'/>
+<path d='M182 114L182 120' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M182 120L180 125' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M180 125L178 130' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M178 130L176 135' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M176 135L172 138' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M172 138L168 141' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M168 141L163 144' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M163 144L159 144' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M159 144L156 144' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M156 144L151 141' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M151 141L147 138' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M147 138L143 135' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M143 135L140 130' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M140 130L138 125' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M138 125L137 120' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M137 120L137 114' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M137 114L137 108' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M137 108L138 102' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M138 102L140 98' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M140 98L143 92' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M143 92L147 89' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M147 89L151 86' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M151 86L156 84' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M156 84L159 84' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M159 84L163 84' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M163 84L168 86' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M168 86L172 89' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M172 89L176 92' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M176 92L178 98' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M178 98L180 102' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M180 102L182 108' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M182 108L182 114' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M147 86L140 68' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M140 68L133 68' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M133 68L136 68L135 68Z' fill='black'/>
+<path d='M133 68L135 68L135 69Z' fill='black'/>
+<path d='M133 68L135 69L135 69Z' fill='black'/>
+<path d='M133 68L135 69L135 71Z' fill='black'/>
+<path d='M133 68L135 71L134 71Z' fill='black'/>
+<path d='M133 68L134 71L134 71Z' fill='black'/>
+<path d='M133 68L134 71L133 71Z' fill='black'/>
+<path d='M133 68L133 71L133 72Z' fill='black'/>
+<path d='M133 68L133 72L133 71Z' fill='black'/>
+<path d='M133 68L133 71L132 71Z' fill='black'/>
+<path d='M133 68L132 71L132 71Z' fill='black'/>
+<path d='M133 68L132 71L131 71Z' fill='black'/>
+<path d='M133 68L131 71L131 69Z' fill='black'/>
+<path d='M133 68L131 69L131 69Z' fill='black'/>
+<path d='M133 68L131 69L131 68Z' fill='black'/>
+<path d='M133 68L131 68L130 68Z' fill='black'/>
+<path d='M133 68L130 68L131 68Z' fill='black'/>
+<path d='M133 68L131 68L131 66Z' fill='black'/>
+<path d='M133 68L131 66L131 66Z' fill='black'/>
+<path d='M133 68L131 66L131 65Z' fill='black'/>
+<path d='M133 68L131 65L132 65Z' fill='black'/>
+<path d='M133 68L132 65L132 65Z' fill='black'/>
+<path d='M133 68L132 65L133 65Z' fill='black'/>
+<path d='M133 68L133 65L133 63Z' fill='black'/>
+<path d='M133 68L133 63L133 65Z' fill='black'/>
+<path d='M133 68L133 65L134 65Z' fill='black'/>
+<path d='M133 68L134 65L134 65Z' fill='black'/>
+<path d='M133 68L134 65L135 65Z' fill='black'/>
+<path d='M133 68L135 65L135 66Z' fill='black'/>
+<path d='M133 68L135 66L135 66Z' fill='black'/>
+<path d='M133 68L135 66L135 68Z' fill='black'/>
+<path d='M133 68L135 68L136 68Z' fill='black'/>
+<path d='M170 84L176 66' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M176 66L183 69' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M184 69L187 69L186 69Z' fill='black'/>
+<path d='M184 69L186 69L186 71Z' fill='black'/>
+<path d='M184 69L186 71L186 71Z' fill='black'/>
+<path d='M184 69L186 71L186 72Z' fill='black'/>
+<path d='M184 69L186 72L185 72Z' fill='black'/>
+<path d='M184 69L185 72L185 72Z' fill='black'/>
+<path d='M184 69L185 72L184 72Z' fill='black'/>
+<path d='M184 69L184 72L184 73Z' fill='black'/>
+<path d='M184 69L184 73L184 72Z' fill='black'/>
+<path d='M184 69L184 72L183 72Z' fill='black'/>
+<path d='M184 69L183 72L183 72Z' fill='black'/>
+<path d='M184 69L183 72L182 72Z' fill='black'/>
+<path d='M184 69L182 72L182 71Z' fill='black'/>
+<path d='M184 69L182 71L182 71Z' fill='black'/>
+<path d='M184 69L182 71L182 69Z' fill='black'/>
+<path d='M184 69L182 69L181 69Z' fill='black'/>
+<path d='M184 69L181 69L182 69Z' fill='black'/>
+<path d='M184 69L182 69L182 68Z' fill='black'/>
+<path d='M184 69L182 68L182 68Z' fill='black'/>
+<path d='M184 69L182 68L182 66Z' fill='black'/>
+<path d='M184 69L182 66L183 66Z' fill='black'/>
+<path d='M184 69L183 66L183 66Z' fill='black'/>
+<path d='M184 69L183 66L184 66Z' fill='black'/>
+<path d='M184 69L184 66L184 65Z' fill='black'/>
+<path d='M184 69L184 65L184 66Z' fill='black'/>
+<path d='M184 69L184 66L185 66Z' fill='black'/>
+<path d='M184 69L185 66L185 66Z' fill='black'/>
+<path d='M184 69L185 66L186 66Z' fill='black'/>
+<path d='M184 69L186 66L186 68Z' fill='black'/>
+<path d='M184 69L186 68L186 68Z' fill='black'/>
+<path d='M184 69L186 68L186 69Z' fill='black'/>
+<path d='M184 69L186 69L187 69Z' fill='black'/>
+<path d='M151 112L159 112L158 114Z' fill='white'/>
+<path d='M151 112L158 114L158 117Z' fill='white'/>
+<path d='M151 112L158 117L157 120Z' fill='white'/>
+<path d='M151 112L157 120L157 121Z' fill='white'/>
+<path d='M151 112L157 121L156 122Z' fill='white'/>
+<path d='M151 112L156 122L154 124Z' fill='white'/>
+<path d='M151 112L154 124L152 124Z' fill='white'/>
+<path d='M151 112L152 124L151 125Z' fill='white'/>
+<path d='M151 112L151 125L150 124Z' fill='white'/>
+<path d='M151 112L150 124L148 124Z' fill='white'/>
+<path d='M151 112L148 124L146 122Z' fill='white'/>
+<path d='M151 112L146 122L145 121Z' fill='white'/>
+<path d='M151 112L145 121L144 120Z' fill='white'/>
+<path d='M151 112L144 120L143 117Z' fill='white'/>
+<path d='M151 112L143 117L143 114Z' fill='white'/>
+<path d='M151 112L143 114L142 112Z' fill='white'/>
+<path d='M151 112L142 112L143 111Z' fill='white'/>
+<path d='M151 112L143 111L143 108Z' fill='white'/>
+<path d='M151 112L143 108L144 105Z' fill='white'/>
+<path d='M151 112L144 105L145 104Z' fill='white'/>
+<path d='M151 112L145 104L146 102Z' fill='white'/>
+<path d='M151 112L146 102L148 101Z' fill='white'/>
+<path d='M151 112L148 101L150 101Z' fill='white'/>
+<path d='M151 112L150 101L151 99Z' fill='white'/>
+<path d='M151 112L151 99L152 101Z' fill='white'/>
+<path d='M151 112L152 101L154 101Z' fill='white'/>
+<path d='M151 112L154 101L156 102Z' fill='white'/>
+<path d='M151 112L156 102L157 104Z' fill='white'/>
+<path d='M151 112L157 104L157 105Z' fill='white'/>
+<path d='M151 112L157 105L158 108Z' fill='white'/>
+<path d='M151 112L158 108L158 111Z' fill='white'/>
+<path d='M151 112L158 111L159 112Z' fill='white'/>
+<path d='M159 112L158 114' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M158 114L158 117' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M158 117L157 120' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M157 120L157 121' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M157 121L156 122' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M156 122L154 124' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M154 124L152 124' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M152 124L151 125' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M151 125L150 124' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M150 124L148 124' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M148 124L146 122' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M146 122L145 121' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M145 121L144 120' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M144 120L143 117' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M143 117L143 114' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M143 114L142 112' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M142 112L143 111' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M143 111L143 108' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M143 108L144 105' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M144 105L145 104' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M145 104L146 102' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M146 102L148 101' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M148 101L150 101' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M150 101L151 99' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M151 99L152 101' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M152 101L154 101' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M154 101L156 102' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M156 102L157 104' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M157 104L157 105' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M157 105L158 108' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M158 108L158 111' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M158 111L159 112' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M171 112L179 112L178 114Z' fill='white'/>
+<path d='M171 112L178 114L178 117Z' fill='white'/>
+<path d='M171 112L178 117L177 120Z' fill='white'/>
+<path d='M171 112L177 120L176 121Z' fill='white'/>
+<path d='M171 112L176 121L176 122Z' fill='white'/>
+<path d='M171 112L176 122L174 124Z' fill='white'/>
+<path d='M171 112L174 124L172 124Z' fill='white'/>
+<path d='M171 112L172 124L171 125Z' fill='white'/>
+<path d='M171 112L171 125L170 124Z' fill='white'/>
+<path d='M171 112L170 124L168 124Z' fill='white'/>
+<path d='M171 112L168 124L166 122Z' fill='white'/>
+<path d='M171 112L166 122L165 121Z' fill='white'/>
+<path d='M171 112L165 121L164 120Z' fill='white'/>
+<path d='M171 112L164 120L163 117Z' fill='white'/>
+<path d='M171 112L163 117L163 114Z' fill='white'/>
+<path d='M171 112L163 114L162 112Z' fill='white'/>
+<path d='M171 112L162 112L163 111Z' fill='white'/>
+<path d='M171 112L163 111L163 108Z' fill='white'/>
+<path d='M171 112L163 108L164 105Z' fill='white'/>
+<path d='M171 112L164 105L165 104Z' fill='white'/>
+<path d='M171 112L165 104L166 102Z' fill='white'/>
+<path d='M171 112L166 102L168 101Z' fill='white'/>
+<path d='M171 112L168 101L170 101Z' fill='white'/>
+<path d='M171 112L170 101L171 99Z' fill='white'/>
+<path d='M171 112L171 99L172 101Z' fill='white'/>
+<path d='M171 112L172 101L174 101Z' fill='white'/>
+<path d='M171 112L174 101L176 102Z' fill='white'/>
+<path d='M171 112L176 102L176 104Z' fill='white'/>
+<path d='M171 112L176 104L177 105Z' fill='white'/>
+<path d='M171 112L177 105L178 108Z' fill='white'/>
+<path d='M171 112L178 108L178 111Z' fill='white'/>
+<path d='M171 112L178 111L179 112Z' fill='white'/>
+<path d='M179 112L178 114' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M178 114L178 117' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M178 117L177 120' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M177 120L176 121' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M176 121L176 122' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M176 122L174 124' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M174 124L172 124' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M172 124L171 125' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M171 125L170 124' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M170 124L168 124' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M168 124L166 122' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M166 122L165 121' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M165 121L164 120' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M164 120L163 117' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M163 117L163 114' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M163 114L162 112' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M162 112L163 111' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M163 111L163 108' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M163 108L164 105' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M164 105L165 104' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M165 104L166 102' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M166 102L168 101' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M168 101L170 101' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M170 101L171 99' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M171 99L172 101' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M172 101L174 101' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M174 101L176 102' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M176 102L176 104' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M176 104L177 105' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M177 105L178 108' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M178 108L178 111' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M178 111L179 112' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M159 109L162 109' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M151 112L152 112L152 112Z' fill='black'/>
+<path d='M151 112L152 112L152 112Z' fill='black'/>
+<path d='M151 112L152 112L152 114Z' fill='black'/>
+<path d='M151 112L152 114L152 114Z' fill='black'/>
+<path d='M151 112L152 114L151 114Z' fill='black'/>
+<path d='M151 112L151 114L151 114Z' fill='black'/>
+<path d='M151 112L151 114L151 114Z' fill='black'/>
+<path d='M151 112L151 114L151 115Z' fill='black'/>
+<path d='M151 112L151 115L151 114Z' fill='black'/>
+<path d='M151 112L151 114L151 114Z' fill='black'/>
+<path d='M151 112L151 114L151 114Z' fill='black'/>
+<path d='M151 112L151 114L150 114Z' fill='black'/>
+<path d='M151 112L150 114L150 114Z' fill='black'/>
+<path d='M151 112L150 114L150 112Z' fill='black'/>
+<path d='M151 112L150 112L150 112Z' fill='black'/>
+<path d='M151 112L150 112L150 112Z' fill='black'/>
+<path d='M151 112L150 112L150 112Z' fill='black'/>
+<path d='M151 112L150 112L150 112Z' fill='black'/>
+<path d='M151 112L150 112L150 111Z' fill='black'/>
+<path d='M151 112L150 111L150 111Z' fill='black'/>
+<path d='M151 112L150 111L151 111Z' fill='black'/>
+<path d='M151 112L151 111L151 111Z' fill='black'/>
+<path d='M151 112L151 111L151 111Z' fill='black'/>
+<path d='M151 112L151 111L151 109Z' fill='black'/>
+<path d='M151 112L151 109L151 111Z' fill='black'/>
+<path d='M151 112L151 111L151 111Z' fill='black'/>
+<path d='M151 112L151 111L151 111Z' fill='black'/>
+<path d='M151 112L151 111L152 111Z' fill='black'/>
+<path d='M151 112L152 111L152 111Z' fill='black'/>
+<path d='M151 112L152 111L152 112Z' fill='black'/>
+<path d='M151 112L152 112L152 112Z' fill='black'/>
+<path d='M151 112L152 112L152 112Z' fill='black'/>
+<path d='M170 112L171 112L171 112Z' fill='black'/>
+<path d='M170 112L171 112L171 112Z' fill='black'/>
+<path d='M170 112L171 112L171 114Z' fill='black'/>
+<path d='M170 112L171 114L171 114Z' fill='black'/>
+<path d='M170 112L171 114L170 114Z' fill='black'/>
+<path d='M170 112L170 114L170 114Z' fill='black'/>
+<path d='M170 112L170 114L170 114Z' fill='black'/>
+<path d='M170 112L170 114L170 115Z' fill='black'/>
+<path d='M170 112L170 115L170 114Z' fill='black'/>
+<path d='M170 112L170 114L170 114Z' fill='black'/>
+<path d='M170 112L170 114L170 114Z' fill='black'/>
+<path d='M170 112L170 114L169 114Z' fill='black'/>
+<path d='M170 112L169 114L169 114Z' fill='black'/>
+<path d='M170 112L169 114L169 112Z' fill='black'/>
+<path d='M170 112L169 112L169 112Z' fill='black'/>
+<path d='M170 112L169 112L169 112Z' fill='black'/>
+<path d='M170 112L169 112L169 112Z' fill='black'/>
+<path d='M170 112L169 112L169 112Z' fill='black'/>
+<path d='M170 112L169 112L169 111Z' fill='black'/>
+<path d='M170 112L169 111L169 111Z' fill='black'/>
+<path d='M170 112L169 111L170 111Z' fill='black'/>
+<path d='M170 112L170 111L170 111Z' fill='black'/>
+<path d='M170 112L170 111L170 111Z' fill='black'/>
+<path d='M170 112L170 111L170 109Z' fill='black'/>
+<path d='M170 112L170 109L170 111Z' fill='black'/>
+<path d='M170 112L170 111L170 111Z' fill='black'/>
+<path d='M170 112L170 111L170 111Z' fill='black'/>
+<path d='M170 112L170 111L171 111Z' fill='black'/>
+<path d='M170 112L171 111L171 111Z' fill='black'/>
+<path d='M170 112L171 111L171 112Z' fill='black'/>
+<path d='M170 112L171 112L171 112Z' fill='black'/>
+<path d='M170 112L171 112L171 112Z' fill='black'/>
+<path d='M155 131L159 135' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M159 135L165 131' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M128 154L166 164L125 192Z' fill='white'/>
+<path d='M128 154L166 164' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M166 164L204 154' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M204 154L210 192' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M210 192L166 200' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M166 200L122 192' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M122 192L128 154' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M166 164L166 200' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M133 169L159 176' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M133 180L159 187' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M173 176L199 169' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M173 187L199 180' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M138 170L144 170L143 170Z' fill='white'/>
+<path d='M138 170L143 170L143 171Z' fill='white'/>
+<path d='M138 170L143 171L142 173Z' fill='white'/>
+<path d='M138 170L142 173L142 174Z' fill='white'/>
+<path d='M138 170L142 174L141 176Z' fill='white'/>
+<path d='M138 170L141 176L140 176Z' fill='white'/>
+<path d='M138 170L140 176L139 176Z' fill='white'/>
+<path d='M138 170L139 176L138 177Z' fill='white'/>
+<path d='M138 170L138 177L138 176Z' fill='white'/>
+<path d='M138 170L138 176L137 176Z' fill='white'/>
+<path d='M138 170L137 176L136 176Z' fill='white'/>
+<path d='M138 170L136 176L135 174Z' fill='white'/>
+<path d='M138 170L135 174L135 173Z' fill='white'/>
+<path d='M138 170L135 173L134 171Z' fill='white'/>
+<path d='M138 170L134 171L134 170Z' fill='white'/>
+<path d='M138 170L134 170L133 170Z' fill='white'/>
+<path d='M138 170L133 170L134 170Z' fill='white'/>
+<path d='M138 170L134 170L134 169Z' fill='white'/>
+<path d='M138 170L134 169L135 167Z' fill='white'/>
+<path d='M138 170L135 167L135 166Z' fill='white'/>
+<path d='M138 170L135 166L136 164Z' fill='white'/>
+<path d='M138 170L136 164L137 164Z' fill='white'/>
+<path d='M138 170L137 164L138 164Z' fill='white'/>
+<path d='M138 170L138 164L138 163Z' fill='white'/>
+<path d='M138 170L138 163L139 164Z' fill='white'/>
+<path d='M138 170L139 164L140 164Z' fill='white'/>
+<path d='M138 170L140 164L141 164Z' fill='white'/>
+<path d='M138 170L141 164L142 166Z' fill='white'/>
+<path d='M138 170L142 166L142 167Z' fill='white'/>
+<path d='M138 170L142 167L143 169Z' fill='white'/>
+<path d='M138 170L143 169L143 170Z' fill='white'/>
+<path d='M138 170L143 170L144 170Z' fill='white'/>
+<path d='M144 170L143 170' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M143 170L143 171' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M143 171L142 173' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M142 173L142 174' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M142 174L141 176' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M141 176L140 176' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M140 176L139 176' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M139 176L138 177' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M138 177L138 176' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M138 176L137 176' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M137 176L136 176' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M136 176L135 174' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M135 174L135 173' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M135 173L134 171' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M134 171L134 170' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M134 170L133 170' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M133 170L134 170' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M134 170L134 169' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M134 169L135 167' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M135 167L135 166' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M135 166L136 164' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M136 164L137 164' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M137 164L138 164' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M138 164L138 163' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M138 163L139 164' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M139 164L140 164' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M140 164L141 164' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M141 164L142 166' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M142 166L142 167' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M142 167L143 169' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M143 169L143 170' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M143 170L144 170' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M193 169L198 169L197 169Z' fill='white'/>
+<path d='M193 169L197 169L197 170Z' fill='white'/>
+<path d='M193 169L197 170L196 171Z' fill='white'/>
+<path d='M193 169L196 171L196 173Z' fill='white'/>
+<path d='M193 169L196 173L195 174Z' fill='white'/>
+<path d='M193 169L195 174L195 174Z' fill='white'/>
+<path d='M193 169L195 174L194 174Z' fill='white'/>
+<path d='M193 169L194 174L193 176Z' fill='white'/>
+<path d='M193 169L193 176L192 174Z' fill='white'/>
+<path d='M193 169L192 174L191 174Z' fill='white'/>
+<path d='M193 169L191 174L190 174Z' fill='white'/>
+<path d='M193 169L190 174L189 173Z' fill='white'/>
+<path d='M193 169L189 173L189 171Z' fill='white'/>
+<path d='M193 169L189 171L188 170Z' fill='white'/>
+<path d='M193 169L188 170L188 169Z' fill='white'/>
+<path d='M193 169L188 169L187 169Z' fill='white'/>
+<path d='M193 169L187 169L188 169Z' fill='white'/>
+<path d='M193 169L188 169L188 167Z' fill='white'/>
+<path d='M193 169L188 167L189 166Z' fill='white'/>
+<path d='M193 169L189 166L189 164Z' fill='white'/>
+<path d='M193 169L189 164L190 163Z' fill='white'/>
+<path d='M193 169L190 163L191 163Z' fill='white'/>
+<path d='M193 169L191 163L192 163Z' fill='white'/>
+<path d='M193 169L192 163L193 161Z' fill='white'/>
+<path d='M193 169L193 161L194 163Z' fill='white'/>
+<path d='M193 169L194 163L195 163Z' fill='white'/>
+<path d='M193 169L195 163L195 163Z' fill='white'/>
+<path d='M193 169L195 163L196 164Z' fill='white'/>
+<path d='M193 169L196 164L196 166Z' fill='white'/>
+<path d='M193 169L196 166L197 167Z' fill='white'/>
+<path d='M193 169L197 167L197 169Z' fill='white'/>
+<path d='M193 169L197 169L198 169Z' fill='white'/>
+<path d='M198 169L197 169' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M197 169L197 170' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M197 170L196 171' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M196 171L196 173' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M196 173L195 174' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M195 174L195 174' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M195 174L194 174' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M194 174L193 176' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M193 176L192 174' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M192 174L191 174' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M191 174L190 174' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M190 174L189 173' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M189 173L189 171' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M189 171L188 170' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M188 170L188 169' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M188 169L187 169' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M187 169L188 169' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M188 169L188 167' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M188 167L189 166' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M189 166L189 164' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M189 164L190 163' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M190 163L191 163' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M191 163L192 163' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M192 163L193 161' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M193 161L194 163' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M194 163L195 163' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M195 163L195 163' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M195 163L196 164' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M196 164L196 166' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M196 166L197 167' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M197 167L197 169' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M197 169L198 169' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M64 173L118 179L60 196Z' fill='white'/>
+<path d='M64 173L118 179' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M118 179L172 173' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M172 173L180 196' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M180 196L118 202' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M118 202L56 196' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M56 196L64 173' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M118 179L118 202' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M71 182L109 187' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M71 189L109 194' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M127 187L165 182' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M127 194L165 189' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<text x='115' y='245' text-anchor='middle' font-family='sans-serif' font-size='28'>CrossHihi</text>
+<path d='M325 137L348 137L347 141Z' fill='white'/>
+<path d='M325 137L347 141L346 146Z' fill='white'/>
+<path d='M325 137L346 146L343 149Z' fill='white'/>
+<path d='M325 137L343 149L341 153Z' fill='white'/>
+<path d='M325 137L341 153L337 155Z' fill='white'/>
+<path d='M325 137L337 155L334 158Z' fill='white'/>
+<path d='M325 137L334 158L329 159Z' fill='white'/>
+<path d='M325 137L329 159L325 159Z' fill='white'/>
+<path d='M325 137L325 159L322 159Z' fill='white'/>
+<path d='M325 137L322 159L317 158Z' fill='white'/>
+<path d='M325 137L317 158L313 155Z' fill='white'/>
+<path d='M325 137L313 155L310 153Z' fill='white'/>
+<path d='M325 137L310 153L307 149Z' fill='white'/>
+<path d='M325 137L307 149L305 146Z' fill='white'/>
+<path d='M325 137L305 146L304 141Z' fill='white'/>
+<path d='M325 137L304 141L302 137Z' fill='white'/>
+<path d='M325 137L302 137L304 134Z' fill='white'/>
+<path d='M325 137L304 134L305 129Z' fill='white'/>
+<path d='M325 137L305 129L307 125Z' fill='white'/>
+<path d='M325 137L307 125L310 122Z' fill='white'/>
+<path d='M325 137L310 122L313 119Z' fill='white'/>
+<path d='M325 137L313 119L317 117Z' fill='white'/>
+<path d='M325 137L317 117L322 116Z' fill='white'/>
+<path d='M325 137L322 116L325 116Z' fill='white'/>
+<path d='M325 137L325 116L329 116Z' fill='white'/>
+<path d='M325 137L329 116L334 117Z' fill='white'/>
+<path d='M325 137L334 117L337 119Z' fill='white'/>
+<path d='M325 137L337 119L341 122Z' fill='white'/>
+<path d='M325 137L341 122L343 125Z' fill='white'/>
+<path d='M325 137L343 125L346 129Z' fill='white'/>
+<path d='M325 137L346 129L347 134Z' fill='white'/>
+<path d='M325 137L347 134L348 137Z' fill='white'/>
+<path d='M348 137L347 141' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M347 141L346 146' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M346 146L343 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M343 149L341 153' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M341 153L337 155' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M337 155L334 158' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M334 158L329 159' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M329 159L325 159' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M325 159L322 159' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M322 159L317 158' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M317 158L313 155' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M313 155L310 153' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M310 153L307 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M307 149L305 146' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M305 146L304 141' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M304 141L302 137' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M302 137L304 134' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M304 134L305 129' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M305 129L307 125' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M307 125L310 122' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M310 122L313 119' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M313 119L317 117' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M317 117L322 116' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M322 116L325 116' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M325 116L329 116' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M329 116L334 117' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M334 117L337 119' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M337 119L341 122' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M341 122L343 125' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M343 125L346 129' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M346 129L347 134' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M347 134L348 137' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M342 151L359 140' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M359 140L361 119' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M268 95L270 59L298 81Z' fill='black'/>
+<path d='M317 79L348 62L344 103Z' fill='black'/>
+<path d='M274 86L275 69L289 82Z' fill='white'/>
+<path d='M324 83L342 70L338 93Z' fill='white'/>
+<path d='M307 107L349 107L348 112Z' fill='white'/>
+<path d='M307 107L348 112L346 118Z' fill='white'/>
+<path d='M307 107L346 118L342 123Z' fill='white'/>
+<path d='M307 107L342 123L336 128Z' fill='white'/>
+<path d='M307 107L336 128L330 131Z' fill='white'/>
+<path d='M307 107L330 131L323 134Z' fill='white'/>
+<path d='M307 107L323 134L314 136Z' fill='white'/>
+<path d='M307 107L314 136L307 136Z' fill='white'/>
+<path d='M307 107L307 136L300 136Z' fill='white'/>
+<path d='M307 107L300 136L292 134Z' fill='white'/>
+<path d='M307 107L292 134L284 131Z' fill='white'/>
+<path d='M307 107L284 131L278 128Z' fill='white'/>
+<path d='M307 107L278 128L272 123Z' fill='white'/>
+<path d='M307 107L272 123L269 118Z' fill='white'/>
+<path d='M307 107L269 118L266 112Z' fill='white'/>
+<path d='M307 107L266 112L265 107Z' fill='white'/>
+<path d='M307 107L265 107L266 103Z' fill='white'/>
+<path d='M307 107L266 103L269 97Z' fill='white'/>
+<path d='M307 107L269 97L272 92Z' fill='white'/>
+<path d='M307 107L272 92L278 87Z' fill='white'/>
+<path d='M307 107L278 87L284 83Z' fill='white'/>
+<path d='M307 107L284 83L292 81Z' fill='white'/>
+<path d='M307 107L292 81L300 79Z' fill='white'/>
+<path d='M307 107L300 79L307 79Z' fill='white'/>
+<path d='M307 107L307 79L314 79Z' fill='white'/>
+<path d='M307 107L314 79L323 81Z' fill='white'/>
+<path d='M307 107L323 81L330 83Z' fill='white'/>
+<path d='M307 107L330 83L336 87Z' fill='white'/>
+<path d='M307 107L336 87L342 92Z' fill='white'/>
+<path d='M307 107L342 92L346 97Z' fill='white'/>
+<path d='M307 107L346 97L348 103Z' fill='white'/>
+<path d='M307 107L348 103L349 107Z' fill='white'/>
+<path d='M349 107L348 112' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M348 112L346 118' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M346 118L342 123' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M342 123L336 128' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M336 128L330 131' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M330 131L323 134' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M323 134L314 136' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M314 136L307 136' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M307 136L300 136' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M300 136L292 134' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M292 134L284 131' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M284 131L278 128' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M278 128L272 123' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M272 123L269 118' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M269 118L266 112' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M266 112L265 107' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M265 107L266 103' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M266 103L269 97' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M269 97L272 92' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M272 92L278 87' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M278 87L284 83' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M284 83L292 81' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M292 81L300 79' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M300 79L307 79' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M307 79L314 79' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M314 79L323 81' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M323 81L330 83' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M330 83L336 87' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M336 87L342 92' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M342 92L346 97' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M346 97L348 103' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M348 103L349 107' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M324 86L336 86L335 87Z' fill='black'/>
+<path d='M324 86L335 87L335 88Z' fill='black'/>
+<path d='M324 86L335 88L334 89Z' fill='black'/>
+<path d='M324 86L334 89L332 91Z' fill='black'/>
+<path d='M324 86L332 91L330 91Z' fill='black'/>
+<path d='M324 86L330 91L328 92Z' fill='black'/>
+<path d='M324 86L328 92L325 92Z' fill='black'/>
+<path d='M324 86L325 92L324 93Z' fill='black'/>
+<path d='M324 86L324 93L323 92Z' fill='black'/>
+<path d='M324 86L323 92L320 92Z' fill='black'/>
+<path d='M324 86L320 92L318 91Z' fill='black'/>
+<path d='M324 86L318 91L316 91Z' fill='black'/>
+<path d='M324 86L316 91L314 89Z' fill='black'/>
+<path d='M324 86L314 89L313 88Z' fill='black'/>
+<path d='M324 86L313 88L313 87Z' fill='black'/>
+<path d='M324 86L313 87L312 86Z' fill='black'/>
+<path d='M324 86L312 86L313 85Z' fill='black'/>
+<path d='M324 86L313 85L313 83Z' fill='black'/>
+<path d='M324 86L313 83L314 82Z' fill='black'/>
+<path d='M324 86L314 82L316 81Z' fill='black'/>
+<path d='M324 86L316 81L318 81Z' fill='black'/>
+<path d='M324 86L318 81L320 80Z' fill='black'/>
+<path d='M324 86L320 80L323 80Z' fill='black'/>
+<path d='M324 86L323 80L324 79Z' fill='black'/>
+<path d='M324 86L324 79L325 80Z' fill='black'/>
+<path d='M324 86L325 80L328 80Z' fill='black'/>
+<path d='M324 86L328 80L330 81Z' fill='black'/>
+<path d='M324 86L330 81L332 81Z' fill='black'/>
+<path d='M324 86L332 81L334 82Z' fill='black'/>
+<path d='M324 86L334 82L335 83Z' fill='black'/>
+<path d='M324 86L335 83L335 85Z' fill='black'/>
+<path d='M324 86L335 85L336 86Z' fill='black'/>
+<path d='M287 104L290 104L289 104Z' fill='black'/>
+<path d='M287 104L289 104L289 105Z' fill='black'/>
+<path d='M287 104L289 105L289 106Z' fill='black'/>
+<path d='M287 104L289 106L289 107Z' fill='black'/>
+<path d='M287 104L289 107L288 107Z' fill='black'/>
+<path d='M287 104L288 107L288 109Z' fill='black'/>
+<path d='M287 104L288 109L287 109Z' fill='black'/>
+<path d='M287 104L287 109L287 109Z' fill='black'/>
+<path d='M287 104L287 109L287 109Z' fill='black'/>
+<path d='M287 104L287 109L286 109Z' fill='black'/>
+<path d='M287 104L286 109L286 107Z' fill='black'/>
+<path d='M287 104L286 107L284 107Z' fill='black'/>
+<path d='M287 104L284 107L284 106Z' fill='black'/>
+<path d='M287 104L284 106L284 105Z' fill='black'/>
+<path d='M287 104L284 105L284 104Z' fill='black'/>
+<path d='M287 104L284 104L283 104Z' fill='black'/>
+<path d='M287 104L283 104L284 104Z' fill='black'/>
+<path d='M287 104L284 104L284 103Z' fill='black'/>
+<path d='M287 104L284 103L284 101Z' fill='black'/>
+<path d='M287 104L284 101L284 100Z' fill='black'/>
+<path d='M287 104L284 100L286 100Z' fill='black'/>
+<path d='M287 104L286 100L286 99Z' fill='black'/>
+<path d='M287 104L286 99L287 99Z' fill='black'/>
+<path d='M287 104L287 99L287 99Z' fill='black'/>
+<path d='M287 104L287 99L287 99Z' fill='black'/>
+<path d='M287 104L287 99L288 99Z' fill='black'/>
+<path d='M287 104L288 99L288 100Z' fill='black'/>
+<path d='M287 104L288 100L289 100Z' fill='black'/>
+<path d='M287 104L289 100L289 101Z' fill='black'/>
+<path d='M287 104L289 101L289 103Z' fill='black'/>
+<path d='M287 104L289 103L289 104Z' fill='black'/>
+<path d='M287 104L289 104L290 104Z' fill='black'/>
+<path d='M324 104L328 104L326 104Z' fill='black'/>
+<path d='M324 104L326 104L326 105Z' fill='black'/>
+<path d='M324 104L326 105L326 106Z' fill='black'/>
+<path d='M324 104L326 106L326 107Z' fill='black'/>
+<path d='M324 104L326 107L325 107Z' fill='black'/>
+<path d='M324 104L325 107L325 109Z' fill='black'/>
+<path d='M324 104L325 109L324 109Z' fill='black'/>
+<path d='M324 104L324 109L324 109Z' fill='black'/>
+<path d='M324 104L324 109L324 109Z' fill='black'/>
+<path d='M324 104L324 109L323 109Z' fill='black'/>
+<path d='M324 104L323 109L323 107Z' fill='black'/>
+<path d='M324 104L323 107L322 107Z' fill='black'/>
+<path d='M324 104L322 107L322 106Z' fill='black'/>
+<path d='M324 104L322 106L322 105Z' fill='black'/>
+<path d='M324 104L322 105L322 104Z' fill='black'/>
+<path d='M324 104L322 104L320 104Z' fill='black'/>
+<path d='M324 104L320 104L322 104Z' fill='black'/>
+<path d='M324 104L322 104L322 103Z' fill='black'/>
+<path d='M324 104L322 103L322 101Z' fill='black'/>
+<path d='M324 104L322 101L322 100Z' fill='black'/>
+<path d='M324 104L322 100L323 100Z' fill='black'/>
+<path d='M324 104L323 100L323 99Z' fill='black'/>
+<path d='M324 104L323 99L324 99Z' fill='black'/>
+<path d='M324 104L324 99L324 99Z' fill='black'/>
+<path d='M324 104L324 99L324 99Z' fill='black'/>
+<path d='M324 104L324 99L325 99Z' fill='black'/>
+<path d='M324 104L325 99L325 100Z' fill='black'/>
+<path d='M324 104L325 100L326 100Z' fill='black'/>
+<path d='M324 104L326 100L326 101Z' fill='black'/>
+<path d='M324 104L326 101L326 103Z' fill='black'/>
+<path d='M324 104L326 103L326 104Z' fill='black'/>
+<path d='M324 104L326 104L328 104Z' fill='black'/>
+<path d='M302 113L307 113' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M307 113L305 117' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M305 117L300 122' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M305 117L311 122' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M276 116L253 111' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M275 122L252 124' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M336 116L362 111' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M337 122L364 124' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M281 142L293 142L292 143Z' fill='white'/>
+<path d='M281 142L292 143L292 145Z' fill='white'/>
+<path d='M281 142L292 145L290 146Z' fill='white'/>
+<path d='M281 142L290 146L289 147Z' fill='white'/>
+<path d='M281 142L289 147L287 148Z' fill='white'/>
+<path d='M281 142L287 148L284 149Z' fill='white'/>
+<path d='M281 142L284 149L282 149Z' fill='white'/>
+<path d='M281 142L282 149L281 149Z' fill='white'/>
+<path d='M281 142L281 149L280 149Z' fill='white'/>
+<path d='M281 142L280 149L277 149Z' fill='white'/>
+<path d='M281 142L277 149L275 148Z' fill='white'/>
+<path d='M281 142L275 148L272 147Z' fill='white'/>
+<path d='M281 142L272 147L271 146Z' fill='white'/>
+<path d='M281 142L271 146L270 145Z' fill='white'/>
+<path d='M281 142L270 145L270 143Z' fill='white'/>
+<path d='M281 142L270 143L269 142Z' fill='white'/>
+<path d='M281 142L269 142L270 141Z' fill='white'/>
+<path d='M281 142L270 141L270 140Z' fill='white'/>
+<path d='M281 142L270 140L271 139Z' fill='white'/>
+<path d='M281 142L271 139L272 137Z' fill='white'/>
+<path d='M281 142L272 137L275 136Z' fill='white'/>
+<path d='M281 142L275 136L277 135Z' fill='white'/>
+<path d='M281 142L277 135L280 135Z' fill='white'/>
+<path d='M281 142L280 135L281 135Z' fill='white'/>
+<path d='M281 142L281 135L282 135Z' fill='white'/>
+<path d='M281 142L282 135L284 135Z' fill='white'/>
+<path d='M281 142L284 135L287 136Z' fill='white'/>
+<path d='M281 142L287 136L289 137Z' fill='white'/>
+<path d='M281 142L289 137L290 139Z' fill='white'/>
+<path d='M281 142L290 139L292 140Z' fill='white'/>
+<path d='M281 142L292 140L292 141Z' fill='white'/>
+<path d='M281 142L292 141L293 142Z' fill='white'/>
+<path d='M293 142L292 143' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M292 143L292 145' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M292 145L290 146' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M290 146L289 147' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M289 147L287 148' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M287 148L284 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M284 149L282 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M282 149L281 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M281 149L280 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M280 149L277 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M277 149L275 148' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M275 148L272 147' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M272 147L271 146' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M271 146L270 145' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M270 145L270 143' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M270 143L269 142' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M269 142L270 141' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M270 141L270 140' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M270 140L271 139' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M271 139L272 137' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M272 137L275 136' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M275 136L277 135' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M277 135L280 135' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M280 135L281 135' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M281 135L282 135' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M282 135L284 135' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M284 135L287 136' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M287 136L289 137' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M289 137L290 139' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M290 139L292 140' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M292 140L292 141' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M292 141L293 142' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M328 142L340 142L338 143Z' fill='white'/>
+<path d='M328 142L338 143L338 145Z' fill='white'/>
+<path d='M328 142L338 145L337 146Z' fill='white'/>
+<path d='M328 142L337 146L336 147Z' fill='white'/>
+<path d='M328 142L336 147L334 148Z' fill='white'/>
+<path d='M328 142L334 148L331 149Z' fill='white'/>
+<path d='M328 142L331 149L329 149Z' fill='white'/>
+<path d='M328 142L329 149L328 149Z' fill='white'/>
+<path d='M328 142L328 149L326 149Z' fill='white'/>
+<path d='M328 142L326 149L324 149Z' fill='white'/>
+<path d='M328 142L324 149L322 148Z' fill='white'/>
+<path d='M328 142L322 148L319 147Z' fill='white'/>
+<path d='M328 142L319 147L318 146Z' fill='white'/>
+<path d='M328 142L318 146L317 145Z' fill='white'/>
+<path d='M328 142L317 145L317 143Z' fill='white'/>
+<path d='M328 142L317 143L316 142Z' fill='white'/>
+<path d='M328 142L316 142L317 141Z' fill='white'/>
+<path d='M328 142L317 141L317 140Z' fill='white'/>
+<path d='M328 142L317 140L318 139Z' fill='white'/>
+<path d='M328 142L318 139L319 137Z' fill='white'/>
+<path d='M328 142L319 137L322 136Z' fill='white'/>
+<path d='M328 142L322 136L324 135Z' fill='white'/>
+<path d='M328 142L324 135L326 135Z' fill='white'/>
+<path d='M328 142L326 135L328 135Z' fill='white'/>
+<path d='M328 142L328 135L329 135Z' fill='white'/>
+<path d='M328 142L329 135L331 135Z' fill='white'/>
+<path d='M328 142L331 135L334 136Z' fill='white'/>
+<path d='M328 142L334 136L336 137Z' fill='white'/>
+<path d='M328 142L336 137L337 139Z' fill='white'/>
+<path d='M328 142L337 139L338 140Z' fill='white'/>
+<path d='M328 142L338 140L338 141Z' fill='white'/>
+<path d='M328 142L338 141L340 142Z' fill='white'/>
+<path d='M340 142L338 143' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M338 143L338 145' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M338 145L337 146' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M337 146L336 147' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M336 147L334 148' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M334 148L331 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M331 149L329 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M329 149L328 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M328 149L326 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M326 149L324 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M324 149L322 148' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M322 148L319 147' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M319 147L318 146' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M318 146L317 145' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M317 145L317 143' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M317 143L316 142' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M316 142L317 141' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M317 141L317 140' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M317 140L318 139' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M318 139L319 137' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M319 137L322 136' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M322 136L324 135' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M324 135L326 135' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M326 135L328 135' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M328 135L329 135' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M329 135L331 135' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M331 135L334 136' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M334 136L336 137' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M336 137L337 139' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M337 139L338 140' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M338 140L338 141' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M338 141L340 142' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<text x='310' y='205' text-anchor='middle' font-family='sans-serif' font-size='16'>Pose 1</text>
+<path d='M471 125L503 125L501 129Z' fill='white'/>
+<path d='M471 125L501 129L500 133Z' fill='white'/>
+<path d='M471 125L500 133L498 135Z' fill='white'/>
+<path d='M471 125L498 135L493 139Z' fill='white'/>
+<path d='M471 125L493 139L488 141Z' fill='white'/>
+<path d='M471 125L488 141L483 142Z' fill='white'/>
+<path d='M471 125L483 142L477 143Z' fill='white'/>
+<path d='M471 125L477 143L471 145Z' fill='white'/>
+<path d='M471 125L471 145L465 143Z' fill='white'/>
+<path d='M471 125L465 143L459 142Z' fill='white'/>
+<path d='M471 125L459 142L455 141Z' fill='white'/>
+<path d='M471 125L455 141L450 139Z' fill='white'/>
+<path d='M471 125L450 139L445 135Z' fill='white'/>
+<path d='M471 125L445 135L443 133Z' fill='white'/>
+<path d='M471 125L443 133L441 129Z' fill='white'/>
+<path d='M471 125L441 129L440 125Z' fill='white'/>
+<path d='M471 125L440 125L441 122Z' fill='white'/>
+<path d='M471 125L441 122L443 118Z' fill='white'/>
+<path d='M471 125L443 118L445 116Z' fill='white'/>
+<path d='M471 125L445 116L450 112Z' fill='white'/>
+<path d='M471 125L450 112L455 110Z' fill='white'/>
+<path d='M471 125L455 110L459 109Z' fill='white'/>
+<path d='M471 125L459 109L465 107Z' fill='white'/>
+<path d='M471 125L465 107L471 106Z' fill='white'/>
+<path d='M471 125L471 106L477 107Z' fill='white'/>
+<path d='M471 125L477 107L483 109Z' fill='white'/>
+<path d='M471 125L483 109L488 110Z' fill='white'/>
+<path d='M471 125L488 110L493 112Z' fill='white'/>
+<path d='M471 125L493 112L498 116Z' fill='white'/>
+<path d='M471 125L498 116L500 118Z' fill='white'/>
+<path d='M471 125L500 118L501 122Z' fill='white'/>
+<path d='M471 125L501 122L503 125Z' fill='white'/>
+<path d='M503 125L501 129' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M501 129L500 133' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M500 133L498 135' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M498 135L493 139' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M493 139L488 141' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M488 141L483 142' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M483 142L477 143' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M477 143L471 145' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M471 145L465 143' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M465 143L459 142' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M459 142L455 141' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M455 141L450 139' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M450 139L445 135' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M445 135L443 133' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M443 133L441 129' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M441 129L440 125' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M440 125L441 122' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M441 122L443 118' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M443 118L445 116' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M445 116L450 112' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M450 112L455 110' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M455 110L459 109' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M459 109L465 107' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M465 107L471 106' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M471 106L477 107' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M477 107L483 109' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M483 109L488 110' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M488 110L493 112' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M493 112L498 116' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M498 116L500 118' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M500 118L501 122' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M501 122L503 125' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M499 131L511 119' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M511 119L509 103' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M413 95L415 59L443 81Z' fill='black'/>
+<path d='M462 79L493 62L489 103Z' fill='black'/>
+<path d='M419 86L420 69L434 82Z' fill='white'/>
+<path d='M469 83L487 70L483 93Z' fill='white'/>
+<path d='M452 107L494 107L493 112Z' fill='white'/>
+<path d='M452 107L493 112L491 118Z' fill='white'/>
+<path d='M452 107L491 118L487 123Z' fill='white'/>
+<path d='M452 107L487 123L481 128Z' fill='white'/>
+<path d='M452 107L481 128L475 131Z' fill='white'/>
+<path d='M452 107L475 131L468 134Z' fill='white'/>
+<path d='M452 107L468 134L459 136Z' fill='white'/>
+<path d='M452 107L459 136L452 136Z' fill='white'/>
+<path d='M452 107L452 136L445 136Z' fill='white'/>
+<path d='M452 107L445 136L437 134Z' fill='white'/>
+<path d='M452 107L437 134L429 131Z' fill='white'/>
+<path d='M452 107L429 131L423 128Z' fill='white'/>
+<path d='M452 107L423 128L417 123Z' fill='white'/>
+<path d='M452 107L417 123L414 118Z' fill='white'/>
+<path d='M452 107L414 118L411 112Z' fill='white'/>
+<path d='M452 107L411 112L410 107Z' fill='white'/>
+<path d='M452 107L410 107L411 103Z' fill='white'/>
+<path d='M452 107L411 103L414 97Z' fill='white'/>
+<path d='M452 107L414 97L417 92Z' fill='white'/>
+<path d='M452 107L417 92L423 87Z' fill='white'/>
+<path d='M452 107L423 87L429 83Z' fill='white'/>
+<path d='M452 107L429 83L437 81Z' fill='white'/>
+<path d='M452 107L437 81L445 79Z' fill='white'/>
+<path d='M452 107L445 79L452 79Z' fill='white'/>
+<path d='M452 107L452 79L459 79Z' fill='white'/>
+<path d='M452 107L459 79L468 81Z' fill='white'/>
+<path d='M452 107L468 81L475 83Z' fill='white'/>
+<path d='M452 107L475 83L481 87Z' fill='white'/>
+<path d='M452 107L481 87L487 92Z' fill='white'/>
+<path d='M452 107L487 92L491 97Z' fill='white'/>
+<path d='M452 107L491 97L493 103Z' fill='white'/>
+<path d='M452 107L493 103L494 107Z' fill='white'/>
+<path d='M494 107L493 112' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M493 112L491 118' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M491 118L487 123' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M487 123L481 128' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M481 128L475 131' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M475 131L468 134' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M468 134L459 136' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M459 136L452 136' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M452 136L445 136' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M445 136L437 134' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M437 134L429 131' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M429 131L423 128' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M423 128L417 123' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M417 123L414 118' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M414 118L411 112' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M411 112L410 107' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M410 107L411 103' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M411 103L414 97' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M414 97L417 92' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M417 92L423 87' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M423 87L429 83' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M429 83L437 81' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M437 81L445 79' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M445 79L452 79' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M452 79L459 79' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M459 79L468 81' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M468 81L475 83' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M475 83L481 87' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M481 87L487 92' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M487 92L491 97' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M491 97L493 103' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M493 103L494 107' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M469 86L481 86L480 87Z' fill='black'/>
+<path d='M469 86L480 87L480 88Z' fill='black'/>
+<path d='M469 86L480 88L479 89Z' fill='black'/>
+<path d='M469 86L479 89L477 91Z' fill='black'/>
+<path d='M469 86L477 91L475 91Z' fill='black'/>
+<path d='M469 86L475 91L473 92Z' fill='black'/>
+<path d='M469 86L473 92L470 92Z' fill='black'/>
+<path d='M469 86L470 92L469 93Z' fill='black'/>
+<path d='M469 86L469 93L468 92Z' fill='black'/>
+<path d='M469 86L468 92L465 92Z' fill='black'/>
+<path d='M469 86L465 92L463 91Z' fill='black'/>
+<path d='M469 86L463 91L461 91Z' fill='black'/>
+<path d='M469 86L461 91L459 89Z' fill='black'/>
+<path d='M469 86L459 89L458 88Z' fill='black'/>
+<path d='M469 86L458 88L458 87Z' fill='black'/>
+<path d='M469 86L458 87L457 86Z' fill='black'/>
+<path d='M469 86L457 86L458 85Z' fill='black'/>
+<path d='M469 86L458 85L458 83Z' fill='black'/>
+<path d='M469 86L458 83L459 82Z' fill='black'/>
+<path d='M469 86L459 82L461 81Z' fill='black'/>
+<path d='M469 86L461 81L463 81Z' fill='black'/>
+<path d='M469 86L463 81L465 80Z' fill='black'/>
+<path d='M469 86L465 80L468 80Z' fill='black'/>
+<path d='M469 86L468 80L469 79Z' fill='black'/>
+<path d='M469 86L469 79L470 80Z' fill='black'/>
+<path d='M469 86L470 80L473 80Z' fill='black'/>
+<path d='M469 86L473 80L475 81Z' fill='black'/>
+<path d='M469 86L475 81L477 81Z' fill='black'/>
+<path d='M469 86L477 81L479 82Z' fill='black'/>
+<path d='M469 86L479 82L480 83Z' fill='black'/>
+<path d='M469 86L480 83L480 85Z' fill='black'/>
+<path d='M469 86L480 85L481 86Z' fill='black'/>
+<path d='M426 105L432 109' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M432 109L438 105' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M462 105L468 109' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M468 109L475 105' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M447 113L452 113' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M452 113L450 117' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M450 117L445 122' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M450 117L456 122' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M421 116L398 111' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M420 122L397 124' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M481 116L507 111' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M482 122L509 124' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M426 139L438 139L437 140Z' fill='white'/>
+<path d='M426 139L437 140L437 141Z' fill='white'/>
+<path d='M426 139L437 141L435 142Z' fill='white'/>
+<path d='M426 139L435 142L434 143Z' fill='white'/>
+<path d='M426 139L434 143L432 145Z' fill='white'/>
+<path d='M426 139L432 145L429 146Z' fill='white'/>
+<path d='M426 139L429 146L427 146Z' fill='white'/>
+<path d='M426 139L427 146L426 146Z' fill='white'/>
+<path d='M426 139L426 146L425 146Z' fill='white'/>
+<path d='M426 139L425 146L422 146Z' fill='white'/>
+<path d='M426 139L422 146L420 145Z' fill='white'/>
+<path d='M426 139L420 145L417 143Z' fill='white'/>
+<path d='M426 139L417 143L416 142Z' fill='white'/>
+<path d='M426 139L416 142L415 141Z' fill='white'/>
+<path d='M426 139L415 141L415 140Z' fill='white'/>
+<path d='M426 139L415 140L414 139Z' fill='white'/>
+<path d='M426 139L414 139L415 137Z' fill='white'/>
+<path d='M426 139L415 137L415 136Z' fill='white'/>
+<path d='M426 139L415 136L416 135Z' fill='white'/>
+<path d='M426 139L416 135L417 134Z' fill='white'/>
+<path d='M426 139L417 134L420 133Z' fill='white'/>
+<path d='M426 139L420 133L422 131Z' fill='white'/>
+<path d='M426 139L422 131L425 131Z' fill='white'/>
+<path d='M426 139L425 131L426 131Z' fill='white'/>
+<path d='M426 139L426 131L427 131Z' fill='white'/>
+<path d='M426 139L427 131L429 131Z' fill='white'/>
+<path d='M426 139L429 131L432 133Z' fill='white'/>
+<path d='M426 139L432 133L434 134Z' fill='white'/>
+<path d='M426 139L434 134L435 135Z' fill='white'/>
+<path d='M426 139L435 135L437 136Z' fill='white'/>
+<path d='M426 139L437 136L437 137Z' fill='white'/>
+<path d='M426 139L437 137L438 139Z' fill='white'/>
+<path d='M438 139L437 140' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M437 140L437 141' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M437 141L435 142' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M435 142L434 143' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M434 143L432 145' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M432 145L429 146' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M429 146L427 146' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M427 146L426 146' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M426 146L425 146' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M425 146L422 146' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M422 146L420 145' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M420 145L417 143' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M417 143L416 142' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M416 142L415 141' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M415 141L415 140' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M415 140L414 139' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M414 139L415 137' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M415 137L415 136' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M415 136L416 135' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M416 135L417 134' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M417 134L420 133' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M420 133L422 131' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M422 131L425 131' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M425 131L426 131' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M426 131L427 131' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M427 131L429 131' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M429 131L432 133' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M432 133L434 134' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M434 134L435 135' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M435 135L437 136' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M437 136L437 137' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M437 137L438 139' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M473 139L485 139L483 140Z' fill='white'/>
+<path d='M473 139L483 140L483 141Z' fill='white'/>
+<path d='M473 139L483 141L482 142Z' fill='white'/>
+<path d='M473 139L482 142L481 143Z' fill='white'/>
+<path d='M473 139L481 143L479 145Z' fill='white'/>
+<path d='M473 139L479 145L476 146Z' fill='white'/>
+<path d='M473 139L476 146L474 146Z' fill='white'/>
+<path d='M473 139L474 146L473 146Z' fill='white'/>
+<path d='M473 139L473 146L471 146Z' fill='white'/>
+<path d='M473 139L471 146L469 146Z' fill='white'/>
+<path d='M473 139L469 146L467 145Z' fill='white'/>
+<path d='M473 139L467 145L464 143Z' fill='white'/>
+<path d='M473 139L464 143L463 142Z' fill='white'/>
+<path d='M473 139L463 142L462 141Z' fill='white'/>
+<path d='M473 139L462 141L462 140Z' fill='white'/>
+<path d='M473 139L462 140L461 139Z' fill='white'/>
+<path d='M473 139L461 139L462 137Z' fill='white'/>
+<path d='M473 139L462 137L462 136Z' fill='white'/>
+<path d='M473 139L462 136L463 135Z' fill='white'/>
+<path d='M473 139L463 135L464 134Z' fill='white'/>
+<path d='M473 139L464 134L467 133Z' fill='white'/>
+<path d='M473 139L467 133L469 131Z' fill='white'/>
+<path d='M473 139L469 131L471 131Z' fill='white'/>
+<path d='M473 139L471 131L473 131Z' fill='white'/>
+<path d='M473 139L473 131L474 131Z' fill='white'/>
+<path d='M473 139L474 131L476 131Z' fill='white'/>
+<path d='M473 139L476 131L479 133Z' fill='white'/>
+<path d='M473 139L479 133L481 134Z' fill='white'/>
+<path d='M473 139L481 134L482 135Z' fill='white'/>
+<path d='M473 139L482 135L483 136Z' fill='white'/>
+<path d='M473 139L483 136L483 137Z' fill='white'/>
+<path d='M473 139L483 137L485 139Z' fill='white'/>
+<path d='M485 139L483 140' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M483 140L483 141' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M483 141L482 142' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M482 142L481 143' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M481 143L479 145' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M479 145L476 146' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M476 146L474 146' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M474 146L473 146' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M473 146L471 146' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M471 146L469 146' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M469 146L467 145' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M467 145L464 143' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M464 143L463 142' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M463 142L462 141' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M462 141L462 140' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M462 140L461 139' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M461 139L462 137' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M462 137L462 136' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M462 136L463 135' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M463 135L464 134' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M464 134L467 133' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M467 133L469 131' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M469 131L471 131' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M471 131L473 131' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M473 131L474 131' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M474 131L476 131' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M476 131L479 133' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M479 133L481 134' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M481 134L482 135' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M482 135L483 136' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M483 136L483 137' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M483 137L485 139' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<text x='455' y='205' text-anchor='middle' font-family='sans-serif' font-size='16'>Pose 2</text>
+<path d='M615 137L638 137L637 141Z' fill='white'/>
+<path d='M615 137L637 141L636 146Z' fill='white'/>
+<path d='M615 137L636 146L633 149Z' fill='white'/>
+<path d='M615 137L633 149L631 153Z' fill='white'/>
+<path d='M615 137L631 153L627 155Z' fill='white'/>
+<path d='M615 137L627 155L624 158Z' fill='white'/>
+<path d='M615 137L624 158L619 159Z' fill='white'/>
+<path d='M615 137L619 159L615 159Z' fill='white'/>
+<path d='M615 137L615 159L612 159Z' fill='white'/>
+<path d='M615 137L612 159L607 158Z' fill='white'/>
+<path d='M615 137L607 158L603 155Z' fill='white'/>
+<path d='M615 137L603 155L600 153Z' fill='white'/>
+<path d='M615 137L600 153L597 149Z' fill='white'/>
+<path d='M615 137L597 149L595 146Z' fill='white'/>
+<path d='M615 137L595 146L594 141Z' fill='white'/>
+<path d='M615 137L594 141L592 137Z' fill='white'/>
+<path d='M615 137L592 137L594 134Z' fill='white'/>
+<path d='M615 137L594 134L595 129Z' fill='white'/>
+<path d='M615 137L595 129L597 125Z' fill='white'/>
+<path d='M615 137L597 125L600 122Z' fill='white'/>
+<path d='M615 137L600 122L603 119Z' fill='white'/>
+<path d='M615 137L603 119L607 117Z' fill='white'/>
+<path d='M615 137L607 117L612 116Z' fill='white'/>
+<path d='M615 137L612 116L615 116Z' fill='white'/>
+<path d='M615 137L615 116L619 116Z' fill='white'/>
+<path d='M615 137L619 116L624 117Z' fill='white'/>
+<path d='M615 137L624 117L627 119Z' fill='white'/>
+<path d='M615 137L627 119L631 122Z' fill='white'/>
+<path d='M615 137L631 122L633 125Z' fill='white'/>
+<path d='M615 137L633 125L636 129Z' fill='white'/>
+<path d='M615 137L636 129L637 134Z' fill='white'/>
+<path d='M615 137L637 134L638 137Z' fill='white'/>
+<path d='M638 137L637 141' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M637 141L636 146' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M636 146L633 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M633 149L631 153' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M631 153L627 155' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M627 155L624 158' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M624 158L619 159' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M619 159L615 159' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M615 159L612 159' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M612 159L607 158' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M607 158L603 155' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M603 155L600 153' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M600 153L597 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M597 149L595 146' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M595 146L594 141' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M594 141L592 137' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M592 137L594 134' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M594 134L595 129' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M595 129L597 125' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M597 125L600 122' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M600 122L603 119' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M603 119L607 117' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M607 117L612 116' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M612 116L615 116' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M615 116L619 116' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M619 116L624 117' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M624 117L627 119' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M627 119L631 122' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M631 122L633 125' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M633 125L636 129' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M636 129L637 134' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M637 134L638 137' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M632 151L649 140' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M649 140L651 119' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M558 95L560 59L588 81Z' fill='black'/>
+<path d='M607 79L638 62L634 103Z' fill='black'/>
+<path d='M564 86L565 69L579 82Z' fill='white'/>
+<path d='M614 83L632 70L628 93Z' fill='white'/>
+<path d='M597 107L639 107L638 112Z' fill='white'/>
+<path d='M597 107L638 112L636 118Z' fill='white'/>
+<path d='M597 107L636 118L632 123Z' fill='white'/>
+<path d='M597 107L632 123L626 128Z' fill='white'/>
+<path d='M597 107L626 128L620 131Z' fill='white'/>
+<path d='M597 107L620 131L613 134Z' fill='white'/>
+<path d='M597 107L613 134L604 136Z' fill='white'/>
+<path d='M597 107L604 136L597 136Z' fill='white'/>
+<path d='M597 107L597 136L590 136Z' fill='white'/>
+<path d='M597 107L590 136L582 134Z' fill='white'/>
+<path d='M597 107L582 134L574 131Z' fill='white'/>
+<path d='M597 107L574 131L568 128Z' fill='white'/>
+<path d='M597 107L568 128L562 123Z' fill='white'/>
+<path d='M597 107L562 123L559 118Z' fill='white'/>
+<path d='M597 107L559 118L556 112Z' fill='white'/>
+<path d='M597 107L556 112L555 107Z' fill='white'/>
+<path d='M597 107L555 107L556 103Z' fill='white'/>
+<path d='M597 107L556 103L559 97Z' fill='white'/>
+<path d='M597 107L559 97L562 92Z' fill='white'/>
+<path d='M597 107L562 92L568 87Z' fill='white'/>
+<path d='M597 107L568 87L574 83Z' fill='white'/>
+<path d='M597 107L574 83L582 81Z' fill='white'/>
+<path d='M597 107L582 81L590 79Z' fill='white'/>
+<path d='M597 107L590 79L597 79Z' fill='white'/>
+<path d='M597 107L597 79L604 79Z' fill='white'/>
+<path d='M597 107L604 79L613 81Z' fill='white'/>
+<path d='M597 107L613 81L620 83Z' fill='white'/>
+<path d='M597 107L620 83L626 87Z' fill='white'/>
+<path d='M597 107L626 87L632 92Z' fill='white'/>
+<path d='M597 107L632 92L636 97Z' fill='white'/>
+<path d='M597 107L636 97L638 103Z' fill='white'/>
+<path d='M597 107L638 103L639 107Z' fill='white'/>
+<path d='M639 107L638 112' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M638 112L636 118' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M636 118L632 123' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M632 123L626 128' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M626 128L620 131' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M620 131L613 134' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M613 134L604 136' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M604 136L597 136' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M597 136L590 136' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M590 136L582 134' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M582 134L574 131' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M574 131L568 128' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M568 128L562 123' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M562 123L559 118' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M559 118L556 112' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M556 112L555 107' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M555 107L556 103' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M556 103L559 97' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M559 97L562 92' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M562 92L568 87' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M568 87L574 83' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M574 83L582 81' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M582 81L590 79' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M590 79L597 79' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M597 79L604 79' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M604 79L613 81' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M613 81L620 83' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M620 83L626 87' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M626 87L632 92' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M632 92L636 97' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M636 97L638 103' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M638 103L639 107' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M614 86L626 86L625 87Z' fill='black'/>
+<path d='M614 86L625 87L625 88Z' fill='black'/>
+<path d='M614 86L625 88L624 89Z' fill='black'/>
+<path d='M614 86L624 89L622 91Z' fill='black'/>
+<path d='M614 86L622 91L620 91Z' fill='black'/>
+<path d='M614 86L620 91L618 92Z' fill='black'/>
+<path d='M614 86L618 92L615 92Z' fill='black'/>
+<path d='M614 86L615 92L614 93Z' fill='black'/>
+<path d='M614 86L614 93L613 92Z' fill='black'/>
+<path d='M614 86L613 92L610 92Z' fill='black'/>
+<path d='M614 86L610 92L608 91Z' fill='black'/>
+<path d='M614 86L608 91L606 91Z' fill='black'/>
+<path d='M614 86L606 91L604 89Z' fill='black'/>
+<path d='M614 86L604 89L603 88Z' fill='black'/>
+<path d='M614 86L603 88L603 87Z' fill='black'/>
+<path d='M614 86L603 87L602 86Z' fill='black'/>
+<path d='M614 86L602 86L603 85Z' fill='black'/>
+<path d='M614 86L603 85L603 83Z' fill='black'/>
+<path d='M614 86L603 83L604 82Z' fill='black'/>
+<path d='M614 86L604 82L606 81Z' fill='black'/>
+<path d='M614 86L606 81L608 81Z' fill='black'/>
+<path d='M614 86L608 81L610 80Z' fill='black'/>
+<path d='M614 86L610 80L613 80Z' fill='black'/>
+<path d='M614 86L613 80L614 79Z' fill='black'/>
+<path d='M614 86L614 79L615 80Z' fill='black'/>
+<path d='M614 86L615 80L618 80Z' fill='black'/>
+<path d='M614 86L618 80L620 81Z' fill='black'/>
+<path d='M614 86L620 81L622 81Z' fill='black'/>
+<path d='M614 86L622 81L624 82Z' fill='black'/>
+<path d='M614 86L624 82L625 83Z' fill='black'/>
+<path d='M614 86L625 83L625 85Z' fill='black'/>
+<path d='M614 86L625 85L626 86Z' fill='black'/>
+<path d='M577 104L580 104L579 104Z' fill='black'/>
+<path d='M577 104L579 104L579 105Z' fill='black'/>
+<path d='M577 104L579 105L579 106Z' fill='black'/>
+<path d='M577 104L579 106L579 107Z' fill='black'/>
+<path d='M577 104L579 107L578 107Z' fill='black'/>
+<path d='M577 104L578 107L578 109Z' fill='black'/>
+<path d='M577 104L578 109L577 109Z' fill='black'/>
+<path d='M577 104L577 109L577 109Z' fill='black'/>
+<path d='M577 104L577 109L577 109Z' fill='black'/>
+<path d='M577 104L577 109L576 109Z' fill='black'/>
+<path d='M577 104L576 109L576 107Z' fill='black'/>
+<path d='M577 104L576 107L574 107Z' fill='black'/>
+<path d='M577 104L574 107L574 106Z' fill='black'/>
+<path d='M577 104L574 106L574 105Z' fill='black'/>
+<path d='M577 104L574 105L574 104Z' fill='black'/>
+<path d='M577 104L574 104L573 104Z' fill='black'/>
+<path d='M577 104L573 104L574 104Z' fill='black'/>
+<path d='M577 104L574 104L574 103Z' fill='black'/>
+<path d='M577 104L574 103L574 101Z' fill='black'/>
+<path d='M577 104L574 101L574 100Z' fill='black'/>
+<path d='M577 104L574 100L576 100Z' fill='black'/>
+<path d='M577 104L576 100L576 99Z' fill='black'/>
+<path d='M577 104L576 99L577 99Z' fill='black'/>
+<path d='M577 104L577 99L577 99Z' fill='black'/>
+<path d='M577 104L577 99L577 99Z' fill='black'/>
+<path d='M577 104L577 99L578 99Z' fill='black'/>
+<path d='M577 104L578 99L578 100Z' fill='black'/>
+<path d='M577 104L578 100L579 100Z' fill='black'/>
+<path d='M577 104L579 100L579 101Z' fill='black'/>
+<path d='M577 104L579 101L579 103Z' fill='black'/>
+<path d='M577 104L579 103L579 104Z' fill='black'/>
+<path d='M577 104L579 104L580 104Z' fill='black'/>
+<path d='M614 104L618 104L616 104Z' fill='black'/>
+<path d='M614 104L616 104L616 105Z' fill='black'/>
+<path d='M614 104L616 105L616 106Z' fill='black'/>
+<path d='M614 104L616 106L616 107Z' fill='black'/>
+<path d='M614 104L616 107L615 107Z' fill='black'/>
+<path d='M614 104L615 107L615 109Z' fill='black'/>
+<path d='M614 104L615 109L614 109Z' fill='black'/>
+<path d='M614 104L614 109L614 109Z' fill='black'/>
+<path d='M614 104L614 109L614 109Z' fill='black'/>
+<path d='M614 104L614 109L613 109Z' fill='black'/>
+<path d='M614 104L613 109L613 107Z' fill='black'/>
+<path d='M614 104L613 107L612 107Z' fill='black'/>
+<path d='M614 104L612 107L612 106Z' fill='black'/>
+<path d='M614 104L612 106L612 105Z' fill='black'/>
+<path d='M614 104L612 105L612 104Z' fill='black'/>
+<path d='M614 104L612 104L610 104Z' fill='black'/>
+<path d='M614 104L610 104L612 104Z' fill='black'/>
+<path d='M614 104L612 104L612 103Z' fill='black'/>
+<path d='M614 104L612 103L612 101Z' fill='black'/>
+<path d='M614 104L612 101L612 100Z' fill='black'/>
+<path d='M614 104L612 100L613 100Z' fill='black'/>
+<path d='M614 104L613 100L613 99Z' fill='black'/>
+<path d='M614 104L613 99L614 99Z' fill='black'/>
+<path d='M614 104L614 99L614 99Z' fill='black'/>
+<path d='M614 104L614 99L614 99Z' fill='black'/>
+<path d='M614 104L614 99L615 99Z' fill='black'/>
+<path d='M614 104L615 99L615 100Z' fill='black'/>
+<path d='M614 104L615 100L616 100Z' fill='black'/>
+<path d='M614 104L616 100L616 101Z' fill='black'/>
+<path d='M614 104L616 101L616 103Z' fill='black'/>
+<path d='M614 104L616 103L616 104Z' fill='black'/>
+<path d='M614 104L616 104L618 104Z' fill='black'/>
+<path d='M592 113L597 113' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M597 113L595 117' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M595 117L590 122' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M595 117L601 122' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M566 116L543 111' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M565 122L542 124' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M626 116L652 111' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M627 122L654 124' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M571 142L583 142L582 143Z' fill='white'/>
+<path d='M571 142L582 143L582 145Z' fill='white'/>
+<path d='M571 142L582 145L580 146Z' fill='white'/>
+<path d='M571 142L580 146L579 147Z' fill='white'/>
+<path d='M571 142L579 147L577 148Z' fill='white'/>
+<path d='M571 142L577 148L574 149Z' fill='white'/>
+<path d='M571 142L574 149L572 149Z' fill='white'/>
+<path d='M571 142L572 149L571 149Z' fill='white'/>
+<path d='M571 142L571 149L570 149Z' fill='white'/>
+<path d='M571 142L570 149L567 149Z' fill='white'/>
+<path d='M571 142L567 149L565 148Z' fill='white'/>
+<path d='M571 142L565 148L562 147Z' fill='white'/>
+<path d='M571 142L562 147L561 146Z' fill='white'/>
+<path d='M571 142L561 146L560 145Z' fill='white'/>
+<path d='M571 142L560 145L560 143Z' fill='white'/>
+<path d='M571 142L560 143L559 142Z' fill='white'/>
+<path d='M571 142L559 142L560 141Z' fill='white'/>
+<path d='M571 142L560 141L560 140Z' fill='white'/>
+<path d='M571 142L560 140L561 139Z' fill='white'/>
+<path d='M571 142L561 139L562 137Z' fill='white'/>
+<path d='M571 142L562 137L565 136Z' fill='white'/>
+<path d='M571 142L565 136L567 135Z' fill='white'/>
+<path d='M571 142L567 135L570 135Z' fill='white'/>
+<path d='M571 142L570 135L571 135Z' fill='white'/>
+<path d='M571 142L571 135L572 135Z' fill='white'/>
+<path d='M571 142L572 135L574 135Z' fill='white'/>
+<path d='M571 142L574 135L577 136Z' fill='white'/>
+<path d='M571 142L577 136L579 137Z' fill='white'/>
+<path d='M571 142L579 137L580 139Z' fill='white'/>
+<path d='M571 142L580 139L582 140Z' fill='white'/>
+<path d='M571 142L582 140L582 141Z' fill='white'/>
+<path d='M571 142L582 141L583 142Z' fill='white'/>
+<path d='M583 142L582 143' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M582 143L582 145' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M582 145L580 146' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M580 146L579 147' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M579 147L577 148' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M577 148L574 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M574 149L572 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M572 149L571 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M571 149L570 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M570 149L567 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M567 149L565 148' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M565 148L562 147' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M562 147L561 146' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M561 146L560 145' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M560 145L560 143' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M560 143L559 142' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M559 142L560 141' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M560 141L560 140' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M560 140L561 139' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M561 139L562 137' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M562 137L565 136' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M565 136L567 135' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M567 135L570 135' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M570 135L571 135' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M571 135L572 135' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M572 135L574 135' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M574 135L577 136' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M577 136L579 137' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M579 137L580 139' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M580 139L582 140' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M582 140L582 141' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M582 141L583 142' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M618 157L630 157L628 158Z' fill='white'/>
+<path d='M618 157L628 158L628 159Z' fill='white'/>
+<path d='M618 157L628 159L627 160Z' fill='white'/>
+<path d='M618 157L627 160L626 161Z' fill='white'/>
+<path d='M618 157L626 161L624 163Z' fill='white'/>
+<path d='M618 157L624 163L621 164Z' fill='white'/>
+<path d='M618 157L621 164L619 164Z' fill='white'/>
+<path d='M618 157L619 164L618 164Z' fill='white'/>
+<path d='M618 157L618 164L616 164Z' fill='white'/>
+<path d='M618 157L616 164L614 164Z' fill='white'/>
+<path d='M618 157L614 164L612 163Z' fill='white'/>
+<path d='M618 157L612 163L609 161Z' fill='white'/>
+<path d='M618 157L609 161L608 160Z' fill='white'/>
+<path d='M618 157L608 160L607 159Z' fill='white'/>
+<path d='M618 157L607 159L607 158Z' fill='white'/>
+<path d='M618 157L607 158L606 157Z' fill='white'/>
+<path d='M618 157L606 157L607 155Z' fill='white'/>
+<path d='M618 157L607 155L607 154Z' fill='white'/>
+<path d='M618 157L607 154L608 153Z' fill='white'/>
+<path d='M618 157L608 153L609 152Z' fill='white'/>
+<path d='M618 157L609 152L612 151Z' fill='white'/>
+<path d='M618 157L612 151L614 149Z' fill='white'/>
+<path d='M618 157L614 149L616 149Z' fill='white'/>
+<path d='M618 157L616 149L618 149Z' fill='white'/>
+<path d='M618 157L618 149L619 149Z' fill='white'/>
+<path d='M618 157L619 149L621 149Z' fill='white'/>
+<path d='M618 157L621 149L624 151Z' fill='white'/>
+<path d='M618 157L624 151L626 152Z' fill='white'/>
+<path d='M618 157L626 152L627 153Z' fill='white'/>
+<path d='M618 157L627 153L628 154Z' fill='white'/>
+<path d='M618 157L628 154L628 155Z' fill='white'/>
+<path d='M618 157L628 155L630 157Z' fill='white'/>
+<path d='M630 157L628 158' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M628 158L628 159' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M628 159L627 160' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M627 160L626 161' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M626 161L624 163' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M624 163L621 164' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M621 164L619 164' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M619 164L618 164' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M618 164L616 164' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M616 164L614 164' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M614 164L612 163' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M612 163L609 161' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M609 161L608 160' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M608 160L607 159' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M607 159L607 158' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M607 158L606 157' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M606 157L607 155' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M607 155L607 154' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M607 154L608 153' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M608 153L609 152' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M609 152L612 151' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M612 151L614 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M614 149L616 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M616 149L618 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M618 149L619 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M619 149L621 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M621 149L624 151' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M624 151L626 152' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M626 152L627 153' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M627 153L628 154' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M628 154L628 155' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M628 155L630 157' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<text x='600' y='205' text-anchor='middle' font-family='sans-serif' font-size='16'>Pose 3</text>
+<path d='M760 137L783 137L782 141Z' fill='white'/>
+<path d='M760 137L782 141L781 146Z' fill='white'/>
+<path d='M760 137L781 146L778 149Z' fill='white'/>
+<path d='M760 137L778 149L776 153Z' fill='white'/>
+<path d='M760 137L776 153L772 155Z' fill='white'/>
+<path d='M760 137L772 155L769 158Z' fill='white'/>
+<path d='M760 137L769 158L764 159Z' fill='white'/>
+<path d='M760 137L764 159L760 159Z' fill='white'/>
+<path d='M760 137L760 159L757 159Z' fill='white'/>
+<path d='M760 137L757 159L752 158Z' fill='white'/>
+<path d='M760 137L752 158L748 155Z' fill='white'/>
+<path d='M760 137L748 155L745 153Z' fill='white'/>
+<path d='M760 137L745 153L742 149Z' fill='white'/>
+<path d='M760 137L742 149L740 146Z' fill='white'/>
+<path d='M760 137L740 146L739 141Z' fill='white'/>
+<path d='M760 137L739 141L737 137Z' fill='white'/>
+<path d='M760 137L737 137L739 134Z' fill='white'/>
+<path d='M760 137L739 134L740 129Z' fill='white'/>
+<path d='M760 137L740 129L742 125Z' fill='white'/>
+<path d='M760 137L742 125L745 122Z' fill='white'/>
+<path d='M760 137L745 122L748 119Z' fill='white'/>
+<path d='M760 137L748 119L752 117Z' fill='white'/>
+<path d='M760 137L752 117L757 116Z' fill='white'/>
+<path d='M760 137L757 116L760 116Z' fill='white'/>
+<path d='M760 137L760 116L764 116Z' fill='white'/>
+<path d='M760 137L764 116L769 117Z' fill='white'/>
+<path d='M760 137L769 117L772 119Z' fill='white'/>
+<path d='M760 137L772 119L776 122Z' fill='white'/>
+<path d='M760 137L776 122L778 125Z' fill='white'/>
+<path d='M760 137L778 125L781 129Z' fill='white'/>
+<path d='M760 137L781 129L782 134Z' fill='white'/>
+<path d='M760 137L782 134L783 137Z' fill='white'/>
+<path d='M783 137L782 141' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M782 141L781 146' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M781 146L778 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M778 149L776 153' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M776 153L772 155' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M772 155L769 158' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M769 158L764 159' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M764 159L760 159' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M760 159L757 159' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M757 159L752 158' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M752 158L748 155' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M748 155L745 153' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M745 153L742 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M742 149L740 146' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M740 146L739 141' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M739 141L737 137' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M737 137L739 134' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M739 134L740 129' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M740 129L742 125' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M742 125L745 122' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M745 122L748 119' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M748 119L752 117' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M752 117L757 116' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M757 116L760 116' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M760 116L764 116' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M764 116L769 117' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M769 117L772 119' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M772 119L776 122' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M776 122L778 125' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M778 125L781 129' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M781 129L782 134' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M782 134L783 137' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M777 151L794 140' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M794 140L796 119' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M703 95L705 59L733 81Z' fill='black'/>
+<path d='M752 79L783 62L779 103Z' fill='black'/>
+<path d='M709 86L710 69L724 82Z' fill='white'/>
+<path d='M759 83L777 70L773 93Z' fill='white'/>
+<path d='M742 107L784 107L783 112Z' fill='white'/>
+<path d='M742 107L783 112L781 118Z' fill='white'/>
+<path d='M742 107L781 118L777 123Z' fill='white'/>
+<path d='M742 107L777 123L771 128Z' fill='white'/>
+<path d='M742 107L771 128L765 131Z' fill='white'/>
+<path d='M742 107L765 131L758 134Z' fill='white'/>
+<path d='M742 107L758 134L749 136Z' fill='white'/>
+<path d='M742 107L749 136L742 136Z' fill='white'/>
+<path d='M742 107L742 136L735 136Z' fill='white'/>
+<path d='M742 107L735 136L727 134Z' fill='white'/>
+<path d='M742 107L727 134L719 131Z' fill='white'/>
+<path d='M742 107L719 131L713 128Z' fill='white'/>
+<path d='M742 107L713 128L707 123Z' fill='white'/>
+<path d='M742 107L707 123L704 118Z' fill='white'/>
+<path d='M742 107L704 118L701 112Z' fill='white'/>
+<path d='M742 107L701 112L700 107Z' fill='white'/>
+<path d='M742 107L700 107L701 103Z' fill='white'/>
+<path d='M742 107L701 103L704 97Z' fill='white'/>
+<path d='M742 107L704 97L707 92Z' fill='white'/>
+<path d='M742 107L707 92L713 87Z' fill='white'/>
+<path d='M742 107L713 87L719 83Z' fill='white'/>
+<path d='M742 107L719 83L727 81Z' fill='white'/>
+<path d='M742 107L727 81L735 79Z' fill='white'/>
+<path d='M742 107L735 79L742 79Z' fill='white'/>
+<path d='M742 107L742 79L749 79Z' fill='white'/>
+<path d='M742 107L749 79L758 81Z' fill='white'/>
+<path d='M742 107L758 81L765 83Z' fill='white'/>
+<path d='M742 107L765 83L771 87Z' fill='white'/>
+<path d='M742 107L771 87L777 92Z' fill='white'/>
+<path d='M742 107L777 92L781 97Z' fill='white'/>
+<path d='M742 107L781 97L783 103Z' fill='white'/>
+<path d='M742 107L783 103L784 107Z' fill='white'/>
+<path d='M784 107L783 112' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M783 112L781 118' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M781 118L777 123' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M777 123L771 128' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M771 128L765 131' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M765 131L758 134' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M758 134L749 136' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M749 136L742 136' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M742 136L735 136' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M735 136L727 134' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M727 134L719 131' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M719 131L713 128' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M713 128L707 123' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M707 123L704 118' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M704 118L701 112' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M701 112L700 107' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M700 107L701 103' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M701 103L704 97' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M704 97L707 92' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M707 92L713 87' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M713 87L719 83' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M719 83L727 81' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M727 81L735 79' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M735 79L742 79' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M742 79L749 79' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M749 79L758 81' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M758 81L765 83' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M765 83L771 87' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M771 87L777 92' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M777 92L781 97' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M781 97L783 103' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M783 103L784 107' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M759 86L771 86L770 87Z' fill='black'/>
+<path d='M759 86L770 87L770 88Z' fill='black'/>
+<path d='M759 86L770 88L769 89Z' fill='black'/>
+<path d='M759 86L769 89L767 91Z' fill='black'/>
+<path d='M759 86L767 91L765 91Z' fill='black'/>
+<path d='M759 86L765 91L763 92Z' fill='black'/>
+<path d='M759 86L763 92L760 92Z' fill='black'/>
+<path d='M759 86L760 92L759 93Z' fill='black'/>
+<path d='M759 86L759 93L758 92Z' fill='black'/>
+<path d='M759 86L758 92L755 92Z' fill='black'/>
+<path d='M759 86L755 92L753 91Z' fill='black'/>
+<path d='M759 86L753 91L751 91Z' fill='black'/>
+<path d='M759 86L751 91L749 89Z' fill='black'/>
+<path d='M759 86L749 89L748 88Z' fill='black'/>
+<path d='M759 86L748 88L748 87Z' fill='black'/>
+<path d='M759 86L748 87L747 86Z' fill='black'/>
+<path d='M759 86L747 86L748 85Z' fill='black'/>
+<path d='M759 86L748 85L748 83Z' fill='black'/>
+<path d='M759 86L748 83L749 82Z' fill='black'/>
+<path d='M759 86L749 82L751 81Z' fill='black'/>
+<path d='M759 86L751 81L753 81Z' fill='black'/>
+<path d='M759 86L753 81L755 80Z' fill='black'/>
+<path d='M759 86L755 80L758 80Z' fill='black'/>
+<path d='M759 86L758 80L759 79Z' fill='black'/>
+<path d='M759 86L759 79L760 80Z' fill='black'/>
+<path d='M759 86L760 80L763 80Z' fill='black'/>
+<path d='M759 86L763 80L765 81Z' fill='black'/>
+<path d='M759 86L765 81L767 81Z' fill='black'/>
+<path d='M759 86L767 81L769 82Z' fill='black'/>
+<path d='M759 86L769 82L770 83Z' fill='black'/>
+<path d='M759 86L770 83L770 85Z' fill='black'/>
+<path d='M759 86L770 85L771 86Z' fill='black'/>
+<path d='M722 104L725 104L724 104Z' fill='black'/>
+<path d='M722 104L724 104L724 105Z' fill='black'/>
+<path d='M722 104L724 105L724 106Z' fill='black'/>
+<path d='M722 104L724 106L724 107Z' fill='black'/>
+<path d='M722 104L724 107L723 107Z' fill='black'/>
+<path d='M722 104L723 107L723 109Z' fill='black'/>
+<path d='M722 104L723 109L722 109Z' fill='black'/>
+<path d='M722 104L722 109L722 109Z' fill='black'/>
+<path d='M722 104L722 109L722 109Z' fill='black'/>
+<path d='M722 104L722 109L721 109Z' fill='black'/>
+<path d='M722 104L721 109L721 107Z' fill='black'/>
+<path d='M722 104L721 107L719 107Z' fill='black'/>
+<path d='M722 104L719 107L719 106Z' fill='black'/>
+<path d='M722 104L719 106L719 105Z' fill='black'/>
+<path d='M722 104L719 105L719 104Z' fill='black'/>
+<path d='M722 104L719 104L718 104Z' fill='black'/>
+<path d='M722 104L718 104L719 104Z' fill='black'/>
+<path d='M722 104L719 104L719 103Z' fill='black'/>
+<path d='M722 104L719 103L719 101Z' fill='black'/>
+<path d='M722 104L719 101L719 100Z' fill='black'/>
+<path d='M722 104L719 100L721 100Z' fill='black'/>
+<path d='M722 104L721 100L721 99Z' fill='black'/>
+<path d='M722 104L721 99L722 99Z' fill='black'/>
+<path d='M722 104L722 99L722 99Z' fill='black'/>
+<path d='M722 104L722 99L722 99Z' fill='black'/>
+<path d='M722 104L722 99L723 99Z' fill='black'/>
+<path d='M722 104L723 99L723 100Z' fill='black'/>
+<path d='M722 104L723 100L724 100Z' fill='black'/>
+<path d='M722 104L724 100L724 101Z' fill='black'/>
+<path d='M722 104L724 101L724 103Z' fill='black'/>
+<path d='M722 104L724 103L724 104Z' fill='black'/>
+<path d='M722 104L724 104L725 104Z' fill='black'/>
+<path d='M759 104L763 104L761 104Z' fill='black'/>
+<path d='M759 104L761 104L761 105Z' fill='black'/>
+<path d='M759 104L761 105L761 106Z' fill='black'/>
+<path d='M759 104L761 106L761 107Z' fill='black'/>
+<path d='M759 104L761 107L760 107Z' fill='black'/>
+<path d='M759 104L760 107L760 109Z' fill='black'/>
+<path d='M759 104L760 109L759 109Z' fill='black'/>
+<path d='M759 104L759 109L759 109Z' fill='black'/>
+<path d='M759 104L759 109L759 109Z' fill='black'/>
+<path d='M759 104L759 109L758 109Z' fill='black'/>
+<path d='M759 104L758 109L758 107Z' fill='black'/>
+<path d='M759 104L758 107L757 107Z' fill='black'/>
+<path d='M759 104L757 107L757 106Z' fill='black'/>
+<path d='M759 104L757 106L757 105Z' fill='black'/>
+<path d='M759 104L757 105L757 104Z' fill='black'/>
+<path d='M759 104L757 104L755 104Z' fill='black'/>
+<path d='M759 104L755 104L757 104Z' fill='black'/>
+<path d='M759 104L757 104L757 103Z' fill='black'/>
+<path d='M759 104L757 103L757 101Z' fill='black'/>
+<path d='M759 104L757 101L757 100Z' fill='black'/>
+<path d='M759 104L757 100L758 100Z' fill='black'/>
+<path d='M759 104L758 100L758 99Z' fill='black'/>
+<path d='M759 104L758 99L759 99Z' fill='black'/>
+<path d='M759 104L759 99L759 99Z' fill='black'/>
+<path d='M759 104L759 99L759 99Z' fill='black'/>
+<path d='M759 104L759 99L760 99Z' fill='black'/>
+<path d='M759 104L760 99L760 100Z' fill='black'/>
+<path d='M759 104L760 100L761 100Z' fill='black'/>
+<path d='M759 104L761 100L761 101Z' fill='black'/>
+<path d='M759 104L761 101L761 103Z' fill='black'/>
+<path d='M759 104L761 103L761 104Z' fill='black'/>
+<path d='M759 104L761 104L763 104Z' fill='black'/>
+<path d='M737 113L742 113' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M742 113L740 117' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M740 117L735 122' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M740 117L746 122' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M711 116L688 111' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M710 122L687 124' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M771 116L797 111' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M772 122L799 124' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M716 155L728 155L727 157Z' fill='white'/>
+<path d='M716 155L727 157L727 158Z' fill='white'/>
+<path d='M716 155L727 158L725 159Z' fill='white'/>
+<path d='M716 155L725 159L724 160Z' fill='white'/>
+<path d='M716 155L724 160L722 161Z' fill='white'/>
+<path d='M716 155L722 161L719 163Z' fill='white'/>
+<path d='M716 155L719 163L717 163Z' fill='white'/>
+<path d='M716 155L717 163L716 163Z' fill='white'/>
+<path d='M716 155L716 163L715 163Z' fill='white'/>
+<path d='M716 155L715 163L712 163Z' fill='white'/>
+<path d='M716 155L712 163L710 161Z' fill='white'/>
+<path d='M716 155L710 161L707 160Z' fill='white'/>
+<path d='M716 155L707 160L706 159Z' fill='white'/>
+<path d='M716 155L706 159L705 158Z' fill='white'/>
+<path d='M716 155L705 158L705 157Z' fill='white'/>
+<path d='M716 155L705 157L704 155Z' fill='white'/>
+<path d='M716 155L704 155L705 154Z' fill='white'/>
+<path d='M716 155L705 154L705 153Z' fill='white'/>
+<path d='M716 155L705 153L706 152Z' fill='white'/>
+<path d='M716 155L706 152L707 151Z' fill='white'/>
+<path d='M716 155L707 151L710 149Z' fill='white'/>
+<path d='M716 155L710 149L712 148Z' fill='white'/>
+<path d='M716 155L712 148L715 148Z' fill='white'/>
+<path d='M716 155L715 148L716 148Z' fill='white'/>
+<path d='M716 155L716 148L717 148Z' fill='white'/>
+<path d='M716 155L717 148L719 148Z' fill='white'/>
+<path d='M716 155L719 148L722 149Z' fill='white'/>
+<path d='M716 155L722 149L724 151Z' fill='white'/>
+<path d='M716 155L724 151L725 152Z' fill='white'/>
+<path d='M716 155L725 152L727 153Z' fill='white'/>
+<path d='M716 155L727 153L727 154Z' fill='white'/>
+<path d='M716 155L727 154L728 155Z' fill='white'/>
+<path d='M728 155L727 157' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M727 157L727 158' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M727 158L725 159' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M725 159L724 160' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M724 160L722 161' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M722 161L719 163' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M719 163L717 163' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M717 163L716 163' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M716 163L715 163' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M715 163L712 163' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M712 163L710 161' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M710 161L707 160' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M707 160L706 159' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M706 159L705 158' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M705 158L705 157' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M705 157L704 155' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M704 155L705 154' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M705 154L705 153' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M705 153L706 152' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M706 152L707 151' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M707 151L710 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M710 149L712 148' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M712 148L715 148' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M715 148L716 148' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M716 148L717 148' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M717 148L719 148' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M719 148L722 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M722 149L724 151' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M724 151L725 152' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M725 152L727 153' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M727 153L727 154' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M727 154L728 155' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M763 155L775 155L773 157Z' fill='white'/>
+<path d='M763 155L773 157L773 158Z' fill='white'/>
+<path d='M763 155L773 158L772 159Z' fill='white'/>
+<path d='M763 155L772 159L771 160Z' fill='white'/>
+<path d='M763 155L771 160L769 161Z' fill='white'/>
+<path d='M763 155L769 161L766 163Z' fill='white'/>
+<path d='M763 155L766 163L764 163Z' fill='white'/>
+<path d='M763 155L764 163L763 163Z' fill='white'/>
+<path d='M763 155L763 163L761 163Z' fill='white'/>
+<path d='M763 155L761 163L759 163Z' fill='white'/>
+<path d='M763 155L759 163L757 161Z' fill='white'/>
+<path d='M763 155L757 161L754 160Z' fill='white'/>
+<path d='M763 155L754 160L753 159Z' fill='white'/>
+<path d='M763 155L753 159L752 158Z' fill='white'/>
+<path d='M763 155L752 158L752 157Z' fill='white'/>
+<path d='M763 155L752 157L751 155Z' fill='white'/>
+<path d='M763 155L751 155L752 154Z' fill='white'/>
+<path d='M763 155L752 154L752 153Z' fill='white'/>
+<path d='M763 155L752 153L753 152Z' fill='white'/>
+<path d='M763 155L753 152L754 151Z' fill='white'/>
+<path d='M763 155L754 151L757 149Z' fill='white'/>
+<path d='M763 155L757 149L759 148Z' fill='white'/>
+<path d='M763 155L759 148L761 148Z' fill='white'/>
+<path d='M763 155L761 148L763 148Z' fill='white'/>
+<path d='M763 155L763 148L764 148Z' fill='white'/>
+<path d='M763 155L764 148L766 148Z' fill='white'/>
+<path d='M763 155L766 148L769 149Z' fill='white'/>
+<path d='M763 155L769 149L771 151Z' fill='white'/>
+<path d='M763 155L771 151L772 152Z' fill='white'/>
+<path d='M763 155L772 152L773 153Z' fill='white'/>
+<path d='M763 155L773 153L773 154Z' fill='white'/>
+<path d='M763 155L773 154L775 155Z' fill='white'/>
+<path d='M775 155L773 157' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M773 157L773 158' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M773 158L772 159' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M772 159L771 160' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M771 160L769 161' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M769 161L766 163' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M766 163L764 163' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M764 163L763 163' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M763 163L761 163' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M761 163L759 163' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M759 163L757 161' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M757 161L754 160' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M754 160L753 159' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M753 159L752 158' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M752 158L752 157' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M752 157L751 155' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M751 155L752 154' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M752 154L752 153' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M752 153L753 152' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M753 152L754 151' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M754 151L757 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M757 149L759 148' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M759 148L761 148' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M761 148L763 148' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M763 148L764 148' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M764 148L766 148' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M766 148L769 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M769 149L771 151' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M771 151L772 152' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M772 152L773 153' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M773 153L773 154' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M773 154L775 155' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M764 164L785 159' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M785 159L794 146' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<text x='745' y='205' text-anchor='middle' font-family='sans-serif' font-size='16'>Pose 4</text>
+<path d='M905 137L928 137L927 141Z' fill='white'/>
+<path d='M905 137L927 141L926 146Z' fill='white'/>
+<path d='M905 137L926 146L923 149Z' fill='white'/>
+<path d='M905 137L923 149L921 153Z' fill='white'/>
+<path d='M905 137L921 153L917 155Z' fill='white'/>
+<path d='M905 137L917 155L914 158Z' fill='white'/>
+<path d='M905 137L914 158L909 159Z' fill='white'/>
+<path d='M905 137L909 159L905 159Z' fill='white'/>
+<path d='M905 137L905 159L902 159Z' fill='white'/>
+<path d='M905 137L902 159L897 158Z' fill='white'/>
+<path d='M905 137L897 158L893 155Z' fill='white'/>
+<path d='M905 137L893 155L890 153Z' fill='white'/>
+<path d='M905 137L890 153L887 149Z' fill='white'/>
+<path d='M905 137L887 149L885 146Z' fill='white'/>
+<path d='M905 137L885 146L884 141Z' fill='white'/>
+<path d='M905 137L884 141L882 137Z' fill='white'/>
+<path d='M905 137L882 137L884 134Z' fill='white'/>
+<path d='M905 137L884 134L885 129Z' fill='white'/>
+<path d='M905 137L885 129L887 125Z' fill='white'/>
+<path d='M905 137L887 125L890 122Z' fill='white'/>
+<path d='M905 137L890 122L893 119Z' fill='white'/>
+<path d='M905 137L893 119L897 117Z' fill='white'/>
+<path d='M905 137L897 117L902 116Z' fill='white'/>
+<path d='M905 137L902 116L905 116Z' fill='white'/>
+<path d='M905 137L905 116L909 116Z' fill='white'/>
+<path d='M905 137L909 116L914 117Z' fill='white'/>
+<path d='M905 137L914 117L917 119Z' fill='white'/>
+<path d='M905 137L917 119L921 122Z' fill='white'/>
+<path d='M905 137L921 122L923 125Z' fill='white'/>
+<path d='M905 137L923 125L926 129Z' fill='white'/>
+<path d='M905 137L926 129L927 134Z' fill='white'/>
+<path d='M905 137L927 134L928 137Z' fill='white'/>
+<path d='M928 137L927 141' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M927 141L926 146' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M926 146L923 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M923 149L921 153' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M921 153L917 155' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M917 155L914 158' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M914 158L909 159' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M909 159L905 159' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M905 159L902 159' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M902 159L897 158' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M897 158L893 155' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M893 155L890 153' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M890 153L887 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M887 149L885 146' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M885 146L884 141' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M884 141L882 137' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M882 137L884 134' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M884 134L885 129' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M885 129L887 125' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M887 125L890 122' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M890 122L893 119' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M893 119L897 117' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M897 117L902 116' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M902 116L905 116' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M905 116L909 116' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M909 116L914 117' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M914 117L917 119' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M917 119L921 122' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M921 122L923 125' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M923 125L926 129' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M926 129L927 134' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M927 134L928 137' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M922 151L939 140' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M939 140L941 119' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M848 95L850 59L878 81Z' fill='black'/>
+<path d='M897 79L928 62L924 103Z' fill='black'/>
+<path d='M854 86L855 69L869 82Z' fill='white'/>
+<path d='M904 83L922 70L918 93Z' fill='white'/>
+<path d='M887 107L929 107L928 112Z' fill='white'/>
+<path d='M887 107L928 112L926 118Z' fill='white'/>
+<path d='M887 107L926 118L922 123Z' fill='white'/>
+<path d='M887 107L922 123L916 128Z' fill='white'/>
+<path d='M887 107L916 128L910 131Z' fill='white'/>
+<path d='M887 107L910 131L903 134Z' fill='white'/>
+<path d='M887 107L903 134L894 136Z' fill='white'/>
+<path d='M887 107L894 136L887 136Z' fill='white'/>
+<path d='M887 107L887 136L880 136Z' fill='white'/>
+<path d='M887 107L880 136L872 134Z' fill='white'/>
+<path d='M887 107L872 134L864 131Z' fill='white'/>
+<path d='M887 107L864 131L858 128Z' fill='white'/>
+<path d='M887 107L858 128L852 123Z' fill='white'/>
+<path d='M887 107L852 123L849 118Z' fill='white'/>
+<path d='M887 107L849 118L846 112Z' fill='white'/>
+<path d='M887 107L846 112L845 107Z' fill='white'/>
+<path d='M887 107L845 107L846 103Z' fill='white'/>
+<path d='M887 107L846 103L849 97Z' fill='white'/>
+<path d='M887 107L849 97L852 92Z' fill='white'/>
+<path d='M887 107L852 92L858 87Z' fill='white'/>
+<path d='M887 107L858 87L864 83Z' fill='white'/>
+<path d='M887 107L864 83L872 81Z' fill='white'/>
+<path d='M887 107L872 81L880 79Z' fill='white'/>
+<path d='M887 107L880 79L887 79Z' fill='white'/>
+<path d='M887 107L887 79L894 79Z' fill='white'/>
+<path d='M887 107L894 79L903 81Z' fill='white'/>
+<path d='M887 107L903 81L910 83Z' fill='white'/>
+<path d='M887 107L910 83L916 87Z' fill='white'/>
+<path d='M887 107L916 87L922 92Z' fill='white'/>
+<path d='M887 107L922 92L926 97Z' fill='white'/>
+<path d='M887 107L926 97L928 103Z' fill='white'/>
+<path d='M887 107L928 103L929 107Z' fill='white'/>
+<path d='M929 107L928 112' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M928 112L926 118' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M926 118L922 123' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M922 123L916 128' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M916 128L910 131' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M910 131L903 134' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M903 134L894 136' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M894 136L887 136' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M887 136L880 136' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M880 136L872 134' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M872 134L864 131' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M864 131L858 128' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M858 128L852 123' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M852 123L849 118' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M849 118L846 112' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M846 112L845 107' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M845 107L846 103' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M846 103L849 97' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M849 97L852 92' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M852 92L858 87' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M858 87L864 83' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M864 83L872 81' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M872 81L880 79' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M880 79L887 79' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M887 79L894 79' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M894 79L903 81' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M903 81L910 83' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M910 83L916 87' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M916 87L922 92' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M922 92L926 97' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M926 97L928 103' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M928 103L929 107' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M904 86L916 86L915 87Z' fill='black'/>
+<path d='M904 86L915 87L915 88Z' fill='black'/>
+<path d='M904 86L915 88L914 89Z' fill='black'/>
+<path d='M904 86L914 89L912 91Z' fill='black'/>
+<path d='M904 86L912 91L910 91Z' fill='black'/>
+<path d='M904 86L910 91L908 92Z' fill='black'/>
+<path d='M904 86L908 92L905 92Z' fill='black'/>
+<path d='M904 86L905 92L904 93Z' fill='black'/>
+<path d='M904 86L904 93L903 92Z' fill='black'/>
+<path d='M904 86L903 92L900 92Z' fill='black'/>
+<path d='M904 86L900 92L898 91Z' fill='black'/>
+<path d='M904 86L898 91L896 91Z' fill='black'/>
+<path d='M904 86L896 91L894 89Z' fill='black'/>
+<path d='M904 86L894 89L893 88Z' fill='black'/>
+<path d='M904 86L893 88L893 87Z' fill='black'/>
+<path d='M904 86L893 87L892 86Z' fill='black'/>
+<path d='M904 86L892 86L893 85Z' fill='black'/>
+<path d='M904 86L893 85L893 83Z' fill='black'/>
+<path d='M904 86L893 83L894 82Z' fill='black'/>
+<path d='M904 86L894 82L896 81Z' fill='black'/>
+<path d='M904 86L896 81L898 81Z' fill='black'/>
+<path d='M904 86L898 81L900 80Z' fill='black'/>
+<path d='M904 86L900 80L903 80Z' fill='black'/>
+<path d='M904 86L903 80L904 79Z' fill='black'/>
+<path d='M904 86L904 79L905 80Z' fill='black'/>
+<path d='M904 86L905 80L908 80Z' fill='black'/>
+<path d='M904 86L908 80L910 81Z' fill='black'/>
+<path d='M904 86L910 81L912 81Z' fill='black'/>
+<path d='M904 86L912 81L914 82Z' fill='black'/>
+<path d='M904 86L914 82L915 83Z' fill='black'/>
+<path d='M904 86L915 83L915 85Z' fill='black'/>
+<path d='M904 86L915 85L916 86Z' fill='black'/>
+<path d='M861 105L868 100' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M867 100L873 105' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M897 105L903 100' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M903 100L910 105' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M882 113L887 113' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M887 113L885 117' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M885 117L880 122' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M885 117L891 122' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M856 116L833 111' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M855 122L832 124' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M916 116L942 111' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M917 122L944 124' fill='none' stroke='black' stroke-width='1' stroke-linecap='round'/>
+<path d='M861 142L873 142L872 143Z' fill='white'/>
+<path d='M861 142L872 143L872 145Z' fill='white'/>
+<path d='M861 142L872 145L870 146Z' fill='white'/>
+<path d='M861 142L870 146L869 147Z' fill='white'/>
+<path d='M861 142L869 147L867 148Z' fill='white'/>
+<path d='M861 142L867 148L864 149Z' fill='white'/>
+<path d='M861 142L864 149L862 149Z' fill='white'/>
+<path d='M861 142L862 149L861 149Z' fill='white'/>
+<path d='M861 142L861 149L860 149Z' fill='white'/>
+<path d='M861 142L860 149L857 149Z' fill='white'/>
+<path d='M861 142L857 149L855 148Z' fill='white'/>
+<path d='M861 142L855 148L852 147Z' fill='white'/>
+<path d='M861 142L852 147L851 146Z' fill='white'/>
+<path d='M861 142L851 146L850 145Z' fill='white'/>
+<path d='M861 142L850 145L850 143Z' fill='white'/>
+<path d='M861 142L850 143L849 142Z' fill='white'/>
+<path d='M861 142L849 142L850 141Z' fill='white'/>
+<path d='M861 142L850 141L850 140Z' fill='white'/>
+<path d='M861 142L850 140L851 139Z' fill='white'/>
+<path d='M861 142L851 139L852 137Z' fill='white'/>
+<path d='M861 142L852 137L855 136Z' fill='white'/>
+<path d='M861 142L855 136L857 135Z' fill='white'/>
+<path d='M861 142L857 135L860 135Z' fill='white'/>
+<path d='M861 142L860 135L861 135Z' fill='white'/>
+<path d='M861 142L861 135L862 135Z' fill='white'/>
+<path d='M861 142L862 135L864 135Z' fill='white'/>
+<path d='M861 142L864 135L867 136Z' fill='white'/>
+<path d='M861 142L867 136L869 137Z' fill='white'/>
+<path d='M861 142L869 137L870 139Z' fill='white'/>
+<path d='M861 142L870 139L872 140Z' fill='white'/>
+<path d='M861 142L872 140L872 141Z' fill='white'/>
+<path d='M861 142L872 141L873 142Z' fill='white'/>
+<path d='M873 142L872 143' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M872 143L872 145' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M872 145L870 146' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M870 146L869 147' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M869 147L867 148' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M867 148L864 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M864 149L862 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M862 149L861 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M861 149L860 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M860 149L857 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M857 149L855 148' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M855 148L852 147' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M852 147L851 146' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M851 146L850 145' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M850 145L850 143' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M850 143L849 142' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M849 142L850 141' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M850 141L850 140' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M850 140L851 139' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M851 139L852 137' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M852 137L855 136' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M855 136L857 135' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M857 135L860 135' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M860 135L861 135' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M861 135L862 135' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M862 135L864 135' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M864 135L867 136' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M867 136L869 137' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M869 137L870 139' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M870 139L872 140' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M872 140L872 141' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M872 141L873 142' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M908 142L920 142L918 143Z' fill='white'/>
+<path d='M908 142L918 143L918 145Z' fill='white'/>
+<path d='M908 142L918 145L917 146Z' fill='white'/>
+<path d='M908 142L917 146L916 147Z' fill='white'/>
+<path d='M908 142L916 147L914 148Z' fill='white'/>
+<path d='M908 142L914 148L911 149Z' fill='white'/>
+<path d='M908 142L911 149L909 149Z' fill='white'/>
+<path d='M908 142L909 149L908 149Z' fill='white'/>
+<path d='M908 142L908 149L906 149Z' fill='white'/>
+<path d='M908 142L906 149L904 149Z' fill='white'/>
+<path d='M908 142L904 149L902 148Z' fill='white'/>
+<path d='M908 142L902 148L899 147Z' fill='white'/>
+<path d='M908 142L899 147L898 146Z' fill='white'/>
+<path d='M908 142L898 146L897 145Z' fill='white'/>
+<path d='M908 142L897 145L897 143Z' fill='white'/>
+<path d='M908 142L897 143L896 142Z' fill='white'/>
+<path d='M908 142L896 142L897 141Z' fill='white'/>
+<path d='M908 142L897 141L897 140Z' fill='white'/>
+<path d='M908 142L897 140L898 139Z' fill='white'/>
+<path d='M908 142L898 139L899 137Z' fill='white'/>
+<path d='M908 142L899 137L902 136Z' fill='white'/>
+<path d='M908 142L902 136L904 135Z' fill='white'/>
+<path d='M908 142L904 135L906 135Z' fill='white'/>
+<path d='M908 142L906 135L908 135Z' fill='white'/>
+<path d='M908 142L908 135L909 135Z' fill='white'/>
+<path d='M908 142L909 135L911 135Z' fill='white'/>
+<path d='M908 142L911 135L914 136Z' fill='white'/>
+<path d='M908 142L914 136L916 137Z' fill='white'/>
+<path d='M908 142L916 137L917 139Z' fill='white'/>
+<path d='M908 142L917 139L918 140Z' fill='white'/>
+<path d='M908 142L918 140L918 141Z' fill='white'/>
+<path d='M908 142L918 141L920 142Z' fill='white'/>
+<path d='M920 142L918 143' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M918 143L918 145' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M918 145L917 146' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M917 146L916 147' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M916 147L914 148' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M914 148L911 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M911 149L909 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M909 149L908 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M908 149L906 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M906 149L904 149' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M904 149L902 148' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M902 148L899 147' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M899 147L898 146' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M898 146L897 145' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M897 145L897 143' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M897 143L896 142' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M896 142L897 141' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M897 141L897 140' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M897 140L898 139' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M898 139L899 137' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M899 137L902 136' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M902 136L904 135' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M904 135L906 135' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M906 135L908 135' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M908 135L909 135' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M909 135L911 135' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M911 135L914 136' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M914 136L916 137' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M916 137L917 139' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M917 139L918 140' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M918 140L918 141' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M918 141L920 142' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M838 76L831 67' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<path d='M934 79L947 74' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>
+<text x='890' y='205' text-anchor='middle' font-family='sans-serif' font-size='16'>Pose 5</text>
+<text x='500' y='300' text-anchor='middle' font-family='sans-serif' font-size='18'>Native vector artwork used by the firmware (not a device screenshot)</text></svg>

@@ -49,9 +49,9 @@
 #error "FirmwareBoardTag: no FREEINK_DEVICE_* flag set; cannot derive board name"
 #endif
 
-// Stable application-only alias uploaded with each CrossNext X4 Pro release.
+// Stable application-only alias uploaded with each CrossHihi X4 Pro release.
 #if FREEINK_DEVICE_X4PRO
-#define CROSSPOINT_RELEASE_ASSET "CrossNext-X4PRO-OTA.bin"
+#define CROSSPOINT_RELEASE_ASSET "CrossHihi-X4PRO-OTA.bin"
 #else
 #define CROSSPOINT_RELEASE_ASSET "firmware-" CROSSPOINT_BOARD_NAME ".bin"
 #endif

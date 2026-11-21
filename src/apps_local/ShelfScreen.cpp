@@ -86,14 +86,13 @@ void buildGrid(toybox::Screen& screen, const MenuModel& model) {
   auto& target = screen.target();
   const auto band = screen.body();
   const auto ink = fui::Paint::solid(fui::Color::Black);
-  const auto background = fui::Paint::dither(fui::Color::LightGray);
   for (int n = 0; n < model.count; ++n) {
     const auto tile = gridCell(band, n);
     const int diameter = std::min({72, int(tile.width) - 12, int(tile.height) - 32});
     const int y = tile.y + std::max(3, (int(tile.height) - diameter - 32) / 2);
     const auto circle = fui::makeRect(tile.x + (tile.width - diameter) / 2, y, diameter, diameter);
     if (!circle.empty() && model.icons && model.icons[n]) {
-      target.fill(circle, background, diameter / 2);
+      // CrossHihi uses unboxed monochrome icons.
       const int pad = std::max(3, diameter / 7);
       target.bitmap(circle.inset({int16_t(pad), int16_t(pad), int16_t(pad), int16_t(pad)}),
                     fui::bitmapFromIcon(*model.icons[n]), fui::BitmapMode::Contain, ink);

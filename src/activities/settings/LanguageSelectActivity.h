@@ -14,7 +14,7 @@ class LanguageSelectActivity final : public UiListActivity {
   static constexpr int BUILTIN_COUNT = 2;
   languagepack::Catalog catalog;
   bool catalogFailed = false;
-  int listCount() const override { return BUILTIN_COUNT + static_cast<int>(catalog.size()); }
+  int listCount() const override { return BUILTIN_COUNT; }
   void buildScreen(UiScreen& screen) override;
   void activateIndex(int index) override;
   void applySelection(int index);

@@ -308,7 +308,7 @@ void buildSheet(toybox::Screen& screen, const SheetModel& model) {
   drawSheetName(screen, fui::makeRect(box.x + 16, box.y + 12, box.width - 32, 32), model.name);
   title.font = 3;
   target.text(fui::makeRect(box.x + 16, box.y + 48, box.width - 32, 28), model.detail, title);
-  const char* labels[] = {tr(STR_WALLPAPER_SET), tr(STR_UI_DELETE_D6F563), tr(STR_WALLPAPER_SLIDESHOW),
+  const char* labels[] = {I18N.getLanguage()==Language::VI ? "Xem ảnh" : "Preview", tr(STR_UI_DELETE_D6F563), tr(STR_WALLPAPER_SLIDESHOW),
                           tr(STR_WALLPAPER_EXIT_PREVIEW)};
   static constexpr fui::ActionId actions[] = {ActionSet, ActionDelete, ActionSlideshow, ActionExitPreview};
   for (int n = 0; n < 4; ++n) {

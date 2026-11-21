@@ -1,7 +1,7 @@
 <script src="/ui.js"></script>
 <script>
 function uiText(source) {
-  return Object.prototype.hasOwnProperty.call(window.CrossNextUi || {}, source) ? window.CrossNextUi[source] : source;
+  return Object.prototype.hasOwnProperty.call(window.CrossHihiUi || {}, source) ? window.CrossHihiUi[source] : source;
 }
 function uiHtml(source) {
   return uiText(source).replace(/[&<>"']/g, function (character) {
@@ -18,7 +18,7 @@ function uiFormat(source, values) {
   });
 }
 document.addEventListener('DOMContentLoaded', function () {
-  document.documentElement.lang = window.CrossNextLocale || 'en';
+  document.documentElement.lang = window.CrossHihiLocale || 'en';
   document.documentElement.dir = /^(ar|he|fa)(-|$)/.test(document.documentElement.lang) ? 'rtl' : 'ltr';
   document.title = uiText(document.title);
   document.querySelectorAll('[data-ui]').forEach(function (element) {

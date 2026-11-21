@@ -1,5 +1,6 @@
 #pragma once
 #include <ArduinoJson.h>
+#include <I18n.h>
 #include <BlePageTurner.h>
 #include <Epub/ReaderRenderSpec.h>
 #include <PersistableStore.h>
@@ -487,7 +488,7 @@ class CrossPointSettings : public PersistableStore<CrossPointSettings> {
   // warmth are always remembered even when this is disabled.
   uint8_t frontlightRestoreOnWake = 1;
   // Language setting (Language enum index, default 0 = EN)
-  uint8_t language = 0;
+  uint8_t language = static_cast<uint8_t>(Language::VI);
   char languagePack[64] = {};
   // Keyboard layouts the user can reach, using keyboard_layouts::ALL table bits.
   // 0 means "not configured", resolved to the UI language's layout plus English.
@@ -499,9 +500,7 @@ class CrossPointSettings : public PersistableStore<CrossPointSettings> {
   // Quick Resume: keep current content visible with moon icon instead of showing a static sleep screen.
   uint8_t quickResumeSleepScreen = QUICK_RESUME_AFTER_TIMEOUT;
   bool retainSleepFrame(bool fromTimeout, bool fromReader) const {
-    const bool keepOnTimeout = fromTimeout && quickResumeSleepScreen == QUICK_RESUME_AFTER_TIMEOUT;
-    if (lunarSleepCalendar) return keepOnTimeout && fromReader;
-    return sleepScreen == QUICK_RESUME || keepOnTimeout;
+    return fromTimeout && fromReader;
   }
 
   static constexpr uint8_t MIN_SLEEP_TIMEOUT_MINUTES = 1;

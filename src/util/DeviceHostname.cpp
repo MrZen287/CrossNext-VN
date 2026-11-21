@@ -17,7 +17,7 @@ namespace {
 // asserts it is PRESENT as well as not saying CrossPoint -- an allowlist alone
 // would let a tidy-up rename ship a device that answers to nothing. The
 // per-unit suffix is appended below; this is the branded half.
-constexpr const char* HOSTNAME = "crossnext";
+constexpr const char* HOSTNAME = "crosshihi";
 
 // FNV-1a over all six MAC bytes, rather than "take the low three".
 //

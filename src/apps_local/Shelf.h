@@ -130,6 +130,7 @@ int shownItem(int folder, int row);
 int orderedItem(int folder, int row);
 // One adjacent move, saved by stable folder/item titles. A failed write rolls back.
 bool moveOrderedItem(int folder, int row, int delta);
+bool pinItemToFront(int folder, int item);
 
 // How many shown items sit BEFORE registry item `item` -- which is the shown
 // row of `item` itself when it is shown, and the row of the next surviving

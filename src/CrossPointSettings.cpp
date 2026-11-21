@@ -371,6 +371,9 @@ bool CrossPointSettings::fromJson(JsonVariantConst doc) {
   } else if (homeLayout >= HOME_LAYOUT_COUNT) {
     homeLayout = HOME_FRAMED;
   }
+  homeLayout = HOME_FRAMED;
+  lunarSleepCalendar = true;
+  quickResumeSleepScreen = QUICK_RESUME_AFTER_TIMEOUT;
   fontWeight = clamp(doc["fontWeight"] | (uint8_t)FONT_WEIGHT_REGULAR, FONT_WEIGHT_COUNT, FONT_WEIGHT_REGULAR);
 
   // Font family — uses dynamic getter/setter in SettingsList so the generic loop skips it.

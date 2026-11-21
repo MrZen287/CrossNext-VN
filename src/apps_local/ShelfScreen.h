@@ -13,7 +13,7 @@ enum : fui::ActionId {
   ActionToggleShown = 5,
   ActionGridOpen = 6,
 };
-inline constexpr int kGridColumns = 3;
+inline constexpr int kGridColumns = 4;
 inline constexpr int kGridRows = 5;
 inline constexpr int kGridSlots = kGridColumns * kGridRows;
 extern const UiLabel kDoneChip;

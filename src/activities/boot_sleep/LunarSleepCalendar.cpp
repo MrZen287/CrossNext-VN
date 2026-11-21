@@ -1,130 +1,88 @@
 #include "LunarSleepCalendar.h"
-
+#include "LunarCoverDigits.h"
 #include <I18n.h>
-
 #include <algorithm>
 #include <cstdio>
-
-#include "LunarCoverDigits.h"
 #include "apps_local/reading/ReadingStatsStore.h"
-#include "apps_local/tools/CalendarLabels.h"
 #include "apps_local/tools/VietnameseLunar.h"
-#include "apps_local/ui/BookFrame.h"
 #include "apps_local/ui/NumberTypography.h"
 #include "apps_local/ui/PixelMenuTheme.h"
 #include "apps_local/ui/VietnameseQuotes.h"
-
 namespace lunarSleepCalendar {
-namespace fui = freeink::ui;
+namespace fui=freeink::ui;
 namespace {
-constexpr StrId weekdays[] = {
-    StrId::STR_STATS_MONDAY, StrId::STR_STATS_TUESDAY, StrId::STR_STATS_WEDNESDAY, StrId::STR_STATS_THURSDAY,
-    StrId::STR_STATS_FRIDAY, StrId::STR_STATS_SATURDAY, StrId::STR_STATS_SUNDAY};
-constexpr const char* shortWeekdays[] = {"T2", "T3", "T4", "T5", "T6", "T7", "CN"};
-constexpr auto ink = fui::Paint::solid(fui::Color::Black);
-
-void divider(fui::DrawTarget& target, fui::Rect page, int y) {
-  const int mid = page.x + page.width / 2;
-  const auto pt = [y](int x, int dy = 0) {
-    return fui::Point{static_cast<int16_t>(x), static_cast<int16_t>(y + dy)};
-  };
-  target.line(pt(page.x + 20), pt(mid - 13), 1, ink);
-  target.line(pt(mid + 13), pt(page.right() - 21), 1, ink);
-  target.triangle(pt(mid - 7), pt(mid, -5), pt(mid + 7), ink);
-  target.triangle(pt(mid - 7), pt(mid, 5), pt(mid + 7), ink);
+constexpr auto ink=fui::Paint::solid(fui::Color::Black);
+constexpr auto white=fui::Paint::solid(fui::Color::White);
+constexpr const char* viDays[]={"THỨ HAI","THỨ BA","THỨ TƯ","THỨ NĂM","THỨ SÁU","THỨ BẢY","CHỦ NHẬT"};
+constexpr const char* enDays[]={"MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY","SUNDAY"};
+constexpr const char* months[]={"Giêng","Hai","Ba","Tư","Năm","Sáu","Bảy","Tám","Chín","Mười","Mười Một","Chạp"};
+constexpr const char* stems[]={"Giáp","Ất","Bính","Đinh","Mậu","Kỷ","Canh","Tân","Nhâm","Quý"};
+constexpr const char* branches[]={"Tý","Sửu","Dần","Mão","Thìn","Tỵ","Ngọ","Mùi","Thân","Dậu","Tuất","Hợi"};
+void text(fui::DrawTarget& t,fui::Rect box,const char* value,int font=0,bool bold=false,fui::Color color=fui::Color::Black) {
+  fui::TextStyle s;s.font=font;s.align=fui::TextAlign::Center;s.bold=bold;s.color=color;t.text(box,value,s);
 }
-
-}  // namespace
-
-bool draw(GfxRenderer& renderer) {
-  const int today = readingstats::today();
-  if (!today) return false;
-  const auto date = readingstats::dateFromDay(today);
-  const auto lunar = vietnameselunar::fromCivilDay(today, date.year);
-  if (!lunar.day) return false;
-
-  renderer.clearScreen();
-  auto target = toybox::makeTarget(renderer);
-  pixelui::bindFonts(target, renderer, I18N.getLanguage() != Language::EN);
-  target.setFont(0, toybox::kSerifSmallFontId);
-  target.setFont(1, toybox::kSerifTileFontId);
-  target.setFont(2, toybox::kSerifTitleFontId);
-  const auto area = target.deviceContext().safeRect();
-  const auto paper = area.inset({10, 10, 10, 10});
-  const auto inner = paper.inset({5, 5, 5, 5});
-  const auto label = [&](fui::Rect rect, const char* text, int font, fui::Color color = fui::Color::Black,
-                         bool emphasis = false) {
-    pixelui::text(target, rect, text, font, color, fui::TextAlign::Center, emphasis);
-  };
-  const auto cellLabel = [&](fui::Rect box, const char* text, int font, fui::Color color, bool emphasis) {
-    box = box.inset({2, 3, 2, 3});
-    const auto previousClip = target.clipRect();
-    target.setClipRect(box);
-    label(box, text, font, color, emphasis);
-    target.setClipRect(previousClip);
-  };
-  bookframe::draw(target, paper);
-  char buffer[96];
-  label(fui::makeRect(inner.x + 28, inner.y + 14, inner.width - 56, 46),
-        I18N.get(weekdays[readingstats::weekday(today)]), 2);
-  std::snprintf(buffer, sizeof(buffer), tr(STR_LUNAR_COVER_DATE), date.day, date.month, date.year);
-  label(fui::makeRect(inner.x + 25, inner.y + 63, inner.width - 50, 44), buffer, 2);
-  const int dateEnd = paper.y + paper.height * 48 / 100;
-  const int quoteHeight = std::clamp(int(paper.height) / 10, 70, 80);
-  const int split = dateEnd + quoteHeight;
-  std::snprintf(buffer, sizeof(buffer), "%d", date.day);
-  numerals::draw(target, fui::makeRect(inner.x + 45, inner.y + 111, inner.width - 90, dateEnd - inner.y - 173),
-                 buffer, fui::Color::Black, coverFace);
-  std::snprintf(buffer, sizeof(buffer), lunar.leap ? tr(STR_TOOLS_LUNAR_LEAP_DATE) : tr(STR_TOOLS_LUNAR_DATE),
-                lunar.day, lunar.month, lunar.year);
-  const char* holidayName = calendarlabels::holiday(lunar);
-  label(fui::makeRect(inner.x, dateEnd - (holidayName ? 62 : 43), inner.width, 33), buffer, 2);
-  if (holidayName) label(fui::makeRect(inner.x, dateEnd - 29, inner.width, 23), holidayName, 0);
-  vietnamesequotes::draw(target, fui::makeRect(inner.x + 18, dateEnd, inner.width - 36, quoteHeight - 8),
-                         vietnamesequotes::next(), 1);
-
-  const int first = readingstats::dayIndex({date.year, date.month, 1});
-  const int offset = readingstats::weekday(first);
-  const int days = readingstats::daysInMonth(date.year, date.month);
-  const int rows = (offset + days + 6) / 7;
-  divider(target, inner, split);
-  const auto grid = fui::makeRect(inner.x + 15, split + 15, inner.width - 30, inner.bottom() - split - 33);
-  constexpr int weekdayHeight = 30;
-  const int gridY = grid.y + weekdayHeight;
-  const int gridHeight = grid.bottom() - gridY;
-  const int weekendX = grid.x + 5 * grid.width / 7;
-  for (int y = grid.y + 2; y < grid.bottom() - 1; y += 4)
-    for (int x = weekendX + 2 + (y % 8 ? 0 : 2); x < grid.right() - 1; x += 4)
-      renderer.drawPixel(x, y);
-  target.stroke(grid, ink, 1);
-  for (int col = 0; col < 7; ++col) {
-    const int x = grid.x + col * grid.width / 7;
-    const int right = grid.x + (col + 1) * grid.width / 7;
-    cellLabel(fui::makeRect(x, grid.y, right - x, weekdayHeight), shortWeekdays[col], 0, fui::Color::Black, col >= 5);
-    if (col) renderer.drawLine(x, grid.y, x, grid.bottom() - 1);
+}
+bool draw(GfxRenderer& r) {
+  r.clearScreen();auto t=toybox::makeTarget(r);pixelui::bindFonts(t,r);
+  t.setFont(0,toybox::kSerifSmallFontId);t.setFont(1,toybox::kSerifTileFontId);t.setFont(2,toybox::kSerifTitleFontId);
+  const auto area=t.deviceContext().safeRect();const auto page=area.inset({12,12,12,12});
+  t.stroke(page,ink,1);
+  const bool vi=I18N.getLanguage()==Language::VI;
+  const int today=readingstats::today();
+  if(!today) {
+    text(t,fui::makeRect(page.x+12,page.y+page.height/3,page.width-24,60),"CrossHihi",2);
+    text(t,fui::makeRect(page.x+12,page.y+page.height/2,page.width-24,50),vi?"Vui lòng đặt ngày giờ":"Please set date and time",0);
+    return true;
   }
-  for (int row = 0; row < rows; ++row) {
-    const int y = gridY + row * gridHeight / rows;
-    renderer.drawLine(grid.x, y, grid.right() - 1, y);
+  const auto d=readingstats::dateFromDay(today);const auto lunar=vietnameselunar::fromCivilDay(today,d.year);
+  char s[192]{};
+  std::snprintf(s,sizeof(s),vi?"%s · %d THÁNG %d":"%s · %02d / %02d",vi?viDays[readingstats::weekday(today)]:enDays[readingstats::weekday(today)],d.day,d.month);
+  text(t,fui::makeRect(page.x+6,page.y+12,page.width-12,40),s,1,true);
+  const int dateTop=page.y+62,dateHeight=page.height*24/100;
+  std::snprintf(s,sizeof(s),"%d",d.day);
+  numerals::draw(t,fui::makeRect(page.x+70,dateTop,page.width-140,dateHeight),s,fui::Color::Black,coverFace);
+  // Simple outlined moon and cloud, without resource files or periodic wakes.
+  auto moon=fui::makeRect(page.x+22,dateTop+10,44,44);t.fill(moon,ink,22);
+  t.fill(fui::makeRect(moon.x+13,moon.y-3,40,40),white,20);
+  const int starX=page.right()-35,starY=dateTop+20;
+  t.line({int16_t(starX-6),int16_t(starY)},{int16_t(starX+6),int16_t(starY)},1,ink);
+  t.line({int16_t(starX),int16_t(starY-7)},{int16_t(starX),int16_t(starY+7)},1,ink);
+  int afterDate=dateTop+dateHeight+7;
+  if(vi&&lunar.day) {
+    std::snprintf(s,sizeof(s),"%d tháng %s%s · %s %s",lunar.day,months[std::clamp(lunar.month,1,12)-1],lunar.leap?" nhuận":"",stems[(lunar.year+6)%10],branches[(lunar.year+8)%12]);
+    text(t,fui::makeRect(page.x+6,afterDate,page.width-12,34),s,0);
+    afterDate+=36;
   }
-  for (int day = 1; day <= days; ++day) {
-    const int n = offset + day - 1;
-    const int col = n % 7, row = n / 7;
-    const int x = grid.x + col * grid.width / 7, right = grid.x + (col + 1) * grid.width / 7;
-    const int y = gridY + row * gridHeight / rows, bottom = gridY + (row + 1) * gridHeight / rows;
-    const int half = (bottom - y) / 2;
-    const bool selected = day == date.day;
-    const auto color = selected ? fui::Color::White : fui::Color::Black;
-    if (selected) renderer.fillRect(x + 1, y + 1, right - x - 1, bottom - y - 1);
-    std::snprintf(buffer, sizeof(buffer), "%d", day);
-    cellLabel(fui::makeRect(x, y, right - x, half), buffer, 0, color, selected || col >= 5);
-    const auto entry = vietnameselunar::fromCivilDay(first + day - 1, date.year);
-    if (entry.day == 1)
-      std::snprintf(buffer, sizeof(buffer), "1/%d%s", entry.month, entry.leap ? "*" : "");
-    else
-      std::snprintf(buffer, sizeof(buffer), "%d", entry.day);
-    cellLabel(fui::makeRect(x, y + half, right - x, bottom - y - half), buffer, 3, color, false);
+  const int mid=page.x+page.width/2;
+  t.line({int16_t(page.x+30),int16_t(afterDate)},{int16_t(mid-10),int16_t(afterDate)},1,ink);
+  t.line({int16_t(mid+10),int16_t(afterDate)},{int16_t(page.right()-30),int16_t(afterDate)},1,ink);
+  vietnamesequotes::draw(t,fui::makeRect(page.x+24,afterDate+8,page.width-48,64),vietnamesequotes::next(),1);
+  const auto grid=fui::makeRect(page.x+18,afterDate+86,page.width-36,page.bottom()-afterDate-104);
+  constexpr const char* vn[]={"T2","T3","T4","T5","T6","T7","CN"};
+  constexpr const char* en[]={"Mo","Tu","We","Th","Fr","Sa","Su"};
+  constexpr int header=30;
+  for(int col=0;col<7;++col)text(t,fui::makeRect(grid.x+col*grid.width/7,grid.y,grid.width/7,header),vi?vn[col]:en[col],0,true);
+  r.drawLine(grid.x,grid.y+header,grid.right(),grid.y+header);
+  const int first=readingstats::dayIndex({d.year,d.month,1}),offset=readingstats::weekday(first);
+  const int days=readingstats::daysInMonth(d.year,d.month),rows=(offset+days+6)/7;
+  for(int day=1;day<=days;++day) {
+    const int n=offset+day-1,col=n%7,row=n/7;
+    const int x=grid.x+col*grid.width/7,right=grid.x+(col+1)*grid.width/7;
+    const int y=grid.y+header+row*(grid.height-header)/rows,bottom=grid.y+header+(row+1)*(grid.height-header)/rows;
+    const auto cell=fui::makeRect(x+2,y+2,right-x-4,bottom-y-4);
+    const bool selected=day==d.day;const auto color=selected?fui::Color::White:fui::Color::Black;
+    if(selected)t.fill(cell,ink,2);
+    std::snprintf(s,sizeof(s),"%d",day);
+    const bool dual=vi&&lunar.day;
+    const int solarH=dual?cell.height*56/100:cell.height;
+    text(t,fui::makeRect(cell.x,cell.y,cell.width,solarH),s,1,true,color);
+    if(dual) {
+      const auto l=vietnameselunar::fromCivilDay(first+day-1,d.year);
+      if(l.day==1)std::snprintf(s,sizeof(s),"1/%d%s",l.month,l.leap?"*":"");
+      else std::snprintf(s,sizeof(s),"%d",l.day);
+      text(t,fui::makeRect(cell.x,cell.y+solarH+2,cell.width,std::max(0,int(cell.height)-solarH-2)),s,0,false,color);
+    }
   }
   return true;
 }
-}  // namespace lunarSleepCalendar
+}

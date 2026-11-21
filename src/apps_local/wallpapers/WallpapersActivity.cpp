@@ -1384,14 +1384,9 @@ void WallpapersActivity::loop() {
         requestUpdate();
         return;
       case wallpapersui::ActionSet:
-        if (setWallpaper(sheetIndex_)) {
-          openSheet(sheetIndex_, View::Preview);
-          interactionsReady_ = false;
-          requestUpdate();
-        } else {
-          showNotice(tr(STR_UI_COULD_NOT_CHANGE_THE_SET_713147), tr(STR_UI_YOUR_SLEEP_SCREEN_IS_UNCHANGED_THE_CB239A),
-                     tr(STR_OK_BUTTON), wallpapersui::ActionDismiss);
-        }
+        openSheet(sheetIndex_, View::Preview);
+        interactionsReady_=false;
+        requestUpdate();
         return;
       case wallpapersui::ActionSlideshow:
         openSheet(sheetIndex_, View::Preview);
@@ -1624,7 +1619,7 @@ void WallpapersActivity::render(RenderLock&&) {
       // whole app session. The pointer is a literal out of WallpapersCore except
       // for the one line that carries a count, which is built into note_ -- a
       // member, so it outlives the paint.
-      model.note = currentSleepNote();
+      model.note = nullptr;
       wallpapersui::buildGridChrome(surface, model);
       const int total = static_cast<int>(names_.size());
       for (int slot = 0; slot < geom.perPage && page_ * geom.perPage + slot < total; ++slot)

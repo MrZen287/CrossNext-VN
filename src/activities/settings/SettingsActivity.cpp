@@ -31,6 +31,8 @@
 #include "OpdsServerListActivity.h"
 #include "SdCardFontSystem.h"
 #include "SdFirmwareUpdateActivity.h"
+#include "LanguageSelectActivity.h"
+#include "OtaUpdateActivity.h"
 #include "SettingsList.h"
 #include "StatusBarSettingsActivity.h"
 #include "TextSettingsActivity.h"
@@ -289,7 +291,8 @@ void SettingsActivity::rebuildSettingsLists() {
   // looking for a CrossPoint setting never scrolls past one of ours to reach
   // it. host-tests/settingsorder/ holds the line. See LOCAL_SCOPE.md.
   for (auto& setting : forkSystemSettings) systemSettings.push_back(std::move(setting));
-  systemSettings.insert(systemSettings.begin(), SettingInfo::Action(StrId::STR_HOME_MENU, SettingAction::HomeMenu));
+  systemSettings.insert(systemSettings.begin(), SettingInfo::Action(StrId::STR_LANGUAGE, SettingAction::Language));
+  systemSettings.push_back(SettingInfo::Action(StrId::STR_CHECK_UPDATES, SettingAction::CrossHihiOta));
   readerSettings.insert(readerSettings.begin(),
                         SettingInfo::Action(StrId::STR_READING_FORMATS, SettingAction::ReadingFormats));
   readerSettings.insert(readerSettings.begin(),
@@ -829,7 +832,12 @@ void SettingsActivity::toggleCurrentSetting() {
                                  rebuildSettingsLists();
                                });
         break;
-      case SettingAction::Language: break;
+      case SettingAction::Language:
+        startActivityForResult(std::make_unique<LanguageSelectActivity>(renderer,mappedInput),resultHandler);
+        break;
+      case SettingAction::CrossHihiOta:
+        startActivityForResult(std::make_unique<OtaUpdateActivity>(renderer,mappedInput),resultHandler);
+        break;
       case SettingAction::ReadingBackup:
         startActivityForResult(std::make_unique<ReadingBackupActivity>(renderer, mappedInput), resultHandler);
         break;

@@ -527,112 +527,12 @@ void releaseSdFontCachesForDecode(const GfxRenderer& renderer) {
 
 void SleepActivity::onEnter() {
   Activity::onEnter();
-
-  if (SETTINGS.retainSleepFrame(fromTimeout, APP_STATE.lastSleepFromReader)) {
+  if (SETTINGS.retainSleepFrame(fromTimeout, APP_STATE.lastSleepFromReader))
     return renderLastScreenSleepScreen();
-  }
-
-  if (SETTINGS.lunarSleepCalendar) {
-    display.setInverted(false);
-    renderer.setOrientation(GfxRenderer::Orientation::Portrait);
-    if (lunarSleepCalendar::draw(renderer)) {
-      renderer.displayBuffer(HalDisplay::FULL_REFRESH);
-      return;
-    }
-    return renderDefaultSleepScreen();
-  }
-
-  const bool frameWasInverted = display.isInverted();
-
-  // The remaining sleep screens draw fresh content in normal polarity. This
-  // activity draws directly from onEnter (outside ActivityManager's
-  // per-render polarity resolution), so clear any inversion left over from a
-  // night-mode reader render.
   display.setInverted(false);
-
-  if (SETTINGS.sleepScreen == CrossPointSettings::SLEEP_SCREEN_MODE::TRANSPARENT_CUSTOM) {
-    // Transparent mode retains the current framebuffer. Materialize any
-    // output-level inversion first so the retained content keeps its visible
-    // polarity after the display driver returns to normal.
-    if (frameWasInverted) renderer.invertScreen();
-    if (APP_STATE.lastSleepFromReader) {
-      ReaderUtils::applyOrientation(renderer, SETTINGS.orientation);
-    }
-    drawSleepPopupPreservingFrame(renderer);
-    if (APP_STATE.lastSleepFromReader) {
-      renderer.setOrientation(GfxRenderer::Orientation::Portrait);
-    }
-    releaseSdFontCachesForDecode(renderer);
-    return renderTransparentCustomSleepScreen();
-  }
-
-  if (SETTINGS.sleepReadingGoal &&
-      (SETTINGS.sleepScreen == CrossPointSettings::CUSTOM || SETTINGS.sleepScreen == CrossPointSettings::COVER ||
-       SETTINGS.sleepScreen == CrossPointSettings::COVER_CUSTOM))
-    prepareGoalOverlay();
-
-  // Show popup with reader orientation only when going to sleep from reader
-  if (APP_STATE.lastSleepFromReader) {
-    ReaderUtils::applyOrientation(renderer, SETTINGS.orientation);
-    GUI.drawPopup(renderer, tr(STR_ENTERING_SLEEP));
-    renderer.setOrientation(GfxRenderer::Orientation::Portrait);
-  } else {
-    GUI.drawPopup(renderer, tr(STR_ENTERING_SLEEP));
-  }
-
-  switch (SETTINGS.sleepScreen) {
-    case CrossPointSettings::SLEEP_SCREEN_MODE::READING_GOAL: {
-      const auto section = menufont::Section::Statistics;
-      const bool previous = chrome::lightHeader;
-      chrome::lightHeader = interfacetheme::light(interfacetheme::resolve(
-          SETTINGS.homeLayout, SETTINGS.interfaceThemeStyle, section, SETTINGS.interfaceThemeOverrides[int(section)]));
-      renderer.clearScreen();
-      auto target = toybox::makeTarget(renderer);
-      pixelui::bindFonts(target, renderer, I18N.getLanguage() != Language::EN);
-      auto interactions = makeUniqueNoThrow<toybox::Interactions>();
-      if (!interactions) {
-        LOG_ERR("SLP", "OOM: daily goal UI");
-        chrome::lightHeader = previous;
-        return renderDefaultSleepScreen();
-      }
-      const freeink::ui::InputSnapshot input{};
-      toybox::Frame frame(target, target.deviceContext(), input, *interactions);
-      toybox::Screen screen(frame);
-      auto summary = makeUniqueNoThrow<readingstats::Summary>();
-      const int day = readingstats::today();
-      const bool available = summary && readinggoal::load(*summary, day);
-      if (!summary) LOG_ERR("SLP", "OOM: daily goal screen");
-      readingui::goalWallpaper(screen, available ? summary.get() : nullptr, day,
-                               readinggoal::target(SETTINGS.readingDailyGoal),
-                               SETTINGS.readingGoalLegacyHistory ? 0 : SETTINGS.readingGoalStartDay);
-      chrome::lightHeader = previous;
-      renderer.displayBuffer(HalDisplay::HALF_REFRESH);
-      return;
-    }
-    case (CrossPointSettings::SLEEP_SCREEN_MODE::BLANK):
-      return renderBlankSleepScreen();
-    case (CrossPointSettings::SLEEP_SCREEN_MODE::CUSTOM):
-      return renderCustomSleepScreen();
-    case (CrossPointSettings::SLEEP_SCREEN_MODE::COVER):
-      return renderCoverSleepScreen();
-    case (CrossPointSettings::SLEEP_SCREEN_MODE::COVER_CUSTOM):
-      if (APP_STATE.lastSleepFromReader) {
-        return renderCoverSleepScreen();
-      } else {
-        return renderCustomSleepScreen();
-      }
-    case (CrossPointSettings::SLEEP_SCREEN_MODE::NOTE):
-      // CrossPlay: the note chosen in Notes, drawn from its file now so it is
-      // never an old picture of itself. No note, or a note since deleted, is
-      // the default screen rather than an empty page.
-      if (notes::drawAsleep(renderer)) {
-        renderer.displayBuffer(HalDisplay::HALF_REFRESH);
-        return;
-      }
-      return renderDefaultSleepScreen();
-    default:
-      return renderDefaultSleepScreen();
-  }
+  renderer.setOrientation(GfxRenderer::Orientation::Portrait);
+  lunarSleepCalendar::draw(renderer);
+  renderer.displayBuffer(HalDisplay::FULL_REFRESH);
 }
 
 void SleepActivity::prepareGoalOverlay() {

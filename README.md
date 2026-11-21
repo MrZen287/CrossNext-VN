@@ -1,189 +1,69 @@
-# CrossNext-VN
+# CrossHihi 1.1.1.1
 
-CrossNext-VN là bản firmware tiếng Việt cho **Xteink X4 Pro**, phát triển
-từ [CrossNext 2.0.4](https://github.com/manuelx900/CrossNext/tree/2.0.4).
+Firmware dành riêng cho **Xteink X4 Pro (ESP32-S3)**, phát triển từ CrossNext-VN 2.0.4-vn.1.
 
-[Tải firmware và tài nguyên microSD](https://github.com/MrZen287/CrossNext-VN/releases) ·
-[Nguồn dữ liệu lịch âm](docs/vietnamese-lunar-data.md)
+**Bản thử công khai:** mã cần vượt qua build X4 Pro và kiểm thử máy tính trước khi phát hành. Chưa có kết quả đo pin, cảm ứng hay ngủ/thức trên thiết bị thật; không coi hình demo là ảnh chụp thiết bị.
 
-- Giao diện tiếng Việt tích hợp và phông Roboto.
-- Home có kệ sách vuốt ngang, ưu tiên bìa sẵn có và nạp thêm bìa khi rảnh.
-- Lịch âm và châm ngôn ở màn hình khóa. Khi máy tự ngủ lúc đang đọc, có thể giữ trang sách.
-- Chọn đèn Ngày hoặc Đêm với độ sáng và độ ấm riêng.
-- Sao lưu vị trí đọc, dấu trang, trích đoạn, thống kê, cài đặt và dữ liệu nuôi gà qua microSD.
-- Thú cưng có Trứng gà lớn theo thời gian đọc. Trò chơi Nuôi gà lưu tiến trình riêng.
+## Giao diện
 
-## Cài đặt bản tiếng Việt
+![Ý tưởng giao diện CrossHihi](docs/crosshihi/demo-concept.png)
 
-1. Sao lưu microSD, gồm thư mục `/.crosspoint/`.
-2. Giải nén bộ cài của bản phát hành. Chép tệp `.bin` vào gốc thẻ, rồi gộp
-   hai thư mục `apps` và `languages` cùng các tệp giấy phép đi kèm.
-3. Vào **Cài đặt → Hệ thống → Cập nhật chương trình cơ sở** và chọn tệp
-   `.bin`. Cách này cần một firmware X4 Pro có trình cập nhật qua microSD tương thích.
+*Ảnh trên là demo thiết kế, không phải ảnh chạy firmware. Danh sách APP trong ảnh là minh họa. Mã thực tế giữ danh mục app/game của CrossNext-VN; menu Mọt có thêm Truyền tệp. Linh vật trong firmware dùng nét vẽ riêng bằng các hình cơ bản, không phải ảnh bitmap lấy nguyên từ demo.*
 
-Mã nguồn kế thừa giấy phép MIT. Phông chữ, dữ liệu và tài nguyên đi kèm
-có giấy phép riêng, ghi trong [thông báo bên thứ ba](THIRD-PARTY-NOTICES.md).
+- Logo khởi động Mọt + Mèo, tên **CrossHihi**, phiên bản **1.1.1.1**.
+- Home cố định: sách đang đọc lớn, châm ngôn hai dòng ở giữa, kệ sách vuốt ở dưới cùng.
+- Chạm bìa hoặc thông tin sách chính để đọc tiếp. Chạm sách trên kệ để mở; vuốt để duyệt tiếp thư viện đã lập chỉ mục.
+- Mèo có năm tư thế/biểu cảm, đổi khi vào Home; chạm mèo để đổi tư thế. Không chạy hoạt ảnh liên tục.
+- Mọt ngồi cố định ở đầu kệ. Popup là lớp phủ, không đẩy châm ngôn hay linh vật.
+- Menu Mọt: **Thư viện · Thống kê đọc · Lịch · APP · Truyền tệp · Cài đặt**. Nút Confirm trên Home cũng mở menu khi chưa chọn mục; Back đóng popup.
+- APP gộp toàn bộ app và game đang có thành lưới **4 cột × 5 hàng**, vuốt sang trang. Dữ liệu lưu và định danh app/game cũ được giữ. Nhấn giữ một mục trong APP để đưa lên đầu danh sách.
+- Tự ngủ khi đang đọc: giữ trang sách. Bấm nguồn chủ động: hiện lịch khóa.
+- Home và khóa không còn lựa chọn kiểu bố cục; cài đặt font/cỡ chữ/lề đọc sách vẫn còn.
 
-## Tài liệu của CrossNext gốc
+## Linh vật từ mã thực tế
 
+![Mọt và Mèo được vẽ bằng mã](docs/crosshihi/native-mascots.svg)
 
+Ảnh này xuất trực tiếp từ hàm vẽ linh vật dùng trong firmware; không phải ảnh chụp màn hình máy đọc.
 
-### CrossNext 2.0.4
+## Tiếng Việt và English
 
-[![Support CrossNext on Ko-fi](site/assets/support-ko-fi.svg)](https://ko-fi.com/manuelx900)
+Chọn trong **Cài đặt → Hệ thống → Ngôn ngữ**; xác nhận để khởi động lại.
 
-[Español](README.es.md) · [Installation](docs/install.md) · [Releases](https://github.com/manuelx900/CrossNext/releases)
+- **Tiếng Việt:** châm ngôn tiếng Việt, ngày âm ở Home và lịch khóa có ngày âm dưới ngày dương; có năm Can Chi.
+- **English:** châm ngôn tiếng Anh, ẩn toàn bộ lịch âm ở cả Home và khóa. Lịch dương và điều hướng dùng tiếng Anh.
+- Khi chưa đặt được ngày giờ, màn hình khóa yêu cầu đặt giờ, không tạo ngày âm giả.
 
-![CrossNext: reading, study and games](docs/images/overview.png)
+## Truyền tệp bằng QR
 
-CrossNext is open-source e-reader firmware for **Xteink X4 Pro (ESP32-S3)**.
-It combines EPUB reading, a library, reading statistics, study tools, small apps
-and games. **CrossNext 2.0.4 is based on [CrossPoint 2.0.0](https://github.com/crosspoint-reader/crosspoint-reader/releases/tag/2.0.0)**, with the app/game foundation inherited from [CrossPlay 1.14.2](https://github.com/ma-r-s/crossplay/releases/tag/v1.14.2).
-The packages described here target X4 Pro; do not install them on X4 or X3.
+Mở **Mọt → Truyền tệp**. Chọn kết nối Wi-Fi hoặc phát hotspot, chờ máy chủ sẵn sàng rồi quét mã QR. Điện thoại phải ở đúng mạng. Đây là chức năng truyền tệp web kế thừa, không phải dịch vụ đám mây mới.
 
-## Install or update
+## Cài đặt và cập nhật
 
-Download the X4 Pro firmware from [GitHub Releases](https://github.com/manuelx900/CrossNext/releases).
-Read the [2.0.4 additions](docs/releases/2.0.4.md), the [2.0.3 additions](docs/releases/2.0.3.md), the [2.0.2 additions](docs/releases/2.0.2.md) and the [full changes from 1.4.0](docs/releases/2.0.0.md).
-Version 2.0.4 fixes the Bluetooth status shortcut and wallpaper preparation, respects the Home recent-book limit while covers load, streamlines Settings entry, and updates the Files and Games menu icons.
+1. Sao lưu toàn bộ microSD, đặc biệt thư mục ẩn `/.crosspoint/` và dữ liệu app.
+2. Tải gói **CrossHihi-X4Pro-v1.1.1.1.zip** trong [Releases](https://github.com/MrZen287/CrossNext-VN/releases).
+3. Chép firmware `.bin` và tài nguyên vào thẻ, giữ nguyên các giấy phép. Không xóa `/.crosspoint/`.
+4. Trên X4 Pro có trình cập nhật qua microSD tương thích, vào **Cài đặt → Hệ thống → Cập nhật firmware** và chọn tệp `.bin`.
 
-Download firmware, the complete resource pack and the optional Book Preparer from the same 2.0.4 release.
-Install the matching resources even if you tried an earlier preview; PET and Reading Adventure now use versioned artwork folders.
-Back up the microSD, including the hidden `/.crosspoint/` folder containing saves.
+Tệp **CrossHihi-X4PRO-OTA.bin** là firmware ứng dụng cho X4 Pro, không phải ảnh factory hay bootloader. Không dùng cho X3/X4 thường hoặc thay bảng phân vùng. Gói này không thay đổi phân vùng; máy phải có slot ứng dụng đủ lớn.
 
-1. For an existing compatible installation, copy `CrossNext-X4PRO-Firmware-v2.0.4.bin`
-   to the card. Open **Settings → Device → Update firmware**, select it and confirm.
-2. Back up custom fonts and dictionaries, then replace the old bundled
-   resource folders with `CrossNext-Resources.zip` at the microSD root. Do not
-   merge old and new resource packs. Keep your books, licences and `/.crosspoint/`
-   saves; restart after installation. See the resource-replacement notice in the release notes.
-3. Put books in a normal card folder such as `/books`, then open **Files** or **Library**.
-   Fresh settings use English. Change the interface language in Settings.
+**OTA:** vào **Cài đặt → Hệ thống → Kiểm tra cập nhật**. Nguồn cập nhật trỏ về repo này, nhận đúng asset CrossHihi và so sánh đủ bốn phần phiên bản. Tài nguyên SD cần cập nhật riêng nếu ghi chú bản phát hành yêu cầu.
 
-The `-factory.bin` image is for USB installation at `0x0`, with bootloader and
-partitions included. It is **not** an SD updater image. Application slots must
-fit the firmware; an SD update cannot enlarge an old partition table.
-See [installation, factory flashing and OTA](docs/install.md) for the exact routes.
-Never clear the whole `/.crosspoint/` folder to refresh covers or compare engines:
-it contains personal reading and app data as well as generated caches.
+## Dung lượng bản build
 
-## Make reading your own
+Build X4 Pro sau tối ưu dùng **7.647.142 / 8.323.072 byte (91,9%)** ngân sách ứng dụng; giảm khoảng **255 KiB** so với bản đầu. Hai kiểu chữ hiển thị rất lớn trong app dùng chung cỡ 28, không cắt bộ ký tự hay đổi font đọc sách. Đây là dung lượng flash, không phải mức RAM khi chạy.
 
-Four home appearances are available: Carousel, Framed, Carousel2 and Bookshelf.
-Library offers Recent, Collections and Filter, in list or cover views.
-List views show book text directly. Cover views show default book placeholders
-while images load; files without cover artwork retain their named fallback.
-The home cover-loading notice can be enabled separately for each appearance.
+## Phát triển và kiểm chứng
 
-![The four appearances](docs/images/appearances.png)
+```sh
+pip install git+https://github.com/pioarduino/platformio-core.git
+pip install -r requirements.txt
+sh host-tests/crosshihi/run.sh
+pio run -e gh_release_x4pro
+```
 
-Open the book's lower panel to change font, size, weight, spacing, margins,
-alignment and chapters. Configure how it opens under
-**Settings → Controls → Buttons → Open book settings**. The default is a swipe
-up from the bottom. Top-edge and bottom-edge taps are also available. The separate **Reading menu** option chooses a toolbar or
-a list presentation; it does not choose the opening gesture.
+Xem [ghi chú bản 1.1.1.1](docs/crosshihi/release-1.1.1.1.md) và [các app được giữ](docs/crosshihi/apps.md).
 
-![Book settings](docs/images/reading.png)
-![Alternative interface](docs/images/alternative-ui.png)
+## Nguồn và giấy phép
 
-The EPUB engine selector is under **Settings → Reading → EPUB engine**:
-**New** or **Classic (1.4)**. Each engine keeps its own prepared pages.
-[Download the original comparison EPUB](docs/downloads/CrossNext-EPUB-Comparison.epub)
-and follow the [comparison guide](docs/epub-engine-comparison.md).
-Both [the comparison book](docs/downloads/CrossNext-EPUB-Comparison.epub) and [the reader showcase](docs/downloads/CrossNext-Reader-Showcase.epub) contain only English. They include numbered passages, typography and PNG/JPEG patterns;
-test the same book and layout on your reader, separating cold and warm openings.
-
-## Reading, study and play
-
-Statistics show time, pages, sessions, streaks, calendar and finished books.
-
-![Reading statistics](docs/images/statistics.png)
-
-PET grows through reading, with care, decoration, memories and previous generations.
-
-![PET](docs/images/pet.png)
-
-Reading Quest adds a campaign, repeatable Hunts, equipment and a shop extending
-through level 150. Every battle has its own reading objective: extra minutes are
-recorded in statistics and do not prepay the next battle. Repeat Hunts award EXP
-and coins; unique outfits and other objects are obtained once.
-
-![Reading Quest](docs/images/quest.png)
-
-Study with Flashcards and saved Words. Small tools include Habits, Tasks, Notes,
-Pomodoro, Wallpapers, Quotes, Calendar, Clock, Counter, Focus and Calculator.
-
-![Flashcards and Words](docs/images/study.png)
-![Apps](docs/images/apps.png)
-
-Games include Chess, Checkers, Go, Minesweeper, Picross, Wordle, 2048, The Intercept,
-Battleship, Solitaire, Hearts, Murdle, Carnivore, Connect four, Sudoku and Othello.
-
-![Games](docs/images/games.png)
-
-## Prepare books on your computer
-
-**CrossNext Book Preparer 2.0.4** is the optional companion application for
-**Windows and macOS**, compatible with firmware 2.0.4. Get its installers from
-[release 2.0.4](https://github.com/manuelx900/CrossNext/releases/tag/2.0.4).
-It prepares your microSD on the computer before you return
-to the reader, so CrossNext can reuse the results instead of doing that work on
-the device. Your books stay on your computer and card; they are not uploaded.
-
-![CrossNext Book Preparer: card selection, formats, reading fonts, text sizes and EPUB engine](docs/images/book-preparer.png)
-
-Using the real firmware preparation engine, it generates:
-
-- **Book data:** metadata and cache indexes that the reader can reuse.
-- **EPUB pages:** chapter pagination and processed images for your selected
-  engine, fonts, sizes and reading layout.
-- **Covers:** the image sizes used by the four home appearances and Library,
-  for supported EPUB, XTC and XTCH books.
-
-1. Close the book on the reader and safely remove the microSD. Connect it to the computer.
-2. Windows: open `CrossNext-Book-Preparer-Windows-v2.0.4.exe`.
-   macOS: open the matching arm64 (Apple Silicon) or x64 (Intel) `.dmg` and drag the application to Applications.
-3. Select the **card root**, not the books folder. The program detects saved reading
-   settings and installed fonts from `/fonts` and `/.fonts`.
-4. Choose formats, fonts and sizes. Match the EPUB engine: **Modern** in the program
-   corresponds to **New** on the reader; **Classic** corresponds to **Classic (1.4)**.
-   Start with **one font and one size**: each EPUB combination stores separate page layouts and selecting many can fill the card.
-   Click **Prepare library**, review the combination count and free space, then confirm.
-5. Cancel preserves completed outputs. Run again to continue, then safely eject the card.
-
-Use **Clear CrossPoint cache** beside the card's free space to review and remove generated caches by date or all at once. Date mode preserves earlier page files and shared book metadata. Books, settings, progress, vocabulary, statistics and game saves are preserved. Deletion requires a separate confirmation and cannot restore earlier overwritten versions. The app leaves a small free-space reserve during preparation and explains when there is insufficient space.
-
-The program writes generated cache files under `/.crosspoint/` and preserves books,
-settings, progress and statistics. Changing engine, font, size, orientation or layout
-can require new pages. It reuses compatible caches rather than deleting the library.
-The prepared options must match those used on the reader. Preparing a book does
-not lock its typography: you can still change it, and the reader will generate
-any missing layout. Preparation does not change visual quality or the display's
-physical refresh time.
-See [Book Preparer instructions](docs/desktop-book-preparer.md) and
-[on-reader preparation](docs/book-preparation.md). macOS packages are unsigned and
-not Apple-notarized. The DMGs are created and verified on macOS; Windows packaging includes the same preparation-engine revision.
-
-## Credits and licence
-
-Keep [LICENSE](LICENSE), [third-party notices](THIRD-PARTY-NOTICES.md), SDK licences
-and bundled asset licences. CrossPlay supplies the app/game shelf and implementations;
-CrossPoint supplies the reading foundation. See [CrossNext changes and references](docs/crossnext-changes.md).
-The comparison book's original text and generated patterns are dedicated under CC0 1.0.
-
-## Fonts and editable translations
-
-Install the matching Resources ZIP in the microSD root. Full book fonts are
-loaded from `/fonts`, including the supplied Noto Serif and optional Noto Sans
-families. Ubuntu remains the built-in reading fallback. Compact Noto Sans/Noto
-Serif interface cuts stay in flash; the interface font is a separate setting.
-See [SD fonts](docs/sd-card-fonts.md).
-
-Resources language packs are designed for community corrections. `languages`
-contains the CSV template, readable translation sources and a build guide. Edit
-wording while preserving keys and format placeholders, then compile a `.cplang`
-with `tools_local/language_packs.py`. Do not edit the binary pack as text.
-Replace the matching pack on the card and restart. Please report context and the
-language when suggesting a correction. See [language packs](docs/language-packs.md).
-
-[![Support CrossNext on Ko-fi](site/assets/support-ko-fi.svg)](https://ko-fi.com/manuelx900)
+CrossHihi kế thừa [CrossNext-VN](https://github.com/MrZen287/CrossNext-VN), [CrossNext](https://github.com/manuelx900/CrossNext), [CrossPlay](https://github.com/ma-r-s/crossplay), [CrossPoint](https://github.com/crosspoint-reader/crosspoint-reader) và FreeInk SDK. Giữ [LICENSE](LICENSE), [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md), giấy phép SDK, font và tài nguyên. Đổi thương hiệu trong giao diện không loại bỏ ghi nhận nguồn và giấy phép kế thừa.
