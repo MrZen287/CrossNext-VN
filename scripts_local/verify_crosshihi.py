@@ -18,3 +18,7 @@ print('English selection survives startup; EN/VI built in')
 
 assert len(re.findall(r"inline constexpr Sprite Cat[0-4]\{",(root/'src/apps_local/ui/CompanionSprites.h').read_text()))==5
 print('Five distinct kitten pose masks and shared worm/logo art are embedded')
+
+for path in ['lib/BlePageTurner/src/SdkRadio.cpp','lib/KOReaderSync/KOReaderSyncClient.cpp','lib/hal/HalSystem.cpp']:
+ assert 'CrossNext' not in (root/path).read_text(), 'Legacy visible brand: '+path
+print('Bluetooth, sync device name and system info use CrossHihi')

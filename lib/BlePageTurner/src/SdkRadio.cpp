@@ -39,7 +39,7 @@ Peer peerOf(const char* addr, const char* name) { return Peer{addr, name}; }
 }  // namespace
 
 bool compiledIn() { return true; }
-bool begin() { return hid().begin("CrossNext"); }
+bool begin() { return hid().begin("CrossHihi"); }
 bool end(const uint32_t timeoutMs) { return hid().end(timeoutMs); }
 bool running() { return hid().isRunning(); }
 bool stopping() { return hid().isStopping(); }
