@@ -34,7 +34,7 @@ with zipfile.ZipFile(args.resources) as old,zipfile.ZipFile(archive,'w',zipfile.
   if len(path.parts)==1 and path.suffix=='.bin':continue
   z.writestr(item.filename,old.read(item.filename))
  z.writestr(name,data)
- z.writestr('HUONG-DAN-CrossHihi.txt',(ROOT/'docs/crosshihi/release-1.1.1.1.md').read_text())
+ z.writestr('HUONG-DAN-CrossHihi.txt',(ROOT/f'docs/crosshihi/release-{version}.md').read_text())
  for file in ['LICENSE','THIRD-PARTY-NOTICES.md']:
   z.writestr(file,(ROOT/file).read_bytes())
 rows=[]

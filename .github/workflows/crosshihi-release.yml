@@ -43,7 +43,7 @@ jobs:
           cp crosshihi-build.log dist/CrossHihi/
       - uses: actions/upload-artifact@v4
         with:
-          name: CrossHihi-X4Pro-1.1.1.1
+          name: CrossHihi-X4Pro-1.1.1.2
           path: dist/CrossHihi/
       - name: Publish tested build as a public pre-release
         env:
@@ -51,8 +51,8 @@ jobs:
         run: |
           current=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/crosshihi" --jq .object.sha)
           test "$current" = "$GITHUB_SHA" || exit 0
-          gh release create v1.1.1.1 --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title "CrossHihi 1.1.1.1 — Bản thử X4 Pro" --notes-file docs/crosshihi/release-1.1.1.1.md --prerelease --draft
-          gh release upload v1.1.1.1 dist/CrossHihi/* docs/crosshihi/demo-concept.png --repo "$GITHUB_REPOSITORY"
-          gh release edit v1.1.1.1 --repo "$GITHUB_REPOSITORY" --draft=false
+          gh release create v1.1.1.2 --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title "CrossHihi 1.1.1.2 — Bản thử X4 Pro" --notes-file docs/crosshihi/release-1.1.1.2.md --prerelease --draft
+          gh release upload v1.1.1.2 dist/CrossHihi/* docs/crosshihi/demo-concept.png --repo "$GITHUB_REPOSITORY"
+          gh release edit v1.1.1.2 --repo "$GITHUB_REPOSITORY" --draft=false
           manifest_sha=$(gh api "repos/$GITHUB_REPOSITORY/contents/ota.json?ref=crosshihi" --jq .sha)
           gh api --silent --method PUT "repos/$GITHUB_REPOSITORY/contents/ota.json" -f message="Update CrossHihi OTA manifest after verified release" -f branch=crosshihi -f sha="$manifest_sha" -f content="$(base64 -w0 dist/CrossHihi/ota.json)"

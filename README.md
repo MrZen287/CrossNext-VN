@@ -1,4 +1,4 @@
-# CrossHihi 1.1.1.1
+# CrossHihi 1.1.1.2
 
 Firmware dành riêng cho **Xteink X4 Pro (ESP32-S3)**, phát triển từ CrossNext-VN 2.0.4-vn.1.
 
@@ -10,7 +10,7 @@ Firmware dành riêng cho **Xteink X4 Pro (ESP32-S3)**, phát triển từ Cross
 
 *Ảnh trên là demo thiết kế, không phải ảnh chạy firmware. Danh sách APP trong ảnh là minh họa. Mã thực tế giữ danh mục app/game của CrossNext-VN; menu Mọt có thêm Truyền tệp. Linh vật trong firmware dùng bộ hình Mọt/Mèo riêng, chuyển thành mask đen trắng nhỏ để không chạy hoạt ảnh liên tục.*
 
-- Logo khởi động Mọt + Mèo, tên **CrossHihi**, phiên bản **1.1.1.1**.
+- Logo khởi động Mọt + Mèo, tên **CrossHihi**, phiên bản **1.1.1.2**.
 - Home cố định: sách đang đọc lớn, châm ngôn hai dòng ở giữa, kệ sách vuốt ở dưới cùng.
 - Chạm bìa hoặc thông tin sách chính để đọc tiếp. Chạm sách trên kệ để mở; vuốt để duyệt tiếp thư viện đã lập chỉ mục.
 - Mèo có năm tư thế/biểu cảm, đổi khi vào Home; chạm mèo để đổi tư thế. Không chạy hoạt ảnh liên tục.
@@ -41,7 +41,7 @@ Mở **Mọt → Truyền tệp**. Chọn kết nối Wi-Fi hoặc phát hotspot
 ## Cài đặt và cập nhật
 
 1. Sao lưu toàn bộ microSD, đặc biệt thư mục ẩn `/.crosspoint/` và dữ liệu app.
-2. Tải gói **CrossHihi-X4Pro-v1.1.1.1.zip** trong [Releases](https://github.com/MrZen287/CrossNext-VN/releases).
+2. Tải gói **CrossHihi-X4Pro-v1.1.1.2.zip** trong [Releases](https://github.com/MrZen287/CrossNext-VN/releases).
 3. Chép firmware `.bin` và tài nguyên vào thẻ, giữ nguyên các giấy phép. Không xóa `/.crosspoint/`.
 4. Trên X4 Pro có trình cập nhật qua microSD tương thích, vào **Cài đặt → Hệ thống → Cập nhật firmware** và chọn tệp `.bin`.
 
@@ -62,7 +62,7 @@ sh host-tests/crosshihi/run.sh
 pio run -e gh_release_x4pro
 ```
 
-Xem [ghi chú bản 1.1.1.1](docs/crosshihi/release-1.1.1.1.md) và [các app được giữ](docs/crosshihi/apps.md).
+Xem [ghi chú bản 1.1.1.2](docs/crosshihi/release-1.1.1.2.md) và [các app được giữ](docs/crosshihi/apps.md).
 
 ## Nguồn và giấy phép
 
