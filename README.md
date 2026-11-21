@@ -51,7 +51,7 @@ Tệp **CrossHihi-X4PRO-OTA.bin** là firmware ứng dụng cho X4 Pro, không p
 
 ## Dung lượng bản build
 
-Build X4 Pro sau tối ưu dùng **7.647.142 / 8.323.072 byte (91,9%)** ngân sách ứng dụng; giảm khoảng **255 KiB** so với bản đầu. Hai kiểu chữ hiển thị rất lớn trong app dùng chung cỡ 28, không cắt bộ ký tự hay đổi font đọc sách. Đây là dung lượng flash, không phải mức RAM khi chạy.
+Build X4 Pro sau tối ưu dùng **7.655.742 / 8.323.072 byte (92,0%)** ngân sách ứng dụng; giảm khoảng **247 KiB** so với bản đầu. Hai kiểu chữ hiển thị rất lớn trong app dùng chung cỡ 28, không cắt bộ ký tự hay đổi font đọc sách. Đây là dung lượng flash, không phải mức RAM khi chạy.
 
 ## Phát triển và kiểm chứng
 

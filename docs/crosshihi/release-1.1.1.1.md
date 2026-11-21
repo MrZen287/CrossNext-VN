@@ -27,7 +27,7 @@ Sao lưu thẻ. Chép `.bin` và tài nguyên vào microSD, rồi cập nhật t
 
 ## Dung lượng
 
-Flash ứng dụng: **7.647.142 / 8.323.072 byte (91,9%)**, giảm khoảng 255 KiB từ bản đầu 95,0%. Đã bỏ đường dựng theme cũ và dùng chung cỡ 28 cho hai kiểu chữ rất lớn trong app; font đọc sách và bộ ký tự được giữ. Không suy diễn tỷ lệ flash thành mức dùng RAM hay tốc độ.
+Flash ứng dụng: **7.655.742 / 8.323.072 byte (92,0%)**, giảm khoảng 247 KiB từ bản đầu 95,0%. Đã bỏ đường dựng theme cũ và dùng chung cỡ 28 cho hai kiểu chữ rất lớn trong app; font đọc sách và bộ ký tự được giữ. Không suy diễn tỷ lệ flash thành mức dùng RAM hay tốc độ.
 
 ## Kiểm chứng và giới hạn
 
