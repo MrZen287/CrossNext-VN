@@ -1,9 +1,11 @@
 """Verify and package the X4 Pro app with the unchanged licensed SD resources."""
 from pathlib import Path, PurePosixPath
-import argparse, hashlib, json, shutil, struct, zipfile
+import argparse, hashlib, json, shutil, struct, zipfile, configparser
 ROOT=Path(__file__).resolve().parents[1]
 p=argparse.ArgumentParser();p.add_argument('--resources',required=True);p.add_argument('--output',default='dist/CrossHihi');args=p.parse_args()
-version='1.1.1.1'
+config=configparser.ConfigParser(interpolation=None)
+config.read(ROOT/'platformio.ini')
+version=config.get('crossplay','version')
 firmware=ROOT/'.pio/build/gh_release_x4pro/firmware.bin'
 data=firmware.read_bytes()
 assert data[0]==0xe9 and struct.unpack_from('<H',data,12)[0]==9, 'Not an ESP32-S3 application'
@@ -40,4 +42,6 @@ for f in sorted(out.iterdir()):
  if f.suffix in ('.bin','.zip'):rows.append({'file':f.name,'bytes':f.stat().st_size,'sha256':hashlib.sha256(f.read_bytes()).hexdigest()})
 (out/'SHA256SUMS.txt').write_text(''.join(f"{x['sha256']}  {x['file']}\n" for x in rows))
 (out/'manifest.json').write_text(json.dumps({'version':version,'board':'X4PRO','files':rows},indent=2)+'\n')
+ota={'tag_name':'v'+version,'assets':[{'name':'CrossHihi-X4PRO-OTA.bin','size':len(data),'browser_download_url':f'https://github.com/MrZen287/CrossNext-VN/releases/download/v{version}/CrossHihi-X4PRO-OTA.bin'}]}
+(out/'ota.json').write_text(json.dumps(ota,indent=2)+'\n')
 print(json.dumps({'version':version,'verified_esp_image':True,'files':rows},indent=2))

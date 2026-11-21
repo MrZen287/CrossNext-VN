@@ -4,11 +4,11 @@ Giao diện Home và lịch khóa mới theo demo đã thống nhất, logo Mọ
 
 ![Demo ý tưởng CrossHihi](https://raw.githubusercontent.com/MrZen287/CrossNext-VN/crosshihi/docs/crosshihi/demo-concept.png)
 
-**Đây là ảnh demo ý tưởng, không phải ảnh chụp firmware.** Bản chạy dùng linh vật nét đơn giản từ mã, menu có thêm Truyền tệp. APP giữ nguyên các mục đã đăng ký trong bản CrossNext-VN gốc, không thêm những app chỉ xuất hiện trong hình minh họa.
+**Đây là ảnh demo ý tưởng, không phải ảnh chụp firmware.** Bản chạy dùng bộ hình linh vật đen trắng riêng (tổng mask khoảng 10,5 KB), menu có thêm Truyền tệp. APP giữ nguyên các mục đã đăng ký trong bản CrossNext-VN gốc, không thêm những app chỉ xuất hiện trong hình minh họa.
 
-![Nét vẽ linh vật thực tế](https://raw.githubusercontent.com/MrZen287/CrossNext-VN/crosshihi/docs/crosshihi/native-mascots.svg)
+![Nét vẽ linh vật thực tế](https://raw.githubusercontent.com/MrZen287/CrossNext-VN/crosshihi/docs/crosshihi/firmware-mascots.png)
 
-Linh vật ở hình trên được xuất từ hàm vẽ trong mã, không phải screenshot thiết bị.
+Linh vật ở hình trên được xuất từ các mask nhúng trong firmware, không phải screenshot thiết bị.
 
 ## Hành vi
 
@@ -33,4 +33,4 @@ Flash ứng dụng: **7.647.142 / 8.323.072 byte (91,9%)**, giảm khoảng 255 
 
 Kết quả build và kiểm thử được đính kèm trong gói phát hành. Kiểm tra trên máy tính không xác nhận chất lượng màn e-ink, độ nhạy cảm ứng, QR trên điện thoại, OTA xuyên suốt, hao pin hay ngủ/thức trên X4 Pro thật. Cần thử các luồng này trên thiết bị trước khi coi là bản ổn định.
 
-Gói tài nguyên kế thừa bản CrossNext-VN 2.0.4-vn.1, giữ giấy phép. Mèo/Mọt/đường kẻ được vẽ từ mã, không cần thêm gói hình SD riêng.
+Gói tài nguyên kế thừa bản CrossNext-VN 2.0.4-vn.1, giữ giấy phép. Bộ hình Mèo/Mọt được nhúng trong firmware, không cần thêm gói hình SD riêng.

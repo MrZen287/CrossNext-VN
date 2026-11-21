@@ -15,3 +15,6 @@ main=(root/'src/main.cpp').read_text()
 assert 'I18N.setLanguage(static_cast<Language>(SETTINGS.language))' in main
 assert 'I18N.setLanguage(Language::VI)' not in main
 print('English selection survives startup; EN/VI built in')
+
+assert len(re.findall(r"inline constexpr Sprite Cat[0-4]\{",(root/'src/apps_local/ui/CompanionSprites.h').read_text()))==5
+print('Five distinct kitten pose masks and shared worm/logo art are embedded')

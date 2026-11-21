@@ -8,7 +8,7 @@ Firmware dành riêng cho **Xteink X4 Pro (ESP32-S3)**, phát triển từ Cross
 
 ![Ý tưởng giao diện CrossHihi](docs/crosshihi/demo-concept.png)
 
-*Ảnh trên là demo thiết kế, không phải ảnh chạy firmware. Danh sách APP trong ảnh là minh họa. Mã thực tế giữ danh mục app/game của CrossNext-VN; menu Mọt có thêm Truyền tệp. Linh vật trong firmware dùng nét vẽ riêng bằng các hình cơ bản, không phải ảnh bitmap lấy nguyên từ demo.*
+*Ảnh trên là demo thiết kế, không phải ảnh chạy firmware. Danh sách APP trong ảnh là minh họa. Mã thực tế giữ danh mục app/game của CrossNext-VN; menu Mọt có thêm Truyền tệp. Linh vật trong firmware dùng bộ hình Mọt/Mèo riêng, chuyển thành mask đen trắng nhỏ để không chạy hoạt ảnh liên tục.*
 
 - Logo khởi động Mọt + Mèo, tên **CrossHihi**, phiên bản **1.1.1.1**.
 - Home cố định: sách đang đọc lớn, châm ngôn hai dòng ở giữa, kệ sách vuốt ở dưới cùng.
@@ -22,9 +22,9 @@ Firmware dành riêng cho **Xteink X4 Pro (ESP32-S3)**, phát triển từ Cross
 
 ## Linh vật từ mã thực tế
 
-![Mọt và Mèo được vẽ bằng mã](docs/crosshihi/native-mascots.svg)
+![Bộ hình Mọt và Mèo thực tế](docs/crosshihi/firmware-mascots.png)
 
-Ảnh này xuất trực tiếp từ hàm vẽ linh vật dùng trong firmware; không phải ảnh chụp màn hình máy đọc.
+Ảnh này xuất từ đúng các mask hình được nhúng trong firmware; không phải ảnh chụp màn hình máy đọc.
 
 ## Tiếng Việt và English
 
