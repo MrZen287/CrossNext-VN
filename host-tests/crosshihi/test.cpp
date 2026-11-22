@@ -1,9 +1,21 @@
 #include <cassert>
 #include <iostream>
+#include "../../src/activities/boot_sleep/ZenLockLayout.h"
 #include "../../src/network/CrossHihiVersion.h"
 #include "../../src/apps_local/home/ReadingDesk.h"
 int main(){
  using namespace crosshihi;
+ assert(newerVersion("1.1.1.4","1.1.1.3"));
+ for(auto size:{freeink::ui::Size{480,800},freeink::ui::Size{600,800},freeink::ui::Size{800,480}}){
+  const auto g=zenlock::layout(size.width,size.height);
+  assert(g.frame.x==size.width-g.frame.right());
+  assert(g.body.x==size.width-g.body.right());
+  assert(g.body.bottom()<g.divider&&g.divider<g.footer.y);
+  assert(g.footer.x>g.frame.x&&g.footer.right()<g.frame.right());
+  assert(g.footer.bottom()<g.frame.bottom());
+  assert(g.frame.y>0&&g.frame.bottom()<size.height);
+ }
+
  assert(newerVersion("v1.1.1.3","1.1.1.2"));
  assert(newerVersion("v1.1.1.3","1.1.1.1"));
  assert(!newerVersion("1.1.1.1","1.1.1.1"));

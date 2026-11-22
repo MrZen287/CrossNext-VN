@@ -1,4 +1,5 @@
 #include "LunarSleepCalendar.h"
+#include "ZenLockLayout.h"
 #include "LunarCoverDigits.h"
 #include <I18n.h>
 #include <HalClock.h>
@@ -26,8 +27,9 @@ void text(fui::DrawTarget& t,fui::Rect box,const char* value,int font=0,bool bol
 bool draw(GfxRenderer& r) {
   r.clearScreen();auto t=toybox::makeTarget(r);pixelui::bindFonts(t,r);
   t.setFont(0,toybox::kSerifSmallFontId);t.setFont(1,toybox::kSerifTileFontId);t.setFont(2,toybox::kSerifTitleFontId);
-  const auto area=t.deviceContext().safeRect();const auto page=area.inset({12,12,12,48});
-  t.stroke(page,ink,1);
+  const auto geometry=zenlock::layout(r.getScreenWidth(),r.getScreenHeight());
+  const auto page=geometry.body;
+  t.stroke(geometry.frame,ink,1);
   const bool vi=I18N.getLanguage()==Language::VI;
   const int today=readingstats::today();
   if(!today) {
@@ -80,10 +82,15 @@ bool draw(GfxRenderer& r) {
   }
   return true;
 }
-void footer(GfxRenderer& r) {
+void footer(GfxRenderer& r,bool framed) {
   auto t=toybox::makeTarget(r);pixelui::bindFonts(t,r);
-  const int y=r.getScreenHeight()-36;
-  auto rect=fui::makeRect(12,y,r.getScreenWidth()-24,32);t.fill(rect,white);
+  const auto g=zenlock::layout(r.getScreenWidth(),r.getScreenHeight());
+  auto rect=framed?g.footer:fui::makeRect(12,r.getScreenHeight()-36,r.getScreenWidth()-24,32);
+  t.fill(rect,white);
+  if(framed) {
+    t.stroke(g.frame,ink,1);
+    t.line({int16_t(g.frame.x+6),int16_t(g.divider)},{int16_t(g.frame.right()-6),int16_t(g.divider)},1,ink);
+  }
   char value[32]="--:--";halClock.formatTime(value,sizeof(value),SETTINGS.clockFormat==1);
   fui::TextStyle style;style.font=pixelui::kSmall;style.align=fui::TextAlign::Left;t.text(rect,value,style);
   const auto status=toybox::headerStatus(r);

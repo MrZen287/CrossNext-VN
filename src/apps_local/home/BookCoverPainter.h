@@ -8,7 +8,7 @@ class GfxRenderer;
 struct RecentBook;
 class BookCoverPainter {
  public:
-  enum class Fit { Crop, Contain };
+  enum class Fit { Crop, Contain, Stretch };
   BookCoverPainter(GfxRenderer& renderer, freeink::ui::DrawTarget& target) : renderer(renderer), target(target) {}
   void paint(const RecentBook& book, freeink::ui::Rect slot, int taper = 0, Fit fit = Fit::Crop);
   freeink::ui::Rect paintedBounds() const { return lastBounds; }
@@ -21,5 +21,5 @@ class BookCoverPainter {
   Bitmap coverBitmap{coverFile};
   std::unique_ptr<uint8_t[]> row;
   size_t rowCapacity = 0;
-  bool paintBitmap(freeink::ui::Rect slot, int taper);
+  bool paintBitmap(freeink::ui::Rect slot, int taper,bool stretch=false);
 };

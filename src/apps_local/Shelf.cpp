@@ -419,7 +419,7 @@ const char* label(const char* stableTitle) {
   if (std::strcmp(stableTitle, "THE INTERCEPT") == 0) return tr(STR_INTERCEPT_NAME);
   if (std::strcmp(stableTitle, "READING QUEST") == 0) return tr(STR_UI_READING_QUEST_6AD39C);
   if (std::strcmp(stableTitle, "CHICKEN GAME") == 0) return tr(STR_CHICKEN_GAME);
-  if (std::strcmp(stableTitle, "PET") == 0) return tr(STR_PET_APP);
+  if (std::strcmp(stableTitle, "PET") == 0) return I18N.getLanguage()==Language::VI?"Mèo & Mọt":"Cat & Worm";
   if (std::strcmp(stableTitle, "FLASHCARDS") == 0) return tr(STR_UI_FLASHCARDS_E0439E);
   if (std::strcmp(stableTitle, "CARNIVORO") == 0) return tr(STR_CAR_TITLE);
   if (std::strcmp(stableTitle, "WORDS") == 0) return tr(STR_WORDS_APP);

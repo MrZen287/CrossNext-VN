@@ -27,3 +27,9 @@ assert "CrossHihi-X4PRO-OTA.bin" in (root/"src/network/FirmwareBoardTag.h").read
 assert "pinItemToFront" not in (root/"src/apps_local/ShelfFolderActivity.cpp").read_text()
 assert "drawSingle" in (root/"src/apps_local/home/ReadingDesk.cpp").read_text()
 print("CrossZen retains the legacy OTA alias; no icon long-press pinning")
+
+pet=(root/"src/apps_local/bookpet/BookPetActivity.cpp").read_text()
+assert 'PetSprite.h' not in pet and 'Mèo & Mọt' in pet
+assert 'companionart::cat' in pet and 'zenart::worm' in pet
+assert 'Fit::Stretch' in (root/"src/apps_local/home/ReadingDesk.cpp").read_text()
+print("Cat/Worm art and fixed cover shell replace pixel species and variable cover bounds")

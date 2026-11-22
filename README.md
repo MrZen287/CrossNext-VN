@@ -1,4 +1,6 @@
-# CrossZen 1.1.1.3
+> **1.1.1.4:** Sửa lịch khóa lệch/phần viền đáy, khung sách đỉnh3D–đáy phẳng và nuôi cặp Mèo–Mọt. Hai bé dùng chung tiến trình chăm sóc/chơi. **English:** Fixed centered calendar lock/footer border, fixed book shell and illustrated Cat & Worm pair with shared care/play progress. [Ghi chú / Release notes](docs/crosshihi/release-1.1.1.4.md).
+
+# CrossZen 1.1.1.4
 
 Firmware dành riêng cho **Xteink X4 Pro (ESP32-S3)**, phát triển từ CrossNext-VN 2.0.4-vn.1.
 
@@ -10,7 +12,7 @@ Firmware dành riêng cho **Xteink X4 Pro (ESP32-S3)**, phát triển từ Cross
 
 *Ảnh trên là demo thiết kế, không phải ảnh chạy firmware. Danh sách APP trong ảnh là minh họa. Mã thực tế giữ danh mục app/game của CrossNext-VN; menu Mọt có thêm Truyền tệp. Linh vật trong firmware dùng bộ hình Mọt/Mèo riêng, chuyển thành mask đen trắng nhỏ để không chạy hoạt ảnh liên tục.*
 
-- Logo khởi động Mọt + Mèo, tên **CrossZen**, phiên bản **1.1.1.3**.
+- Logo khởi động Mọt + Mèo, tên **CrossZen**, phiên bản **1.1.1.4**.
 - Home cố định: sách đang đọc lớn, châm ngôn một dòng ở giữa, kệ sách vuốt ở dưới cùng.
 - Chạm bìa hoặc thông tin sách chính để đọc tiếp. Chạm sách trên kệ để mở; vuốt để duyệt tiếp thư viện đã lập chỉ mục.
 - Mèo lớn ôm bìa có năm tư thế/biểu cảm, đổi khi vào Home; chạm mèo để đổi tư thế. Không chạy hoạt ảnh liên tục.
@@ -41,7 +43,7 @@ Mở **Mọt → Truyền tệp**. Chọn kết nối Wi-Fi hoặc phát hotspot
 ## Cài đặt và cập nhật
 
 1. Sao lưu toàn bộ microSD, đặc biệt thư mục ẩn `/.crosspoint/` và dữ liệu app.
-2. Tải gói **CrossZen-X4Pro-v1.1.1.3.zip** trong [Releases](https://github.com/MrZen287/CrossNext-VN/releases).
+2. Tải gói **CrossZen-X4Pro-v1.1.1.4.zip** trong [Releases](https://github.com/MrZen287/CrossNext-VN/releases).
 3. Chép firmware `.bin` và tài nguyên vào thẻ, giữ nguyên các giấy phép. Không xóa `/.crosspoint/`.
 4. Trên X4 Pro có trình cập nhật qua microSD tương thích, vào **Cài đặt → Hệ thống → Cập nhật firmware** và chọn tệp `.bin`.
 
@@ -62,28 +64,28 @@ sh host-tests/crosshihi/run.sh
 pio run -e gh_release_x4pro
 ```
 
-Xem [ghi chú bản 1.1.1.3](docs/crosshihi/release-1.1.1.3.md) và [các app được giữ](docs/crosshihi/apps.md).
+Xem [ghi chú bản 1.1.1.4](docs/crosshihi/release-1.1.1.4.md) và [các app được giữ](docs/crosshihi/apps.md).
 
 ## Nguồn và giấy phép
 
 CrossZen kế thừa [CrossNext-VN](https://github.com/MrZen287/CrossNext-VN), [CrossNext](https://github.com/manuelx900/CrossNext), [CrossPlay](https://github.com/ma-r-s/crossplay), [CrossPoint](https://github.com/crosspoint-reader/crosspoint-reader) và FreeInk SDK. Giữ [LICENSE](LICENSE), [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md), giấy phép SDK, font và tài nguyên. Đổi thương hiệu trong giao diện không loại bỏ ghi nhận nguồn và giấy phép kế thừa.
 
-Chi tiết bản 1.1.1.3 và đường cập nhật từ CrossHihi xem [ghi chú phát hành](docs/crosshihi/release-1.1.1.3.md).
+Chi tiết bản 1.1.1.4 và đường cập nhật từ CrossHihi xem [ghi chú phát hành](docs/crosshihi/release-1.1.1.4.md).
 
 ## Thú cưng CrossZen
 
-Mục Thú cưng thay chế độ cũ bằng lõi [Book Pet](https://github.com/unipheas/book-pet-x3) chuyển thể cho X4 Pro. Byte/Mote/Pip lớn lên nhờ chăm sóc/chơi; không gắn với thống kê đọc. Có chơi nhớ vị trí, thức ăn, đồ chơi, mở loài và lưu tiến trình NVS riêng. Giữ giấy phép [MIT gốc](licenses/BookPet-MIT.txt). Không có nút quay lại chế độ thú cũ; dữ liệu cũ trên SD được giữ nhưng không nhập vào thú mới.
+Mục Thú cưng thay chế độ cũ bằng lõi [Book Pet](https://github.com/unipheas/book-pet-x3) chuyển thể cho X4 Pro. Mèo và Mọt lớn lên nhờ chăm sóc/chơi; không gắn với thống kê đọc. Có chơi nhớ vị trí, thức ăn, đồ chơi, mở loài và lưu tiến trình NVS riêng. Giữ giấy phép [MIT gốc](licenses/BookPet-MIT.txt). Không có nút quay lại chế độ thú cũ; dữ liệu cũ trên SD được giữ nhưng không nhập vào thú mới.
 
 ---
 
 # English — CrossZen
 
-CrossZen1.1.1.3 is a public preview firmware for **Xteink X4 Pro**, evolved from CrossHihi/CrossNext-VN. Vietnamese and English are built in. The Home screen has a larger cover and cat, a smaller cat/worm pair hugging Continue, one-line quotes, a fixed worm popup, and a single bottom date/time/battery row. English hides lunar dates. The lock screen can show the fixed calendar or a PNG/BMP selected from an SD folder. Automatic reader sleep preserves the page.
+CrossZen1.1.1.4 is a public preview firmware for **Xteink X4 Pro**, evolved from CrossHihi/CrossNext-VN. Vietnamese and English are built in. The Home screen has a larger cover and cat, a smaller cat/worm pair hugging Continue, one-line quotes, a fixed worm popup, and a single bottom date/time/battery row. English hides lunar dates. The lock screen can show the fixed calendar or a PNG/BMP selected from an SD folder. Automatic reader sleep preserves the page.
 
-APP retains24 entries in a4×5 grid over2 pages. The original virtual pet is replaced by a [Book Pet](https://github.com/unipheas/book-pet-x3) adaptation: care and play drive growth and unlocks, without reading rewards. Its progress is stored separately.
+APP retains24 entries in a4×5 grid over2 pages. The virtual pet uses an adapted [Book Pet](https://github.com/unipheas/book-pet-x3) care engine with illustrated Cat & Worm sharing care/play progress and no reading rewards. Its progress is stored separately.
 
-**Upgrade:** on CrossHihi1.1.1.1/1.1.1.2, open Worm → Settings → System → Check for updates and confirm1.1.1.3. Existing SD resources do not need to be recopied. Selected lock images must be on your card. For a manual application update, use `CrossZen-X4Pro-v1.1.1.3.bin`; do not treat it as a factory image. The legacy CrossHihi OTA asset name remains for compatibility. Back up your SD card and preserve `/.crosspoint/`.
+**Upgrade:** on CrossHihi1.1.1.1/1.1.1.2, open Worm → Settings → System → Check for updates and confirm1.1.1.4. Existing SD resources do not need to be recopied. Selected lock images must be on your card. For a manual application update, use `CrossZen-X4Pro-v1.1.1.4.bin`; do not treat it as a factory image. The legacy CrossHihi OTA asset name remains for compatibility. Back up your SD card and preserve `/.crosspoint/`.
 
-The images on this page are design concepts, not actual device screenshots. See the [bilingual release notes](docs/crosshihi/release-1.1.1.3.md) for implementation details, known limits and image-picker differences. Builds and host tests are required before release; physical touch, ghosting, battery, sleep/wake and end-to-end OTA have not yet been validated.
+The images on this page are design concepts, not actual device screenshots. See the [bilingual release notes](docs/crosshihi/release-1.1.1.4.md) for implementation details, known limits and image-picker differences. Builds and host tests are required before release; physical touch, ghosting, battery, sleep/wake and end-to-end OTA have not yet been validated.
 
 Source, SDK, fonts, resources and adapted artwork retain their licenses. [Book Pet MIT license](licenses/BookPet-MIT.txt) and [third-party notices](THIRD-PARTY-NOTICES.md).

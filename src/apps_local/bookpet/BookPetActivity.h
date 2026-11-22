@@ -12,7 +12,8 @@ class BookPetActivity final:public Activity {
   void loop() override;
   void render(RenderLock&&) override;
  private:
-  enum View {Home,Game,Species,Toys,Diary};
+  enum View {Home,Game,Toys,Diary};
+  unsigned expression=0;
   View view=Home;
   bookpet::PetEngine pet;
   std::array<freeink::ui::Rect,10> hits{};

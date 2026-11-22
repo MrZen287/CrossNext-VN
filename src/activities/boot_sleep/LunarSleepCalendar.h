@@ -3,6 +3,6 @@
 class GfxRenderer;
 
 namespace lunarSleepCalendar {
-void footer(GfxRenderer&);
+void footer(GfxRenderer&,bool framed=false);
 bool draw(GfxRenderer& renderer);
 }

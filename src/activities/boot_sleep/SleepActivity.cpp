@@ -551,7 +551,7 @@ void SleepActivity::onEnter() {
     }
   }
   if(!image)lunarSleepCalendar::draw(renderer);
-  lunarSleepCalendar::footer(renderer);
+  lunarSleepCalendar::footer(renderer,true);
   renderer.displayBuffer(HalDisplay::FULL_REFRESH);
 }
 

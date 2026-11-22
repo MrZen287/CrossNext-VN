@@ -16,13 +16,13 @@
 #include "CoverScanline.h"
 #include "CoverSceneCache.h"
 namespace fui = freeink::ui;
-bool BookCoverPainter::paintBitmap(fui::Rect slot, int taper) {
+bool BookCoverPainter::paintBitmap(fui::Rect slot, int taper,bool stretch) {
   const int width = coverBitmap.getWidth(), height = coverBitmap.getHeight();
   if (width <= 0 || height <= 0 || slot.empty()) return false;
   int cropWidth = width, cropHeight = height;
-  if (!taper && int64_t(width) * slot.height > int64_t(height) * slot.width)
+  if (!stretch && !taper && int64_t(width) * slot.height > int64_t(height) * slot.width)
     cropWidth = std::max(1, int(int64_t(height) * slot.width / slot.height));
-  else if (!taper)
+  else if (!stretch && !taper)
     cropHeight = std::max(1, int(int64_t(width) * slot.height / slot.width));
   const int sourceX = (width - cropWidth) / 2, sourceY = (height - cropHeight) / 2;
   const bool packed = coverBitmap.is1Bit();
@@ -111,7 +111,7 @@ void BookCoverPainter::paint(const RecentBook& book, fui::Rect slot, int taper, 
           width = std::max(1, int(int64_t(w) * height / h));
         slot = fui::makeRect(slot.x + (slot.width - width) / 2, slot.y + (slot.height - height) / 2, width, height);
       }
-      drawn = paintBitmap(slot, taper);
+      drawn = paintBitmap(slot, taper,fit==Fit::Stretch);
     }
     homecover::recordSource(path, coverFile, drawn);
     coverFile.close();

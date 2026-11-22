@@ -63,8 +63,18 @@ void draw(GfxRenderer& r,Layout& g,const RecentBook* featured,const std::vector<
   }
   if(!featured) text(t,g.reading,vi?"Mở một cuốn sách từ Thư viện":"Open a book from Library",1,2,false,fui::TextAlign::Center);
   else {
-    BookCoverPainter painter(r,t);painter.paint(*featured,g.cover,0,BookCoverPainter::Fit::Contain);
-    g.cat=catForCover(painter.paintedBounds());
+    // Constant book shell: visible top plane and spine; a single flat lower edge.
+    const auto shell=g.cover;
+    const int depth=7,spine=7;
+    const auto face=makeRect(shell.x+spine,shell.y,shell.width-spine,shell.height);
+    BookCoverPainter painter(r,t);painter.paint(*featured,face,0,BookCoverPainter::Fit::Stretch);
+    const fui::Point topLeft{shell.x,shell.y},topRight{shell.right(),shell.y};
+    const fui::Point backRight{int16_t(shell.right()+depth),int16_t(shell.y-depth)},backLeft{int16_t(shell.x+depth),int16_t(shell.y-depth)};
+    t.triangle(topLeft,topRight,backRight,white);t.triangle(topLeft,backRight,backLeft,white);
+    t.line(topLeft,topRight,1,ink);t.line(topRight,backRight,1,ink);t.line(backRight,backLeft,1,ink);t.line(backLeft,topLeft,1,ink);
+    t.line({int16_t(shell.x+depth),int16_t(shell.y-3)},{int16_t(shell.right()+3),int16_t(shell.y-3)},1,ink);
+    t.stroke(shell,ink,1);t.line({int16_t(shell.x+spine),shell.y},{int16_t(shell.x+spine),shell.bottom()},1,ink);
+    g.cat=catForCover(shell);
 
     text(t,g.title,featured->title.c_str(),1,2,true);
     text(t,g.author,featured->author.c_str(),0,2);
