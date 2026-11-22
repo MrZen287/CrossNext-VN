@@ -73,3 +73,17 @@ Chi tiết bản 1.1.1.3 và đường cập nhật từ CrossHihi xem [ghi chú
 ## Thú cưng CrossZen
 
 Mục Thú cưng thay chế độ cũ bằng lõi [Book Pet](https://github.com/unipheas/book-pet-x3) chuyển thể cho X4 Pro. Byte/Mote/Pip lớn lên nhờ chăm sóc/chơi; không gắn với thống kê đọc. Có chơi nhớ vị trí, thức ăn, đồ chơi, mở loài và lưu tiến trình NVS riêng. Giữ giấy phép [MIT gốc](licenses/BookPet-MIT.txt). Không có nút quay lại chế độ thú cũ; dữ liệu cũ trên SD được giữ nhưng không nhập vào thú mới.
+
+---
+
+# English — CrossZen
+
+CrossZen1.1.1.3 is a public preview firmware for **Xteink X4 Pro**, evolved from CrossHihi/CrossNext-VN. Vietnamese and English are built in. The Home screen has a larger cover and cat, a smaller cat/worm pair hugging Continue, one-line quotes, a fixed worm popup, and a single bottom date/time/battery row. English hides lunar dates. The lock screen can show the fixed calendar or a PNG/BMP selected from an SD folder. Automatic reader sleep preserves the page.
+
+APP retains24 entries in a4×5 grid over2 pages. The original virtual pet is replaced by a [Book Pet](https://github.com/unipheas/book-pet-x3) adaptation: care and play drive growth and unlocks, without reading rewards. Its progress is stored separately.
+
+**Upgrade:** on CrossHihi1.1.1.1/1.1.1.2, open Worm → Settings → System → Check for updates and confirm1.1.1.3. Existing SD resources do not need to be recopied. Selected lock images must be on your card. For a manual application update, use `CrossZen-X4Pro-v1.1.1.3.bin`; do not treat it as a factory image. The legacy CrossHihi OTA asset name remains for compatibility. Back up your SD card and preserve `/.crosspoint/`.
+
+The images on this page are design concepts, not actual device screenshots. See the [bilingual release notes](docs/crosshihi/release-1.1.1.3.md) for implementation details, known limits and image-picker differences. Builds and host tests are required before release; physical touch, ghosting, battery, sleep/wake and end-to-end OTA have not yet been validated.
+
+Source, SDK, fonts, resources and adapted artwork retain their licenses. [Book Pet MIT license](licenses/BookPet-MIT.txt) and [third-party notices](THIRD-PARTY-NOTICES.md).
