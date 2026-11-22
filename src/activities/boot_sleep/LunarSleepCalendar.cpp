@@ -84,9 +84,10 @@ void footer(GfxRenderer& r) {
   auto t=toybox::makeTarget(r);pixelui::bindFonts(t,r);
   const int y=r.getScreenHeight()-36;
   auto rect=fui::makeRect(12,y,r.getScreenWidth()-24,32);t.fill(rect,white);
-  char value[32];halClock.formatTime(value,sizeof(value),SETTINGS.clockFormat==1);
+  char value[32]="--:--";halClock.formatTime(value,sizeof(value),SETTINGS.clockFormat==1);
   fui::TextStyle style;style.font=pixelui::kSmall;style.align=fui::TextAlign::Left;t.text(rect,value,style);
-  const auto status=toybox::headerStatus(r);std::snprintf(value,sizeof(value),"%d%%",std::max(0,status.percent));
+  const auto status=toybox::headerStatus(r);
+  if(status.percent>=0)std::snprintf(value,sizeof(value),"%d%%",status.percent);else std::snprintf(value,sizeof(value),"--%%");
   style.align=fui::TextAlign::Right;t.text(rect,value,style);
 }
 
