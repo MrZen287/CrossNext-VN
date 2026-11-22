@@ -1,10 +1,10 @@
 {
-  "tag_name": "v1.1.1.3",
+  "tag_name": "v1.1.1.4",
   "assets": [
     {
       "name": "CrossHihi-X4PRO-OTA.bin",
-      "size": 7433808,
-      "browser_download_url": "https://github.com/MrZen287/CrossNext-VN/releases/download/v1.1.1.3/CrossHihi-X4PRO-OTA.bin"
+      "size": 7432432,
+      "browser_download_url": "https://github.com/MrZen287/CrossNext-VN/releases/download/v1.1.1.4/CrossHihi-X4PRO-OTA.bin"
     }
   ]
 }
