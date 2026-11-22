@@ -571,12 +571,12 @@ void WifiSelectionActivity::attemptConnection() {
   WiFi.setScanMethod(WIFI_ALL_CHANNEL_SCAN);
   WiFi.setSortMethod(WIFI_CONNECT_AP_BY_SIGNAL);
 
-  // Set hostname so routers show "CrossHihi-AABBCCDDEEFF" instead of "esp32-XXXXXXXXXXXX"
+  // Set hostname so routers show "CrossZen-AABBCCDDEEFF" instead of "esp32-XXXXXXXXXXXX"
   uint8_t mac[6] = {};
   const esp_err_t macResult = esp_read_mac(mac, ESP_MAC_WIFI_STA);
   if (macResult == ESP_OK) {
-    char hostname[sizeof("CrossHihi-") + 12];
-    snprintf(hostname, sizeof(hostname), "CrossHihi-%02X%02X%02X%02X%02X%02X", mac[0], mac[1], mac[2], mac[3], mac[4],
+    char hostname[sizeof("CrossZen-") + 12];
+    snprintf(hostname, sizeof(hostname), "CrossZen-%02X%02X%02X%02X%02X%02X", mac[0], mac[1], mac[2], mac[3], mac[4],
              mac[5]);
     WiFi.setHostname(hostname);
   } else {

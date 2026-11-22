@@ -36,8 +36,8 @@ struct Script {
   size_t size = 0;
 };
 inline Script script() {
-  static constexpr char PREFIX[] = "window.CrossHihiUi={";
-  static constexpr char LOCALE[] = "};window.CrossHihiLocale=";
+  static constexpr char PREFIX[] = "window.CrossZenUi={";
+  static constexpr char LOCALE[] = "};window.CrossZenLocale=";
   const auto selected = I18N.getLanguage();
   const char* language = LANGUAGE_TAGS[static_cast<size_t>(selected)];
   size_t length = sizeof(PREFIX) - 1 + sizeof(LOCALE) - 1 + jsonLength(language) + 2;

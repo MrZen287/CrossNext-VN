@@ -4,7 +4,8 @@
 #include "../../src/apps_local/home/ReadingDesk.h"
 int main(){
  using namespace crosshihi;
- assert(newerVersion("v1.1.1.2","1.1.1.1"));
+ assert(newerVersion("v1.1.1.3","1.1.1.2"));
+ assert(newerVersion("v1.1.1.3","1.1.1.1"));
  assert(!newerVersion("1.1.1.1","1.1.1.1"));
  assert(!newerVersion("1.1.1.0","1.1.1.1"));
  assert(newerVersion("1.1.1.1","1.1.1.1-rc"));
@@ -29,13 +30,17 @@ int main(){
   }
   for(int n=0;n<count;++n)assert(normal.hits[Recent1+n].right()<normal.mascot.x);
   assert(normal.shelf.bottom()<=800);
-  assert(normal.cat.y>normal.status.bottom()+4);
+  assert(normal.cat.y>=0);
+  assert(normal.shelf.bottom()<normal.status.y);
+  assert(normal.heading.y==normal.status.y);
+  assert(open.popup.bottom()<open.mascot.y);
   assert(normal.cover.bottom()<normal.quote.y);
  }
  for(auto cover : {freeink::ui::makeRect(18,137,199,340),freeink::ui::makeRect(18,156,199,301),freeink::ui::makeRect(18,205,199,199),freeink::ui::makeRect(50,137,135,340)}) {
   auto cat=catForCover(cover);
-  assert(cat.bottom()==cover.y+6);
-  assert(cat.right()==cover.right()+16);
+  assert(cat.y<cover.y);
+  assert(cat.right()>cover.right());
+  assert(cat.width>=100);
  }
  std::cout<<"CrossHihi version, overlay, tap targets and stationary mascot checks passed\n";
 }

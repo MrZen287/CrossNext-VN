@@ -157,6 +157,8 @@ void CrossPointSettings::toJson(JsonDocument& doc) const {
 
   // Language -- managed by LanguageSelectActivity, not in SettingsList.
   // Stored as ISO code string ("EN", "DE", ...) for stability across enum reorders.
+  doc["zenLockImage"] = zenLockImage;
+  doc["zenLockImagePath"] = zenLockImagePath;
   doc["language"] = (language < getLanguageCount()) ? LANGUAGE_CODES[language] : "EN";
   if (languagePack[0]) doc["languagePack"] = languagePack;
 
@@ -177,6 +179,9 @@ bool CrossPointSettings::fromJson(JsonVariantConst doc) {
   bleturner::readJson(ble, doc);
   CrossPointSettings& s = *this;
   bool needsResave = false;
+  zenLockImage = doc["zenLockImage"] | false;
+  copyToField(zenLockImagePath, doc["zenLockImagePath"] | "", sizeof(zenLockImagePath));
+  if (zenLockImagePath[0] != '/' || std::strstr(zenLockImagePath, "..")) {zenLockImage=0;zenLockImagePath[0]=0;}
   pluginHubPromptHidden = doc["pluginHubPromptHidden"] | uint8_t(0);
   perBookTextSettings =
       doc["perBookTextSettings"].is<uint8_t>() ? uint8_t(doc["perBookTextSettings"].as<uint8_t>() != 0) : 1;

@@ -33,6 +33,7 @@
 #include "SdFirmwareUpdateActivity.h"
 #include "LanguageSelectActivity.h"
 #include "OtaUpdateActivity.h"
+#include "ZenLockActivity.h"
 #include "SettingsList.h"
 #include "StatusBarSettingsActivity.h"
 #include "TextSettingsActivity.h"
@@ -293,6 +294,7 @@ void SettingsActivity::rebuildSettingsLists() {
   for (auto& setting : forkSystemSettings) systemSettings.push_back(std::move(setting));
   systemSettings.insert(systemSettings.begin(), SettingInfo::Action(StrId::STR_LANGUAGE, SettingAction::Language));
   systemSettings.push_back(SettingInfo::Action(StrId::STR_CHECK_UPDATES, SettingAction::CrossHihiOta));
+  displaySettings.push_back(SettingInfo::Action(StrId::STR_SLEEP_SCREEN, SettingAction::ZenLock));
   readerSettings.insert(readerSettings.begin(),
                         SettingInfo::Action(StrId::STR_READING_FORMATS, SettingAction::ReadingFormats));
   readerSettings.insert(readerSettings.begin(),
@@ -835,6 +837,9 @@ void SettingsActivity::toggleCurrentSetting() {
       case SettingAction::Language:
         startActivityForResult(std::make_unique<LanguageSelectActivity>(renderer,mappedInput),resultHandler);
         break;
+      case SettingAction::ZenLock:
+        if(auto activity=makeUniqueNoThrow<ZenLockActivity>(renderer,mappedInput)) startActivityForResult(std::move(activity),nullptr);
+        return;
       case SettingAction::CrossHihiOta:
         startActivityForResult(std::make_unique<OtaUpdateActivity>(renderer,mappedInput),resultHandler);
         break;

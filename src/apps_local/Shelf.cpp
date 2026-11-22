@@ -32,7 +32,7 @@
 #include "intercept/InterceptActivity.h"
 #include "minesweeper/MinesweeperActivity.h"
 #include "murdle/MurdleActivity.h"
-#include "pet/PetActivity.h"
+#include "bookpet/BookPetActivity.h"
 #include "chicken/ChickenGame.h"
 #include "picross/PicrossActivity.h"
 #include "player/PlayerActivity.h"
@@ -74,7 +74,7 @@ constexpr shelf::Item kGames[] = {
 };
 constexpr shelf::Item kApps[] = {
     {"READING QUEST", &navicons::BookOpen32, &ReadingQuestActivity::create},
-    {"PET", &navicons::Paw32, &PetActivity::create},
+    {"PET", &navicons::Paw32, &BookPetActivity::create},
     {"WALLPAPERS", &navicons::Image32, &WallpapersActivity::create},
     {"FLASHCARDS", &navicons::Cards32, &FlashcardsActivity::create},
     {"CALENDAR", &navicons::Calendar32, &ToolsActivity::calendar},
@@ -88,8 +88,9 @@ constexpr shelf::Item kApps[] = {
 // nothing else: the Home hook counts this table rather than knowing its length.
 constexpr auto kAllApps = [] {
   std::array<shelf::Item, std::size(kApps)+std::size(kGames)> all{};
-  size_t n=0; for(const auto& item:kApps) all[n++]=item;
-  for(const auto& item:kGames) all[n++]=item; return all;
+  constexpr int apps[]={3,0,1,4,5,6,2};
+  constexpr int games[]={14,4,5,3,6,0,2,15,1,9,10,8,13,7,11,12,16};
+  size_t n=0;for(int i:apps)all[n++]=kApps[i];for(int i:games)all[n++]=kGames[i]; return all;
 }();
 constexpr shelf::Folder kFolders[] = {
     {"Games", UIIcon::Games, &navicons::Gear32, kGames, static_cast<int>(sizeof(kGames) / sizeof(shelf::Item))},

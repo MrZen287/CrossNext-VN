@@ -226,17 +226,6 @@ void ShelfFolderActivity::loop() {
     return;
   }
 
-  int holdX=0,holdY=0;
-  bool held=mappedInput.wasScreenLongPress(holdX,holdY);
-  if(!held && input.touchReleased && mappedInput.tapWasHeldLong()){held=true;holdX=tapX;holdY=tapY;}
-  if(folder==2 && !choosing && interactionsReady && held) {
-    const auto device=toybox::makeTarget(renderer).deviceContext();
-    const int slot=shelfui::gridIndexAt(device,itemCount>rowsPerPage,holdX,holdY);
-    const int row=shelfui::rowForPage(shelfui::pageFor(selected,rowsPerPage),rowsPerPage)+slot;
-    const int item=slot<0?-1:itemAtRow(row);
-    if(item>=0&&shelf::pinItemToFront(folder,item)){selected=0;interactionsReady=false;requestUpdate();}
-    return;
-  }
   if (!input.touchReleased || !interactionsReady) return;
 
   const fui::ActionEvent event = interactions.route(input);

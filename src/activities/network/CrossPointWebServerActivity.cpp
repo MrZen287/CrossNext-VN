@@ -28,7 +28,7 @@
 
 namespace {
 // AP Mode configuration
-constexpr const char* AP_SSID = "CrossHihi";
+constexpr const char* AP_SSID = "CrossZen";
 constexpr const char* AP_PASSWORD = nullptr;  // Open network for ease of use
 // The mDNS name is per-device now (see util/DeviceHostname.h): two X4 Pros
 // on one network both answered for "crossplay", and a QR pointing at the

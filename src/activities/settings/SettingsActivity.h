@@ -27,6 +27,7 @@ enum class SettingAction {
   ImportCrossInk,
   SdFirmwareUpdate,
   CrossHihiOta,
+  ZenLock,
   Language,
   DownloadFonts,
   TextSettings,

@@ -2,7 +2,7 @@
 from pathlib import Path, PurePosixPath
 import argparse, hashlib, json, shutil, struct, zipfile, configparser
 ROOT=Path(__file__).resolve().parents[1]
-p=argparse.ArgumentParser();p.add_argument('--resources',required=True);p.add_argument('--output',default='dist/CrossHihi');args=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--resources',required=True);p.add_argument('--output',default='dist/CrossZen');args=p.parse_args()
 config=configparser.ConfigParser(interpolation=None)
 config.read(ROOT/'platformio.ini')
 version=config.get('crossplay','version')
@@ -23,9 +23,9 @@ assert data[checksum_at]==checksum,'Bad ESP image XOR checksum'
 if data[23]:
  assert data[checksum_at+1:checksum_at+33]==hashlib.sha256(data[:checksum_at+1]).digest(),'Bad ESP application SHA256'
 out=Path(args.output);out.mkdir(parents=True,exist_ok=True)
-name=f'CrossHihi-X4Pro-v{version}.bin'
-(out/name).write_bytes(data);(out/'CrossHihi-X4PRO-OTA.bin').write_bytes(data)
-archive=out/f'CrossHihi-X4Pro-v{version}.zip'
+name=f'CrossZen-X4Pro-v{version}.bin'
+(out/name).write_bytes(data);(out/'CrossZen-X4PRO-OTA.bin').write_bytes(data);(out/'CrossHihi-X4PRO-OTA.bin').write_bytes(data)
+archive=out/f'CrossZen-X4Pro-v{version}.zip'
 with zipfile.ZipFile(args.resources) as old,zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED,compresslevel=6) as z:
  for item in old.infolist():
   path=PurePosixPath(item.filename)
@@ -34,8 +34,8 @@ with zipfile.ZipFile(args.resources) as old,zipfile.ZipFile(archive,'w',zipfile.
   if len(path.parts)==1 and path.suffix=='.bin':continue
   z.writestr(item.filename,old.read(item.filename))
  z.writestr(name,data)
- z.writestr('HUONG-DAN-CrossHihi.txt',(ROOT/f'docs/crosshihi/release-{version}.md').read_text())
- for file in ['LICENSE','THIRD-PARTY-NOTICES.md']:
+ z.writestr('HUONG-DAN-CrossZen.txt',(ROOT/f'docs/crosshihi/release-{version}.md').read_text())
+ for file in ['LICENSE','THIRD-PARTY-NOTICES.md','licenses/BookPet-MIT.txt','licenses/CrossHihi-Mascots.txt']:
   z.writestr(file,(ROOT/file).read_bytes())
 rows=[]
 for f in sorted(out.iterdir()):

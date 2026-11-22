@@ -866,7 +866,7 @@ int HomeActivity::nextDeskShelfCover() const {
 }
 
 void HomeActivity::activateReadingDesk(readingdesk::Action action) {
-  if (action == readingdesk::Menu) { deskMenuOpen=!deskMenuOpen; deskFocus=readingdesk::None; requestUpdate(); return; }
+  if (action == readingdesk::Menu) { deskMenuOpen=!deskMenuOpen; if(deskMenuOpen)++deskCatPose; deskFocus=readingdesk::None; requestUpdate(); return; }
   if (action == readingdesk::Cat) { deskCatPose=(deskCatPose+1)%5; requestUpdate(); return; }
   if (action == readingdesk::Stats) { deskMenuOpen=false; activityManager.replaceActivity(std::make_unique<ReadingStatsActivity>(renderer,mappedInput)); return; }
   if (action == readingdesk::Transfer) { deskMenuOpen=false; onFileTransferOpen(); return; }

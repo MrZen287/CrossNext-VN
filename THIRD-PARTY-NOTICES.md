@@ -185,3 +185,7 @@ The decoder includes local bounds and palette-initialization patches in
 - The Vietnamese lunar calendar table is generated offline with Astronomy Engine
   2.1.19, MIT. See [Data and build notes](docs/vietnamese-lunar-data.md) and
   [AstronomyEngine-MIT.txt](licenses/AstronomyEngine-MIT.txt).
+
+## Book Pet (CrossZen 1.1.1.3)
+
+Care engine, persistent pet state and original pixel sprites adapted from https://github.com/unipheas/book-pet-x3 (MIT; Copyright2026 Brian Phillips and Book Pet contributors). Full license: licenses/BookPet-MIT.txt. The CrossZen adaptation uses its own X4 Pro input/display wrapper, separate NVS namespace and care/play-based progression; reading rewards and the original hardware/update implementation are not included.

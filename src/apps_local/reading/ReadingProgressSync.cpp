@@ -96,7 +96,7 @@ Result ProgressSync::upload() {
   json["document"] = book.local.document;
   json["progress"] = book.local.progress;
   json["percentage"] = book.local.percentage;
-  json["device"] = "CrossHihi";
+  json["device"] = "CrossZen";
   json["device_id"] = "crossplay-reader";
   if (book.local.position) {
     const auto& rich = *book.local.position;

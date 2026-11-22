@@ -149,7 +149,9 @@ void FileBrowserActivity::loadFiles(HalFile* directory) {
       files.emplace_back(std::string(fileNameBuffer.get()) + "/");
     } else {
       std::string_view filename{fileNameBuffer.get()};
-      if (mode == Mode::PickFirmware) {
+      if (mode == Mode::PickImage) {
+        if (FsHelpers::hasPngExtension(filename) || FsHelpers::checkFileExtension(filename, ".bmp")) files.emplace_back(filename);
+      } else if (mode == Mode::PickFirmware) {
         // Firmware picker: only show .bin files.
         if (FsHelpers::checkFileExtension(filename, ".bin")) {
           files.emplace_back(filename);
@@ -375,7 +377,7 @@ void FileBrowserActivity::activateSelected() {
   bool isDirectory = (entry.back() == '/');
 
   // Firmware picker: select file -> return path; navigate into directories normally.
-  if (mode == Mode::PickFirmware && !isDirectory) {
+  if (mode != Mode::Books && !isDirectory) {
     std::string cleanBasePath = basepath;
     if (cleanBasePath.back() != '/') cleanBasePath += "/";
     ActivityResult res{FilePathResult{cleanBasePath + entry}};
@@ -670,7 +672,7 @@ bool FileBrowserActivity::handleButtons() {
         }
 
         requestUpdate();
-      } else if (mode == Mode::PickFirmware) {
+      } else if (mode != Mode::Books) {
         // Firmware picker at root: cancel back to caller instead of going home.
         ActivityResult res;
         res.isCancelled = true;
@@ -755,7 +757,7 @@ void FileBrowserActivity::buildScreen(UiScreen& screen) {
 }
 
 void FileBrowserActivity::drawChrome() {
-  const char* folderName = mode == Mode::PickFirmware ? tr(STR_SELECT_FIRMWARE_FILE)
+  const char* folderName = mode == Mode::PickImage ? (I18N.getLanguage()==Language::VI ? "Chọn ảnh khóa" : "Select lock image") : mode == Mode::PickFirmware ? tr(STR_SELECT_FIRMWARE_FILE)
                            : chrome::lightHeader      ? tr(STR_BROWSE_FILES)
                            : basepath == "/"          ? tr(STR_SD_CARD)
                                                       : basepath.c_str() + basepath.rfind('/') + 1;
@@ -763,10 +765,10 @@ void FileBrowserActivity::drawChrome() {
 }
 
 void FileBrowserActivity::drawFooter() {
-  const char* backLabel = (basepath == "/") ? (mode == Mode::PickFirmware ? tr(STR_BACK) : tr(STR_HOME)) : tr(STR_BACK);
+  const char* backLabel = (basepath == "/") ? (mode != Mode::Books ? tr(STR_BACK) : tr(STR_HOME)) : tr(STR_BACK);
   // In PickFirmware mode, Confirm on a .bin returns the path to the caller (not "open"); show
   // STR_SELECT instead. Directories in the same picker still descend, so keep STR_OPEN there.
-  const bool selectingFirmwareFile = mode == Mode::PickFirmware && !files.empty() && nav.selected >= 0 &&
+  const bool selectingFirmwareFile = mode != Mode::Books && !files.empty() && nav.selected >= 0 &&
                                      nav.selected < listCount() && files[nav.selected].back() != '/';
   const char* confirmLabel = files.empty() ? "" : (selectingFirmwareFile ? tr(STR_SELECT) : tr(STR_OPEN));
   const auto labels = mappedInput.mapLabels(backLabel, confirmLabel, files.empty() ? "" : tr(STR_DIR_UP),

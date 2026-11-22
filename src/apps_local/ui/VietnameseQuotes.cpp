@@ -41,6 +41,18 @@ const char* next() {
   return vi?"Đi một ngày đàng, học một sàng khôn.":"Make room for one more page.";
 }
 
+void drawSingle(freeink::ui::DrawTarget& target,freeink::ui::Rect box,const char* quote,freeink::ui::FontId font) {
+  freeink::ui::TextStyle style;style.font=font;style.italic=true;style.align=freeink::ui::TextAlign::Center;style.maxLines=1;
+  char copy[384];const char* candidate=quote;
+  for(int attempt=0;attempt<64;++attempt) {
+    std::snprintf(copy,sizeof(copy),"“%s”",candidate);
+    if(target.measureText(font,copy,style).width<=box.width&&fittext::complete(target,box,copy,style)){target.text(box,copy,style);return;}
+    if(I18N.getLanguage()==Language::VI)candidate=readingdesk::vietnameseQuotes[attempt%std::size(readingdesk::vietnameseQuotes)];
+    else candidate="Read a little. Dream a lot.";
+  }
+  candidate=I18N.getLanguage()==Language::VI?"Có chí thì nên.":"Read and grow.";
+  std::snprintf(copy,sizeof(copy),"“%s”",candidate);fittext::draw(target,box,copy,style,1);
+}
 void draw(freeink::ui::DrawTarget& target, freeink::ui::Rect box, const char* quote, freeink::ui::FontId font) {
   char text[384];
   std::snprintf(text, sizeof(text), "“%s”", quote);

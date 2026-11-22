@@ -21,4 +21,9 @@ print('Five distinct kitten pose masks and shared worm/logo art are embedded')
 
 for path in ['lib/BlePageTurner/src/SdkRadio.cpp','lib/KOReaderSync/KOReaderSyncClient.cpp','lib/hal/HalSystem.cpp']:
  assert 'CrossNext' not in (root/path).read_text(), 'Legacy visible brand: '+path
-print('Bluetooth, sync device name and system info use CrossHihi')
+print('Bluetooth, sync device name and system info use CrossZen')
+
+assert "CrossHihi-X4PRO-OTA.bin" in (root/"src/network/FirmwareBoardTag.h").read_text()
+assert "pinItemToFront" not in (root/"src/apps_local/ShelfFolderActivity.cpp").read_text()
+assert "drawSingle" in (root/"src/apps_local/home/ReadingDesk.cpp").read_text()
+print("CrossZen retains the legacy OTA alias; no icon long-press pinning")

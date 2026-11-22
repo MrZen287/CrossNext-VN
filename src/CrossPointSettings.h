@@ -251,6 +251,8 @@ class CrossPointSettings : public PersistableStore<CrossPointSettings> {
   // Sleep screen settings
   uint8_t sleepScreen = DARK;
   uint8_t lunarSleepCalendar = 1;
+  uint8_t zenLockImage = 0;
+  char zenLockImagePath[256] = {};
   // Night mode: inverted output polarity, applied to every activity per
   // render by ActivityManager. The sleep screen opts out itself.
   uint8_t screenInverted = 0;

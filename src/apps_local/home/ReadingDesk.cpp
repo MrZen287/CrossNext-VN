@@ -4,11 +4,14 @@
 #include <I18n.h>
 #include <algorithm>
 #include <cstdio>
+#include <cstring>
 #include "../../RecentBooksStore.h"
 #include "../../util/BookProgress.h"
 #include "../reading/ReadingStatsStore.h"
 #include "../tools/VietnameseLunar.h"
 #include "../ui/CompanionArt.h"
+#include "../ui/CrossZenArt.h"
+#include "../ui/FitText.h"
 #include "../ui/Dashboard.h"
 #include "../ui/NavigationIcons.h"
 #include "../ui/PixelMenuTheme.h"
@@ -46,24 +49,23 @@ void draw(GfxRenderer& r,Layout& g,const RecentBook* featured,const std::vector<
   auto status=toybox::headerStatus(r);
   if(status.percent>=0)std::snprintf(s,sizeof(s),"%d%%",status.percent);else std::snprintf(s,sizeof(s),"--%%");
   text(t,g.status,s,0,1,false,fui::TextAlign::Right);
-  r.drawLine(g.status.x,g.status.bottom(),g.status.right(),g.status.bottom());
+
   const bool vi=I18N.getLanguage()==Language::VI;
   const int today=readingstats::today();
   if(today) {
     const auto d=readingstats::dateFromDay(today);
     constexpr const char* en[]={"Mon","Tue","Wed","Thu","Fri","Sat","Sun"};
-    constexpr const char* vn[]={"Thứ Hai","Thứ Ba","Thứ Tư","Thứ Năm","Thứ Sáu","Thứ Bảy","Chủ Nhật"};
+    constexpr const char* vn[]={"T2","T3","T4","T5","T6","T7","CN"};
     const int day=readingstats::weekday(today);
-    std::snprintf(s,sizeof(s),"%s, %02d.%02d",vi?vn[day]:en[day],d.day,d.month);
-    auto b=makeRect(g.heading.x+g.heading.width/2,g.heading.y,g.heading.width/2,24);
-    text(t,b,s,0,1,false,fui::TextAlign::Right);
-    if(vi){const auto l=vietnameselunar::fromCivilDay(today,d.year);if(l.day){std::snprintf(s,sizeof(s),"Âm lịch %d.%d",l.day,l.month);b.y+=24;text(t,b,s,0,1,false,fui::TextAlign::Right);}}
+    std::snprintf(s,sizeof(s),"%s · %02d.%02d",vi?vn[day]:en[day],d.day,d.month);
+    if(vi){const auto l=vietnameselunar::fromCivilDay(today,d.year);if(l.day){const size_t at=std::strlen(s);std::snprintf(s+at,sizeof(s)-at," | Âm %d.%d",l.day,l.month);}}
+    fittext::draw(t,g.heading,s,0,1,fui::TextAlign::Center);
   }
   if(!featured) text(t,g.reading,vi?"Mở một cuốn sách từ Thư viện":"Open a book from Library",1,2,false,fui::TextAlign::Center);
   else {
     BookCoverPainter painter(r,t);painter.paint(*featured,g.cover,0,BookCoverPainter::Fit::Contain);
     g.cat=catForCover(painter.paintedBounds());
-    companionart::cat(t,g.cat,pose);
+
     text(t,g.title,featured->title.c_str(),1,2,true);
     text(t,g.author,featured->author.c_str(),0,2);
     const auto pos=loadBookPosition(featured->path);const int percent=loadBookProgress(featured->path);
@@ -75,18 +77,21 @@ void draw(GfxRenderer& r,Layout& g,const RecentBook* featured,const std::vector<
       t.stroke(makeRect(g.progress.x,y,width,5),ink,1);t.fill(makeRect(g.progress.x,y,width*std::clamp(percent,0,100)/100,5),ink);
       std::snprintf(s,sizeof(s),"%d%%",percent);text(t,g.progress,s,0,1,false,fui::TextAlign::Right);
     }
-    const auto b=g.hits[Resume];t.fill(b,ink,2);text(t,b,vi?"Đọc tiếp →":"Continue →",0,1,false,fui::TextAlign::Center,fui::Color::White);
+    const auto b=g.hits[Resume];t.fill(b,ink,2);text(t,b,vi?"Đọc tiếp":"Continue",0,1,false,fui::TextAlign::Center,fui::Color::White);
+    zenart::duo(t,g.duo);
+    if(pose%5==2)zenart::corner(t,g.cat);else companionart::cat(t,g.cat,pose);
     if(focus==Resume)t.stroke(b.inset({3,3,3,3}),white,1);
   }
   // One layout and one quote paint path, regardless of popup state.
-  vietnamesequotes::draw(t,g.quote,quote,pixelui::kSmall);
+  vietnamesequotes::drawSingle(t,g.quote,quote,pixelui::kSmall);
   BookCoverPainter painter(r,t);
   for(int n=0;n<int(shelf.size())&&n<shelfSize;++n){const auto b=g.hits[Recent1+n];painter.paint(shelf[n],b,0,BookCoverPainter::Fit::Contain);if(focus==Recent1+n)t.stroke(b.inset({-2,-2,-2,-2}),ink,2);}
   r.drawLine(g.shelf.x,g.shelf.bottom(),g.shelf.right(),g.shelf.bottom());
   r.drawLine(g.shelf.x,g.shelf.bottom()+3,g.shelf.right(),g.shelf.bottom()+3);
-  companionart::worm(t,g.mascot);
+  if(g.popup.empty()) companionart::worm(t,g.mascot);
+  else if(pose%2) zenart::wormRest(t,g.mascot);else zenart::wormHappy(t,g.mascot);
   if(focus==Menu)t.stroke(g.hits[Menu],ink,1,3);
-  for(auto a:{Previous,Next})if(!g.hits[a].empty())dashboard::chevron(t,g.hits[a],false,a==Previous);
+
   if(!g.popup.empty()) {
     t.fill(g.popup,white,4);t.stroke(g.popup,ink,2,4);
     auto cx=g.close.x+18,cy=g.close.y+14;

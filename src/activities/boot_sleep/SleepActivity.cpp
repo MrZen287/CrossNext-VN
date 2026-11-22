@@ -531,7 +531,27 @@ void SleepActivity::onEnter() {
     return renderLastScreenSleepScreen();
   display.setInverted(false);
   renderer.setOrientation(GfxRenderer::Orientation::Portrait);
-  lunarSleepCalendar::draw(renderer);
+  bool image=false;
+  const char* path=SETTINGS.zenLockImagePath;
+  if(SETTINGS.zenLockImage && path[0] && Storage.exists(path)) {
+    releaseSdFontCachesForDecode(renderer);
+    renderer.clearScreen();
+    if(FsHelpers::hasPngExtension(std::string_view(path))) {
+      RenderConfig config;config.x=0;config.y=0;config.maxWidth=renderer.getScreenWidth();config.maxHeight=renderer.getScreenHeight()-40;config.useDithering=true;
+      HalFile source;
+      const bool valid=Storage.openFileForRead("SLP",path,source)&&isValidPngHeader(source);
+      source.close();
+      if(valid){PngToFramebufferConverter converter;image=converter.decodeToFramebuffer(path,renderer,config);}
+    } else {
+      HalFile file;
+      if(Storage.openFileForRead("SLP",path,file)) {
+        Bitmap bitmap(file);
+        if(bitmap.parseHeaders()==BmpReaderError::Ok)image=renderer.drawBitmap(bitmap,0,0,renderer.getScreenWidth(),renderer.getScreenHeight()-40);
+      }
+    }
+  }
+  if(!image)lunarSleepCalendar::draw(renderer);
+  lunarSleepCalendar::footer(renderer);
   renderer.displayBuffer(HalDisplay::FULL_REFRESH);
 }
 
