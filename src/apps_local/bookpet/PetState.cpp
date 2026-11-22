@@ -92,93 +92,14 @@ static_assert(offsetof(PetStateV4, autonomousEnabled) ==
 }
 
 void PetEngine::begin() {
-  bool migrated = false;
-  uint32_t legacyFragments = 0;
+  // CrossZen starts a new, isolated save; upstream X3 migrations do not apply.
   Preferences prefs;
-  prefs.begin(kNamespace, true);
-  const size_t savedSize = prefs.getBytesLength(kStateKey);
-  if (savedSize == sizeof(PetState)) {
-    PetState saved;
-    prefs.getBytes(kStateKey, &saved, sizeof(saved));
-    if (saved.version == 6) {
-      pet = saved;
-    } else if (saved.version == 5) {
-      pet = saved;
-      pet.version = 6;
-      legacyFragments =
-          static_cast<uint32_t>(pet.fragments[0]) + pet.fragments[1] +
-          pet.fragments[2] + pet.fragments[3];
-      migrated = true;
+  if (prefs.begin(kNamespace, true)) {
+    if (prefs.getBytesLength(kStateKey) == sizeof(PetState)) {
+      PetState saved;
+      if (prefs.getBytes(kStateKey, &saved, sizeof(saved)) == sizeof(saved) && saved.version == 6) pet = saved;
     }
-  } else if (savedSize == sizeof(PetStateV4)) {
-    PetStateV4 old;
-    prefs.getBytes(kStateKey, &old, sizeof(old));
-    if (old.version == 4) {
-      memcpy(&pet, &old, offsetof(PetStateV4, autonomousEnabled));
-      pet.version = 6;
-      pet.autonomousEnabled = old.autonomousEnabled;
-      pet.sleeping = old.sleeping;
-      legacyFragments =
-          static_cast<uint32_t>(old.fragments[0]) + old.fragments[1] +
-          old.fragments[2] + old.fragments[3];
-      migrated = true;
-    }
-  } else if (savedSize == sizeof(PetStateV3)) {
-    PetStateV3 old;
-    prefs.getBytes(kStateKey, &old, sizeof(old));
-    if (old.version == 3) {
-      pet.activeMinutes = old.activeMinutes;
-      pet.interactions = old.interactions;
-      pet.experience = old.experience;
-      pet.pageBites = old.pageBites;
-      memcpy(pet.fragments, old.fragments, sizeof(old.fragments));
-      pet.feedCount = old.feedCount;
-      pet.playCount = old.playCount;
-      pet.cleanCount = old.cleanCount;
-      pet.restCount = old.restCount;
-      pet.level = old.level;
-      pet.fullness = old.fullness;
-      pet.happiness = old.happiness;
-      pet.energy = old.energy;
-      pet.cleanliness = old.cleanliness;
-      pet.curiosity = old.curiosity;
-      pet.food = old.food;
-      pet.species = old.species;
-      pet.lastEvent = old.lastEvent;
-      memcpy(pet.diary, old.diary, sizeof(old.diary));
-      pet.sleeping = old.sleeping;
-      legacyFragments =
-          static_cast<uint32_t>(old.fragments[0]) + old.fragments[1] +
-          old.fragments[2] + old.fragments[3];
-      migrated = true;
-    }
-  } else if (savedSize == sizeof(PetStateV2)) {
-    PetStateV2 old;
-    prefs.getBytes(kStateKey, &old, sizeof(old));
-    if (old.version == 2) {
-      pet.activeMinutes = old.activeMinutes;
-      pet.interactions = old.interactions;
-      pet.experience = old.experience;
-      pet.pageBites = old.pageBites;
-      pet.level = old.level;
-      pet.fullness = old.fullness;
-      pet.happiness = old.happiness;
-      pet.energy = old.energy;
-      pet.food = old.food;
-      pet.species = old.species;
-      pet.sleeping = old.sleeping;
-      recordEvent(11);
-      migrated = true;
-    }
-  }
-  prefs.end();
-  if (migrated) {
-    pet.pageBites = static_cast<uint16_t>(
-        min<uint32_t>(UINT16_MAX, pet.pageBites + legacyFragments));
-    pet.lastReadingTransaction = 0;
-    pet.readingReserved = 0;
-    if (legacyFragments > 0) pet.lastEvent = 33;
-    save();
+    prefs.end();
   }
   lastTickMs = millis();
 }
