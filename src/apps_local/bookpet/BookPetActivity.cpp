@@ -1,5 +1,6 @@
 #include "BookPetActivity.h"
 #include "PetSprite.h"
+#include "apps_local/Shelf.h"
 #include "apps_local/ui/PixelMenuTheme.h"
 #include "apps_local/ui/FitText.h"
 #include "activities/boot_sleep/LunarSleepCalendar.h"
@@ -46,12 +47,12 @@ void BookPetActivity::loop(){
  if(view==Game&&revealing&&int32_t(now-revealUntil)>=0){revealing=false;++revision;requestUpdate();}
  if(pet.tick(now))requestUpdate();
  if(view==Home&&int32_t(now-poseAt)>=0){pet.awakeMoment();poseAt=now+15000;requestUpdate();}
- if(mappedInput.wasReleased(MappedInputManager::Button::Back)){if(view==Home)finish();else {view=Home;selected=0;++revision;requestUpdate();}return;}
+ if(mappedInput.wasReleased(MappedInputManager::Button::Back)){if(view==Home)shelf::leave(renderer,mappedInput);else {view=Home;selected=0;++revision;requestUpdate();}return;}
  if(mappedInput.wasPressed(MappedInputManager::Button::NavNext)){selected=(selected+1)%std::max(1,count);requestUpdate();}
  if(mappedInput.wasPressed(MappedInputManager::Button::NavPrevious)){selected=(selected+std::max(1,count)-1)%std::max(1,count);requestUpdate();}
  if(mappedInput.wasReleased(MappedInputManager::Button::Confirm)&&surfaceRevealed()){action(selected);return;}
  int x=0,y=0;if(mappedInput.wasScreenTapped(x,y)&&surfaceRevealed()){
-  if(x<52&&y<56){if(view==Home)finish();else {view=Home;selected=0;++revision;requestUpdate();}return;}
+  if(x<52&&y<56){if(view==Home)shelf::leave(renderer,mappedInput);else {view=Home;selected=0;++revision;requestUpdate();}return;}
   for(int n=0;n<count;++n)if(hits[n].contains(x,y)){selected=n;action(n);return;}
  }
 }
