@@ -11,6 +11,8 @@ concurrency:
   cancel-in-progress: true
 jobs:
   x4pro:
+    # Paused at the owner's request; resume only after explicit approval.
+    if: ${{ false }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
