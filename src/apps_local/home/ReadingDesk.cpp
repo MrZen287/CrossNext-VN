@@ -1,4 +1,5 @@
 #include "ReadingDesk.h"
+#include "ApprovedHomeUi.h"
 #include <GfxRenderer.h>
 #include <Epub.h>
 #include <FsHelpers.h>
@@ -50,7 +51,9 @@ void text(fui::DrawTarget& t,fui::Rect r,const char* s,int font=0,int lines=1,bo
 void draw(GfxRenderer& r,Layout& g,const RecentBook* featured,const std::vector<RecentBook>& shelf,
           int,Action focus,const char* quote,unsigned pose) {
   r.clearScreen();auto t=toybox::makeTarget(r);pixelui::bindFonts(t,r);
-  char s[160]{};
+  const bool native=r.getScreenWidth()==480 && r.getScreenHeight()==800;
+  char s[160]{},chapterCopy[80]{},remainingCopy[80]{},estimateCopy[160]{};
+  int livePercent=-1;
   const auto clockBox=g.status;
   t.fill(clockBox,white,6);t.stroke(clockBox,ink,1,6);
   for(int x : {clockBox.x+18,clockBox.right()-18}) {
@@ -80,18 +83,18 @@ void draw(GfxRenderer& r,Layout& g,const RecentBook* featured,const std::vector<
     const auto shell=g.cover;
     const int depth=7,spine=7;
     const auto face=makeRect(shell.x+spine,shell.y,shell.width-spine,shell.height);
-    BookCoverPainter painter(r,t);painter.paint(*featured,face,0,BookCoverPainter::Fit::Stretch);
+    if(!native){BookCoverPainter painter(r,t);painter.paint(*featured,face,0,BookCoverPainter::Fit::Stretch);}
     const fui::Point topLeft{shell.x,shell.y},topRight{shell.right(),shell.y};
     const fui::Point backRight{int16_t(shell.right()+depth),int16_t(shell.y-depth)},backLeft{int16_t(shell.x+depth),int16_t(shell.y-depth)};
     t.triangle(topLeft,topRight,backRight,white);t.triangle(topLeft,backRight,backLeft,white);
     t.line(topLeft,topRight,1,ink);t.line(topRight,backRight,1,ink);t.line(backRight,backLeft,1,ink);t.line(backLeft,topLeft,1,ink);
     t.line({int16_t(shell.x+depth),int16_t(shell.y-3)},{int16_t(shell.right()+3),int16_t(shell.y-3)},1,ink);
     t.stroke(shell,ink,1);t.line({int16_t(shell.x+spine),shell.y},{int16_t(shell.x+spine),shell.bottom()},1,ink);
-    g.cat=catForCover(shell);
+    if(!native)g.cat=catForCover(shell);
 
     text(t,g.title,featured->title.c_str(),1,2,true);
     text(t,g.author,featured->author.c_str(),0,2);
-    const auto pos=loadBookPosition(featured->path);const int percent=loadBookProgress(featured->path);
+    const auto pos=loadBookPosition(featured->path);const int percent=loadBookProgress(featured->path);livePercent=percent;
     struct Details {std::string path;uint32_t revision=0;int chapter=0,total=0;uint64_t seconds=0;bool known=false;};
     static Details info;
     const auto revision=Storage.resourceRevision()^Storage.stateFileRevision(readingstats::kJournalPath)^Storage.stateFileRevision(("/.crosspoint/epub_"+std::to_string(static_cast<unsigned long>(std::hash<std::string>{}(featured->path)))+"/progress.bin").c_str());
@@ -111,6 +114,7 @@ void draw(GfxRenderer& r,Layout& g,const RecentBook* featured,const std::vector<
     }
     if(info.chapter && info.total)std::snprintf(s,sizeof(s),"Chương %d / %d",info.chapter,info.total);
     else std::snprintf(s,sizeof(s),"Trang %d",pos.page);
+    std::snprintf(chapterCopy,sizeof(chapterCopy),"%s",s);
     text(t,g.position,s);
     if(percent>=0){int width=std::max(0,int(g.progress.width)-55),y=g.progress.y+14;
       t.stroke(makeRect(g.progress.x,y,width,5),ink,1);t.fill(makeRect(g.progress.x,y,width*std::clamp(percent,0,100)/100,5),ink);
@@ -118,12 +122,14 @@ void draw(GfxRenderer& r,Layout& g,const RecentBook* featured,const std::vector<
     }
     if(info.chapter&&info.total)std::snprintf(s,sizeof(s),"Còn %d chương",std::max(0,info.total-info.chapter));
     else std::snprintf(s,sizeof(s),"Chưa có số chương");
+    std::snprintf(remainingCopy,sizeof(remainingCopy),"%s",s);
     text(t,makeRect(g.remaining.x,g.remaining.y,g.remaining.width,25),s);
     if(percent>=100)std::snprintf(s,sizeof(s),"Đã đọc hết");
     else if(info.known&&info.seconds>=300&&percent>=5){
       const uint64_t minutes=std::min<uint64_t>(99999,info.seconds*uint64_t(100-percent)/unsigned(percent)/60);
       std::snprintf(s,sizeof(s),"Ước tính %llu giờ %u phút",static_cast<unsigned long long>(minutes/60),unsigned(minutes%60));
     }else std::snprintf(s,sizeof(s),"Chưa đủ dữ liệu thời gian");
+    std::snprintf(estimateCopy,sizeof(estimateCopy),"%s",s);
     text(t,makeRect(g.remaining.x,g.remaining.y+25,g.remaining.width,29),s);
     const auto b=g.hits[Resume];
     // A soft cloud with raised lobes; its hit region remains the full button.
@@ -136,13 +142,13 @@ void draw(GfxRenderer& r,Layout& g,const RecentBook* featured,const std::vector<
     t.fill(makeRect(b.x+20,b.y+7,b.width-40,23),white);
     text(t,b,"Đọc tiếp",0,1,false,fui::TextAlign::Center);
     zenart::duo(t,g.duo);
-    if(pose%5==2)zenart::corner(t,g.cat);else companionart::cat(t,g.cat,pose);
+    if(!native){if(pose%5==2)zenart::corner(t,g.cat);else companionart::cat(t,g.cat,pose);}
     if(focus==Resume)t.stroke(b.inset({3,3,3,3}),ink,1,16);
   }
   // One layout and one quote paint path, regardless of popup state.
   vietnamesequotes::drawSingle(t,g.quote,quote,pixelui::kSmall);
   BookCoverPainter painter(r,t);
-  for(int n=0;n<int(shelf.size())&&n<shelfSize;++n){const auto b=g.hits[Recent1+n];painter.paint(shelf[n],b,0,BookCoverPainter::Fit::Contain);if(focus==Recent1+n)t.stroke(b.inset({-2,-2,-2,-2}),ink,2);}
+  for(int n=0;!native&&n<int(shelf.size())&&n<shelfSize;++n){const auto b=g.hits[Recent1+n];painter.paint(shelf[n],b,0,BookCoverPainter::Fit::Contain);if(focus==Recent1+n)t.stroke(b.inset({-2,-2,-2,-2}),ink,2);}
   r.drawLine(g.shelf.x,g.shelf.bottom(),g.shelf.right(),g.shelf.bottom());
   r.drawLine(g.shelf.x,g.shelf.bottom()+3,g.shelf.right(),g.shelf.bottom()+3);
   if(g.popup.empty()) companionart::worm(t,g.mascot);
@@ -157,6 +163,25 @@ void draw(GfxRenderer& r,Layout& g,const RecentBook* featured,const std::vector<
     t.stroke(makeRect(g.mascot.x+28,g.mascot.y-12,7,7),ink,1,3);
   }
   if(focus==Menu)t.stroke(g.hits[Menu],ink,1,3);
+
+  if(native){
+    approvedhome::draw(t,makeRect(0,0,480,800));
+    BookCoverPainter nativePainter(r,t);
+    if(featured)nativePainter.paint(*featured,g.cover,0,BookCoverPainter::Fit::Stretch);
+    else {text(t,g.cover,"Mở sách từ Thư viện",1,3,false,fui::TextAlign::Center);}
+    for(int n=0;n<int(shelf.size())&&n<shelfSize;++n)nativePainter.paint(shelf[n],g.hits[Recent1+n],0,BookCoverPainter::Fit::Stretch);
+    t.setFont(5,toybox::kHugeFontId);t.setFont(6,toybox::kReadingBoldFontId);
+    char time[16]{},date[40]{},lunar[40]{};
+    halClock.formatTime(time,sizeof(time),SETTINGS.clockFormat==1);
+    if(today){auto d=readingstats::dateFromDay(today);constexpr const char* days[]={"T2","T3","T4","T5","T6","T7","CN"};
+      std::snprintf(date,sizeof(date),"%s · %02d.%02d",days[readingstats::weekday(today)],d.day,d.month);
+      auto l=vietnameselunar::fromCivilDay(today,d.year);if(l.day)std::snprintf(lunar,sizeof(lunar),"Âm %d.%d",l.day,l.month);}
+    approvedhome::Info model;
+    model.clock=time;model.date=date;model.lunar=lunar;model.title=featured?featured->title.c_str():"Chưa có sách";
+    model.author=featured?featured->author.c_str():"";model.chapter=chapterCopy;model.remaining=remainingCopy;model.estimate=estimateCopy;
+    model.percent=livePercent;model.battery=battery.percent;model.quote=quote;
+    approvedhome::overlay(t,g,model);
+  }
 
   if(!g.popup.empty()) {
     t.fill(g.popup,white,4);t.stroke(g.popup,ink,2,4);

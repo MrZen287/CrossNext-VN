@@ -47,7 +47,6 @@ namespace {
 homeui::ShelfCatalogCache shelfCatalog;
 int rememberedDeskPage = 0;
 std::vector<int> rememberedDeskStarts;
-unsigned lastCatPose = 0;
 bool availableRecent(const RecentBook& book) {
   if (content::hiddenContent(book.path)) return false;
   if (shelfCatalog.matches(library::libraryContentRevision(), homecover::sceneRevision(),
@@ -364,7 +363,7 @@ void HomeActivity::onEnter() {
     launcherStatsPending = false;
     deskMenuOpen = false;
     deskFocus = readingdesk::None;
-    deskCatPose = lastCatPose = (lastCatPose + 1 + (micros() % 4)) % 5;
+    deskCatPose = 0;
     deskQuote = vietnamesequotes::next();
     loadRecentBooks(1);
     deskPrepared = -2;
@@ -972,8 +971,9 @@ int HomeActivity::nextDeskShelfCover() const {
 }
 
 void HomeActivity::activateReadingDesk(readingdesk::Action action) {
-  if (action == readingdesk::Menu) { deskMenuOpen=!deskMenuOpen; if(deskMenuOpen)++deskCatPose; deskFocus=readingdesk::None; requestUpdate(); return; }
-  if (action == readingdesk::Cat) { deskCatPose=(deskCatPose+1)%5; requestUpdate(); return; }
+  if (action == readingdesk::Menu) { deskMenuOpen=!deskMenuOpen;  deskFocus=readingdesk::None; requestUpdate(); return; }
+  if (action == readingdesk::Cat) return;
+  if (action == readingdesk::Quote) {deskQuote=vietnamesequotes::next();requestUpdate();return;}
   if (action == readingdesk::Stats) { deskMenuOpen=false; activityManager.replaceActivity(std::make_unique<ReadingStatsActivity>(renderer,mappedInput)); return; }
   if (action == readingdesk::Transfer) { deskMenuOpen=false; onFileTransferOpen(); return; }
   deskMenuOpen=false;

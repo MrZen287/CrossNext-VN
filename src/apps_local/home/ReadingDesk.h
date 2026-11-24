@@ -7,7 +7,7 @@ class GfxRenderer;
 struct RecentBook;
 namespace readingdesk {
 inline constexpr int shelfSize=3;
-enum Action {None=-1,Settings,Resume,Recent1,Recent2,Recent3,Previous,Next,Library,Calendar,Apps,Games,Menu,Stats,Transfer,Cat,Count};
+enum Action {None=-1,Settings,Resume,Recent1,Recent2,Recent3,Previous,Next,Library,Calendar,Apps,Games,Menu,Stats,Transfer,Cat,Quote,Count};
 struct Layout {
   freeink::ui::Rect status,heading,reading,cover,title,author,position,progress,remaining,shelf,quote,mascot,cat,duo,popup,close;
   std::array<freeink::ui::Rect,Count> hits{};

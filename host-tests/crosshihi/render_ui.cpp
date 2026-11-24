@@ -13,6 +13,7 @@
 #include "../../src/apps_local/tools/ToolsScreens.h"
 #include "../../src/apps_local/reading/ReadingStatsScreens.h"
 #include "../../src/apps_local/home/HomeLauncher.h"
+#include "../../src/apps_local/home/ApprovedHomeUi.h"
 #include "../../src/apps_local/library/LibraryMenu.h"
 #include "../../src/apps_local/library/LibraryControls.h"
 #include "../../src/apps_local/ui/NavigationIcons.h"
@@ -33,7 +34,7 @@ struct Font {
 struct Canvas{
  std::vector<uint8_t> pixels=std::vector<uint8_t>(60*800,255);fui::DisplayTarget target{pixels.data(),480,800,60};
  fui::DeviceContext device;fui::InputSnapshot input;toybox::Interactions hits;toybox::Frame frame;toybox::Screen screen;
- Font huge{sans28b,true},small{sans10},body{sans12},title{sans18b},tiny{sans08},reading{sans13};
+ Font readingBold{sans13b},huge{sans28b,true},small{sans10},body{sans12},title{sans18b},tiny{sans08},reading{sans13};
  Canvas():device([&]{auto d=target.deviceContext();d.hasTouch=true;return d;}()),frame(target,device,input,hits,nullptr,{82,false,true,"10:30"}),screen(frame){device.hasTouch=true;target.setFont(0,small.font);target.setFont(1,body.font);target.setFont(2,title.font);target.setFont(5,huge.font);target.setFont(3,tiny.font);target.setFont(4,small.font);target.setFont(fui::HEADER_CLOCK_FONT,small.font);}
  void save(const std::string& path){FILE* f=fopen(path.c_str(),"wb");assert(f);fprintf(f,"P4\n480 800\n");for(auto v:pixels)fputc(v^255,f);fclose(f);}
 };
@@ -61,6 +62,18 @@ int main(int argc,char**argv){assert(argc==2);I18N.setLanguage(Language::VI);chr
   const auto area=c.screen.body();pixelui::list(c.screen,p);
   int black=0,all=0;for(int y=area.y;y<area.bottom();++y)for(int x=area.x;x<area.right();++x){++all;if(!(c.pixels[y*60+x/8]&(0x80>>(x%8))))++black;}
   assert(black>100 && black<all/3);c.save(std::string(argv[1])+"/library-all.pbm");
+ }
+
+ {Canvas c;c.target.setFont(5,c.huge.font);c.target.setFont(6,c.readingBold.font);
+  auto g=readingdesk::layout(fui::makeRect(0,0,480,800),3,true,true,true,false);
+  approvedhome::draw(c.target,fui::makeRect(0,0,480,800));
+  // Test book fronts are separate from the embedded illustration.
+  for(auto box:{g.cover,g.hits[readingdesk::Recent1],g.hits[readingdesk::Recent2],g.hits[readingdesk::Recent3]}){
+    c.target.stroke(box,fui::Paint::solid(fui::Color::Black),1);
+    approvedhome::text(c.target,box,"Bìa sách\ntrên thẻ",1,false,fui::TextAlign::Center,2);
+  }
+  approvedhome::Info m;m.clock="07:45";m.date="T3 · 24.11";m.lunar="Âm 16.10";m.title="Dế Mèn phiêu lưu ký";m.author="Tô Hoài";m.chapter="Chương 4 / 10";m.remaining="Còn 6 chương";m.estimate="Ước tính 2 giờ 15 phút";m.percent=40;m.battery=82;m.quote="Đi một ngày đàng, học một sàng khôn.";
+  approvedhome::overlay(c.target,g,m);c.save(std::string(argv[1])+"/home-approved.pbm");
  }
 
 }

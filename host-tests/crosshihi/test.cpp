@@ -44,6 +44,7 @@ int main(){
   assert(normal.shelf.bottom()<=800);
   assert(normal.cat.y>=0);
   assert(normal.status.bottom()<normal.cover.y);
+  assert(normal.at(normal.quote.x+10,normal.quote.y+10)==Quote);
   assert(normal.heading.y>normal.status.y);
   assert(open.hits[Library].empty()&&open.hits[Apps].empty());
   assert(open.popup.bottom()<open.mascot.y);

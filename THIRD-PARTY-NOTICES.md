@@ -192,3 +192,7 @@ Care engine, persistent pet state and original pixel sprites adapted from https:
 
 ## Lunar almanac data
 Offline 2026–2028 solar-term/officer/activity tables derive from 6tail/lunar-javascript, copyright (c) 2018 6tail, MIT. See licenses/Lunar-Javascript-MIT.txt and docs/crosshihi/almanac.md. Vietnamese lunar conversion remains separate.
+
+## Approved CrossZen Home artwork (1.1.1.8)
+
+assets_local/crosszen/home-approved.png is original AI-generated artwork created for this project and approved by the user. scripts_local/build_home_art.py removes live content fields and packs a 480×800 1-bit template. Runtime book covers are supplied by the user's books and are not bundled with this template. The generated illustration is independent of runtime book data.
