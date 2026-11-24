@@ -30,6 +30,7 @@ jobs:
           pip install -r requirements.txt
       - name: Verify Home interactions, version ordering and original app catalog
         run: |
+          python scripts/gen_i18n.py lib/I18n/translations lib/I18n --builtin-langs vi
           sh host-tests/crosshihi/run.sh
           sh host-tests/bookpet/run.sh
           python scripts_local/verify_crosshihi.py
