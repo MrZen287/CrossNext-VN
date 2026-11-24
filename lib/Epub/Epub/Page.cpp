@@ -30,6 +30,32 @@ void renderBoxBackgrounds(const std::vector<std::unique_ptr<PageElement>>& eleme
   }
 }
 
+struct GuideLine {const PageLine* line;int left,right,top,bottom,height;};
+GuideLine guideMetrics(const PageLine& line,GfxRenderer& r,int font,int x,int y){
+ GuideLine m{&line,r.getScreenWidth(),0,r.getScreenHeight(),0,0};auto* b=line.getBlock();
+ for(uint16_t i=0;i<b->wordCount();++i){auto g=b->wordGeometry(r,font,i);auto style=b->wordStyle(i);
+  auto bounds=r.getTextBounds(g.fontId,b->wordText(i),style);auto probe=r.getTextBounds(g.fontId,"Ágjpqỵ",style);
+  int origin=y+line.yPos+g.y;
+  m.left=std::min(m.left,x+line.xPos+int(b->wordXpos(i)));
+  m.right=std::max(m.right,x+line.xPos+int(b->wordXpos(i))+g.width);
+  m.top=std::min(m.top,origin+std::min(bounds.top,probe.top));
+  m.bottom=std::max(m.bottom,origin+std::max(bounds.top+bounds.height,probe.top+probe.height));
+  m.height=std::max(m.height,r.getLineHeight(g.fontId));
+ }return m;
+}
+void renderGuides(const std::vector<std::unique_ptr<PageElement>>& elements,GfxRenderer& r,int font,int x,int y){
+ if(!readingguides::enabled)return;
+ std::vector<GuideLine> lines;lines.reserve(32);
+ for(const auto& e:elements)if(e->getTag()==TAG_PageLine)lines.push_back(guideMetrics(static_cast<const PageLine&>(*e),r,font,x,y));
+ for(const auto&m:lines){if(m.right<=m.left)continue;int next=r.getScreenHeight();
+  for(const auto&n:lines)if(n.top>m.top&&n.left<m.right&&n.right>m.left)next=std::min(next,n.top);
+  for(const auto&e:elements)if((e->getTag()==TAG_PageImage||e->getTag()==TAG_PageHorizontalRule||e->getTag()==TAG_PageDropCap)&&y+e->yPos>m.top)next=std::min(next,y+int(e->yPos));
+  int yy=readingguides::guideY(m.bottom,next,m.height);if(yy<0||yy>=r.getScreenHeight())continue;
+  int start=std::max(0,m.left),end=std::min(r.getScreenWidth(),m.right),pitch=std::max(4,m.height/5);
+  for(int xx=start;xx<end;++xx)if(readingguides::mark(readingguides::style,xx-start,pitch)){r.drawPixel(xx,yy);if(readingguides::style==1&&xx+1<end)r.drawPixel(xx+1,yy);}
+ }
+}
+
 // Draws one border edge as a strip along a box side.
 void drawBorderEdge(const GfxRenderer& renderer, const int x, const int y, const int length, const CssBorderSide& side,
                     const bool horizontal) {
@@ -68,27 +94,6 @@ void drawBorderEdge(const GfxRenderer& renderer, const int x, const int y, const
 
 void PageLine::render(GfxRenderer& renderer, const int fontId, const int xOffset, const int yOffset) {
   block->render(renderer, fontId, xPos + xOffset, yPos + yOffset);
-  if(readingguides::enabled && block->wordCount()) {
-    int left=renderer.getScreenWidth(),right=0,bottom=0;
-    for(uint16_t i=0;i<block->wordCount();++i){
-      const auto g=block->wordGeometry(renderer,fontId,i);
-      left=std::min(left,xOffset+xPos+int(block->wordXpos(i)));
-      right=std::max(right,xOffset+xPos+int(block->wordXpos(i))+g.width);
-      bottom=std::max(bottom,yOffset+yPos+g.y+g.height);
-    }
-    // Anchor guides to current font metrics, not each line's changing glyphs.
-    const int height=renderer.getLineHeight(fontId);
-    bottom=yOffset+yPos+height-std::max(1,height/12);
-    const int pitch=std::max(4,height/5);
-    // Sparse marks follow the current rendered font and size.
-    const int start=std::max(0,left),end=std::min(renderer.getScreenWidth(),right);
-    if(bottom>=0&&bottom<renderer.getScreenHeight())for(int x=start;x<end;++x){
-      const int style=readingguides::style;
-      const bool mark=readingguides::mark(style,x-start,pitch);
-      if(mark){renderer.drawPixel(x,bottom);if(style==1&&x+1<end)renderer.drawPixel(x+1,bottom);}
-    }
-  }
-
 }
 
 bool PageLine::serialize(Print& file) {
@@ -348,6 +353,7 @@ void Page::render(GfxRenderer& renderer, const int fontId, const int xOffset, co
   renderFilteredPageElements(elements, renderer, fontId, xOffset, yOffset, isBorderBox);
   renderFilteredPageElements(elements, renderer, fontId, xOffset, yOffset,
                              [](const PageElement& element) { return !isBorderBox(element); });
+  renderGuides(elements,renderer,fontId,xOffset,yOffset);
 }
 
 void Page::renderImages(GfxRenderer& renderer, const int fontId, const int xOffset, const int yOffset) const {
@@ -367,6 +373,7 @@ void Page::renderWithImagePlaceholders(GfxRenderer& renderer, const int fontId, 
       element->render(renderer, fontId, xOffset, yOffset);
     }
   }
+  renderGuides(elements,renderer,fontId,xOffset,yOffset);
 }
 
 bool Page::serialize(Print& file) const {

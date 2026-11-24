@@ -1,4 +1,5 @@
 #include "HomeActivity.h"
+#include "../../apps_local/home/CatExpressions.h"
 
 #include <Bitmap.h>
 #include <ContentVisibility.h>
@@ -11,6 +12,7 @@
 #include <HalStorage.h>
 #include <I18n.h>
 #include <LibraryBuilder.h>
+#include "apps_local/dictionary/DictionaryActivity.h"
 #include <LibraryIndexFile.h>
 #include <Memory.h>
 #include <PaintClock.h>
@@ -355,6 +357,9 @@ bool HomeActivity::loadRecentCovers(int coverHeight) {
   return changed;
 }
 
+namespace {unsigned rememberedCatExpression=0;}
+void HomeActivity::onReturnFromChild(){std::optional<RenderLock> lock;if(!RenderLock::heldByCurrentTask())lock.emplace();deskCatPose=rememberedCatExpression=catexpressions::next(rememberedCatExpression);requestUpdate();}
+
 void HomeActivity::onEnter() {
   Activity::onEnter();
   if (readingDeskEnabled()) {
@@ -363,7 +368,7 @@ void HomeActivity::onEnter() {
     launcherStatsPending = false;
     deskMenuOpen = false;
     deskFocus = readingdesk::None;
-    deskCatPose = 0;
+    deskCatPose = rememberedCatExpression=catexpressions::next(rememberedCatExpression);
     deskQuote = vietnamesequotes::next();
     loadRecentBooks(1);
     deskPrepared = -2;
@@ -842,16 +847,18 @@ void HomeActivity::loopReadingDesk() {
   const int direction = mappedInput.wasReleased(Button::NavNext) || swipe == Swipe::Left     ? 1
                         : mappedInput.wasReleased(Button::NavPrevious) || swipe == Swipe::Right ? -1
                                                                                                : 0;
-  const bool interacting = tapped || confirm || resume || direction || swipe == Swipe::Up;
+  const bool home=mappedInput.homeButtonAction()==HomeButtonAction::Home;
+  const bool interacting = home || tapped || confirm || resume || direction || swipe == Swipe::Up;
   RenderLock lock(interacting ? RenderLock::Mode::Blocking : RenderLock::Mode::Try);
   if (!lock.ownsLock()) return;
+  if(home){deskMenuOpen=false;deskFocus=readingdesk::None;requestUpdate();return;}
   if (!deskMenuOpen && swipe == Swipe::Up) { openLauncher(); return; }
   if (!deskMenuOpen && horizontal && deskLayout.shelf.contains(swipeX, swipeY)) {
     activateReadingDesk(swipe == Swipe::Left ? readingdesk::Next : readingdesk::Previous);
     return;
   }
   if (!deskMenuOpen && horizontal) {
-    activateReadingDesk(swipe == Swipe::Left ? readingdesk::Library : readingdesk::Apps);
+    activateReadingDesk(swipe == Swipe::Right ? readingdesk::Dictionary : readingdesk::Apps);
     return;
   }
   if (tapped) {
@@ -972,7 +979,7 @@ int HomeActivity::nextDeskShelfCover() const {
 
 void HomeActivity::activateReadingDesk(readingdesk::Action action) {
   if (action == readingdesk::Menu) { deskMenuOpen=!deskMenuOpen;  deskFocus=readingdesk::None; requestUpdate(); return; }
-  if (action == readingdesk::Cat) return;
+  if (action == readingdesk::Cat) {deskCatPose=rememberedCatExpression=catexpressions::next(rememberedCatExpression);requestUpdate();return;}
   if (action == readingdesk::Quote) {deskQuote=vietnamesequotes::next();requestUpdate();return;}
   if (action == readingdesk::Stats) { deskMenuOpen=false; activityManager.replaceActivity(std::make_unique<ReadingStatsActivity>(renderer,mappedInput)); return; }
   if (action == readingdesk::Transfer) { deskMenuOpen=false; onFileTransferOpen(); return; }
@@ -980,6 +987,7 @@ void HomeActivity::activateReadingDesk(readingdesk::Action action) {
   switch (action) {
     case readingdesk::Settings: onSettingsOpen(); return;
     case readingdesk::Library: onLibraryOpen(); return;
+    case readingdesk::Dictionary: activityManager.replaceActivity(ZenDictionaryActivity::create(renderer,mappedInput)); return;
     case readingdesk::Apps: shelf::openFolder(2, renderer, mappedInput); return;
     case readingdesk::Games: shelf::openFolder(0, renderer, mappedInput); return;
     case readingdesk::Calendar: {
@@ -1200,7 +1208,7 @@ void HomeActivity::render(RenderLock&&) {
     }
     auto target = toybox::makeTarget(renderer);
     const auto* book = deskBook();
-    deskLayout = readingdesk::layout(target.deviceContext().safeRect(), static_cast<int>(deskShelf.size()), book != nullptr,
+    deskLayout = readingdesk::screenLayout(target.deviceContext(), static_cast<int>(deskShelf.size()), book != nullptr,
                                      deskPage > 0, deskNextPageStart >= 0, deskMenuOpen);
     readingdesk::draw(renderer, deskLayout, book, deskShelf, deskFeatured, deskFocus, deskQuote, deskCatPose);
     renderer.displayBuffer(cleanInitialRefresh && !firstRenderDone ? HalDisplay::HALF_REFRESH

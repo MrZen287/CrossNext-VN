@@ -20,7 +20,7 @@
 #include "SideButtonSettings.h"
 #include "activities/settings/SettingsActivity.h"
 #include "components/UITheme.h"
-#include "util/DictionaryRegistry.h"
+
 
 // Build the font family setting dynamically. When registry is non-null, SD card fonts
 // are appended after the built-in fonts. Otherwise only built-in fonts are listed.
@@ -140,55 +140,9 @@ inline SettingInfo buildFontSizeSetting(const SdCardFontRegistry* registry) {
   return s;
 }
 
-// Build the dictionary selection setting dynamically from the folders discovered
-// under /dictionaries. "None" plus one option per dictionary; the selected folder
-// name persists in SETTINGS.dictionaryName (saved/loaded manually in
-// CrossPointSettings::toJson/fromJson — the generic loop skips dynamic entries).
-inline SettingInfo buildDictionarySetting(const std::vector<DictionaryEntry>& dictionaries, bool translation = false) {
-  std::vector<std::string> folderNames;
-  folderNames.reserve(dictionaries.size());
-  for (const auto& entry : dictionaries) {
-    if (entry.name.size() < sizeof(SETTINGS.dictionaryName) && folderNames.size() < 254)
-      folderNames.push_back(entry.name);
-  }
-
-  SettingInfo s;
-  char* selected = translation ? SETTINGS.translationDictionaryName : SETTINGS.dictionaryName;
-  s.nameId = translation ? StrId::STR_WORD_TRANSLATION_DICT : StrId::STR_WORD_DEFINITION_DICT;
-  s.key = translation ? "translationDictionaryName"
-                      : "dictionaryName";  // web settings API; persisted by name, not by the generic loop
-  s.type = SettingType::ENUM;
-  s.enumStringValues.reserve(folderNames.size() + 1);
-  s.enumStringValues.push_back(I18N.get(StrId::STR_NONE_OPT));
-  s.enumStringValues.insert(s.enumStringValues.end(), folderNames.begin(), folderNames.end());
-  s.category = StrId::STR_CAT_READER;
-
-  s.valueGetter = [folderNames, selected]() -> uint8_t {
-    for (size_t i = 0; i < folderNames.size(); i++) {
-      // Only complete folder names fitting the persisted field are selectable.
-      if (strncmp(folderNames[i].c_str(), selected, sizeof(SETTINGS.dictionaryName) - 1) == 0) {
-        return static_cast<uint8_t>(i + 1);
-      }
-    }
-    return 0;  // "None", also when the stored folder no longer exists
-  };
-
-  s.valueSetter = [folderNames, selected, translation](uint8_t v) {
-    (translation ? SETTINGS.translationDictionaryAuto : SETTINGS.dictionaryAuto) = false;
-    if (v == 0 || v > folderNames.size()) {
-      selected[0] = '\0';
-      return;
-    }
-    strncpy(selected, folderNames[v - 1].c_str(), sizeof(SETTINGS.dictionaryName) - 1);
-    selected[sizeof(SETTINGS.dictionaryName) - 1] = '\0';
-  };
-
-  return s;
-}
-
 inline std::vector<StrId> buildLongPressMenuValues() {
   std::vector<StrId> values = {StrId::STR_KOSYNC, StrId::STR_DISABLED, StrId::STR_BOOKMARK_OPTION,
-                               StrId::STR_DICTIONARY};
+                               StrId::STR_DISABLED};
   values.reserve(CrossPointSettings::LONG_PRESS_MENU_FUNCTION_COUNT);
   if (BoardConfig::hasHomeKey()) values.push_back(StrId::STR_READER_MENU);
   values.push_back(StrId::STR_SAVE_CLIPPING);
@@ -270,9 +224,8 @@ void forEachBaseSetting(Fn& fn) {
 // UI and web callers own their descriptors; persistence visits one at a time.
 std::vector<SettingInfo> getBaseSettingsList(size_t extraCapacity = 0);
 
-inline std::vector<SettingInfo> getSettingsList(const SdCardFontRegistry* registry = nullptr,
-                                                const std::vector<DictionaryEntry>* dictionaries = nullptr) {
-  auto v = getBaseSettingsList(dictionaries ? 2 : 0);
+inline std::vector<SettingInfo> getSettingsList(const SdCardFontRegistry* registry = nullptr) {
+  auto v = getBaseSettingsList();
   // Keep legacy keys loadable, but do not advertise unsupported controls on
   // the device or the web settings page. Appearance uses homeLayout.
   v.erase(std::remove_if(v.begin(), v.end(),
@@ -308,13 +261,6 @@ inline std::vector<SettingInfo> getSettingsList(const SdCardFontRegistry* regist
       *it = buildFontSizeSetting(registry);
     }
   }
-  if (dictionaries) {
-    // Insert at the end of the Reader category (just before the first Controls entry).
-    auto it =
-        std::find_if(v.begin(), v.end(), [](const SettingInfo& s) { return s.category == StrId::STR_CAT_CONTROLS; });
-    const auto pos = it - v.begin();
-    v.insert(v.begin() + pos, buildDictionarySetting(*dictionaries));
-    v.insert(v.begin() + pos + 1, buildDictionarySetting(*dictionaries, true));
-  }
+
   return v;
 }

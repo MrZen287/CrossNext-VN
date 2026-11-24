@@ -18,7 +18,7 @@ void ZenOptionsActivity::buildScreen(UiScreen& screen){
  for(int n=0;n<count;++n){
   rows[n]={};rows[n].actionValue=n;
   if(kind==Kind::Guides){
-    constexpr const char* labels[]={"Hiển thị dòng kẻ","Chấm mảnh · · · ·","Chấm đậm • • • •","Gạch ngắn – – –","Gạch chấm – · – ·","Nét liền mảnh ───"};
+    constexpr const char* labels[]={"Hiển thị dòng kẻ","Chấm mảnh","Chấm đậm","Gạch ngắn","Gạch chấm","Nét liền mảnh"};
     rows[n].label=labels[n];GUI.setCheckboxRow(rows[n],n?SETTINGS.zenGuideStyle==n-1:SETTINGS.zenReadingGuides);
   }else if(slot>=0){rows[n].label=kind==Kind::Widgets?widgets[n]:edges[n];GUI.setCheckboxRow(rows[n],value(slot)==n);}
   else{rows[n].label=kind==Kind::Widgets?slots[n]:n?"Mép phải · vuốt lên/xuống":"Mép trái · vuốt lên/xuống";
@@ -26,7 +26,14 @@ void ZenOptionsActivity::buildScreen(UiScreen& screen){
   if(failed&&n==0)rows[n].subtitle="Không lưu được, hãy thử lại";
  }
  freeink::ui::ListProps props;props.items=rows;props.count=count;props.action=ACTION_ROW;props.inputMask=freeink::ui::InputTouch;
- props.labelText.maxLines=2;syncListViewport(screen,props);pixelui::list(screen,props);
+ if(kind==Kind::Guides){props.rowHeight=78;props.rowGap=6;}props.labelText.maxLines=2;syncListViewport(screen,props);pixelui::list(screen,props);
+ if(kind==Kind::Guides){
+  const auto body=pixelui::geometry(screen.device()).body;
+  const int rowHeight=props.rowHeight?props.rowHeight:72;
+  for(int n=std::max(1,int(props.topIndex));n<count;++n){int yy=body.y+(n-props.topIndex)*(rowHeight+props.rowGap)+rowHeight-12;if(yy>=body.bottom())break;
+   for(int x=body.x+20;x<body.x+132;++x)if(readingguides::mark(n-1,x-body.x-20,10))screen.target().fill(freeink::ui::makeRect(x,yy,n==2?2:1,1),freeink::ui::Paint::solid(freeink::ui::Color::Black));
+  }
+ }
 }
 void ZenOptionsActivity::activateIndex(int n){
  RenderLock lock;

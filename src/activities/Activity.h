@@ -49,6 +49,7 @@ class Activity {
   virtual void onExit();
   // Called under RenderLock before stacking this live parent below a child.
   virtual void prepareForChild() {}
+  virtual void onReturnFromChild() {}
   // Last chance to queue activity-owned state before sleep events are drained.
   virtual void prepareForSleep() {}
   virtual void pauseReadingPace() {}

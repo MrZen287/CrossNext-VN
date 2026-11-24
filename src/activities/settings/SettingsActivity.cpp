@@ -188,10 +188,10 @@ void SettingsActivity::rebuildSettingsLists() {
   // Only Reading needs resource discovery; the category menu is independent
   // of the installed SD fonts and dictionaries.
   readingResourcesReady = !categoryHome && selectedCategoryIndex == 1;
-  std::vector<DictionaryEntry> dictionaries;
+
   if (readingResourcesReady) {
     sdFontSystem.refreshIfDirty();
-    DictionaryRegistry::discover(dictionaries);
+
   }
 
   // Filled by the loop, drained after the action rows below.
@@ -258,8 +258,6 @@ void SettingsActivity::rebuildSettingsLists() {
   };
   forEachBaseSetting(collect);
   if (readingResourcesReady) {
-    readerSettings.push_back(buildDictionarySetting(dictionaries));
-    readerSettings.push_back(buildDictionarySetting(dictionaries, true));
   }
 
   // Append device-only ACTION items
@@ -702,16 +700,7 @@ void SettingsActivity::toggleCurrentSetting() {
                                     ? static_cast<uint8_t>(setting.enumLabels().size())
                                     : static_cast<uint8_t>(setting.enumStringValues.size());
     const uint8_t cur = setting.valueGetter();
-    const bool dictionary =
-        setting.nameId == StrId::STR_WORD_DEFINITION_DICT || setting.nameId == StrId::STR_WORD_TRANSLATION_DICT;
-    if (dictionary && totalValues == 1) {
-      const char* options[] = {tr(STR_OK_BUTTON)};
-      optionPopup.showMessage(I18N.get(setting.nameId), tr(STR_DICTIONARY_INSTALL_HELP), options, 1, 0,
-                              [this](int) { requestUpdate(); });
-      requestUpdate();
-      return;
-    }
-    if (totalValues > 2 || dictionary) {
+    if (totalValues > 2) {
       const auto valueSetter = setting.valueSetter;
       auto onSelect = [this, valueSetter, sleepScreenChanged, quickResumeTimeoutChanged](int idx) {
         valueSetter(idx);

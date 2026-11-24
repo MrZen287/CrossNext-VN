@@ -1,4 +1,5 @@
 #include "Shelf.h"
+#include "dictionary/DictionaryActivity.h"
 
 #include <HalStorage.h>
 #include <I18n.h>
@@ -78,6 +79,7 @@ constexpr shelf::Item kApps[] = {
     {"CALENDAR", &navicons::Calendar32, &ToolsActivity::calendar},
     {"CLOCK", &navicons::Clock32, &ToolsActivity::clock},
     {"CALCULATOR", &navicons::Calculator32, &CalculatorActivity::create},
+    {"DICTIONARY", &navicons::Books32, &ZenDictionaryActivity::create},
 };
 
 // The two rows Home grows, in reading order. Titles are Title Case because
@@ -86,7 +88,7 @@ constexpr shelf::Item kApps[] = {
 // nothing else: the Home hook counts this table rather than knowing its length.
 constexpr auto kAllApps = [] {
   std::array<shelf::Item, std::size(kApps)+std::size(kGames)> all{};
-  constexpr int apps[]={3,0,1,4,5,6,2};
+  constexpr int apps[]={7,3,0,1,4,5,6,2};
   constexpr int games[]={13,3,4,2,5,0,1,14,8,9,7,12,6,10,11,15};
   size_t n=0;for(int i:apps)all[n++]=kApps[i];for(int i:games)all[n++]=kGames[i]; return all;
 }();
@@ -420,6 +422,7 @@ const char* label(const char* stableTitle) {
   if (std::strcmp(stableTitle, "PET") == 0) return I18N.getLanguage()==Language::VI?"Mèo & Mọt":"Cat & Worm";
   if (std::strcmp(stableTitle, "FLASHCARDS") == 0) return tr(STR_UI_FLASHCARDS_E0439E);
   if (std::strcmp(stableTitle, "CARNIVORO") == 0) return tr(STR_CAR_TITLE);
+  if (std::strcmp(stableTitle, "DICTIONARY") == 0) return "Từ Điển";
   if (std::strcmp(stableTitle, "WORDS") == 0) return tr(STR_WORDS_APP);
   if (std::strcmp(stableTitle, "QUOTES") == 0) return tr(STR_UI_QUOTES_171E81);
   if (std::strcmp(stableTitle, "WALLPAPERS") == 0) return tr(STR_UI_WALLPAPERS_2AA278);

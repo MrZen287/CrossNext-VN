@@ -50,7 +50,7 @@
 #include "apps_local/ui/RemoteBindingActions.h"
 #include "apps_local/ui/RemoteShortcutChoices.h"
 #include "apps_local/ui/ToyboxFonts.h"
-#include "apps_local/words/DictionaryDefaults.h"
+
 
 // How long the device sleeps before waking itself, in microseconds. 0 means
 // only the power button ends a sleep, which is how every build has behaved
@@ -865,7 +865,7 @@ void setup() {
   SETTINGS.language = static_cast<uint8_t>(Language::VI);
   SETTINGS.languagePack[0] = '\0';
   I18N.setLanguage(Language::VI);
-  if (dictionarydefaults::apply(SETTINGS)) SETTINGS.saveToFile();
+
   UITheme::getInstance().reload();
   ButtonNavigator::setMappedInputManager(mappedInputManager);
   pluginevents::refreshSubscriptions();

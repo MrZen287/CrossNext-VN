@@ -352,49 +352,9 @@ bool ClipSelectionActivity::buildSelectedText(const int first, const int last, s
   return true;
 }
 
-int ClipSelectionActivity::selectionActionCount() const {
-  if (rangeStart < 0) return 2;
-  const int first = std::min(rangeStart, selected), last = std::max(rangeStart, selected);
-  uint32_t start = UINT32_MAX, end = 0;
-  bool sourceKnown = true;
-  for (int n = first; n <= last; ++n) {
-    if (words[n].startOffset == UINT32_MAX || words[n].endOffset == UINT32_MAX ||
-        words[n].endOffset <= words[n].startOffset) {
-      sourceKnown = false;
-      break;
-    }
-    start = std::min(start, words[n].startOffset);
-    end = std::max(end, words[n].endOffset);
-  }
-  if (sourceKnown) {
-    for (int n = first; n <= last; ++n)
-      if (words[n].paragraphStart && words[n].startOffset != start) return 1;
-    // Bidi may reverse fragments. Grow source coverage without allocating a sort buffer.
-    uint32_t through = start;
-    for (int step = first; step <= last; ++step) {
-      uint32_t next = through;
-      for (int n = first; n <= last; ++n)
-        if (words[n].startOffset <= through) next = std::max(next, words[n].endOffset);
-      if (next == through) break;
-      through = next;
-    }
-    return through == end ? 2 : 1;
-  }
-  for (int n = first + 1; n <= last; ++n) {
-    const auto& previous = words[n - 1];
-    const auto& current = words[n];
-    const bool separated = current.row != previous.row ? !previous.discretionaryHyphen && !current.discretionaryHyphen
-                                                       : current.x > previous.x + previous.width + 2 ||
-                                                             previous.x > current.x + current.width + 2;
-    if (current.paragraphStart || separated) return 1;
-  }
-  return 2;
-}
+int ClipSelectionActivity::selectionActionCount() const { return 1; }
 
-ClippingResult::Action ClipSelectionActivity::selectionAction(const int index) const {
-  if (selectionActionCount() == 1) return ClippingResult::Action::Clip;
-  return index == 0 ? ClippingResult::Action::Translate : ClippingResult::Action::Lookup;
-}
+ClippingResult::Action ClipSelectionActivity::selectionAction(const int) const { return ClippingResult::Action::Clip; }
 
 void ClipSelectionActivity::confirmSelection(const ClippingResult::Action action) {
   if (rangeStart < 0) {

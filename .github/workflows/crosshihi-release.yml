@@ -33,19 +33,31 @@ jobs:
           python scripts/gen_i18n.py lib/I18n/translations lib/I18n --builtin-langs vi
           sh host-tests/crosshihi/run.sh
           sh host-tests/bookpet/run.sh
+          sh host-tests/dictionary-zen/run.sh
           python scripts_local/verify_crosshihi.py
       - name: Build X4 Pro application
         run: |
           set -o pipefail
           pio run -e gh_release_x4pro 2>&1 | tee crosshihi-build.log
+      - name: Build licensed bilingual SD dictionary pack
+        run: |
+          mkdir -p /tmp/zen-dictionary-inputs
+          curl --fail --location --retry 3 -o /tmp/vn_en_dictionary.db https://github.com/tecxmate/vnme-data/releases/download/v1.0.0/vn_en_dictionary.db
+          for file in vnedict.idx vnedict.dict.dz; do curl --fail --location --retry 3 -o "/tmp/zen-dictionary-inputs/$file" "https://raw.githubusercontent.com/cer28/stardict-vnedict/main/compiled/$file"; done
+          curl --fail --location --retry 3 -o /tmp/zen-dictionary-inputs/VNEDICT-README.md https://raw.githubusercontent.com/cer28/stardict-vnedict/main/README.md
+          curl --fail --location --retry 3 -o /tmp/zen-dictionary-inputs/LICENSE-FVDP-GPL3.txt https://raw.githubusercontent.com/tecxmate/vnme-data/main/LICENSE
+          python scripts_local/package_zen_dictionaries.py --database /tmp/vn_en_dictionary.db --vnedict /tmp/zen-dictionary-inputs --output /tmp/zen-dictionary-pack
+          c++ -std=c++20 -O1 -Ihost-tests/dictionary-zen/stubs -Isrc host-tests/dictionary-zen/store.cpp -o /tmp/zen-dictionary-store-test
+          ZEN_DICT_ROOT=/tmp/zen-dictionary-pack /tmp/zen-dictionary-store-test
       - name: Package licensed SD resources and verify ESP image
         run: |
           curl --fail --location --retry 3 -o /tmp/crosshihi-resources.zip https://github.com/MrZen287/CrossNext-VN/releases/download/v2.0.4-vn.1/CrossNext-VN-X4Pro-v2.0.4-vn.1.zip
-          python scripts_local/package_crosshihi.py --resources /tmp/crosshihi-resources.zip
+          python scripts_local/package_crosshihi.py --resources /tmp/crosshihi-resources.zip --dictionaries /tmp/zen-dictionary-pack/CrossZen-Tu-Dien-Anh-Viet.zip
+          cp /tmp/zen-dictionary-pack/CrossZen-Tu-Dien-Anh-Viet.zip dist/CrossZen/
           cp crosshihi-build.log dist/CrossZen/
       - uses: actions/upload-artifact@v4
         with:
-          name: CrossZen-X4Pro-1.1.1.8
+          name: CrossZen-X4Pro-1.1.1.9
           path: dist/CrossZen/
       - name: Publish tested build as a public pre-release
         env:
@@ -53,8 +65,8 @@ jobs:
         run: |
           current=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/crosshihi" --jq .object.sha)
           test "$current" = "$GITHUB_SHA" || exit 0
-          gh release create v1.1.1.8 --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title "CrossZen 1.1.1.8 — Bản thử X4 Pro" --notes-file docs/crosshihi/release-1.1.1.8.md --prerelease --draft
-          gh release upload v1.1.1.8 dist/CrossZen/* docs/crosshihi/crosszen-demo.png docs/crosshihi/home2-native.png docs/crosshihi/home-approved-native.png --repo "$GITHUB_REPOSITORY"
-          gh release edit v1.1.1.8 --repo "$GITHUB_REPOSITORY" --draft=false
+          gh release create v1.1.1.9 --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title "CrossZen 1.1.1.9 — Bản thử X4 Pro" --notes-file docs/crosshihi/release-1.1.1.9.md --prerelease --draft
+          gh release upload v1.1.1.9 dist/CrossZen/* docs/crosshihi/crosszen-demo.png docs/crosshihi/home2-native.png docs/crosshihi/home-approved-native.png docs/crosshihi/dictionary-demo.png docs/crosshihi/idle-companions-native.png --repo "$GITHUB_REPOSITORY"
+          gh release edit v1.1.1.9 --repo "$GITHUB_REPOSITORY" --draft=false
           manifest_sha=$(gh api "repos/$GITHUB_REPOSITORY/contents/ota.json?ref=crosshihi" --jq .sha)
           gh api --silent --method PUT "repos/$GITHUB_REPOSITORY/contents/ota.json" -f message="Update CrossZen OTA manifest after verified release" -f branch=crosshihi -f sha="$manifest_sha" -f content="$(base64 -w0 dist/CrossZen/ota.json)"

@@ -196,3 +196,7 @@ Offline 2026–2028 solar-term/officer/activity tables derive from 6tail/lunar-j
 ## Approved CrossZen Home artwork (1.1.1.8)
 
 assets_local/crosszen/home-approved.png is original AI-generated artwork created for this project and approved by the user. scripts_local/build_home_art.py removes live content fields and packs a 480×800 1-bit template. Runtime book covers are supplied by the user's books and are not bundled with this template. The generated illustration is independent of runtime book data.
+
+## CrossZen bilingual SD dictionaries
+
+English–Vietnamese: FVDP by Hồ Ngọc Đức, mirrored in tecxmate/vnme-data (GPL-3.0 subset; AI source excluded). Vietnamese–English: Paul Denisowski VNEDICT, mirrored in cer28/stardict-vnedict, CC BY 3.0. Data sources, conversion changes and license attribution are included in the separate SD data ZIP. No dictionary content is embedded in firmware. See scripts_local/package_zen_dictionaries.py and its manifest for reproducible conversion and source hashes.

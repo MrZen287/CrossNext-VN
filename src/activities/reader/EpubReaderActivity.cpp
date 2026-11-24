@@ -37,7 +37,7 @@
 #include "ClippingStore.h"
 #include "CrossPointSettings.h"
 #include "CrossPointState.h"
-#include "DictionaryWordSelectActivity.h"
+
 #include "EpubReaderBookmarksActivity.h"
 #include "EpubReaderChapterSelectionActivity.h"
 #include "EpubReaderClippingListActivity.h"
@@ -71,7 +71,7 @@
 #include "fontIds.h"
 #include "util/BookmarkUtil.h"
 #include "util/ButtonNavigator.h"
-#include "util/DictionaryRegistry.h"
+
 #include "util/LoopDeadline.h"
 #include "util/ScreenshotUtil.h"
 
@@ -208,16 +208,7 @@ void moveFinishedBookToReadFolder(const std::string& srcPath, const std::string&
     return;
   }
 
-  if (!bookdictionary::move(srcPath.c_str(), dstPath.c_str())) {
-    LOG_ERR("ERS", "Could not move book dictionaries; restoring file");
-    for (const char* suffix : SIDECARS) {
-      const std::string from = dstPath + suffix;
-      if (Storage.exists(from.c_str()) && !Storage.rename(from.c_str(), (srcPath + suffix).c_str()))
-        LOG_ERR("ERS", "Could not restore sidecar: %s", from.c_str());
-    }
-    if (!ClippingStore::moveBook(dstPath, srcPath)) LOG_ERR("ERS", "Could not restore finished book");
-    return;
-  }
+
 
   const std::string newCachePath = "/.crosspoint/epub_" + std::to_string(std::hash<std::string>{}(dstPath));
   bool cacheMoved = false;
@@ -312,7 +303,7 @@ bool EpubReaderActivity::loadBook() {
   });
 
   epub->setupCacheDir();
-  bookdictionary::load(epub->getPath().c_str(), bookDictionaries);
+
 
   HalFile f;
   if (Storage.openFileForRead("ERS", epub->getCachePath() + "/progress.bin", f)) {
@@ -435,16 +426,7 @@ void EpubReaderActivity::showIndexingPopup(const uint32_t pageLoans) {
   pagesUntilFullRefresh = 1;
 }
 
-void EpubReaderActivity::openDictionaryWordSelect() {
-  if (!bookDictionaries.selected(false, SETTINGS.dictionaryName)[0] &&
-      !bookDictionaries.selected(true, SETTINGS.translationDictionaryName)[0]) {
-    showDictionaryMessage = true;
-    dictionaryMessageTime = millis();
-    requestUpdate();
-    return;
-  }
-  startClipSelection(-1, -1, ClipSelectionActivity::Mode::Lookup);
-}
+
 
 void EpubReaderActivity::startClipSelection(const int initialX, const int initialY,
                                             const ClipSelectionActivity::Mode mode) {
@@ -518,8 +500,7 @@ void EpubReaderActivity::startClipSelection(const int initialX, const int initia
     const auto& clipping = std::get<ClippingResult>(result.data);
     const uint16_t startPage = static_cast<uint16_t>(pageNumber + clipping.startPageOffset);
     const uint16_t endPage = static_cast<uint16_t>(pageNumber + clipping.endPageOffset);
-    if (clipping.action != ClippingResult::Action::Lookup && clipping.action != ClippingResult::Action::Translate &&
-        section && currentSpineIndex == spineIndex && endPage < section->pageCount) {
+    if (section && currentSpineIndex == spineIndex && endPage < section->pageCount) {
       section->currentPage = endPage;
       currentPageVisibleOffset = section->getVisibleTextOffsetForPage(endPage);
     }
@@ -530,47 +511,7 @@ void EpubReaderActivity::startClipSelection(const int initialX, const int initia
       requestUpdate();
       return;
     }
-    if (clipping.action == ClippingResult::Action::Lookup || clipping.action == ClippingResult::Action::Translate) {
-      auto page = section ? section->loadPage(section->currentPage) : nullptr;
-      if (!page) {
-        LOG_ERR("CLIP", "Failed to load lookup page");
-        requestUpdate();
-        return;
-      }
-      int top, right, bottom, left;
-      renderer.getOrientedViewableTRBL(&top, &right, &bottom, &left);
-      // One bounded source context travels with this explicit lookup; the
-      // reader remains stacked at its current page and owns no vocabulary cache.
-      auto source = makeUniqueNoThrow<vocabulary::Context>();
-      if (source) {
-        const bool fits = vocabulary::copy(source->path, sizeof(source->path), epub->getPath().c_str()) &&
-                          vocabulary::copy(source->book, sizeof(source->book), bookTitle.c_str()) &&
-                          vocabulary::copy(source->author, sizeof(source->author), author.c_str()) &&
-                          vocabulary::copy(source->chapter, sizeof(source->chapter), chapterTitle.c_str());
-        source->fragment = !vocabulary::copy(source->sentence, sizeof(source->sentence), clipping.sentence.c_str()) ||
-                           clipping.sentenceFragment;
-        source->spine = spineIndex;
-        source->page = startPage;
-        source->offset = clipping.startOffset;
-        if (!fits) source.reset();
-      } else
-        LOG_ERR("WORDS", "OOM: source context %u bytes", unsigned(sizeof(vocabulary::Context)));
-      auto lookup = makeUniqueNoThrow<DictionaryWordSelectActivity>(
-          renderer, mappedInput, std::move(page), left + SETTINGS.screenMargin,
-          top + SETTINGS.screenMargin + UITheme::getReaderTopBarHeight(), clipping.text, std::move(source),
-          epub->getLanguage(), true, clipping.action == ClippingResult::Action::Translate,
-          bookDictionaries.selected(clipping.action == ClippingResult::Action::Translate,
-                                    clipping.action == ClippingResult::Action::Translate
-                                        ? SETTINGS.translationDictionaryName
-                                        : SETTINGS.dictionaryName));
-      if (!lookup) {
-        LOG_ERR("CLIP", "OOM: dictionary lookup activity");
-        requestUpdate();
-        return;
-      }
-      startActivityForResult(std::move(lookup), [this](const ActivityResult&) { requestUpdate(); });
-      return;
-    }
+
     const uint16_t paragraphIndex =
         section ? section->getParagraphIndexForPage(startPage).value_or(UINT16_MAX) : UINT16_MAX;
     const auto addResult = CLIPPINGS.addClipping(
@@ -787,10 +728,7 @@ void EpubReaderActivity::loop() {
     requestUpdate();
   }
 
-  if (showDictionaryMessage && (millis() - dictionaryMessageTime) >= ReaderUtils::BOOKMARK_MESSAGE_DURATION_MS) {
-    showDictionaryMessage = false;
-    requestUpdate();
-  }
+
 
   // The toolbar reader menu owns all input while shown, ahead of the automatic page turn
   // below: the More panel's rate popup switches automatic turning on and leaves the panel
@@ -831,7 +769,6 @@ void EpubReaderActivity::loop() {
     case HomeButtonAction::ReaderMenu:
     case HomeButtonAction::Bookmark:
     case HomeButtonAction::Sync:
-    case HomeButtonAction::Dictionary:
     case HomeButtonAction::Footnotes:
     case HomeButtonAction::CreateClipping:
       automaticPageTurnActive = false;
@@ -876,7 +813,7 @@ void EpubReaderActivity::loop() {
   // While the end-of-book suggestion menu is up it owns Confirm/Back/navigation, so it
   // gets this tick's input first and the long-press shortcuts below stay inert behind it
   // -- a hold there must not drop a bookmark onto the suggestion screen or paint the
-  // dictionary word picker over it. Anything the menu does not handle (long-press Back to
+  // text selection over it. Anything the menu does not handle (long-press Back to
   // the file browser, say) still falls through to the regular handlers.
   if (handleEndOfBookMenu()) {
     return;
@@ -902,9 +839,6 @@ void EpubReaderActivity::loop() {
           return;
         }
         break;
-      case CrossPointSettings::LP_MENU_DICTIONARY:
-        openDictionaryWordSelect();
-        return;
       case CrossPointSettings::LP_MENU_CREATE_CLIPPING:
         startClipSelection();
         return;
@@ -927,9 +861,6 @@ void EpubReaderActivity::loop() {
         return;
       case HomeButtonAction::Sync:
         launchKOReaderSync();
-        return;
-      case HomeButtonAction::Dictionary:
-        if (!showDictionaryMessage) openDictionaryWordSelect();
         return;
       case HomeButtonAction::CreateClipping:
         startClipSelection();
@@ -1185,38 +1116,7 @@ void EpubReaderActivity::onReaderMenuConfirm(EpubReaderMenuActivity::MenuAction 
       if(activity)startActivityForResult(std::move(activity),[this](const ActivityResult&){requestUpdate();});
       break;
     }
-    case EpubReaderMenuActivity::MenuAction::BOOK_DICTIONARIES:
-      openBookDictionaries();
-      break;
-    case EpubReaderMenuActivity::MenuAction::FINISH_BOOK:
-      requestFinishBook();
-      break;
-    case EpubReaderMenuActivity::MenuAction::SEARCH: {
-      auto search = makeUniqueNoThrow<BookSearchActivity>(renderer, mappedInput, epub);
-      if (!search) {
-        LOG_ERR("ERS", "OOM: book search");
-        break;
-      }
-      startActivityForResult(std::move(search), [this](const ActivityResult& result) {
-        if (result.isCancelled) {
-          requestUpdate();
-          return;
-        }
-        const auto* chapter = std::get_if<ChapterResult>(&result.data);
-        if (!chapter) {
-          requestUpdate();
-          return;
-        }
-        RenderLock lock;
-        clearDeferredReposition();
-        currentSpineIndex = chapter->spineIndex;
-        pendingAnchor = chapter->anchor;
-        nextPageNumber = 0;
-        resetSection();
-        requestUpdate();
-      });
-      break;
-    }
+
     case EpubReaderMenuActivity::MenuAction::BOOK_STATS: {
       flushReaderSession();
       auto stats = makeUniqueNoThrow<ReadingStatsActivity>(renderer, mappedInput);
@@ -1345,10 +1245,7 @@ void EpubReaderActivity::onReaderMenuConfirm(EpubReaderMenuActivity::MenuAction 
           });
       break;
     }
-    case EpubReaderMenuActivity::MenuAction::DICTIONARY: {
-      openDictionaryWordSelect();
-      break;
-    }
+
     case EpubReaderMenuActivity::MenuAction::DISPLAY_QR: {
       if (section && section->currentPage >= 0 && section->currentPage < section->pageCount) {
         std::string fullText = section->getTextFromSectionFile();
@@ -1423,7 +1320,6 @@ void EpubReaderActivity::onReaderMenuConfirm(EpubReaderMenuActivity::MenuAction 
 unsigned long EpubReaderActivity::confirmLongPressThreshold() const {
   switch (SETTINGS.longPressMenuFunction) {
     case CrossPointSettings::LP_MENU_BOOKMARK:
-    case CrossPointSettings::LP_MENU_DICTIONARY:
     case CrossPointSettings::LP_MENU_CREATE_CLIPPING:
       return ReaderUtils::BOOKMARK_HOLD_MS;
     case CrossPointSettings::LP_MENU_KOSYNC:
@@ -1719,7 +1615,6 @@ std::optional<uint32_t> EpubReaderActivity::nextLoopWakeDelayMs(const uint32_t n
   loopdeadline::Deadline next(now);
   if (automaticPageTurnActive) next.after(lastPageTurnTime, pageTurnDuration);
   if (showBookmarkMessage) next.after(bookmarkMessageTime, ReaderUtils::BOOKMARK_MESSAGE_DURATION_MS);
-  if (showDictionaryMessage) next.after(dictionaryMessageTime, ReaderUtils::BOOKMARK_MESSAGE_DURATION_MS);
   if (showClippingMessage) next.after(clippingMessageTime, ReaderUtils::BOOKMARK_MESSAGE_DURATION_MS);
   if (pendingManualTurn != 0) next.after(lastPageTurnTime, 200);
   if (canQueueNextPagePrefetch()) next.after(pageReadyAt, PREFETCH_IDLE_MS);
@@ -2392,9 +2287,7 @@ void EpubReaderActivity::renderBook() {
     GUI.drawPopup(renderer, bookmarkRemoved ? tr(STR_BOOKMARK_REMOVED) : tr(STR_BOOKMARK_ADDED));
   }
 
-  if (showDictionaryMessage) {
-    GUI.drawPopup(renderer, tr(STR_DICT_NO_DICT_SET));
-  }
+
 
   if (showClippingMessage) {
     GUI.drawPopup(renderer, I18N.get(clippingMessage));
@@ -3964,65 +3857,9 @@ void EpubReaderActivity::applyReaderTextSettings() {
   formatReflowPending = true;
 }
 
-void EpubReaderActivity::openBookDictionaries() {
-  releasePageReuse();
-  static constexpr StrId choices[] = {StrId::STR_DICTIONARY, StrId::STR_WORD_TRANSLATION_DICT};
-  overlayPopup.show(StrId::STR_BOOK_DICTIONARIES, choices, 2, 0,
-                    [this](int choice) { chooseBookDictionary(choice != 0); });
-  paintOverlayPopup();
-}
 
-void EpubReaderActivity::chooseBookDictionary(bool translation) {
-  // Discovery and the bounded label snapshot belong to this explicit settings
-  // action, never to page rendering or lookup hot paths.
-  std::vector<DictionaryEntry> entries;
-  entries.reserve(32);
-  DictionaryRegistry::discover(entries);
-  bookDictionaryFolders.clear();
-  bookDictionaryFolders.reserve(std::min(size_t(128), entries.size()));
-  for (const auto& entry : entries) {
-    if (entry.name.size() < 32 && bookDictionaryFolders.size() < 128) bookDictionaryFolders.push_back(entry.name);
-  }
-  const char* name = translation ? bookDictionaries.translation : bookDictionaries.definition;
-  int selected = -1;
-  for (size_t i = 0; i < bookDictionaryFolders.size(); ++i)
-    if (bookDictionaryFolders[i] == name) selected = int(i);
-  if (*name && selected < 0 && bookDictionaryFolders.size() < 128) {
-    selected = int(bookDictionaryFolders.size());
-    bookDictionaryFolders.emplace_back(name);
-  }
-  std::vector<std::string> labels;
-  labels.reserve(bookDictionaryFolders.size() + 2);
-  labels.emplace_back(tr(STR_BOOK_DICTIONARY_DEFAULT));
-  labels.emplace_back(tr(STR_NONE_OPT));
-  labels.insert(labels.end(), bookDictionaryFolders.begin(), bookDictionaryFolders.end());
-  const int current = bookDictionaries.overrides & (translation ? 2 : 1) ? (selected < 0 ? 1 : selected + 2) : 0;
-  overlayPopup.show(translation ? StrId::STR_WORD_TRANSLATION_DICT : StrId::STR_DICTIONARY, std::move(labels), current,
-                    [this, translation](int choice) {
-                      if (choice < 0 || choice >= int(bookDictionaryFolders.size()) + 2) return;
-                      auto changed = bookDictionaries;
-                      const uint8_t bit = translation ? 2 : 1;
-                      char* destination = translation ? changed.translation : changed.definition;
-                      if (!choice) {
-                        changed.overrides &= ~bit;
-                        destination[0] = 0;
-                      } else {
-                        changed.overrides |= bit;
-                        std::snprintf(destination, 32, "%s",
-                                      choice == 1 ? "" : bookDictionaryFolders[choice - 2].c_str());
-                      }
-                      if (!std::memcmp(&changed, &bookDictionaries, sizeof(changed)) ||
-                          bookdictionary::save(epub->getPath().c_str(), changed)) {
-                        bookDictionaries = changed;
-                        requestUpdate();
-                      } else {
-                        static constexpr StrId close[] = {StrId::STR_OK_BUTTON};
-                        overlayPopup.show(StrId::STR_TOOLS_SAVE_FAILED, close, 1, 0, [this](int) { requestUpdate(); });
-                        paintOverlayPopup();
-                      }
-                    });
-  paintOverlayPopup();
-}
+
+
 
 // More links to the in-sheet Style controls and the existing reader actions.
 void EpubReaderActivity::buildMoreActions() {
@@ -4039,7 +3876,7 @@ void EpubReaderActivity::buildMoreActions() {
   moreItems.push_back({MA::GO_TO_PERCENT, StrId::STR_READER_GOTO});
   moreItems.push_back({MA::BOOK_STATS, StrId::STR_READER_BOOK_STATS});
   moreItems.push_back({MA::FINISH_BOOK, completionMenuLabelId()});
-  moreItems.push_back({MA::BOOK_DICTIONARIES, StrId::STR_BOOK_DICTIONARIES});
+
   moreItems.push_back({MA::AUTO_PAGE_TURN, StrId::STR_AUTO_TURN_PAGES_PER_MIN});
   if (KOREADER_STORE.hasCredentials()) moreItems.push_back({MA::SYNC, StrId::STR_SYNC_PROGRESS});
 }
@@ -4085,10 +3922,6 @@ void EpubReaderActivity::activateMoreRow(int row) {
     settleOverlayRefresh();
   }
   const auto action = moreItems[row].action;
-  if (action == MA::BOOK_DICTIONARIES) {
-    openBookDictionaries();
-    return;
-  }
   if (action == MA::STYLE_SETTINGS && overlay == Overlay::Text) {
     RenderLock lock;
     textSheetView = readertext::SheetView::Style;

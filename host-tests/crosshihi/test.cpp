@@ -36,7 +36,7 @@ int main(){
   auto worm=normal.hits[Menu];assert(normal.at(worm.x+worm.width/2,worm.y+worm.height/2)==Menu);
   assert(open.at(20,300)==Menu); // Outside click dismisses, never launches the background book.
   assert(normal.at(normal.cover.x+5,normal.cover.y+normal.cover.height/2)==Resume);
-  for(auto a:{Stats,Calendar,Transfer,Settings}){
+  for(auto a:{Library,Stats,Calendar,Transfer,Settings}){
    auto hit=open.hits[a];assert(hit.height>=44);
    assert(open.at(hit.x+hit.width/2,hit.y+hit.height/2)==a);
   }
@@ -46,9 +46,18 @@ int main(){
   assert(normal.status.bottom()<normal.cover.y);
   assert(normal.at(normal.quote.x+10,normal.quote.y+10)==Quote);
   assert(normal.heading.y>normal.status.y);
-  assert(open.hits[Library].empty()&&open.hits[Apps].empty());
+  assert(!open.hits[Library].empty()&&open.hits[Apps].empty());
   assert(open.popup.bottom()<open.mascot.y);
   assert(normal.cover.bottom()<normal.quote.y);
+ }
+ // X4 Pro bezel insets must never switch the art to the legacy book positions.
+ for(int inset:{0,1,2,4,8}){
+  freeink::ui::DeviceContext d;d.width=480;d.height=800;d.safeArea={int16_t(inset),int16_t(inset),int16_t(inset),int16_t(inset)};
+  auto g=screenLayout(d,3,true,false,false,false);
+  assert(g.cover.x==63&&g.cover.y==194&&g.cover.width==213&&g.cover.height==347);
+  auto face=coverFace(g.cover);assert(face.x==66&&face.y==197&&face.right()==273&&face.bottom()==538);
+  for(int n=0;n<3;++n){auto shell=g.hits[Recent1+n];auto f=coverFace(shell);assert(f.x>shell.x&&f.y>shell.y&&f.right()<shell.right()&&f.bottom()<shell.bottom());}
+  assert(g.hits[Recent3].right()<g.mascot.x);
  }
  for(auto cover : {freeink::ui::makeRect(18,137,199,340),freeink::ui::makeRect(18,156,199,301),freeink::ui::makeRect(18,205,199,199),freeink::ui::makeRect(50,137,135,340)}) {
   auto cat=catForCover(cover);

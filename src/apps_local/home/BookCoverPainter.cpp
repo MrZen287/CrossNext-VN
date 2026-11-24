@@ -62,8 +62,12 @@ bool BookCoverPainter::paintBitmap(fui::Rect slot, int taper,bool stretch) {
                     reinterpret_cast<uint16_t*>(row.get() + columnsBytes + bandsBytes), width, sourceX, cropWidth,
                     cropHeight, slot, taper);
   }
-  const auto draw = [this](int x, int y, int w, int h) { renderer.fillRect(x, y, w, h, true); };
-  renderer.fillRect(slot.x, slot.y, slot.width, slot.height, false);
+  const auto fill=[this](int x,int y,int w,int h,bool black){renderer.fillRect(x,y,w,h,black);};
+  const auto draw = [this,slot,fill](int x,int y,int w,int h){
+    if(warped)face.mapRect(slot,x,y,w,h,[fill](int a,int b,int c,int d){fill(a,b,c,d,true);});else fill(x,y,w,h,true);
+  };
+  if(warped)face.mapRect(slot,slot.x,slot.y,slot.width,slot.height,[fill](int a,int b,int c,int d){fill(a,b,c,d,false);});
+  else renderer.fillRect(slot.x,slot.y,slot.width,slot.height,false);
   for (int line = 0; line < height; ++line) {
     const auto error = packed ? coverBitmap.readNext1BitRow(source) : coverBitmap.readNextRow(row.get(), source);
     if (error != BmpReaderError::Ok) return false;
@@ -80,6 +84,15 @@ bool BookCoverPainter::paintBitmap(fui::Rect slot, int taper,bool stretch) {
   return true;
 }
 void BookCoverPainter::paint(const RecentBook& book, fui::Rect slot, int taper, Fit fit) {
+  if(slot.empty())return;
+  // Every path (bitmap, fallback, frame) must obey the caller's book face.
+  const auto before=renderer.getClipRect();
+  struct ClipRestore {GfxRenderer& r;std::array<int,4> clip;~ClipRestore(){r.setClipRect(clip[0],clip[1],clip[2],clip[3]);}} restore{renderer,before};
+  const int left=std::max(before[0],int(slot.x)),top=std::max(before[1],int(slot.y));
+  const int right=std::min(before[0]+before[2],int(slot.right())),bottom=std::min(before[1]+before[3],int(slot.bottom()));
+  if(right<=left||bottom<=top)return;
+  renderer.setClipRect(left,top,right-left,bottom-top);
+
   bool drawn = false;
   char thumb[112]{};
   const bool xtc = FsHelpers::hasXtcExtension(book.path);
@@ -119,7 +132,20 @@ void BookCoverPainter::paint(const RecentBook& book, fui::Rect slot, int taper, 
     homecover::recordSource(path, coverFile, false);
   }
   lastBounds = slot;
-  if (!drawn) GUI.drawCoverPlaceholder(renderer, Rect{slot.x, slot.y, slot.width, slot.height});
+  if(!drawn && warped){
+    const auto white=fui::Paint::solid(fui::Color::White),ink=fui::Paint::solid(fui::Color::Black);
+    face.mapRect(slot,slot.x,slot.y,slot.width,slot.height,[&](int x,int y,int w,int h){target.fill(fui::makeRect(x,y,w,h),white);});
+    const auto inset=slot.inset({12,22,12,22});
+    fui::TextStyle style;style.font=0;style.maxLines=3;style.align=fui::TextAlign::Center;
+    target.text(inset,book.title.c_str(),style);
+    (void)ink;
+  }else if (!drawn) GUI.drawCoverPlaceholder(renderer, Rect{slot.x, slot.y, slot.width, slot.height});
+  if(warped){
+    const auto ink=fui::Paint::solid(fui::Color::Black);
+    target.line({int16_t(face.left),int16_t(face.topLeft)},{int16_t(face.right),int16_t(face.topRight)},1,ink);
+    target.line({int16_t(face.left),int16_t(face.bottomLeft)},{int16_t(face.right),int16_t(face.bottomRight)},1,ink);
+    return;
+  }
   if (!taper) {
     renderer.drawRect(slot.x, slot.y, slot.width, slot.height);
     return;
@@ -132,4 +158,9 @@ void BookCoverPainter::paint(const RecentBook& book, fui::Rect slot, int taper, 
       [this](int x, int y, int w, int h) {
         target.fill(fui::makeRect(x, y, w, h), fui::Paint::solid(fui::Color::Black));
       });
+}
+
+void BookCoverPainter::paintFace(const RecentBook& book,const homecover::CoverFace& plane){
+ if(!plane.valid())return;
+ warped=true;face=plane;paint(book,plane.bounds(),0,Fit::Stretch);warped=false;
 }

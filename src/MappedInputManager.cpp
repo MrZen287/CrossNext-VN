@@ -45,13 +45,14 @@ void MappedInputManager::update(const bool deferHomeButtonAction) const {
         readerTextContext && readertext::menuTrigger(SETTINGS.readerTextTrigger) == readertext::MenuTrigger::HomeHold;
     if (!readerHome) readerHomeOwned = false;
     if (gpio.wasHomeKeyPressed()) readerHomeOwned = readerHome;
-    homeButtonInput.setWindow(readerTextContext ? 0 : SETTINGS.homeButtonDoubleTapTiming);
+    // Fixed CrossZen controls: readers distinguish double taps; all other screens return Home immediately.
+    homeButtonInput.setWindow(readerTextContext ? 0 : 5);
     homeAction = homeButtonInput.update(
         millis(), gpio.wasHomeKeyTapped(), gpio.wasHomeKeyLongPressed(), edgeLightClaimed || wasSwipe() != SwipeDir::None,
-        gpio.wasHomeKeyPressed(), readerTextContext ? HomeButtonAction::NextPage : static_cast<HomeButtonAction>(SETTINGS.homeButtonTapAction),
-        readerTextContext ? HomeButtonAction::Home : static_cast<HomeButtonAction>(SETTINGS.homeButtonDoubleTapAction),
+        gpio.wasHomeKeyPressed(), readerTextContext ? HomeButtonAction::NextPage : HomeButtonAction::Home,
+        readerTextContext ? HomeButtonAction::Home : HomeButtonAction::Ignore,
         (readerTextContext || readerHomeOwned) ? HomeButtonAction::ReaderMenu
-                        : static_cast<HomeButtonAction>(SETTINGS.homeButtonLongPressAction),
+                        : HomeButtonAction::Home,
         isTouchscreenLocked());
     if (gpio.wasHomeKeyTapped() || gpio.wasHomeKeyLongPressed()) readerHomeOwned = false;
     if (gpio.wasHomeKeyLongPressed() && homeAction != HomeButtonAction::Ignore) {

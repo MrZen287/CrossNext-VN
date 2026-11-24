@@ -26,7 +26,7 @@ inline void overlay(fui::DrawTarget& t,const readingdesk::Layout& g,const Info& 
  text(t,fui::makeRect(286,79,166,24),m.date,0,false,fui::TextAlign::Center);
  text(t,fui::makeRect(286,103,166,23),m.lunar,0,false,fui::TextAlign::Center);
  text(t,g.title,m.title,6,true,fui::TextAlign::Left,2);
- text(t,g.author,m.author);text(t,g.position,m.chapter);
+ text(t,g.author,m.author,0,false,fui::TextAlign::Left,2);text(t,g.position,m.chapter);
  const int width=g.progress.width-39,y=g.progress.y+11;
  t.stroke(fui::makeRect(g.progress.x,y,width,7),ink,1,3);
  if(m.percent>=0){t.fill(fui::makeRect(g.progress.x+2,y+2,std::max(0,(width-4)*std::clamp(m.percent,0,100)/100),3),ink,1);
@@ -35,7 +35,8 @@ inline void overlay(fui::DrawTarget& t,const readingdesk::Layout& g,const Info& 
  text(t,fui::makeRect(g.remaining.x,g.remaining.y+25,g.remaining.width,40),m.estimate,3,false,fui::TextAlign::Left,2);
  text(t,fui::makeRect(319,485,132,50),"Đọc tiếp",6,true,fui::TextAlign::Center);
  fui::TextStyle qs;qs.font=0;qs.italic=true;qs.align=fui::TextAlign::Center;qs.maxLines=1;
- fittext::draw(t,g.quote,m.quote,qs,1);
+ char quote[400];std::snprintf(quote,sizeof(quote),"“%s”",m.quote?m.quote:"");
+ fittext::draw(t,g.quote,quote,qs,1);
  if(m.battery>=0){char s[12];std::snprintf(s,sizeof(s),"%d%%",m.battery);text(t,fui::makeRect(389,644,64,31),s,1,true,fui::TextAlign::Center);}
 }
 }

@@ -1,5 +1,7 @@
 #include "ReadingDesk.h"
 #include "ApprovedHomeUi.h"
+#include "HomePaws.h"
+#include "CatExpressions.h"
 #include <GfxRenderer.h>
 #include <Epub.h>
 #include <FsHelpers.h>
@@ -29,7 +31,7 @@ using fui::makeRect;
 namespace {
 constexpr auto ink=fui::Paint::solid(fui::Color::Black);
 constexpr auto white=fui::Paint::solid(fui::Color::White);
-constexpr Action menuActions[]={Stats,Calendar,Transfer,Settings};
+constexpr Action menuActions[]={Library,Stats,Calendar,Transfer,Settings};
 const char* label(Action a) {
   const bool vi=I18N.getLanguage()==Language::VI;
   switch(a) {
@@ -128,7 +130,7 @@ void draw(GfxRenderer& r,Layout& g,const RecentBook* featured,const std::vector<
     else if(info.known&&info.seconds>=300&&percent>=5){
       const uint64_t minutes=std::min<uint64_t>(99999,info.seconds*uint64_t(100-percent)/unsigned(percent)/60);
       std::snprintf(s,sizeof(s),"Ước tính %llu giờ %u phút",static_cast<unsigned long long>(minutes/60),unsigned(minutes%60));
-    }else std::snprintf(s,sizeof(s),"Chưa đủ dữ liệu thời gian");
+    }else std::snprintf(s,sizeof(s),"Chưa đủ dữ liệu");
     std::snprintf(estimateCopy,sizeof(estimateCopy),"%s",s);
     text(t,makeRect(g.remaining.x,g.remaining.y+25,g.remaining.width,29),s);
     const auto b=g.hits[Resume];
@@ -167,9 +169,10 @@ void draw(GfxRenderer& r,Layout& g,const RecentBook* featured,const std::vector<
   if(native){
     approvedhome::draw(t,makeRect(0,0,480,800));
     BookCoverPainter nativePainter(r,t);
-    if(featured)nativePainter.paint(*featured,g.cover,0,BookCoverPainter::Fit::Stretch);
+    if(featured)nativePainter.paintFace(*featured,homecover::mainFace);
     else {text(t,g.cover,"Mở sách từ Thư viện",1,3,false,fui::TextAlign::Center);}
-    for(int n=0;n<int(shelf.size())&&n<shelfSize;++n)nativePainter.paint(shelf[n],g.hits[Recent1+n],0,BookCoverPainter::Fit::Stretch);
+    for(int n=0;n<int(shelf.size())&&n<shelfSize;++n)nativePainter.paintFace(shelf[n],homecover::shelfFaces[n]);
+    homepaws::draw(t);catexpressions::draw(t,pose);
     t.setFont(5,toybox::kHugeFontId);t.setFont(6,toybox::kReadingBoldFontId);
     char time[16]{},date[40]{},lunar[40]{};
     halClock.formatTime(time,sizeof(time),SETTINGS.clockFormat==1);
@@ -188,8 +191,8 @@ void draw(GfxRenderer& r,Layout& g,const RecentBook* featured,const std::vector<
     auto cx=g.close.x+18,cy=g.close.y+14;
     t.line({int16_t(cx-5),int16_t(cy-5)},{int16_t(cx+5),int16_t(cy+5)},2,ink);
     t.line({int16_t(cx+5),int16_t(cy-5)},{int16_t(cx-5),int16_t(cy+5)},2,ink);
-    constexpr const freeink::Icon* icons[]={&navicons::Stats32,&navicons::Calendar32,&navicons::Send32,&navicons::Gear32};
-    for(int n=0;n<4;++n){const auto a=menuActions[n];auto b=g.hits[a];if(focus==a)t.stroke(b,ink,1);t.bitmap(makeRect(b.x+8,b.y+(b.height-26)/2,26,26),fui::bitmapFromIcon(*icons[n]),fui::BitmapMode::Contain,ink);text(t,makeRect(b.x+45,b.y,b.width-48,b.height),label(a));if(n<3)r.drawLine(b.x,b.bottom(),b.right(),b.bottom());}
+    constexpr const freeink::Icon* icons[]={&navicons::Books32,&navicons::Stats32,&navicons::Calendar32,&navicons::Send32,&navicons::Gear32};
+    for(int n=0;n<5;++n){const auto a=menuActions[n];auto b=g.hits[a];if(focus==a)t.stroke(b,ink,1);t.bitmap(makeRect(b.x+8,b.y+(b.height-26)/2,26,26),fui::bitmapFromIcon(*icons[n]),fui::BitmapMode::Contain,ink);text(t,makeRect(b.x+45,b.y,b.width-48,b.height),label(a));if(n<4)r.drawLine(b.x,b.bottom(),b.right(),b.bottom());}
   }
 }
 } // namespace readingdesk

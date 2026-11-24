@@ -3,7 +3,7 @@
 namespace readingdesk {
 namespace fui=freeink::ui;
 using fui::makeRect;
-namespace { constexpr Action menuActions[]={Stats,Calendar,Transfer,Settings}; }
+namespace { constexpr Action menuActions[]={Library,Stats,Calendar,Transfer,Settings}; }
 Action Layout::at(int x,int y) const {
   if(!popup.empty()) {
     if(close.contains(x,y)||hits[Menu].contains(x,y))return Menu;
@@ -18,8 +18,8 @@ Action Layout::at(int x,int y) const {
 }
 Action Layout::move(Action current,int direction) const {
   if(!popup.empty()) {
-    for(int n=0;n<4;++n)if(menuActions[n]==current)return menuActions[(n+direction+4)%4];
-    return direction<0?Settings:Stats;
+    for(int n=0;n<5;++n)if(menuActions[n]==current)return menuActions[(n+direction+5)%5];
+    return direction<0?Settings:Library;
   }
   constexpr Action order[]={Resume,Recent1,Recent2,Recent3,Menu};
   int start=direction>0?-1:5;
@@ -65,23 +65,23 @@ Layout layout(fui::Rect safe,int count,bool hasBook,bool prev,bool next,bool men
   if(next)g.hits[Next]=makeRect(g.shelf.right()-perch-12,g.shelf.y+20,26,g.shelf.height-perch-20);
   if(menu) {
     const int row=wide?38:48,pw=std::min(w,wide?240:264);
-    g.popup=makeRect(g.shelf.right()-pw,std::max(safe.y+8,g.mascot.y-4*row-34),pw,4*row+32);
+    g.popup=makeRect(g.shelf.right()-pw,std::max(safe.y+8,g.mascot.y-5*row-34),pw,5*row+32);
     g.close=makeRect(g.popup.right()-36,g.popup.y,36,30);
-    for(int n=0;n<4;++n)g.hits[menuActions[n]]=makeRect(g.popup.x+6,g.popup.y+30+n*row,pw-12,row);
+    for(int n=0;n<5;++n)g.hits[menuActions[n]]=makeRect(g.popup.x+6,g.popup.y+30+n*row,pw-12,row);
   }
   if(safe.width==480 && safe.height==800){
     g.status=makeRect(272,20,188,122);g.heading=makeRect(286,79,166,47);
     g.reading=makeRect(27,170,448,395);g.cover=makeRect(63,194,213,347);
     g.cat=makeRect(5,35,245,159);
-    g.title=makeRect(296,198,177,65);g.author=makeRect(296,263,177,27);
-    g.position=makeRect(296,299,177,28);g.progress=makeRect(296,324,177,29);
-    g.remaining=makeRect(296,350,177,63);g.hits[Resume]=hasBook?makeRect(290,475,181,70):fui::Rect{};
-    g.duo=makeRect(308,417,145,63);g.quote=makeRect(18,574,444,38);
+    g.title=makeRect(296,198,177,65);g.author=makeRect(296,267,177,34);
+    g.position=makeRect(296,306,177,28);g.progress=makeRect(296,334,177,29);
+    g.remaining=makeRect(296,363,177,63);g.hits[Resume]=hasBook?makeRect(290,475,181,70):fui::Rect{};
+    g.duo=makeRect(308,417,145,63);g.quote=makeRect(18,582,444,38);
     g.shelf=makeRect(5,627,470,168);g.mascot=makeRect(354,706,96,69);g.hits[Menu]=g.mascot;
     const fui::Rect covers[]={makeRect(24,644,86,117),makeRect(132,643,88,118),makeRect(239,642,89,119)};
     for(int n=0;n<count&&n<shelfSize;++n)g.hits[Recent1+n]=covers[n];
-    if(menu){g.popup=makeRect(205,480,264,220);g.close=makeRect(433,480,36,28);
-      for(int n=0;n<4;++n)g.hits[menuActions[n]]=makeRect(211,510+n*47,252,47);}
+    if(menu){g.popup=makeRect(205,433,264,267);g.close=makeRect(433,433,36,28);
+      for(int n=0;n<5;++n)g.hits[menuActions[n]]=makeRect(211,463+n*47,252,47);}
   }
   return g;
 }

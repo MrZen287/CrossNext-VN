@@ -1,5 +1,6 @@
 #pragma once
 #include <Bitmap.h>
+#include "CoverFace.h"
 #include <FreeInkUI.h>
 #include <HalStorage.h>
 
@@ -11,6 +12,7 @@ class BookCoverPainter {
   enum class Fit { Crop, Contain, Stretch };
   BookCoverPainter(GfxRenderer& renderer, freeink::ui::DrawTarget& target) : renderer(renderer), target(target) {}
   void paint(const RecentBook& book, freeink::ui::Rect slot, int taper = 0, Fit fit = Fit::Crop);
+  void paintFace(const RecentBook& book,const homecover::CoverFace& face);
   freeink::ui::Rect paintedBounds() const { return lastBounds; }
 
  private:
@@ -21,5 +23,7 @@ class BookCoverPainter {
   Bitmap coverBitmap{coverFile};
   std::unique_ptr<uint8_t[]> row;
   size_t rowCapacity = 0;
+  bool warped=false;
+  homecover::CoverFace face{};
   bool paintBitmap(freeink::ui::Rect slot, int taper,bool stretch=false);
 };

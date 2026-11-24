@@ -243,7 +243,7 @@ void ActivityManager::loop() {
       return;
     }
     if (!currentActivity->isHomeActivity() && mappedInput.wasHomeGesture()) {
-      if (currentActivity->handleHomeGesture()) {
+      if (mappedInput.homeButtonAction()!=HomeButtonAction::Home && currentActivity->handleHomeGesture()) {
         return;
       }
       goHome();
@@ -310,6 +310,8 @@ void ActivityManager::loop() {
           lock.unlock();  // Handler may acquire its own lock
           handler(pendingResult);
         }
+
+        if(pendingAction==PendingAction::None && currentActivity)currentActivity->onReturnFromChild();
 
         // Request an update to ensure the popped activity gets re-rendered
         if (pendingAction == PendingAction::None) {

@@ -1,4 +1,7 @@
 #include <FreeInkUIDisplayTarget.h>
+#include "apps_local/home/HomePaws.h"
+#include "apps_local/home/CatExpressions.h"
+#include "apps_local/home/CoverFace.h"
 #include <cstdio>
 #include <vector>
 #include <string>
@@ -65,13 +68,17 @@ int main(int argc,char**argv){assert(argc==2);I18N.setLanguage(Language::VI);chr
  }
 
  {Canvas c;c.target.setFont(5,c.huge.font);c.target.setFont(6,c.readingBold.font);
-  auto g=readingdesk::layout(fui::makeRect(0,0,480,800),3,true,true,true,false);
+  c.device.safeArea={2,2,2,2};
+  auto g=readingdesk::screenLayout(c.device,3,true,true,true,false);
   approvedhome::draw(c.target,fui::makeRect(0,0,480,800));
-  // Test book fronts are separate from the embedded illustration.
-  for(auto box:{g.cover,g.hits[readingdesk::Recent1],g.hits[readingdesk::Recent2],g.hits[readingdesk::Recent3]}){
-    c.target.stroke(box,fui::Paint::solid(fui::Color::Black),1);
-    approvedhome::text(c.target,box,"Bìa sách\ntrên thẻ",1,false,fui::TextAlign::Center,2);
+  // Native cover planes, with a public sample rather than a private reader photo.
+  for(int n=0;n<4;++n){auto face=n?homecover::shelfFaces[n-1]:homecover::mainFace;const auto bounds=face.bounds();
+    face.mapRect(bounds,bounds.x,bounds.y,bounds.width,bounds.height,[&](int x,int y,int w,int h){c.target.fill(fui::makeRect(x,y,w,h),fui::Paint::solid(fui::Color::White));});
+    c.target.line({int16_t(face.left),int16_t(face.topLeft)},{int16_t(face.right),int16_t(face.topRight)},1,fui::Paint::solid(fui::Color::Black));
+    c.target.line({int16_t(face.left),int16_t(face.bottomLeft)},{int16_t(face.right),int16_t(face.bottomRight)},1,fui::Paint::solid(fui::Color::Black));
+    approvedhome::text(c.target,bounds.inset({9,24,9,24}),n?"Sách\ntrên thẻ":"Bìa sách\ntrên thẻ",1,false,fui::TextAlign::Center,2);
   }
+  homepaws::draw(c.target);catexpressions::draw(c.target,0);
   approvedhome::Info m;m.clock="07:45";m.date="T3 · 24.11";m.lunar="Âm 16.10";m.title="Dế Mèn phiêu lưu ký";m.author="Tô Hoài";m.chapter="Chương 4 / 10";m.remaining="Còn 6 chương";m.estimate="Ước tính 2 giờ 15 phút";m.percent=40;m.battery=82;m.quote="Đi một ngày đàng, học một sàng khôn.";
   approvedhome::overlay(c.target,g,m);c.save(std::string(argv[1])+"/home-approved.pbm");
  }

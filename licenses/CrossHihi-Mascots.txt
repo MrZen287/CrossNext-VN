@@ -7,3 +7,5 @@ Distributed with this project under its MIT license.
 CrossZen 1.1.1.3 corner kitten, button duo and two worm expressions: original AI-generated artwork created for this firmware, packed as ink/silhouette masks. Same MIT terms above.
 
 CrossZen calendar illustration: original AI-generated botanical/countryside artwork created for this project in November 2026; source assets_local/crosszen/calendar-source.png; packed mask CalendarIllustration.h.
+
+2026-11-24: CrossZen idle kitten/bookworm and dictionary header mascots generated with OpenAI image generation for this project. Transparent surroundings are encoded separately from opaque white character silhouettes; original project PNGs and native mask headers are included.

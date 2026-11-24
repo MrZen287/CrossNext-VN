@@ -173,6 +173,7 @@ class HomeActivity final : public Activity {
     setInterfaceFontSection(menufont::Section::Home);
   }
   void onEnter() override;
+  void onReturnFromChild() override;
   void onExit() override;
   void loop() override;
   std::optional<uint32_t> nextLoopWakeDelayMs(uint32_t) const override {

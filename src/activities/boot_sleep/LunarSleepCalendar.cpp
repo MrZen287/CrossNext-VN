@@ -36,9 +36,16 @@ bool draw(GfxRenderer& r) {
     t.line({int16_t(x),int16_t(geometry.frame.y+24)},{int16_t(x+3),int16_t(geometry.frame.y+24)},1,ink);
   for (int x : {geometry.frame.x+geometry.frame.width/3,geometry.frame.x+geometry.frame.width*2/3})
     t.stroke(fui::makeRect(x-4,geometry.frame.y+9,8,8),ink,1,4);
-  for (int x=geometry.frame.x+10;x<geometry.frame.right()-10;x+=16) {
-    t.line({int16_t(x),int16_t(geometry.frame.bottom()-5)},{int16_t(x+8),int16_t(geometry.frame.bottom()-8)},1,ink);
-    t.line({int16_t(x+8),int16_t(geometry.frame.bottom()-8)},{int16_t(x+16),int16_t(geometry.frame.bottom()-5)},1,ink);
+  // A continuous irregular torn edge with an offset shadow, visible on 1-bit e-ink.
+  const int tearY=geometry.frame.bottom()-9;
+  t.fill(fui::makeRect(geometry.frame.x+1,tearY-3,geometry.frame.width-2,12),white);
+  constexpr int tooth[]={0,-3,-1,-5,-2,0,-4,-1};
+  for(int x=geometry.frame.x+1,n=0;x<geometry.frame.right()-1;x+=6,++n) {
+    const int end=std::min(x+6,int(geometry.frame.right()-1));
+    const int y1=tearY+tooth[n%8],y2=tearY+tooth[(n+1)%8];
+    t.line({int16_t(x),int16_t(y1+4)},{int16_t(end),int16_t(y2+4)},1,ink);
+    t.line({int16_t(x),int16_t(y1)},{int16_t(end),int16_t(y2)},2,ink);
+    if(n%3==1)t.line({int16_t(x+1),int16_t(y1-2)},{int16_t(x+3),int16_t(y1-5)},1,ink);
   }
   const bool vi=I18N.getLanguage()==Language::VI;
   const int today=readingstats::today();

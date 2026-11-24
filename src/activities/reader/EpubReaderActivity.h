@@ -20,7 +20,6 @@
 #include "ReaderToolbarUi.h"
 #include "apps_local/reader/PageReuse.h"
 #include "components/OptionPopup.h"
-#include "util/BookDictionarySettings.h"
 
 namespace vocabulary {
 struct Context;
@@ -29,10 +28,6 @@ struct Context;
 class EpubReaderActivity final : public ReaderActivity {
   std::shared_ptr<Epub> epub;
   int textLayoutPage = 0;
-  bookdictionary::Settings bookDictionaries;
-  std::vector<std::string> bookDictionaryFolders;
-  void openBookDictionaries();
-  void chooseBookDictionary(bool translation);
   std::unique_ptr<Section> section = nullptr;
   // One deserialized successor, moved into the normal render path on a hit.
   std::unique_ptr<Page> prefetchedPage;
@@ -85,8 +80,6 @@ class EpubReaderActivity final : public ReaderActivity {
   bool skipNextButtonCheck = false;
   bool automaticPageTurnActive = false;
   bool showBookmarkMessage = false;
-  bool showDictionaryMessage = false;
-  unsigned long dictionaryMessageTime = 0UL;
   bool showClippingMessage = false;
   StrId clippingMessage = StrId::STR_CLIPPING_SAVED;
   unsigned long clippingMessageTime = 0UL;
@@ -240,7 +233,6 @@ class EpubReaderActivity final : public ReaderActivity {
   void writeMoreRowValue(int row, char* out, size_t size) const;
   void activateMoreRow(int row);
   void openFootnoteSelect(bool reopenMenuOnCancel);
-  void openDictionaryWordSelect();
   void startClipSelection(int initialX = -1, int initialY = -1,
                           ClipSelectionActivity::Mode mode = ClipSelectionActivity::Mode::Clip);
   int clippingAtPoint(const Page& page, int x, int y) const;

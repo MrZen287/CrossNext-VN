@@ -1,0 +1,4 @@
+#include "apps_local/dictionary/DictionaryStore.h"
+#include <cassert>
+#include <cstdio>
+int main(){zendictionary::Store s;std::array<zendictionary::Entry,3> entries;int count;assert(s.open(false));assert(s.suggestions("jour",entries,count)&&count>0);std::string text;assert(s.definition(entries[0],text)&&!text.empty());assert(s.suggestions("hello",entries,count)&&count>0&&entries[0].word=="hello");assert(s.definition(entries[0],text)&&text.find("chào")!=std::string::npos);assert(s.suggestions("zzzzzzzzzzzzzzzz",entries,count)&&count==0);assert(s.open(true));assert(s.suggestions("học",entries,count)&&count>0);assert(s.definition(entries[0],text)&&!text.empty());assert(s.suggestions("mèo",entries,count)&&count>0);puts("Real SD dictionary indices: both directions, prefix suggestions, definitions and missing word passed");}

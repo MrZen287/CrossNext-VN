@@ -2,7 +2,7 @@
 from pathlib import Path, PurePosixPath
 import argparse, hashlib, json, shutil, struct, zipfile, configparser
 ROOT=Path(__file__).resolve().parents[1]
-p=argparse.ArgumentParser();p.add_argument('--resources',required=True);p.add_argument('--output',default='dist/CrossZen');args=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--resources',required=True);p.add_argument('--dictionaries');p.add_argument('--output',default='dist/CrossZen');args=p.parse_args()
 config=configparser.ConfigParser(interpolation=None)
 config.read(ROOT/'platformio.ini')
 version=config.get('crossplay','version')
@@ -32,11 +32,19 @@ with zipfile.ZipFile(args.resources) as old,zipfile.ZipFile(archive,'w',zipfile.
   assert not path.is_absolute() and '..' not in path.parts
   if not path.parts or item.is_dir():continue
   if len(path.parts)==1 and path.suffix=='.bin':continue
+  if args.dictionaries and path.parts[0]=='dictionaries':continue
   z.writestr(item.filename,old.read(item.filename))
+ if args.dictionaries:
+  with zipfile.ZipFile(args.dictionaries) as dictionaries:
+   for item in dictionaries.infolist():
+    path=PurePosixPath(item.filename)
+    assert not path.is_absolute() and '..' not in path.parts
+    if not item.is_dir() and (path.parts[0]=='dictionaries' or path.name=='manifest-dictionaries.json'):z.writestr(item.filename,dictionaries.read(item.filename))
  z.writestr(name,data)
  z.writestr('HUONG-DAN-CrossZen.txt',(ROOT/f'docs/crosshihi/release-{version}.md').read_text())
  for file in ['LICENSE','THIRD-PARTY-NOTICES.md','licenses/BookPet-MIT.txt','licenses/CrossHihi-Mascots.txt','licenses/Lunar-Javascript-MIT.txt','licenses/VietnameseHomeQuotes.txt']:
   z.writestr(file,(ROOT/file).read_bytes())
+if args.dictionaries:shutil.copy2(args.dictionaries,out/'CrossZen-Tu-Dien-Anh-Viet.zip')
 rows=[]
 for f in sorted(out.iterdir()):
  if f.suffix in ('.bin','.zip'):rows.append({'file':f.name,'bytes':f.stat().st_size,'sha256':hashlib.sha256(f.read_bytes()).hexdigest()})
