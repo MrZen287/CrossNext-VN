@@ -1,8 +1,8 @@
-# CrossZen 1.1.1.5
+# CrossZen 1.1.1.6
 
 Firmware tiếng Việt dành riêng cho **Xteink X4 Pro (ESP32-S3)**. Phát triển từ CrossNext-VN/CrossPoint/CrossPlay; giữ giấy phép và ghi công trong [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
 
-[Ghi chú phát hành Việt / English](docs/crosshihi/release-1.1.1.5.md) · [Tải bản thử nghiệm](https://github.com/MrZen287/CrossNext-VN/releases/tag/v1.1.1.5)
+[Ghi chú phát hành Việt / English](docs/crosshihi/release-1.1.1.6.md) · [Tải bản thử nghiệm](https://github.com/MrZen287/CrossNext-VN/releases/tag/v1.1.1.6)
 
 ## Thay đổi chính
 
@@ -28,7 +28,7 @@ Firmware tiếng Việt dành riêng cho **Xteink X4 Pro (ESP32-S3)**. Phát tri
 ## Cập nhật
 
 - **OTA:** sau khi bản phát hành và manifest sẵn sàng, mở **Mọt → Cài đặt → Kiểm tra cập nhật**. Tệp `CrossHihi-X4PRO-OTA.bin` được giữ cho các bản cũ, có cùng nội dung với `CrossZen-X4PRO-OTA.bin`.
-- **Từ microSD:** chép `CrossZen-X4Pro-v1.1.1.5.bin` lên thẻ, vào **Cài đặt → Thiết bị → Cập nhật chương trình cơ sở**, chọn tệp và xác nhận.
+- **Từ microSD:** chép `CrossZen-X4Pro-v1.1.1.6.bin` lên thẻ, vào **Cài đặt → Thiết bị → Cập nhật chương trình cơ sở**, chọn tệp và xác nhận.
 - Từ 1.1.1.4 không cần chép lại tài nguyên SD. Giữ dữ liệu và thư mục ẩn. Gói ZIP đầy đủ vẫn kèm tài nguyên gốc và giấy phép.
 - Đây là ảnh **ứng dụng X4 Pro**, không phải factory/bootloader, không thay bảng phân vùng và không dùng cho X3/X4 thường.
 
@@ -38,8 +38,14 @@ Chưa đo cảm ứng, bóng mờ, pin và OTA đầu-cuối trên máy thật. 
 
 ## English
 
-Experimental **X4 Pro only** firmware, with a **Vietnamese-only device UI**. [Bilingual release notes](docs/crosshihi/release-1.1.1.5.md) describe the Home/navigation redesign, white bottom controls, illustrated calendar lock, real-data statistics charts, offline 2026–2028 almanac, 400 fitted Vietnamese sayings and removal of Checkers. The existing Cat/Worm game and save data remain.
+Experimental **X4 Pro only** firmware, with a **Vietnamese-only device UI**. [Bilingual release notes](docs/crosshihi/release-1.1.1.6.md) describe the Home/navigation redesign, white bottom controls, illustrated calendar lock, real-data statistics charts, offline 2026–2028 almanac, 400 fitted Vietnamese sayings and removal of Checkers. The existing Cat/Worm game and save data remain.
 
 The images above are host renders using the interface code and embedded assets/fonts, with sample data. They are not physical-device photos. Update with the existing firmware updater after release publication or install the versioned application `.bin` through the existing X4 Pro microSD updater. Previous 1.1.1.4 SD resources do not need to be recopied. Legacy and current OTA aliases are byte-identical.
 
 Embedded EPUB fonts and bundled Bookerly are not included. Physical-device touch, ghosting, battery and end-to-end OTA remain unmeasured. See [almanac methodology](docs/crosshihi/almanac.md) and retained third-party notices for source and licensing details.
+
+### Home thứ hai / Second Home
+
+Vuốt lên từ Home có mèo. Chạm widget để mở Lịch hoặc Thống kê đọc; vuốt trái để xem lịch tháng và trang app tiếp theo. Dock: Thư viện · Thống kê · Lịch · Cài đặt. Không có thanh navigation. Hình dưới được dựng từ bộ vẽ giao diện với dữ liệu minh họa; danh sách app trong hình minh họa không phải ảnh chụp thiết bị.
+
+![Home thứ hai, hai trang](docs/crosshihi/home2-native.png)

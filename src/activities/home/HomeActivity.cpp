@@ -6,6 +6,7 @@
 #include <FsHelpers.h>
 #include <GfxRenderer.h>
 #include <HalDisplay.h>
+#include <HalClock.h>
 #include <HalStorage.h>
 #include <I18n.h>
 #include <LibraryBuilder.h>
@@ -19,6 +20,8 @@
 #include <cstring>
 #include <vector>
 
+#include "../../apps_local/reading/ReadingGoal.h"
+#include "../../apps_local/ui/NavigationIcons.h"
 #include "../../apps_local/Shelf.h"  // fork-local seam
 #include "../../apps_local/home/CoverSceneCache.h"
 #include "../../apps_local/home/HomeShelfOrder.h"
@@ -356,6 +359,8 @@ void HomeActivity::onEnter() {
   Activity::onEnter();
   if (readingDeskEnabled()) {
     renderer.setOrientation(GfxRenderer::Orientation::Portrait);
+    launcherOpen = false;
+    launcherStatsPending = false;
     deskMenuOpen = false;
     deskFocus = readingdesk::None;
     deskCatPose = lastCatPose = (lastCatPose + 1 + (micros() % 4)) % 5;
@@ -729,7 +734,86 @@ void HomeActivity::loop() {
   }
 }
 
+void HomeActivity::openLauncher() {
+  launcherOpen = true;
+  deskMenuOpen = false;
+  launcherPage = 0;
+  launcherCount = 0;
+  const auto& folder = shelf::folders()[2];
+  for (int row=0;row<shelf::shownCount(2) && launcherCount<int(launcherItems.size());++row) {
+    const int item=shelf::shownItem(2,row);
+    if(item>=0 && std::strcmp(folder.items[item].title,"CALENDAR")) launcherItems[launcherCount++]=item;
+  }
+  launcherStatsPending = true;
+  launcherModel.statsReady = false;
+  launcherModel.statsFailed = false;
+  launcherDay = readingstats::today();
+  activityManager.requestIdleWork(*this);
+  requestUpdate();
+}
+void HomeActivity::loopLauncher() {
+  using Swipe=MappedInputManager::SwipeDir;
+  int sx=0,sy=0;
+  const auto swipe=mappedInput.wasSwipe(sx,sy);
+  RenderLock lock;
+  if(swipe==Swipe::Down || mappedInput.homeButtonAction()==HomeButtonAction::Home ||
+     mappedInput.wasReleased(MappedInputManager::Button::Back)) {
+    launcherOpen=false;requestUpdate();return;
+  }
+  if(swipe==Swipe::Left || swipe==Swipe::Right) {
+    const int pages=std::max(1,(launcherCount+11)/12);
+    launcherPage=std::clamp(launcherPage+(swipe==Swipe::Left?1:-1),0,pages-1);
+    requestUpdate();return;
+  }
+  int x=0,y=0;
+  if(mappedInput.wasScreenTapped(x,y)) {
+    const int count=std::clamp(launcherCount-launcherPage*12,0,12);
+    const int action=launcherLayout.at(x,y,launcherPage,count);
+    if(action>=homelauncher::App) {
+      const int i=launcherPage*12+action-homelauncher::App;
+      if(i>=0 && i<launcherCount)shelf::openItem(2,launcherItems[i],renderer,mappedInput,shelf::LaunchOrigin::Home);
+    } else switch(action) {
+      case homelauncher::Calendar:activateReadingDesk(readingdesk::Calendar);break;
+      case homelauncher::Stats:activateReadingDesk(readingdesk::Stats);break;
+      case homelauncher::Library:onLibraryOpen();break;
+      case homelauncher::Settings:onSettingsOpen();break;
+      default:break;
+    }
+    return;
+  }
+  const int today=readingstats::today();
+  if(today!=launcherDay) {launcherDay=today;launcherStatsPending=true;launcherModel.statsReady=false;activityManager.requestIdleWork(*this);requestUpdate();}
+  if(launcherStatsPending)activityManager.requestIdleWork(*this);
+  const auto minute=millis()/60000;
+  if(minute!=deskMinute){deskMinute=minute;requestUpdate();}
+}
+void HomeActivity::renderLauncher() {
+  auto target=toybox::makeTarget(renderer);
+  pixelui::bindFonts(target,renderer);
+  target.setFont(5,toybox::kHugeFontId);
+  launcherLayout=homelauncher::layout(target.deviceContext().safeRect());
+  launcherModel.today=launcherDay;
+  launcherModel.page=launcherPage;
+  launcherModel.count=std::clamp(launcherCount-launcherPage*12,0,12);
+  char clock[16]{};
+  halClock.formatTime(clock,sizeof(clock),SETTINGS.clockFormat==1);
+  launcherModel.time=clock;
+  freeink::ui::HeaderProps header;
+  GUI.applyHeaderStatus(renderer,header);
+  launcherModel.battery=header.status.battery.percent;
+  launcherModel.goal=readinggoal::target(SETTINGS.readingDailyGoal);
+  launcherModel.dock={&navicons::Books32,&navicons::Stats32,&navicons::Calendar32,&navicons::Gear32};
+  const auto& folder=shelf::folders()[2];
+  for(int n=0;n<launcherModel.count;++n) {
+    const auto& item=folder.items[launcherItems[launcherPage*12+n]];
+    launcherModel.tiles[n]={shelf::label(item.title),item.icon};
+  }
+  homelauncher::draw(target,launcherLayout,launcherModel);
+  launcherModel.time="";
+}
+
 void HomeActivity::loopReadingDesk() {
+  if (launcherOpen) { loopLauncher(); return; }
   using Button = MappedInputManager::Button;
   using Swipe = MappedInputManager::SwipeDir;
   int swipeX = 0, swipeY = 0;
@@ -742,9 +826,10 @@ void HomeActivity::loopReadingDesk() {
   const int direction = mappedInput.wasReleased(Button::NavNext) || swipe == Swipe::Left     ? 1
                         : mappedInput.wasReleased(Button::NavPrevious) || swipe == Swipe::Right ? -1
                                                                                                : 0;
-  const bool interacting = tapped || confirm || resume || direction;
+  const bool interacting = tapped || confirm || resume || direction || swipe == Swipe::Up;
   RenderLock lock(interacting ? RenderLock::Mode::Blocking : RenderLock::Mode::Try);
   if (!lock.ownsLock()) return;
+  if (!deskMenuOpen && swipe == Swipe::Up) { openLauncher(); return; }
   if (!deskMenuOpen && horizontal && deskLayout.shelf.contains(swipeX, swipeY)) {
     activateReadingDesk(swipe == Swipe::Left ? readingdesk::Next : readingdesk::Previous);
     return;
@@ -956,6 +1041,18 @@ bool HomeActivity::continueLibraryWarmup(void* context) {
 void HomeActivity::runIdleWork() {
   if (readingDeskEnabled()) {
     if (entryPhase != EntryPhase::Ready) return;
+    if (launcherOpen) {
+      if (launcherStatsPending) {
+        launcherStatsPending=false;
+        auto summary=makeUniqueNoThrow<readingstats::Summary>();
+        const bool ok=summary && readinggoal::load(*summary,launcherDay);
+        for(int n=0;n<7;++n)launcherModel.seconds[n]=ok?summary->onDay(launcherDay-6+n):0;
+        launcherModel.statsReady=ok;
+        launcherModel.statsFailed=!ok;
+        requestUpdate();
+      }
+      return;
+    }
     auto* book = deskBook();
     const int height = deskLayout.cover.height;
     if (deskLibraryPending) {
@@ -1080,6 +1177,10 @@ void HomeActivity::runIdleWork() {
 void HomeActivity::render(RenderLock&&) {
   if (entryPhase == EntryPhase::Blocking) return;
   if (readingDeskEnabled()) {
+    if (launcherOpen) {
+      renderLauncher();renderer.displayBuffer(HalDisplay::FAST_REFRESH);
+      firstRenderDone=true;entryPhase=EntryPhase::Ready;return;
+    }
     auto target = toybox::makeTarget(renderer);
     const auto* book = deskBook();
     deskLayout = readingdesk::layout(target.deviceContext().safeRect(), static_cast<int>(deskShelf.size()), book != nullptr,

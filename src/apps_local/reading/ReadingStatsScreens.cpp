@@ -593,7 +593,7 @@ void periodChart(Context& s, fui::Rect r, const Model& m, bool daily) {
   if (!daily) {
     s.target().line({int16_t(left), int16_t(base - height)}, {int16_t(left), int16_t(base)}, 2, black);
     for (int n = 0; n < 3; ++n) {
-      char label[16];
+      char label[24];
       std::snprintf(label, sizeof(label), "%llu", static_cast<unsigned long long>(maximum * n / (annual ? 2 : 120)));
       const auto tick = fui::makeRect(r.x + 2, base - height * n / 2 - 10, 26, 20);
       if (annual)

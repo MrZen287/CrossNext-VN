@@ -75,6 +75,7 @@ void CrossPointSettings::toJson(JsonDocument& doc) const {
   bleturner::writeJson(ble, doc);
   readerbars::writeJson(doc, readerBars);
   const CrossPointSettings& s = *this;
+  doc["zenEdgeControlsVersion"] = 1;
   doc["readingDailyGoal"] = readingDailyGoal;
   doc["readingGoalStartDay"] = readingGoalStartDay;
   doc["readingGoalLegacyHistory"] = readingGoalLegacyHistory;
@@ -375,6 +376,10 @@ bool CrossPointSettings::fromJson(JsonVariantConst doc) {
     needsResave = true;
   } else if (homeLayout >= HOME_LAYOUT_COUNT) {
     homeLayout = HOME_FRAMED;
+  if ((doc["zenEdgeControlsVersion"] | 0) < 1) {
+    // Enable the new reader defaults once, then preserve subsequent user choices.
+    leftEdgeLightAction=1;rightEdgeLightAction=2;needsResave=true;
+  }
   }
   homeLayout = HOME_FRAMED;
   lunarSleepCalendar = true;

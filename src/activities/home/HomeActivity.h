@@ -10,6 +10,7 @@
 #include "../../apps_local/home/HomeMenuInput.h"
 #include "../../apps_local/home/HomeMenuIntegration.h"
 #include "../../apps_local/home/ReadingDesk.h"
+#include "../../apps_local/home/HomeLauncher.h"
 #include "../../apps_local/library/PreparedCoverCache.h"
 #include "./FileBrowserActivity.h"
 #include "CrossPointSettings.h"
@@ -70,6 +71,15 @@ class HomeActivity final : public Activity {
   const char* deskQuote = "";
   uint32_t deskMinute = 0;
   static bool readingDeskEnabled() { return true; }
+  bool launcherOpen = false, launcherStatsPending = false;
+  int launcherPage = 0, launcherDay = 0;
+  homelauncher::Layout launcherLayout{};
+  homelauncher::Model launcherModel{};
+  std::array<int, 24> launcherItems{};
+  int launcherCount = 0;
+  void openLauncher();
+  void loopLauncher();
+  void renderLauncher();
   void loopReadingDesk();
   DeskPage collectDeskPage(int start, bool useLibrary);
   void loadDeskShelfPage(int page, bool useLibrary = true);

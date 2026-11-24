@@ -20,12 +20,22 @@ void MappedInputManager::update(const bool deferHomeButtonAction) const {
   remoteInput.reset();
   gpio.update();
   edgeLight = {};
-  if (Frontlight.present()) {
-    int sx = 0, sy = 0, ex = 0, ey = 0;
-    if (decodeSwipe(sx, sy, ex, ey))
-      edgeLight = edgelight::classify(sx, sy, ex, ey, renderer.getScreenWidth(), renderer.getScreenHeight(),
-                                      SETTINGS.leftEdgeLightAction, SETTINGS.rightEdgeLightAction);
-  }
+  edgeLightClaimed = false;
+  if (Frontlight.present() && readerTextContext && !isTouchscreenLocked()) {
+    int x=0,y=0;
+    const bool down=wasScreenTouchPressed(x,y);
+    if(down) edgeDrag.begin(x,y,renderer.getScreenWidth(),renderer.getScreenHeight(),
+                           (SETTINGS.leftEdgeLightAction==uint8_t(edgelight::Action::Warmth)&&!Frontlight.hasColorTemperature()?0:SETTINGS.leftEdgeLightAction),Frontlight.hasColorTemperature()?SETTINGS.rightEdgeLightAction:
+                           (SETTINGS.rightEdgeLightAction==uint8_t(edgelight::Action::Warmth)?0:SETTINGS.rightEdgeLightAction));
+    const bool held=isScreenTouchHeld(x,y);
+    if(held) edgeLight=edgeDrag.move(x,y);
+    else if(gpio.wasTouchReleased()) {
+      float sx=0,sy=0,ex=0,ey=0;
+      if(gpio.wasSwipe(sx,sy,ex,ey)) {renderer.tapToLogical(ex,ey,x,y);edgeLight=edgeDrag.move(x,y);}
+    }
+    edgeLightClaimed=edgeDrag.claimed();
+    if(gpio.wasTouchReleased() || (!down && !held))edgeDrag.reset();
+  } else edgeDrag.reset();
   const bool pagePressed =
       SETTINGS.vibration == CrossPointSettings::VIBRATION_TOUCH_PAGE && gpio.wasCapacitivePagePressed();
   HalHaptics::feedback(SETTINGS.vibration != CrossPointSettings::VIBRATION_OFF, pagePressed, SETTINGS.hapticIntensity);
@@ -35,12 +45,12 @@ void MappedInputManager::update(const bool deferHomeButtonAction) const {
         readerTextContext && readertext::menuTrigger(SETTINGS.readerTextTrigger) == readertext::MenuTrigger::HomeHold;
     if (!readerHome) readerHomeOwned = false;
     if (gpio.wasHomeKeyPressed()) readerHomeOwned = readerHome;
-    homeButtonInput.setWindow(SETTINGS.homeButtonDoubleTapTiming);
+    homeButtonInput.setWindow(readerTextContext ? 0 : SETTINGS.homeButtonDoubleTapTiming);
     homeAction = homeButtonInput.update(
         millis(), gpio.wasHomeKeyTapped(), gpio.wasHomeKeyLongPressed(), wasSwipe() != SwipeDir::None,
-        gpio.wasHomeKeyPressed(), static_cast<HomeButtonAction>(SETTINGS.homeButtonTapAction),
-        static_cast<HomeButtonAction>(SETTINGS.homeButtonDoubleTapAction),
-        readerHomeOwned ? HomeButtonAction::ReaderMenu
+        gpio.wasHomeKeyPressed(), readerTextContext ? HomeButtonAction::NextPage : static_cast<HomeButtonAction>(SETTINGS.homeButtonTapAction),
+        readerTextContext ? HomeButtonAction::Home : static_cast<HomeButtonAction>(SETTINGS.homeButtonDoubleTapAction),
+        (readerTextContext || readerHomeOwned) ? HomeButtonAction::ReaderMenu
                         : static_cast<HomeButtonAction>(SETTINGS.homeButtonLongPressAction),
         isTouchscreenLocked());
     if (gpio.wasHomeKeyTapped() || gpio.wasHomeKeyLongPressed()) readerHomeOwned = false;
@@ -67,7 +77,8 @@ void MappedInputManager::update(const bool deferHomeButtonAction) const {
   }
   if (gpio.hasTouch() && homeAction == HomeButtonAction::Ignore) {
     sideEvent =
-        sideReleasedEvent(SETTINGS.sideLeftAction, SETTINGS.sideRightAction,
+        sideReleasedEvent(readerTextContext ? uint8_t(SideButtonAction::Navigation) : SETTINGS.sideLeftAction,
+                          readerTextContext ? uint8_t(SideButtonAction::Navigation) : SETTINGS.sideRightAction,
                           !(suppressedNavigationReleases & (1u << HalGPIO::BTN_UP)) &&
                               !releaseGate.swallowsRelease(HalGPIO::BTN_UP) && gpio.wasReleased(HalGPIO::BTN_UP),
                           !(suppressedNavigationReleases & (1u << HalGPIO::BTN_DOWN)) &&
@@ -146,7 +157,7 @@ bool MappedInputManager::readButton(const uint8_t buttonIndex, bool (HalGPIO::*f
                           (remoteInput.button == RemoteButton::SideRight && buttonIndex == HalGPIO::BTN_DOWN);
   if (remoteSide && (fn == &HalGPIO::wasPressed || fn == &HalGPIO::wasReleased)) return true;
   // Reassigned side keys have one owner: no page turn, menu step or held repeat.
-  if (gpio.hasTouch() && ((buttonIndex == HalGPIO::BTN_UP && !sideNavigates(SETTINGS.sideLeftAction)) ||
+  if (gpio.hasTouch() && !readerTextContext && ((buttonIndex == HalGPIO::BTN_UP && !sideNavigates(SETTINGS.sideLeftAction)) ||
                           (buttonIndex == HalGPIO::BTN_DOWN && !sideNavigates(SETTINGS.sideRightAction))))
     return false;
   const bool readerHold =
@@ -168,7 +179,7 @@ bool MappedInputManager::readButton(const uint8_t buttonIndex, bool (HalGPIO::*f
 }
 
 bool MappedInputManager::mapButton(const Button button, bool (HalGPIO::*fn)(uint8_t) const) const {
-  const auto sideLayout = SETTINGS.sideButtonLayout;
+  const auto sideLayout = readerTextContext ? uint8_t(CrossPointSettings::PREV_NEXT) : SETTINGS.sideButtonLayout;
 
   switch (button) {
     case Button::Back:
@@ -256,7 +267,7 @@ void MappedInputManager::rememberTouchHeldTime() const {
 }
 
 bool MappedInputManager::wasScreenTapped(int& x, int& y) const {
-  if (isTouchscreenLocked()) return false;
+  if (isTouchscreenLocked() || edgeLightClaimed) return false;
   float nx = 0.0f;
   float ny = 0.0f;
   if (!gpio.wasTouchTap(nx, ny)) return false;
@@ -300,7 +311,7 @@ bool MappedInputManager::tapWasHeldLong() const {
 }
 
 bool MappedInputManager::wasScreenLongPress(int& x, int& y) const {
-  if (isTouchscreenLocked()) return false;
+  if (isTouchscreenLocked() || edgeLightClaimed) return false;
   float nx = 0.0f;
   float ny = 0.0f;
   if (!gpio.wasTouchLongPress(nx, ny)) return false;
@@ -368,7 +379,7 @@ MappedInputManager::RowTouch MappedInputManager::colTouch(int& col, const int le
 }
 
 bool MappedInputManager::decodeSwipe(int& sx, int& sy, int& ex, int& ey) const {
-  if (isTouchscreenLocked() || edgeLight.action != edgelight::Action::None) return false;
+  if (isTouchscreenLocked() || edgeLightClaimed || edgeLight.action != edgelight::Action::None) return false;
   float nxs = 0.0f;
   float nys = 0.0f;
   float nxe = 0.0f;

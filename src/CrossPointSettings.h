@@ -308,7 +308,7 @@ class CrossPointSettings : public PersistableStore<CrossPointSettings> {
   // Short power button click behaviour
   uint8_t shortPwrBtn = IGNORE;
   uint8_t touchPowerShortAction = 0, touchPowerLongAction = 1;
-  uint8_t leftEdgeLightAction = 0, rightEdgeLightAction = 0;
+  uint8_t leftEdgeLightAction = 1, rightEdgeLightAction = 2;
   uint8_t powerWakeMode = static_cast<uint8_t>(powermenu::WakeMode::ShortPress);
   // X4 Pro: double-click power toggles the frontlight. Disabling frees the
   // power button for shortPwrBtn actions without the double-click wait.

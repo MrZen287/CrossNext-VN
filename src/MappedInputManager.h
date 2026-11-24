@@ -66,6 +66,7 @@ class MappedInputManager {
   edgelight::Event edgeLightEvent() const { return edgeLight; }
   void setGlobalHomeAction(HomeButtonAction action) { homeAction = action; }
   void setReaderTextContext(bool active) {
+    if (readerTextContext != active) { homeButtonInput.reset(); deferredHomeAction=HomeButtonAction::Ignore; edgeDrag.reset(); }
     if (!active) {
       readerMenuButtons.cancel();
       readerHomeOwned = false;
@@ -269,6 +270,8 @@ class MappedInputManager {
   mutable bool readerHomeOwned = false;
   mutable readertext::MenuButtonInput readerMenuButtons;
   mutable edgelight::Event edgeLight;
+  mutable edgelight::Drag edgeDrag;
+  mutable bool edgeLightClaimed=false;
   mutable HomeButtonAction deferredHomeAction = HomeButtonAction::Ignore;
   mutable bool touchHeldOverrideValid = false;
   mutable unsigned long touchHeldOverrideMs = 0;

@@ -12,14 +12,17 @@
 #include "../../src/apps_local/ui/QuickSettingsScreen.h"
 #include "../../src/apps_local/tools/ToolsScreens.h"
 #include "../../src/apps_local/reading/ReadingStatsScreens.h"
+#include "../../src/apps_local/home/HomeLauncher.h"
+#include "../../src/apps_local/ui/NavigationIcons.h"
+#include "../../src/apps_local/ui/GameMenuIcons.h"
 namespace fui=freeink::ui;
 I18n& I18n::getInstance(){static I18n i;return i;}
 void I18n::setLanguage(Language){_language=Language::VI;}
 const char* I18n::get(StrId id)const{auto v=getLanguageStrings(Language::VI);auto off=v.offsets[(size_t)id];if(off&0x80000000){auto en=getLanguageStrings(Language::EN);return en.data+(off&0x7fffffff);}return v.data+off;}
 struct Font {
  std::vector<fui::FontGlyph> glyphs;fui::BitmapFont font;
- Font(const EpdFontData& source):glyphs(0x203b-32){
-  for(unsigned cp=32;cp<0x203b;++cp){unsigned index=31;for(unsigned i=0;i<source.intervalCount;++i){auto r=source.intervals[i];if(cp>=r.first&&cp<=r.last){index=r.offset+cp-r.first;break;}}
+ Font(const EpdFontData& source,bool digitsOnly=false):glyphs(0x203b-32){
+  for(unsigned cp=32;cp<0x203b;++cp){unsigned index=31;for(unsigned i=0;i<source.intervalCount;++i){auto r=source.intervals[i];if((!digitsOnly||cp<128)&&cp>=r.first&&cp<=r.last){index=r.offset+cp-r.first;break;}}
    const auto g=source.glyph[index];assert(g.dataOffset<65536);glyphs[cp-32]={uint16_t(g.dataOffset),g.width,g.height,uint8_t(fp4::toPixel(g.advanceX)),int8_t(g.left),int8_t(-g.top)};
   }
   font={source.bitmap,glyphs.data(),32,0x203a,uint8_t(source.advanceY),uint8_t(source.ascender),100,100,1};
@@ -28,8 +31,8 @@ struct Font {
 struct Canvas{
  std::vector<uint8_t> pixels=std::vector<uint8_t>(60*800,255);fui::DisplayTarget target{pixels.data(),480,800,60};
  fui::DeviceContext device;fui::InputSnapshot input;toybox::Interactions hits;toybox::Frame frame;toybox::Screen screen;
- Font small{sans10},body{sans12},title{sans18b},tiny{sans08},reading{sans13};
- Canvas():device([&]{auto d=target.deviceContext();d.hasTouch=true;return d;}()),frame(target,device,input,hits,nullptr,{82,false,true,"10:30"}),screen(frame){device.hasTouch=true;target.setFont(0,small.font);target.setFont(1,body.font);target.setFont(2,title.font);target.setFont(3,tiny.font);target.setFont(4,small.font);target.setFont(fui::HEADER_CLOCK_FONT,small.font);}
+ Font huge{sans28b,true},small{sans10},body{sans12},title{sans18b},tiny{sans08},reading{sans13};
+ Canvas():device([&]{auto d=target.deviceContext();d.hasTouch=true;return d;}()),frame(target,device,input,hits,nullptr,{82,false,true,"10:30"}),screen(frame){device.hasTouch=true;target.setFont(0,small.font);target.setFont(1,body.font);target.setFont(2,title.font);target.setFont(5,huge.font);target.setFont(3,tiny.font);target.setFont(4,small.font);target.setFont(fui::HEADER_CLOCK_FONT,small.font);}
  void save(const std::string& path){FILE* f=fopen(path.c_str(),"wb");assert(f);fprintf(f,"P4\n480 800\n");for(auto v:pixels)fputc(v^255,f);fclose(f);}
 };
 int main(int argc,char**argv){assert(argc==2);I18N.setLanguage(Language::VI);chrome::lightHeader=true;pixelui::preserveTranslatedCase=true;pixelui::uppercaseLabels=false;
@@ -41,4 +44,12 @@ int main(int argc,char**argv){assert(argc==2);I18N.setLanguage(Language::VI);chr
  for(int tab=0;tab<4;++tab){Canvas c;readingui::Model m;readingui::Work w;m.summary=&summary;m.annualStats=&annual;m.periodStats=&day;m.today=m.displayedDay=today;m.month=2026*12+10;m.tab=tab;m.books=books;m.count=m.bookTotal=5;m.goalMinutes=120;readingui::build(c.screen,m,w);c.save(std::string(argv[1])+"/stats-"+std::to_string(tab)+".pbm");}
  for(int mode=0;mode<5;++mode){Canvas c;toolsui::Model m;toolsui::Work w;m.year=2026;m.month=11;m.selected=m.today=today;m.dayDetail=mode==1||mode==2;m.moreDay=mode==2;m.monthPicker=mode==3;m.holidays=mode==4;toolsui::build(c.screen,m,w);c.save(std::string(argv[1])+"/calendar-"+std::to_string(mode)+".pbm");}
  {Canvas c;quickui::Model m;quickui::Work w;quickui::build(c.screen,m,w);c.save(std::string(argv[1])+"/quick.pbm");}
+ for(int page=0;page<2;++page){
+  Canvas c;c.target.setFont(5,c.huge.font);homelauncher::Model m;m.page=page;m.count=page?10:12;m.today=readingstats::dayIndex({2026,11,24});m.time="07:45";m.battery=82;m.statsReady=true;m.goal=120;m.seconds={1800,3600,2700,4200,1200,4800,5700};
+  m.dock={&navicons::Books32,&navicons::Stats32,&navicons::Calendar32,&navicons::Gear32};
+  const homelauncher::Tile tiles[]={{tr(STR_UI_FLASHCARDS_E0439E),&navicons::Cards32},{tr(STR_UI_READING_QUEST_6AD39C),&navicons::BookOpen32},{"Mèo & Mọt",&navicons::Paw32},{tr(STR_UI_CLOCK_6E3C9D),&navicons::Clock32},{tr(STR_CALCULATOR_APP),&navicons::Calculator32},{tr(STR_UI_WALLPAPERS_2AA278),&navicons::Image32},{"SUDOKU",&gameicons::Sudoku40},{"PICROSS",&gameicons::Picross40},{"WORDLE",&gameicons::Wordle40},{tr(STR_UI_MINESWEEPER_A2F226),&gameicons::Minesweeper40},{"2048",&gameicons::Game204840},{tr(STR_UI_CHESS_902609),&gameicons::Chess40},{"GO",&gameicons::Go40},{"OTHELLO",&navicons::Othello32},{tr(STR_UI_SOLITAIRE_8C3ACB),&gameicons::Solitaire40},{tr(STR_UI_HEARTS_29FBCB),&gameicons::Hearts40},{tr(STR_UI_BATTLESHIP_4046EE),&gameicons::Battleship40},{tr(STR_UI_CONNECT_FOUR_A81733),&gameicons::ConnectFour40},{tr(STR_INTERCEPT_NAME),&gameicons::Intercept40},{"MURDLE",&gameicons::Murdle40},{tr(STR_CAR_TITLE),&gameicons::Carnivoro40},{tr(STR_CHICKEN_GAME),&navicons::Paw32}};
+  for(int n=0;n<m.count;++n)m.tiles[n]=tiles[page*12+n];
+  homelauncher::draw(c.target,homelauncher::layout(c.device.safeRect()),m);c.save(std::string(argv[1])+"/home2-"+std::to_string(page)+".pbm");
+ }
+
 }
