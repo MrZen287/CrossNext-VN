@@ -47,7 +47,7 @@ void MappedInputManager::update(const bool deferHomeButtonAction) const {
     if (gpio.wasHomeKeyPressed()) readerHomeOwned = readerHome;
     homeButtonInput.setWindow(readerTextContext ? 0 : SETTINGS.homeButtonDoubleTapTiming);
     homeAction = homeButtonInput.update(
-        millis(), gpio.wasHomeKeyTapped(), gpio.wasHomeKeyLongPressed(), wasSwipe() != SwipeDir::None,
+        millis(), gpio.wasHomeKeyTapped(), gpio.wasHomeKeyLongPressed(), edgeLightClaimed || wasSwipe() != SwipeDir::None,
         gpio.wasHomeKeyPressed(), readerTextContext ? HomeButtonAction::NextPage : static_cast<HomeButtonAction>(SETTINGS.homeButtonTapAction),
         readerTextContext ? HomeButtonAction::Home : static_cast<HomeButtonAction>(SETTINGS.homeButtonDoubleTapAction),
         (readerTextContext || readerHomeOwned) ? HomeButtonAction::ReaderMenu
