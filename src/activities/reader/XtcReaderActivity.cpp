@@ -1,3 +1,4 @@
+#include "activities/settings/ZenOptionsActivity.h"
 #include "XtcReaderActivity.h"
 
 #include <FsHelpers.h>
@@ -51,13 +52,13 @@ void XtcReaderActivity::renderPageSettings() {
   text.contentsAvailable = !xtc->getChapters().empty();
   text.listContext = this;
   text.listPage = settingsPage;
-  text.listCount = settingsTab == 2 ? xtc->getChapters().size() : 2;
+  text.listCount = settingsTab == 2 ? xtc->getChapters().size() : 3;
   text.listLabel = [](const void* context, int n, char* out, size_t size) {
     const auto* self = static_cast<const XtcReaderActivity*>(context);
     std::snprintf(out, size, "%s",
                   self->settingsTab == 2 ? self->xtc->getChapters()[n].name.c_str()
                   : n == 0               ? tr(STR_REFRESH_FREQ)
-                                         : I18N.get(self->completionMenuLabelId()));
+                                         : n==1 ? I18N.get(self->completionMenuLabelId()) : tr(STR_ZEN_EDGE_GESTURES));
   };
   text.listCheck = [](const void* context, int n) {
     const auto* self = static_cast<const XtcReaderActivity*>(context);
@@ -153,6 +154,13 @@ bool XtcReaderActivity::handleFormatInput() {
       return true;
     }
     if (routed.event == ReaderToolbarUi::Event::Row || swipeStep) {
+      if(!swipeStep && settingsTab==3 && routed.value==readertext::MorePick+2){
+        {RenderLock lock;pageSettings.reset();}
+        auto activity=makeUniqueNoThrow<ZenOptionsActivity>(renderer,mappedInput,ZenOptionsActivity::Kind::Edges);
+        if(activity)startActivityForResult(std::move(activity),[this](const ActivityResult&){requestUpdate();});
+        return true;
+      }
+
       if (!swipeStep && settingsTab == 3 && routed.value == readertext::MorePick + 1) {
         {
           RenderLock lock;
@@ -165,7 +173,7 @@ bool XtcReaderActivity::handleFormatInput() {
         RenderLock lock;
         int control = routed.value;
         if (swipeStep || control == readertext::SheetPrevious || control == readertext::SheetNext) {
-          const int count = settingsTab == 2 ? xtc->getChapters().size() : 2;
+          const int count = settingsTab == 2 ? xtc->getChapters().size() : 3;
           const int capacity = readertext::sheetRowsPerPage(pageSettings->uiTarget.deviceContext(), true);
           const int step = swipeStep ? swipeStep : (control == readertext::SheetNext ? 1 : -1);
           const int page = std::clamp(settingsPage + step, 0, std::max(0, (count - 1) / capacity));

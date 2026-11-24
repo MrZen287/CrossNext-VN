@@ -1,5 +1,10 @@
 #include "ReadingDesk.h"
 #include <GfxRenderer.h>
+#include <Epub.h>
+#include <FsHelpers.h>
+#include <Memory.h>
+#include <KOReaderDocumentId.h>
+#include "../../util/ReadingTimeMemo.h"
 #include <HalClock.h>
 #include <I18n.h>
 #include <algorithm>
@@ -87,14 +92,39 @@ void draw(GfxRenderer& r,Layout& g,const RecentBook* featured,const std::vector<
     text(t,g.title,featured->title.c_str(),1,2,true);
     text(t,g.author,featured->author.c_str(),0,2);
     const auto pos=loadBookPosition(featured->path);const int percent=loadBookProgress(featured->path);
-    if(pos.section)std::snprintf(s,sizeof(s),vi?"Ch. %d · Trang %d":"Ch. %d · Page %d",pos.section,pos.page);
-    else std::snprintf(s,sizeof(s),vi?"Trang %d":"Page %d",pos.page);
+    struct Details {std::string path;uint32_t revision=0;int chapter=0,total=0;uint64_t seconds=0;bool known=false;};
+    static Details info;
+    const auto revision=Storage.resourceRevision()^Storage.stateFileRevision(readingstats::kJournalPath)^Storage.stateFileRevision(("/.crosspoint/epub_"+std::to_string(static_cast<unsigned long>(std::hash<std::string>{}(featured->path)))+"/progress.bin").c_str());
+    if(info.path!=featured->path || info.revision!=revision){
+      info={};info.path=featured->path;info.revision=revision;
+      if(FsHelpers::hasReflowableBookExtension(featured->path)){
+        auto epub=makeUniqueNoThrow<Epub>(featured->path,"/.crosspoint");
+        if(epub && epub->load(false,true)){
+          info.total=epub->getTocItemsCount();
+          if(pos.section>0){const int toc=epub->getTocIndexForSpineIndex(pos.section-1);if(toc>=0&&toc<info.total)info.chapter=toc+1;}
+        }
+      }
+      if(!readingtime::lookup(featured->path.c_str(),info.seconds,info.known)){
+        struct Snapshot {readingstats::Repository repo;readingstats::Book book;};auto snap=makeUniqueNoThrow<Snapshot>();
+        if(snap){auto doc=KOReaderDocumentId::calculate(featured->path);info.known=snap->repo.cachedBook(doc.c_str(),snap->book);if(info.known)info.seconds=snap->book.seconds;}
+      }
+    }
+    if(info.chapter && info.total)std::snprintf(s,sizeof(s),"Chương %d / %d",info.chapter,info.total);
+    else std::snprintf(s,sizeof(s),"Trang %d",pos.page);
     text(t,g.position,s);
-    if(percent>=0) {
-      int width=std::max(0,int(g.progress.width)-55),y=g.progress.y+14;
+    if(percent>=0){int width=std::max(0,int(g.progress.width)-55),y=g.progress.y+14;
       t.stroke(makeRect(g.progress.x,y,width,5),ink,1);t.fill(makeRect(g.progress.x,y,width*std::clamp(percent,0,100)/100,5),ink);
       std::snprintf(s,sizeof(s),"%d%%",percent);text(t,g.progress,s,0,1,false,fui::TextAlign::Right);
     }
+    if(info.chapter&&info.total)std::snprintf(s,sizeof(s),"Còn %d chương",std::max(0,info.total-info.chapter));
+    else std::snprintf(s,sizeof(s),"Chưa có số chương");
+    text(t,makeRect(g.remaining.x,g.remaining.y,g.remaining.width,25),s);
+    if(percent>=100)std::snprintf(s,sizeof(s),"Đã đọc hết");
+    else if(info.known&&info.seconds>=300&&percent>=5){
+      const uint64_t minutes=std::min<uint64_t>(99999,info.seconds*uint64_t(100-percent)/unsigned(percent)/60);
+      std::snprintf(s,sizeof(s),"Ước tính %llu giờ %u phút",static_cast<unsigned long long>(minutes/60),unsigned(minutes%60));
+    }else std::snprintf(s,sizeof(s),"Chưa đủ dữ liệu thời gian");
+    text(t,makeRect(g.remaining.x,g.remaining.y+25,g.remaining.width,29),s);
     const auto b=g.hits[Resume];
     // A soft cloud with raised lobes; its hit region remains the full button.
     t.fill(b,white,18);t.stroke(b,ink,2,18);

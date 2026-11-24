@@ -1,3 +1,4 @@
+#include "util/ReadingGuides.h"
 #include "CrossPointSettings.h"
 
 #include <BlePageTurnerJson.h>
@@ -75,6 +76,8 @@ void CrossPointSettings::toJson(JsonDocument& doc) const {
   bleturner::writeJson(ble, doc);
   readerbars::writeJson(doc, readerBars);
   const CrossPointSettings& s = *this;
+  doc["zenWidgetLeft"]=zenWidgetLeft;doc["zenWidgetRight"]=zenWidgetRight;doc["zenWidgetWide"]=zenWidgetWide;
+  doc["zenReadingGuides"]=zenReadingGuides;doc["zenGuideStyle"]=zenGuideStyle;
   doc["zenEdgeControlsVersion"] = 1;
   doc["readingDailyGoal"] = readingDailyGoal;
   doc["readingGoalStartDay"] = readingGoalStartDay;
@@ -354,6 +357,11 @@ bool CrossPointSettings::fromJson(JsonVariantConst doc) {
     needsResave = true;
   }
   fontPointSize = storedFontSize;
+  zenReadingGuides=(doc["zenReadingGuides"] | 1)!=0;zenGuideStyle=std::min(uint8_t(doc["zenGuideStyle"] | 0),uint8_t(4));
+  readingguides::enabled=zenReadingGuides;readingguides::style=zenGuideStyle;
+  zenWidgetLeft=std::min(uint8_t(doc["zenWidgetLeft"] | 0),uint8_t(3));
+  zenWidgetRight=std::min(uint8_t(doc["zenWidgetRight"] | 1),uint8_t(3));
+  zenWidgetWide=std::min(uint8_t(doc["zenWidgetWide"] | 2),uint8_t(3));
   libraryView = (doc["libraryView"] | 0) == 1 ? 1 : 0;
   libraryLayout = (doc["libraryLayout"] | 0) == 1 ? 1 : 0;
   libraryClassicGrid = (doc["libraryClassicGrid"] | 1) != 0;
@@ -441,6 +449,10 @@ bool CrossPointSettings::fromJson(JsonVariantConst doc) {
     needsResave = true;
   }
   copyToField(translationDictionaryName, doc["translationDictionaryName"] | "", sizeof(translationDictionaryName));
+  copyToField(sdFontFamilyName,"Bokerlam",sizeof(sdFontFamilyName));
+  menuFontStyle=uint8_t(menufont::Style::NotoSans);
+  std::fill(std::begin(menuFontOverrides),std::end(menuFontOverrides),0);
+  std::fill(std::begin(menuFontItemOverrides),std::end(menuFontItemOverrides),0);
   // Dictionary folder name — uses dynamic getter/setter in SettingsList, load manually
   copyToField(dictionaryName, doc["dictionaryName"] | "", sizeof(dictionaryName));
   // Preserve legacy named choices; previously empty selections adopt the defaults.

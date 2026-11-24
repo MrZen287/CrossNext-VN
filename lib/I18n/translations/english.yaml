@@ -9228,3 +9228,9 @@ STR_READING_BACKUP_FAILED: "Check the archive and microSD space."
 STR_READING_BACKUP_DONE: "Restore complete. Restart to load the restored data."
 
 STR_READING_BACKUP_INCOMPLETE: "Restore stopped. The previous data is in the safety backup."
+
+STR_ZEN_WIDGETS: "Second Home widgets"
+
+STR_ZEN_EDGE_GESTURES: "Reader edge swipes"
+
+STR_ZEN_READING_GUIDES: "Reading guides"

@@ -58,6 +58,7 @@
 #include "SilentRestart.h"
 #include "activities/network/WifiSelectionActivity.h"
 #include "activities/settings/TextSettingsActivity.h"
+#include "activities/settings/ZenOptionsActivity.h"
 #include "apps_local/bookprep/OpenedBookPreparationActivity.h"
 #include "apps_local/readertext/BookSearchActivity.h"
 #include "apps_local/readertext/BookTextPreferences.h"
@@ -1175,6 +1176,15 @@ void EpubReaderActivity::onReaderMenuConfirm(EpubReaderMenuActivity::MenuAction 
   };
 
   switch (action) {
+    case EpubReaderMenuActivity::MenuAction::READING_GUIDES: {
+      auto activity=makeUniqueNoThrow<ZenOptionsActivity>(renderer,mappedInput,ZenOptionsActivity::Kind::Guides);
+      if(activity)startActivityForResult(std::move(activity),[this](const ActivityResult&){requestUpdate();});break;
+    }
+    case EpubReaderMenuActivity::MenuAction::EDGE_GESTURES: {
+      auto activity=makeUniqueNoThrow<ZenOptionsActivity>(renderer,mappedInput,ZenOptionsActivity::Kind::Edges);
+      if(activity)startActivityForResult(std::move(activity),[this](const ActivityResult&){requestUpdate();});
+      break;
+    }
     case EpubReaderMenuActivity::MenuAction::BOOK_DICTIONARIES:
       openBookDictionaries();
       break;
@@ -4020,6 +4030,8 @@ void EpubReaderActivity::buildMoreActions() {
   moreItems.clear();
   moreItems.reserve(10);
   moreItems.push_back({MA::STYLE_SETTINGS, StrId::STR_STYLE});
+  moreItems.push_back({MA::READING_GUIDES,StrId::STR_ZEN_READING_GUIDES});
+  if(mappedInput.hasTouch())moreItems.push_back({MA::EDGE_GESTURES,StrId::STR_ZEN_EDGE_GESTURES});
   moreItems.push_back({MA::SEARCH, StrId::STR_READER_SEARCH});
   moreItems.push_back({MA::TOGGLE_BOOKMARK,
                        currentPageBookmarked ? StrId::STR_READER_REMOVE_BOOKMARK : StrId::STR_READER_ADD_BOOKMARK});

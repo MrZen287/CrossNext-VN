@@ -34,6 +34,7 @@
 #include "LanguageSelectActivity.h"
 #include "OtaUpdateActivity.h"
 #include "ZenLockActivity.h"
+#include "ZenOptionsActivity.h"
 #include "SettingsList.h"
 #include "StatusBarSettingsActivity.h"
 #include "TextSettingsActivity.h"
@@ -68,7 +69,7 @@ int settingsGroup(const SettingInfo& s, int category) {
         s.valuePtr == &CrossPointSettings::sleepScreenCoverFilter ||
         s.valuePtr == &CrossPointSettings::quickResumeSleepScreen)
       return 0;
-    if (s.action == SettingAction::UiPresentation) return 2;
+    if (s.action == SettingAction::UiPresentation || s.action == SettingAction::ZenWidgets) return 2;
     return 1;
   }
   if (category == 1) {
@@ -295,6 +296,7 @@ void SettingsActivity::rebuildSettingsLists() {
   // CrossZen ships Vietnamese only; no language picker.
   systemSettings.push_back(SettingInfo::Action(StrId::STR_CHECK_UPDATES, SettingAction::CrossHihiOta));
   displaySettings.push_back(SettingInfo::Action(StrId::STR_SLEEP_SCREEN, SettingAction::ZenLock));
+  displaySettings.push_back(SettingInfo::Action(StrId::STR_ZEN_WIDGETS, SettingAction::ZenWidgets));
   readerSettings.insert(readerSettings.begin(),
                         SettingInfo::Action(StrId::STR_READING_FORMATS, SettingAction::ReadingFormats));
   readerSettings.insert(readerSettings.begin(),
@@ -842,6 +844,9 @@ void SettingsActivity::toggleCurrentSetting() {
         break;
       case SettingAction::Language:
         startActivityForResult(std::make_unique<LanguageSelectActivity>(renderer,mappedInput),resultHandler);
+        break;
+      case SettingAction::ZenWidgets:
+        if(auto activity=makeUniqueNoThrow<ZenOptionsActivity>(renderer,mappedInput,ZenOptionsActivity::Kind::Widgets)) startActivityForResult(std::move(activity),nullptr);
         break;
       case SettingAction::ZenLock:
         if(auto activity=makeUniqueNoThrow<ZenLockActivity>(renderer,mappedInput)) startActivityForResult(std::move(activity),nullptr);

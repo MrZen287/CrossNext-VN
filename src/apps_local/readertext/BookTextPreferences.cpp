@@ -52,7 +52,7 @@ void apply(const Preferences& p) {
 #define COPY(member, key) SETTINGS.member = p.values[member];
   TEXT_FIELDS(COPY)
 #undef COPY
-  std::memcpy(SETTINGS.sdFontFamilyName, p.family, sizeof(p.family));
+  std::snprintf(SETTINGS.sdFontFamilyName,sizeof(SETTINGS.sdFontFamilyName),"Bokerlam");
 }
 bool valid(const Preferences& p) {
   const auto* v = p.values;

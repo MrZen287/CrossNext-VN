@@ -35,7 +35,9 @@ class EpubReaderMenuActivity final : public UiListActivity {
     BOOK_STATS,
     STYLE_SETTINGS,
     BOOK_DICTIONARIES,
-    FINISH_BOOK
+    FINISH_BOOK,
+    READING_GUIDES,
+    EDGE_GESTURES
   };
 
   struct MenuItem {

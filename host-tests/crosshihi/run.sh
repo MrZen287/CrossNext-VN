@@ -10,3 +10,5 @@ c++ -std=c++20 -Wall -Wextra -Werror -Wno-comment -Wno-unused-function -DZEN_SCR
 .crosshihi-test/screens
 c++ -std=c++20 -Wall -Wextra -Werror -Wno-comment -Ifreeink-sdk/libs/ui/FreeInkUI/include -Ifreeink-sdk/libs/assets/Icons/include host-tests/crosshihi/launcher.cpp -o .crosshihi-test/launcher
 .crosshihi-test/launcher
+c++ -std=c++20 -Wall -Wextra -Werror -Wno-comment -Isrc -Ifreeink-sdk/libs/ui/FreeInkUI/include -Ifreeink-sdk/libs/assets/Icons/include -Ilib/I18n -Ilib/BlePageTurner/include -Ifreeink-sdk/libs/network/BleKeyboardHost/include host-tests/crosshihi/library.cpp src/apps_local/ui/PixelMenu.cpp freeink-sdk/libs/ui/FreeInkUI/src/FreeInkUI.cpp -o .crosshihi-test/library
+.crosshihi-test/library

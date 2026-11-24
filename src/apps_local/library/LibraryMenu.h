@@ -140,7 +140,7 @@ inline void lightRows(fui::ListProps& props) {
   props.valueText.font = 3;
   props.sidePadding = 12;
   props.rowStyles.normal.borderWidth = 0;
-  props.rowStyles.normal.background = fui::Paint::solid(fui::Color::Black);
+  props.rowStyles.normal.background = fui::Paint::solid(fui::Color::White);
   props.rowStyles.normal.foreground = fui::Paint::solid(fui::Color::Black);
   props.rowStyles.selected = props.rowStyles.focused = props.rowStyles.active = props.rowStyles.normal;
   props.separatorPaint = fui::Paint::dither(fui::Color::DarkGray);

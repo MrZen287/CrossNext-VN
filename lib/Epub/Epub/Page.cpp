@@ -1,6 +1,7 @@
 #include "Page.h"
 
 #include <GfxRenderer.h>
+#include "../../../src/util/ReadingGuides.h"
 #include <Logging.h>
 #include <Memory.h>
 #include <Serialization.h>
@@ -67,7 +68,7 @@ void drawBorderEdge(const GfxRenderer& renderer, const int x, const int y, const
 
 void PageLine::render(GfxRenderer& renderer, const int fontId, const int xOffset, const int yOffset) {
   block->render(renderer, fontId, xPos + xOffset, yPos + yOffset);
-  if(block->wordCount()) {
+  if(readingguides::enabled && block->wordCount()) {
     int left=renderer.getScreenWidth(),right=0,bottom=0;
     for(uint16_t i=0;i<block->wordCount();++i){
       const auto g=block->wordGeometry(renderer,fontId,i);
@@ -75,9 +76,17 @@ void PageLine::render(GfxRenderer& renderer, const int fontId, const int xOffset
       right=std::max(right,xOffset+xPos+int(block->wordXpos(i))+g.width);
       bottom=std::max(bottom,yOffset+yPos+g.y+g.height);
     }
-    // Sparse marks beneath actual glyph extents, avoiding descenders and images.
-    for(int x=std::max(0,left);x< std::min(renderer.getScreenWidth(),right);x+=6)
-      renderer.drawPixel(x,bottom+2);
+    // Anchor guides to current font metrics, not each line's changing glyphs.
+    const int height=renderer.getLineHeight(fontId);
+    bottom=yOffset+yPos+height-std::max(1,height/12);
+    const int pitch=std::max(4,height/5);
+    // Sparse marks follow the current rendered font and size.
+    const int start=std::max(0,left),end=std::min(renderer.getScreenWidth(),right);
+    if(bottom>=0&&bottom<renderer.getScreenHeight())for(int x=start;x<end;++x){
+      const int style=readingguides::style;
+      const bool mark=readingguides::mark(style,x-start,pitch);
+      if(mark){renderer.drawPixel(x,bottom);if(style==1&&x+1<end)renderer.drawPixel(x+1,bottom);}
+    }
   }
 
 }

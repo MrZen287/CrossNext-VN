@@ -7,6 +7,7 @@
 #include <GfxRenderer.h>
 #include <HalDisplay.h>
 #include <HalClock.h>
+#include "activities/settings/ZenOptionsActivity.h"
 #include <HalStorage.h>
 #include <I18n.h>
 #include <LibraryBuilder.h>
@@ -768,11 +769,22 @@ void HomeActivity::loopLauncher() {
   int x=0,y=0;
   if(mappedInput.wasScreenTapped(x,y)) {
     const int count=std::clamp(launcherCount-launcherPage*12,0,12);
-    const int action=launcherLayout.at(x,y,launcherPage,count);
+    const int action=launcherLayout.at(x,y,launcherPage,count,launcherModel.widgets);
     if(action>=homelauncher::App) {
       const int i=launcherPage*12+action-homelauncher::App;
       if(i>=0 && i<launcherCount)shelf::openItem(2,launcherItems[i],renderer,mappedInput,shelf::LaunchOrigin::Home);
     } else switch(action) {
+      case homelauncher::WidgetSettings: {
+        const int page=launcherPage;
+        startActivityForResult(std::make_unique<ZenOptionsActivity>(renderer,mappedInput,ZenOptionsActivity::Kind::Widgets),
+          [this,page](const ActivityResult&){RenderLock lock;openLauncher();launcherPage=page;requestUpdate();});
+        break;
+      }
+      case homelauncher::Clock: {
+        const auto& folder=shelf::folders()[1];
+        for(int n=0;n<folder.count;++n)if(!std::strcmp(folder.items[n].title,"CLOCK")){shelf::openItem(1,n,renderer,mappedInput,shelf::LaunchOrigin::Home);break;}
+        break;
+      }
       case homelauncher::Calendar:activateReadingDesk(readingdesk::Calendar);break;
       case homelauncher::Stats:activateReadingDesk(readingdesk::Stats);break;
       case homelauncher::Library:onLibraryOpen();break;
@@ -783,6 +795,9 @@ void HomeActivity::loopLauncher() {
   }
   const int today=readingstats::today();
   if(today!=launcherDay) {launcherDay=today;launcherStatsPending=true;launcherModel.statsReady=false;activityManager.requestIdleWork(*this);requestUpdate();}
+  uint8_t hour=0,minuteValue=0;
+  const bool clockKnown=halClock.getTime(hour,minuteValue);
+  if(clockKnown!=launcherModel.clockKnown || (clockKnown && (hour!=launcherModel.hour||minuteValue!=launcherModel.minute)))requestUpdate();
   if(launcherStatsPending)activityManager.requestIdleWork(*this);
   const auto minute=millis()/60000;
   if(minute!=deskMinute){deskMinute=minute;requestUpdate();}
@@ -793,7 +808,9 @@ void HomeActivity::renderLauncher() {
   target.setFont(5,toybox::kHugeFontId);
   launcherLayout=homelauncher::layout(target.deviceContext().safeRect());
   launcherModel.today=launcherDay;
+  launcherModel.clockKnown=halClock.getTime(launcherModel.hour,launcherModel.minute);
   launcherModel.page=launcherPage;
+  launcherModel.widgets={homelauncher::widget(SETTINGS.zenWidgetLeft),homelauncher::widget(SETTINGS.zenWidgetRight),homelauncher::widget(SETTINGS.zenWidgetWide)};
   launcherModel.count=std::clamp(launcherCount-launcherPage*12,0,12);
   char clock[16]{};
   halClock.formatTime(clock,sizeof(clock),SETTINGS.clockFormat==1);

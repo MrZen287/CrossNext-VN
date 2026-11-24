@@ -42,13 +42,14 @@ Layout layout(fui::Rect safe,int count,bool hasBook,bool prev,bool next,bool men
   const int coverW=std::min(w*49/100,coverH*2/3);
   g.cover=makeRect(x,g.reading.y,coverW,coverH);
   const int copyX=g.cover.right()+14,copyW=x+w-copyX;
-  g.title=makeRect(copyX,g.cover.y+48,copyW,wide?48:76);
-  g.author=makeRect(copyX,g.title.bottom()+4,copyW,wide?36:54);
+  g.title=makeRect(copyX,g.cover.y+42,copyW,wide?40:64);
+  g.author=makeRect(copyX,g.title.bottom()+4,copyW,28);
   g.position=makeRect(copyX,g.author.bottom()+4,copyW,26);
   g.progress=makeRect(copyX,g.position.bottom()+4,copyW,30);
+  g.remaining=makeRect(copyX,g.progress.bottom()+2,copyW,54);
   if(hasBook)g.hits[Resume]=makeRect(copyX,g.cover.bottom()-46,copyW,44);
   const auto button=g.hits[Resume];
-  g.duo=makeRect(copyX+4,button.y-78,copyW-8,100);
+  g.duo=makeRect(copyX+4,button.y-38,copyW-8,60);
   g.cat=catForCover(g.cover);
   const int perch=wide?60:68;
   g.mascot=makeRect(g.shelf.right()-perch,g.shelf.bottom()-perch,perch,perch);

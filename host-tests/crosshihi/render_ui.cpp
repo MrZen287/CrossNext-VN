@@ -13,6 +13,8 @@
 #include "../../src/apps_local/tools/ToolsScreens.h"
 #include "../../src/apps_local/reading/ReadingStatsScreens.h"
 #include "../../src/apps_local/home/HomeLauncher.h"
+#include "../../src/apps_local/library/LibraryMenu.h"
+#include "../../src/apps_local/library/LibraryControls.h"
 #include "../../src/apps_local/ui/NavigationIcons.h"
 #include "../../src/apps_local/ui/GameMenuIcons.h"
 namespace fui=freeink::ui;
@@ -45,11 +47,20 @@ int main(int argc,char**argv){assert(argc==2);I18N.setLanguage(Language::VI);chr
  for(int mode=0;mode<5;++mode){Canvas c;toolsui::Model m;toolsui::Work w;m.year=2026;m.month=11;m.selected=m.today=today;m.dayDetail=mode==1||mode==2;m.moreDay=mode==2;m.monthPicker=mode==3;m.holidays=mode==4;toolsui::build(c.screen,m,w);c.save(std::string(argv[1])+"/calendar-"+std::to_string(mode)+".pbm");}
  {Canvas c;quickui::Model m;quickui::Work w;quickui::build(c.screen,m,w);c.save(std::string(argv[1])+"/quick.pbm");}
  for(int page=0;page<2;++page){
-  Canvas c;c.target.setFont(5,c.huge.font);homelauncher::Model m;m.page=page;m.count=page?10:12;m.today=readingstats::dayIndex({2026,11,24});m.time="07:45";m.battery=82;m.statsReady=true;m.goal=120;m.seconds={1800,3600,2700,4200,1200,4800,5700};
+  Canvas c;c.target.setFont(5,c.huge.font);homelauncher::Model m;m.page=page;m.count=page?10:12;m.today=readingstats::dayIndex({2026,11,24});m.clockKnown=true;m.hour=7;m.minute=45;m.time="07:45";m.battery=82;m.statsReady=true;m.goal=120;m.seconds={1800,3600,2700,4200,1200,4800,5700};
   m.dock={&navicons::Books32,&navicons::Stats32,&navicons::Calendar32,&navicons::Gear32};
   const homelauncher::Tile tiles[]={{tr(STR_UI_FLASHCARDS_E0439E),&navicons::Cards32},{tr(STR_UI_READING_QUEST_6AD39C),&navicons::BookOpen32},{"Mèo & Mọt",&navicons::Paw32},{tr(STR_UI_CLOCK_6E3C9D),&navicons::Clock32},{tr(STR_CALCULATOR_APP),&navicons::Calculator32},{tr(STR_UI_WALLPAPERS_2AA278),&navicons::Image32},{"SUDOKU",&gameicons::Sudoku40},{"PICROSS",&gameicons::Picross40},{"WORDLE",&gameicons::Wordle40},{tr(STR_UI_MINESWEEPER_A2F226),&gameicons::Minesweeper40},{"2048",&gameicons::Game204840},{tr(STR_UI_CHESS_902609),&gameicons::Chess40},{"GO",&gameicons::Go40},{"OTHELLO",&navicons::Othello32},{tr(STR_UI_SOLITAIRE_8C3ACB),&gameicons::Solitaire40},{tr(STR_UI_HEARTS_29FBCB),&gameicons::Hearts40},{tr(STR_UI_BATTLESHIP_4046EE),&gameicons::Battleship40},{tr(STR_UI_CONNECT_FOUR_A81733),&gameicons::ConnectFour40},{tr(STR_INTERCEPT_NAME),&gameicons::Intercept40},{"MURDLE",&gameicons::Murdle40},{tr(STR_CAR_TITLE),&gameicons::Carnivoro40},{tr(STR_CHICKEN_GAME),&navicons::Paw32}};
   for(int n=0;n<m.count;++n)m.tiles[n]=tiles[page*12+n];
   homelauncher::draw(c.target,homelauncher::layout(c.device.safeRect()),m);c.save(std::string(argv[1])+"/home2-"+std::to_string(page)+".pbm");
+ }
+
+ {Canvas c;pixelui::begin(c.screen,36);libraryui::filterTabs(c.screen,3,1);
+  fui::ListItem rows[7]{};const char* names[]={"Dế Mèn phiêu lưu ký","Nhà giả kim","Hoàng tử bé","Đi tìm lẽ sống","Totto-chan","Tuổi trẻ đáng giá bao nhiêu?","Không gia đình"};
+  for(int n=0;n<7;++n){rows[n].label=names[n];rows[n].value="epub";}
+  fui::ListProps p;libraryui::styleBookRows(p,c.target);libraryui::lightRows(p);p.items=rows;p.count=7;p.selectedIndex=-1;
+  const auto area=c.screen.body();pixelui::list(c.screen,p);
+  int black=0,all=0;for(int y=area.y;y<area.bottom();++y)for(int x=area.x;x<area.right();++x){++all;if(!(c.pixels[y*60+x/8]&(0x80>>(x%8))))++black;}
+  assert(black>100 && black<all/3);c.save(std::string(argv[1])+"/library-all.pbm");
  }
 
 }

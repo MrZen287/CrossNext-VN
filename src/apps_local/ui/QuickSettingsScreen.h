@@ -272,7 +272,7 @@ void build(Screen& screen, const Model& model, Work& work) {
     lightui::shade(screen.target(),
                    fui::makeRect(0, g.bottom, screen.device().width, screen.device().height - g.bottom));
   screen.sheet(sheet, g.bottom);
-  pixelui::copyCaps(work.label, sizeof(work.label), chrome::lightHeader ? "" : tr(STR_SETTINGS_TITLE));
+  pixelui::copyCaps(work.label, sizeof(work.label), chrome::lightHeader ? "Điều khiển" : tr(STR_SETTINGS_TITLE));
   pixelui::text(screen.target(), fui::makeRect(bar.x, bar.y, bar.width / 3, bar.height), work.label, pixelui::kSmall);
   const auto battery =
       fui::makeRect(g.header.right() - statusbattery::width - statusbattery::terminal,
@@ -356,6 +356,14 @@ void build(Screen& screen, const Model& model, Work& work) {
     if (!chrome::lightHeader)
       screen.target().fill(fui::makeRect(g.tiles.x, g.tiles.bottom() + 10, g.tiles.width, 3),
                            fui::Paint::solid(fui::Color::Black));
+  }
+  if(chrome::lightHeader){
+    const auto rule=lightui::rule;
+    screen.target().line({g.tiles.x,int16_t(g.tiles.y-8)},{g.tiles.right(),int16_t(g.tiles.y-8)},1,rule);
+    if(model.light){
+      screen.target().stroke(g.brightness,rule,1,12);
+      if(model.temperature)screen.target().stroke(g.warmth,rule,1,12);
+    }
   }
   if (model.light) {
     const int half = g.profiles.width / 2;

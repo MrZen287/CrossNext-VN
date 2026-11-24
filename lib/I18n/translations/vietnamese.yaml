@@ -8577,3 +8577,9 @@ STR_READING_BACKUP_FAILED: "Không hoàn tất. Kiểm tra bản sao lưu và du
 STR_READING_BACKUP_DONE: "Đã khôi phục. Máy sẽ khởi động lại để đọc dữ liệu."
 
 STR_READING_BACKUP_INCOMPLETE: "Khôi phục bị gián đoạn. Dữ liệu trước đó nằm trong bản sao lưu vừa tạo."
+
+STR_ZEN_WIDGETS: "Widget Home thứ hai"
+
+STR_ZEN_EDGE_GESTURES: "Vuốt mép: độ sáng / độ ấm"
+
+STR_ZEN_READING_GUIDES: "Dòng kẻ khi đọc"

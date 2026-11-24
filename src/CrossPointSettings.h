@@ -309,6 +309,8 @@ class CrossPointSettings : public PersistableStore<CrossPointSettings> {
   uint8_t shortPwrBtn = IGNORE;
   uint8_t touchPowerShortAction = 0, touchPowerLongAction = 1;
   uint8_t leftEdgeLightAction = 1, rightEdgeLightAction = 2;
+  uint8_t zenReadingGuides=1, zenGuideStyle=0;
+  uint8_t zenWidgetLeft=0, zenWidgetRight=1, zenWidgetWide=2;
   uint8_t powerWakeMode = static_cast<uint8_t>(powermenu::WakeMode::ShortPress);
   // X4 Pro: double-click power toggles the frontlight. Disabling frees the
   // power button for shortPwrBtn actions without the double-click wait.
@@ -407,7 +409,7 @@ class CrossPointSettings : public PersistableStore<CrossPointSettings> {
   uint8_t readerMenuStyle = READER_MENU_LIST;
   uint8_t readerTextTrigger = uint8_t(readertext::MenuTrigger::SwipeUp);
   // SD card font family name (empty = use built-in fontFamily)
-  char sdFontFamilyName[32] = "Noto Serif";
+  char sdFontFamilyName[32] = "Bokerlam";
   // Dictionary folder name under /dictionaries (empty = no dictionary)
   char dictionaryName[32] = "";
   char translationDictionaryName[32] = "";

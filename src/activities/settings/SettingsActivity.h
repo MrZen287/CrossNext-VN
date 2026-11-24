@@ -41,6 +41,7 @@ enum class SettingAction {
   About,
   Manga,
   ReadingBackup,
+  ZenWidgets,
 };
 
 struct SettingInfo {
