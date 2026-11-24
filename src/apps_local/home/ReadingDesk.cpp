@@ -169,9 +169,9 @@ void draw(GfxRenderer& r,Layout& g,const RecentBook* featured,const std::vector<
   if(native){
     approvedhome::draw(t,makeRect(0,0,480,800));
     BookCoverPainter nativePainter(r,t);
-    if(featured)nativePainter.paintFace(*featured,homecover::mainFace);
+    if(featured)nativePainter.paintFace(*featured,homecover::mainFace,g.cover.height);
     else {text(t,g.cover,"Mở sách từ Thư viện",1,3,false,fui::TextAlign::Center);}
-    for(int n=0;n<int(shelf.size())&&n<shelfSize;++n)nativePainter.paintFace(shelf[n],homecover::shelfFaces[n]);
+    for(int n=0;n<int(shelf.size())&&n<shelfSize;++n)nativePainter.paintFace(shelf[n],homecover::shelfFaces[n],g.hits[Recent1+n].height);
     homepaws::draw(t);catexpressions::draw(t,pose);
     t.setFont(5,toybox::kHugeFontId);t.setFont(6,toybox::kReadingBoldFontId);
     char time[16]{},date[40]{},lunar[40]{};

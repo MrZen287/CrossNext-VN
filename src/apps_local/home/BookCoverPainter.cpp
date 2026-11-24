@@ -93,13 +93,15 @@ void BookCoverPainter::paint(const RecentBook& book, fui::Rect slot, int taper, 
   if(right<=left||bottom<=top)return;
   renderer.setClipRect(left,top,right-left,bottom-top);
 
+  // Cache identity follows preparation, independently of the destination plane height.
+  const int cacheHeight=preparedHeight>0?preparedHeight:slot.height;
   bool drawn = false;
   char thumb[112]{};
   const bool xtc = FsHelpers::hasXtcExtension(book.path);
   if (FsHelpers::hasEpubExtension(book.path) || FsHelpers::hasXtcExtension(book.path)) {
     std::snprintf(thumb, sizeof(thumb), "/.crosspoint/%s_%lu/thumb_%s%d.bmp", xtc ? "xtc" : "epub",
                   static_cast<unsigned long>(std::hash<std::string>{}(book.path)),
-                  xtc && SETTINGS.xtcCoverRotation ? "ccw3_" : "", slot.height);
+                  xtc && SETTINGS.xtcCoverRotation ? "ccw3_" : "", cacheHeight);
   }
   std::string fallback;
   const char* path = thumb;
@@ -108,9 +110,9 @@ void BookCoverPainter::paint(const RecentBook& book, fui::Rect slot, int taper, 
       std::snprintf(thumb, sizeof(thumb), "/.crosspoint/xtc_%lu/cover%s.bmp",
                     static_cast<unsigned long>(std::hash<std::string>{}(book.path)),
                     SETTINGS.xtcCoverRotation ? "_ccw3" : "");
-      fallback = UITheme::getCoverThumbPath(thumb, slot.height);
+      fallback = UITheme::getCoverThumbPath(thumb, cacheHeight);
     } else
-      fallback = UITheme::getCoverThumbPath(book.coverBmpPath, slot.height);
+      fallback = UITheme::getCoverThumbPath(book.coverBmpPath, cacheHeight);
     path = fallback.c_str();
   }
   if (*path && Storage.openFileForRead("HOME", path, coverFile)) {
@@ -160,7 +162,7 @@ void BookCoverPainter::paint(const RecentBook& book, fui::Rect slot, int taper, 
       });
 }
 
-void BookCoverPainter::paintFace(const RecentBook& book,const homecover::CoverFace& plane){
+void BookCoverPainter::paintFace(const RecentBook& book,const homecover::CoverFace& plane,int sourceHeight){
  if(!plane.valid())return;
- warped=true;face=plane;paint(book,plane.bounds(),0,Fit::Stretch);warped=false;
+ preparedHeight=sourceHeight;warped=true;face=plane;paint(book,plane.bounds(),0,Fit::Stretch);warped=false;preparedHeight=0;
 }
