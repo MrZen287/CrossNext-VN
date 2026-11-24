@@ -33,6 +33,7 @@
 
 #include "../../../lib/GfxRenderer/RevealedInteractions.h"
 #include "BackButton.h"
+#include "ZenChrome.h"
 #include "ToyboxText.h"
 #include "ToyboxTokens.h"
 
@@ -269,158 +270,23 @@ inline int16_t headerTitleWidth(Screen& screen, const freeink::ui::Rect& band, c
 // this function, and a rule added to one copy at a time is a rule the
 // twenty-fifth copy will not have.
 inline void headerBand(Screen& screen, const freeink::ui::HeaderProps& props) {
-  namespace fui = freeink::ui;
-  // Absolute chrome, done HERE so no screen can forget it. It was an opt-in
-  // call placed before this one, and screens forgot it exactly the way they
-  // forgot the rule: Yahtzee called it on its menu and not on its card or its
-  // result, so the card's band began at the bezel's safe top instead of row 0
-  // and painted 85 rows where the menu painted 76. Mario saw the two screens
-  // side by side and asked why one header was taller, which is the only way
-  // this was ever going to be found -- every band looks right alone.
-  //
-  // Safe to do unconditionally: it is idempotent for the 25 screens that
-  // already call it, and no screen in the fork insets its content before its
-  // band, so there is no inset here to clobber.
+  namespace fui=freeink::ui;
   absoluteChrome(screen);
-  // Reserve the shared band and body gap so existing board geometry stays stable.
-  auto band = screen.takeTop(screen.theme().headerHeight, kBandRuleGap + kRule);
-  if (screen.device().height > screen.device().width)
-    band.height = screen.frame().safeRect().y + kMenuHeaderVisibleHeight;
-  chrome::headerHeight = band.bottom();
-  const int16_t safeTop = screen.frame().safeRect().y;
-  const int16_t inkTop = band.y > safeTop ? band.y : safeTop;
-  const fui::StyleSet& styles = props.styles.unset() ? screen.theme().popup : props.styles;
-  // Paint first, ink second: header() fills its own rect in the same colour, so
-  // the two agree wherever they overlap. Square and borderless, which every
-  // band in this fork is (popup radius 0, headerUnderline 0): a rounded or
-  // top-bordered band would need its corners and its rule carried up here too.
-  screen.target().fill(fui::makeRect(0, 0, screen.device().screen().width, band.bottom()),
-                       styles.resolve(fui::StateNormal).background);
-  // Keep the body reservation while leaving a clear gap below the band.
-
-  // The rect the component is really handed, which is the band CLIPPED to the
-  // visible rows: the bezel hides the top ten, and the ink stays below them.
-  // The fitting is done against this one and not against the band, because the
-  // component sizes its leading and trailing buttons from `rect.height - 8` --
-  // measuring those against the taller band reserved ten pixels the title was
-  // then never given back.
-  const int rightInset = screen.device().width - screen.device().safeRect().right();
-  auto ink = fui::makeRect(band.x, inkTop, band.width - rightInset - screen.headerStatus().reserve() - 6,
-                           static_cast<int16_t>(band.bottom() - inkTop));
-
-  fui::HeaderProps fitted = props;
-  const bool ownBack = screen.device().hasTouch && !props.leadingIcon && !props.leadingIconAsset;
-  const auto back = backui::rect(screen.device(), band);
-  if (ownBack) fitted.leftReserve += backui::kReserve;
-  backui::publish(ownBack, back);
-  // The theme substitutions Screen::header() is about to make, made here first
-  // because the fitting needs the real style and the real padding. Taking the
-  // theme's title style whole -- rather than building one -- is what keeps the
-  // band's ink WHITE: titleText.color is White in the tokens precisely because
-  // this band is always solid black, and a style assembled field by field here
-  // would paint every title in the fork black on black.
-  if (fui::textStyleUnset(fitted.titleText)) {
-    fitted.titleText = screen.theme().titleText;
-    fitted.titleText.align = screen.theme().headerTitleAlign;
-  }
-  if (fui::textStyleUnset(fitted.subtitleText)) fitted.subtitleText = screen.theme().smallText;
-  // trailingText too, and it is not a tidy-up: headerTitleWidth measures the
-  // trailing button's LABEL to know how much of the band it takes, and an
-  // unset style measures it at font 0 -- the SMALL slot -- while the component
-  // draws it at BODY. On the Hacker News band those are toybox_10 and
-  // reading_serif_14, so "SAVED" measured 51px against the 91px it really
-  // occupies and the fit believed it had 40px it did not have. The error
-  // points the wrong way: the ladder declines to step down and the renderer
-  // cuts instead.
-  if (fui::textStyleUnset(fitted.trailingText)) fitted.trailingText = screen.theme().bodyText;
-  if (fitted.sidePadding < 0) fitted.sidePadding = screen.theme().headerSidePadding;
-  if (fitted.titleText.font == kDisplayFont) fitted.titleText.font = kUiFont;
-  const fui::TextStyle asked = fitted.titleText;
-  std::string title =
-      fittedTitle(screen.target(), fitted.title, headerTitleWidth(screen, ink, fitted), fitted.titleText);
-  fui::TextStyle clockStyle;
-  clockStyle.font = fui::HEADER_CLOCK_FONT;
-  clockStyle.color = fui::Color::White;
-  const int titleWidth = screen.target().measureText(fitted.titleText.font, title.c_str(), fitted.titleText).width;
-  const int clockSpace = std::max(0, headerTitleWidth(screen, ink, fitted) - titleWidth - 14);
-  const auto clock =
-      fui::headerClockRect(screen.target(), fui::makeRect(ink.right() - clockSpace - 6, ink.y, clockSpace, ink.height),
-                           screen.headerStatus().clock, clockStyle);
-  if (!clock.empty()) ink.width -= clock.width + 14;
-  screen.setHeaderReserve(band.width - ink.width);
-  // A fitted style that reads as DEFAULT would be replaced by the theme's own
-  // inside Screen::header(), putting the cut we just chose back to the display
-  // one -- silently, and only on the longest strings. FONT_SLOT_SMALL is 0, so
-  // a title stepped all the way down with every other field left alone is one
-  // field away from that. Toybox's own titleText is White and cannot reach it;
-  // a caller supplying a black, left-aligned title style could. Rather than
-  // emit a style that will be undone, keep the cut that caller asked for and
-  // let fitLines mark the overflow instead.
-  if (fui::textStyleUnset(fitted.titleText) && !fui::textStyleUnset(asked)) {
-    fitted.titleText = asked;
-    title = fitLines(screen.target(), props.title, headerTitleWidth(screen, ink, fitted), 1, fitted.titleText);
-  }
-  if (fitted.title != nullptr) fitted.title = title.c_str();
-
-  // A TITLE WHOSE LINE BOX DOES NOT FIT THE BAND IS TOP-ALIGNED, NOT CENTRED,
-  // and that leaves it sitting on the band's bottom edge.
-  //
-  // The component centres a line box when it fits and clamps it to the top of
-  // the rect when it does not. The display cut's box is 63px and carries 13 of
-  // air above its capitals, so on a 56px band -- safe rect 3..56, 53 tall --
-  // the caps land at 16..54: sixteen pixels of headroom and two of clearance.
-  // Mario saw it as the title touching the bottom of the header, and measuring
-  // it agreed to the pixel.
-  //
-  // So when the box overflows, the rect is shifted up by exactly enough to put
-  // the CAP BAND in the middle of the band instead. Nothing else moves: the
-  // shift is zero whenever the line box fits, which is every one of the fork's
-  // 76px headers. Only the two landscape card games run a 56px band, and both
-  // draw their own header buttons, so nothing the component positions from
-  // this rect travels with it.
-  fui::Rect titleRect = ink;
-  if (fitted.title != nullptr) {
-    const int16_t lineHeight = screen.target().lineHeight(fitted.titleText.font);
-    const CutMetrics* cut = cutForLineHeight(lineHeight);
-    if (cut != nullptr && lineHeight > ink.height) {
-      const int16_t wantedCapTop = static_cast<int16_t>(band.y + (band.height - cut->inkHeight) / 2);
-      const int16_t capTopNow = static_cast<int16_t>(ink.y + (cut->ascender - cut->inkHeight));
-      titleRect.y = static_cast<int16_t>(ink.y - (capTopNow - wantedCapTop));
-      titleRect.height = static_cast<int16_t>(ink.height + (capTopNow - wantedCapTop));
-    }
-  }
-
-  screen.header(fitted, titleRect);
-  if (ownBack) backui::paint(screen.target(), back);
-  const auto& battery = screen.headerStatus();
-  if (!clock.empty()) screen.target().text(clock, battery.clock, clockStyle);
-  if (battery.percent >= 0) {
-    const auto safe = screen.device().safeRect();
-    const auto paper = fui::Paint::solid(fui::Color::White);
-    const auto black = fui::Paint::solid(fui::Color::Black);
-    const auto box = fui::makeRect(safe.right() - 44, ink.y + (ink.height - 19) / 2, 30, 19);
-    screen.target().stroke(box, paper, 2);
-    screen.target().fill(fui::makeRect(box.right(), box.y + 5, 4, 9), paper);
-    screen.target().fill(fui::makeRect(box.x + 4, box.y + 4,
-                                       (box.width - 8) * std::clamp(battery.percent, 0, 100) / 100, box.height - 8),
-                         paper);
-    if (battery.charging) {
-      screen.target().line({int16_t(box.x + 18), int16_t(box.y)}, {int16_t(box.x + 12), int16_t(box.y + 11)}, 2, black);
-      screen.target().line({int16_t(box.x + 12), int16_t(box.y + 11)}, {int16_t(box.x + 19), int16_t(box.y + 9)}, 2,
-                           black);
-      screen.target().line({int16_t(box.x + 19), int16_t(box.y + 9)}, {int16_t(box.x + 14), int16_t(box.y + 20)}, 2,
-                           black);
-    }
-    if (battery.showPercent) {
-      char value[8];
-      std::snprintf(value, sizeof(value), "%d%%", std::clamp(battery.percent, 0, 100));
-      fui::TextStyle style;
-      style.font = 3;
-      style.color = fui::Color::White;
-      style.align = fui::TextAlign::Right;
-      screen.target().text(fui::makeRect(box.x - 64, ink.y, 58, ink.height), value, style);
-    }
-  }
+  screen.takeBottom(zenchrome::height);
+  auto band=screen.takeTop(screen.theme().headerHeight,kBandRuleGap+kRule);
+  const auto safe=screen.device().safeRect();
+  band.y=safe.y;band.height=std::max(44,int(band.bottom()-safe.y));
+  auto fitted=props;
+  fitted.status.showBattery=false;fitted.status.clockText=nullptr;
+  // App-specific leading actions remain; the common Back target is in the footer.
+  fitted.titleText.color=fui::Color::Black;fitted.titleText.font=1;
+  fitted.styles.explicitlySet=true;
+  fitted.styles.normal.background=fui::Paint::solid(fui::Color::White);
+  fitted.styles.normal.foreground=fui::Paint::solid(fui::Color::Black);
+  screen.header(fitted,band);
+  const auto& status=screen.headerStatus();
+  zenchrome::draw(screen.target(),screen.device(),status.clock,status.percent,true);
+  screen.setHeaderReserve(0);chrome::headerHeight=0;
 }
 
 // The rect headerBand() painted, asked for rather than reconstructed.

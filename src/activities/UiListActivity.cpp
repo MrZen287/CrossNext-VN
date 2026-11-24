@@ -166,6 +166,12 @@ void UiListActivity::drawChrome() {
 }
 
 void UiListActivity::drawFooter() {
+  if(mappedInput.hasTouch()) {
+    auto target=toybox::makeTarget(renderer);pixelui::bindFonts(target,renderer);
+    const auto status=toybox::headerStatus(renderer);
+    zenchrome::draw(target,target.deviceContext(),status.clock,status.percent,true);
+    return;
+  }
   const auto labels = mappedInput.mapLabels(tr(STR_BACK), tr(STR_SELECT), tr(STR_DIR_UP), tr(STR_DIR_DOWN));
   GUI.drawButtonHints(renderer, labels.btn1, labels.btn2, labels.btn3, labels.btn4);
 }

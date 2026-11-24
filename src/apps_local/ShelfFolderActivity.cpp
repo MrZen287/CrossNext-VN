@@ -278,7 +278,7 @@ void ShelfFolderActivity::render(RenderLock&&) {
   const fui::DeviceContext device = target.deviceContext();
   const fui::InputSnapshot noInput{};
   interactionsReady = false;
-  toybox::Frame frame(target, device, noInput, interactions);
+  toybox::Frame frame(target, device, noInput, interactions,nullptr,toybox::headerStatus(renderer));
   toybox::Screen screen(frame);
 
   // Keep the selection on screen. The list is virtualized, so a selection below
@@ -328,5 +328,6 @@ void ShelfFolderActivity::render(RenderLock&&) {
       choosing ? mappedInput.mapLabels(tr(STR_DONE), tr(STR_UI_SHOW_HIDE_06C236), tr(STR_2048_UP), tr(STR_2048_DOWN))
                : mappedInput.mapLabels(tr(STR_QUEST_BACK), tr(STR_OPEN), tr(STR_2048_UP), tr(STR_2048_DOWN));
   GUI.drawButtonHints(renderer, labels.btn1, labels.btn2, labels.btn3, labels.btn4);
+  {const auto status=toybox::headerStatus(renderer);zenchrome::draw(target,device,status.clock,status.percent,true);}
   renderer.displayBuffer();
 }

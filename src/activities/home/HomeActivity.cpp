@@ -749,6 +749,10 @@ void HomeActivity::loopReadingDesk() {
     activateReadingDesk(swipe == Swipe::Left ? readingdesk::Next : readingdesk::Previous);
     return;
   }
+  if (!deskMenuOpen && horizontal) {
+    activateReadingDesk(swipe == Swipe::Left ? readingdesk::Library : readingdesk::Apps);
+    return;
+  }
   if (tapped) {
     deskFocus = readingdesk::None;
     activateReadingDesk(deskLayout.at(x, y));

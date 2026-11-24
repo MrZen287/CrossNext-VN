@@ -82,6 +82,12 @@ void ToolsActivity::action(fui::ActionId a, int value) {
   switch (a) {
     case Previous:
     case Next: {
+      if(model.dayDetail){
+        model.selected=std::clamp(model.selected+(a==Next?1:-1),readingstats::dayIndex({1970,1,1}),readingstats::dayIndex({2199,12,31}));
+        const auto d=readingstats::dateFromDay(model.selected);model.year=d.year;model.month=d.month;model.almanacPage=0;break;
+      }
+      if(model.monthPicker){model.year=std::clamp(model.year+(a==Next?1:-1),1970,2199);break;}
+
       int n = model.year * 12 + model.month - 1 + (a == Next ? 1 : -1);
       n = std::clamp(n, 1970 * 12, 2199 * 12 + 11);
       model.year = n / 12;
@@ -89,6 +95,7 @@ void ToolsActivity::action(fui::ActionId a, int value) {
       break;
     }
     case Today:
+      model.dayDetail=model.monthPicker=model.moreDay=model.holidays=false;
       updateTime(true);
       model.selected = model.validTime ? model.today : readingstats::dayIndex({model.year, model.month, 1});
       break;
@@ -99,7 +106,15 @@ void ToolsActivity::action(fui::ActionId a, int value) {
     case SelectDay:
       if (value < 1 || value > readingstats::daysInMonth(model.year, model.month)) return;
       model.selected = readingstats::dayIndex({model.year, model.month, value});
+      model.dayDetail=true;model.moreDay=false;model.almanacPage=0;
       break;
+    case MonthPicker:model.monthPicker=true;model.holidays=false;break;
+    case PickMonth:if(value>=1&&value<=12){model.month=value;model.monthPicker=false;model.dayDetail=false;}break;
+    case CloseCalendarPanel:model.dayDetail=model.monthPicker=model.moreDay=model.holidays=false;break;
+    case DayMore:model.moreDay=!model.moreDay;model.almanacPage=0;break;
+    case AlmanacPage:model.almanacPage=std::clamp(value,0,113);break;
+    case CalendarMonths:model.holidays=false;model.dayDetail=false;break;
+    case CalendarHolidays:model.holidays=true;model.dayDetail=false;model.monthPicker=false;break;
     case HourFormat:
       state.twelveHour = !state.twelveHour;
       model.twelveHour = state.twelveHour;
@@ -182,6 +197,7 @@ void ToolsActivity::lookupDate(bool lunar) {
     model.year = date.year;
     model.month = date.month;
     model.selected = *day;
+    model.dayDetail=true;model.monthPicker=model.moreDay=model.holidays=false;model.almanacPage=0;
   });
 }
 void ToolsActivity::counterLoop() {
@@ -251,6 +267,11 @@ void ToolsActivity::loop() {
   }
   RenderLock lock(*this);
   if (mappedInput.wasReleased(MappedInputManager::Button::Back)) {
+    if(kind==toolsui::Kind::Calendar&&(model.dayDetail||model.monthPicker||model.holidays)){
+      if(model.moreDay)model.moreDay=false;
+      else model.dayDetail=model.monthPicker=model.holidays=false;
+      ready=false;requestUpdate();return;
+    }
     if (model.confirm) {
       action(toolsui::CancelReset);
       return;
@@ -273,6 +294,10 @@ void ToolsActivity::loop() {
     action(kind == toolsui::Kind::Counter ? toolsui::Add
            : kind == toolsui::Kind::Clock ? toolsui::Appearance
                                           : toolsui::Today);
+  const auto swipe=mappedInput.wasSwipe();
+  if(kind==toolsui::Kind::Calendar&&(swipe==MappedInputManager::SwipeDir::Left||swipe==MappedInputManager::SwipeDir::Right)){
+    action(swipe==MappedInputManager::SwipeDir::Left?toolsui::Next:toolsui::Previous);return;
+  }
   if (mappedInput.wasReleased(MappedInputManager::Button::Left)) action(toolsui::Previous);
   if (mappedInput.wasReleased(MappedInputManager::Button::Right)) action(toolsui::Next);
   if (ready && !model.confirm) {

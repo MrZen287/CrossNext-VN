@@ -83,9 +83,9 @@ void LibraryListActivity::onEnter() {
   entryStartedAt = millis();
   // Register the shell before any index, pruning, or cover I/O.
   RenderLock lock(*this);
-  activeTabIndex = 0;
+  activeTabIndex = 3; // All books, not the recently opened subset.
   descendingTabs = SETTINGS.librarySortDirections & 1u;
-  sortOrder = descendingTabs & 1 ? library::SortOrder::RecentDesc : library::SortOrder::RecentAsc;
+  sortOrder = library::SortOrder::TitleAsc;
   UiTabListActivity::onEnter();
   app.on(ACTION_SEARCH, &LibraryListActivity::searchActionTrampoline, this);
   app.on(ACTION_REBUILD, &LibraryListActivity::rebuildActionTrampoline, this);
@@ -772,7 +772,9 @@ void LibraryListActivity::buildPreferences(UiScreen& screen) {
 }
 
 void LibraryListActivity::stepTab(const int direction) {
-  selectTab((activeTabIndex + (direction > 0 ? 1 : -1) + 3) % 3, false);
+  constexpr int order[]={3,0,1,2};
+  int at=0;for(int n=0;n<4;++n)if(order[n]==activeTabIndex)at=n;
+  selectTab(order[(at+(direction>0?1:3))%4],false);
 }
 
 void LibraryListActivity::onTabAction(const int index) {
@@ -781,7 +783,7 @@ void LibraryListActivity::onTabAction(const int index) {
 }
 
 void LibraryListActivity::selectTab(const int index, const bool) {
-  if (index < 0 || index > 2) return;
+  if (index < 0 || index > 3) return;
   if (index == 1) {
     openCollections();
     return;
@@ -791,11 +793,11 @@ void LibraryListActivity::selectTab(const int index, const bool) {
     return;
   }
   RenderLock lock;
-  const bool reuseRecent = isRecentSort(sortOrder) && !facetFilter.active() && query.empty() && !groupsCollapsed;
+  const bool reuseRecent = index==0 && isRecentSort(sortOrder) && !facetFilter.active() && query.empty() && !groupsCollapsed;
   closeRouting();
   view = View::Books;
-  activeTabIndex = 0;
-  sortOrder = descendingTabs & 1 ? library::SortOrder::RecentDesc : library::SortOrder::RecentAsc;
+  activeTabIndex = index;
+  sortOrder = index==3 ? library::SortOrder::TitleAsc : descendingTabs & 1 ? library::SortOrder::RecentDesc : library::SortOrder::RecentAsc;
   facetChoices.deactivate();
   facetFilter = {};
   query.clear();
@@ -822,7 +824,7 @@ void LibraryListActivity::openCollections(const std::string& book) {
       finish();
       return;
     }
-    const int tab = selection && selection->action == 2 ? 2 : 0;
+    const int tab = selection && selection->action == 3 ? 3 : selection && selection->action == 2 ? 2 : 0;
     lock.unlock();
     selectTab(tab, true);
   });
@@ -1018,12 +1020,12 @@ void LibraryListActivity::toggleSortDirection() {
   requestUpdate();
 }
 
-int LibraryListActivity::tabCount() const { return 3; }
+int LibraryListActivity::tabCount() const { return 4; }
 
 int LibraryListActivity::activeTab() const { return activeTabIndex; }
 
 const char* LibraryListActivity::tabLabel(const int index) const {
-  return index == 0 ? tr(STR_LIBRARY_TAB_RECENT) : index == 1 ? tr(STR_COLLECTIONS) : tr(STR_LIBRARY_FILTER);
+  return index == 3 ? "Tất cả" : index == 0 ? tr(STR_LIBRARY_TAB_RECENT) : index == 1 ? tr(STR_COLLECTIONS) : tr(STR_LIBRARY_FILTER);
 }
 
 fui::TabIndicator LibraryListActivity::tabIndicator(const int) const { return fui::TabIndicator::None; }
@@ -1715,7 +1717,7 @@ bool LibraryListActivity::handleCustomInput() {
     }
   }
   if (mappedInput.wasSwipe() == MappedInputManager::SwipeDir::Right) {
-    if (view == View::Categories || (view == View::Books && activeTabIndex == 0))
+    if (view == View::Categories || (view == View::Books && (activeTabIndex == 0 || activeTabIndex == 3)))
       onGoHome();
     else
       handleBackAction();
@@ -2317,6 +2319,7 @@ void LibraryListActivity::runIdleWork() {
 }
 
 void LibraryListActivity::drawFooter() {
+  if(mappedInput.hasTouch()){UiListActivity::drawFooter();return;}
   if (!libraryReady()) return;
   if (view != View::Books) {
     UiListActivity::drawFooter();

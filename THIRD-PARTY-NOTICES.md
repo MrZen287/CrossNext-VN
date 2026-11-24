@@ -189,3 +189,6 @@ The decoder includes local bounds and palette-initialization patches in
 ## Book Pet (CrossZen 1.1.1.3)
 
 Care engine, persistent pet state and original pixel sprites adapted from https://github.com/unipheas/book-pet-x3 (MIT; Copyright2026 Brian Phillips and Book Pet contributors). Full license: licenses/BookPet-MIT.txt. The CrossZen adaptation uses its own X4 Pro input/display wrapper, separate NVS namespace and care/play-based progression; reading rewards and the original hardware/update implementation are not included.
+
+## Lunar almanac data
+Offline 2026–2028 solar-term/officer/activity tables derive from 6tail/lunar-javascript, copyright (c) 2018 6tail, MIT. See licenses/Lunar-Javascript-MIT.txt and docs/crosshihi/almanac.md. Vietnamese lunar conversion remains separate.

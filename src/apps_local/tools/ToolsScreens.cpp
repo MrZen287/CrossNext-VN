@@ -13,6 +13,10 @@
 #include "../ui/ToyboxIcons.h"
 #include "VietnameseLunar.h"
 #include "CalendarLabels.h"
+#include "Almanac.h"
+#include "../ui/CalendarIllustration.h"
+#include "../../activities/boot_sleep/LunarCoverDigits.h"
+#include "../ui/FitText.h"
 
 namespace toolsui {
 namespace fui = freeink::ui;
@@ -65,23 +69,22 @@ CalendarGrid calendarGrid(fui::Rect body, const Model& m) {
   return {fui::makeRect(body.x, body.y + navH + gap, body.width, body.height - navH - gap - footer), offset, days,
           1 + (offset + days + 6) / 7};
 }
-void calendar(toybox::Screen& s, const Model& m, Work& w, fui::Rect body) {
+void legacyCalendar(toybox::Screen& s, const Model& m, Work& w, fui::Rect body) {
   const bool wide = body.width > body.height;
   const int navH = wide ? 42 : 58, gap = 10, rotateH = wide ? 40 : 56;
   std::snprintf(w.label, sizeof(w.label), "%s %d", I18N.get(months[m.month - 1]), m.year);
   caps(s, w, fui::makeRect(body.x + navH + 8, body.y, body.width - 2 * navH - 16, navH), w.label);
+  s.frame().hit(fui::makeRect(body.x+navH+8,body.y,body.width-2*navH-16,navH),MonthPicker);
   button(s, w, fui::makeRect(body.x, body.y, navH, navH), "<", Previous);
   button(s, w, fui::makeRect(body.right() - navH, body.y, navH, navH), ">", Next);
   const int first = readingstats::dayIndex({m.year, m.month, 1});
   const auto layout = calendarGrid(body, m);
   const int offset = layout.offset, days = layout.days, rows = layout.rows;
   const auto grid = layout.rect;
-  static constexpr StrId names[] = {StrId::STR_READING_MON, StrId::STR_READING_TUE, StrId::STR_READING_WED,
-                                    StrId::STR_READING_THU, StrId::STR_READING_FRI, StrId::STR_READING_SAT,
-                                    StrId::STR_READING_SUN};
+  static constexpr const char* names[]={"T2","T3","T4","T5","T6","T7","CN"};
   for (int col = 0; col < 7; ++col) {
     const int x = grid.x + col * grid.width / 7, right = grid.x + (col + 1) * grid.width / 7;
-    caps(s, w, fui::makeRect(x, grid.y, right - x, grid.height / rows), I18N.get(names[(col + (m.sunday ? 6 : 0)) % 7]),
+    caps(s, w, fui::makeRect(x, grid.y, right - x, grid.height / rows), names[(col + (m.sunday ? 6 : 0)) % 7],
          0);
   }
   for (int d = 1; d <= days; ++d) {
@@ -90,29 +93,31 @@ void calendar(toybox::Screen& s, const Model& m, Work& w, fui::Rect body) {
     const auto cell =
         fui::makeRect(x, y, grid.x + (col + 1) * grid.width / 7 - x, grid.y + (row + 1) * grid.height / rows - y);
     const bool selected = first + d - 1 == m.selected;
-    if (selected) s.target().fill(cell, ink);
+    if (selected) s.target().fill(cell, ink,5);
+    if(first+d-1==m.today&&!selected)s.target().stroke(cell.inset({2,2,2,2}),ink,2,5);
     const auto color = selected ? fui::Color::White : fui::Color::Black;
     const auto lunar = vietnameselunar::fromCivilDay(first + d - 1, m.year);
-    const int solarHeight = lunar.day ? cell.height / 2 : cell.height;
+    const bool dual=lunar.day&&cell.height>=42;
+    const int solarHeight = dual ? cell.height-19 : cell.height;
     std::snprintf(w.label, sizeof(w.label), "%d", d);
-    pixelui::text(s.target(), fui::makeRect(cell.x, cell.y, cell.width, solarHeight), w.label, 1, color,
-                  fui::TextAlign::Center);
-    if (lunar.day) {
+    pixelui::text(s.target(), fui::makeRect(cell.x, cell.y, cell.width, solarHeight), w.label, 0, color,
+                  fui::TextAlign::Center,true);
+    if (dual) {
       if (lunar.day == 1) {
         std::snprintf(w.label, sizeof(w.label), "1/%d%s", lunar.month, lunar.leap ? "*" : "");
       } else {
         std::snprintf(w.label, sizeof(w.label), "%d", lunar.day);
       }
       pixelui::text(s.target(), fui::makeRect(cell.x, cell.y + solarHeight, cell.width, cell.height - solarHeight),
-                    w.label, 0, color, fui::TextAlign::Center);
+                    w.label, 3, color, fui::TextAlign::Center);
     }
   }
   for (int col = 1; col < 7; ++col)
     s.target().line({int16_t(grid.x + col * grid.width / 7), grid.y},
-                    {int16_t(grid.x + col * grid.width / 7), grid.bottom()}, 2, ink);
+                    {int16_t(grid.x + col * grid.width / 7), grid.bottom()}, 1, fui::Paint::dither(fui::Color::LightGray));
   for (int row = 1; row < rows; ++row)
     s.target().line({grid.x, int16_t(grid.y + row * grid.height / rows)},
-                    {grid.right(), int16_t(grid.y + row * grid.height / rows)}, 2, ink);
+                    {grid.right(), int16_t(grid.y + row * grid.height / rows)}, 1, fui::Paint::dither(fui::Color::LightGray));
   lightui::outline(s.target(), grid, ink, pixelui::kBorder);
   s.frame().hit(grid, SelectDay, 0, fui::InputTouch | fui::InputPointerOnly);
   const int dayTop = grid.y + grid.height / rows;
@@ -154,7 +159,98 @@ void calendar(toybox::Screen& s, const Model& m, Work& w, fui::Rect body) {
   const int actionsY = body.bottom() - rotateH;
   button(s, w, fui::makeRect(body.x, actionsY, third, rotateH), tr(STR_CALENDAR_GO_SOLAR), GoToSolar);
   button(s, w, fui::makeRect(body.x + third + gap, actionsY, third, rotateH), tr(STR_CALENDAR_GO_LUNAR), GoToLunar);
-  button(s, w, fui::makeRect(body.right() - third, actionsY, third, rotateH), tr(STR_QUICK_ROTATE), Rotate);
+  button(s, w, fui::makeRect(body.right() - third, actionsY, third, rotateH), "Chọn tháng", MonthPicker);
+}
+void note(toybox::Screen& s,fui::Rect r,const char* value,int font=0,bool bold=false,fui::TextAlign align=fui::TextAlign::Left){
+ fui::TextStyle style;style.font=font;style.maxLines=std::max(1,int(r.height)/std::max(1,int(s.target().lineHeight(font))));style.bold=bold;style.align=align;s.target().text(r,value,style);
+}
+void dateFooter(toybox::Screen& s,const Model& m,Work& w,fui::Rect body){
+ const int h=40,y=body.bottom()-h,third=(body.width-12)/3;
+ control(s,w,fui::makeRect(body.x,y,third,h),m.moreDay?"Tờ lịch ngày":"Lịch tháng",m.moreDay?DayMore:CloseCalendarPanel);
+ control(s,w,fui::makeRect(body.x+third+6,y,third,h),"‹ Ngày trước",Previous);
+ control(s,w,fui::makeRect(body.x+2*third+12,y,third,h),"Ngày sau ›",Next);
+ (void)m;
+}
+void dayDetails(toybox::Screen& s,const Model& m,Work& w,fui::Rect body){
+ const auto d=readingstats::dateFromDay(m.selected);const auto l=vietnameselunar::fromCivilDay(m.selected,d.year);const auto* data=almanac::find(m.selected);
+ char value[256],cc[64];const bool wide=body.width>body.height;
+ if(wide&&!m.moreDay){
+  const int leftW=body.width/3;auto left=fui::makeRect(body.x,body.y,leftW,body.height-48);
+  calendarart::draw(s.target(),left);
+  note(s,fui::makeRect(left.x,left.y,left.width,30),I18N.get(weekdays[readingstats::weekday(m.selected)]),0,true,fui::TextAlign::Center);
+  std::snprintf(value,sizeof(value),"%d",d.day);numerals::draw(s.target(),fui::makeRect(left.x+20,left.y+36,left.width-40,110),value,fui::Color::Black,lunarSleepCalendar::coverFace);
+  std::snprintf(value,sizeof(value),"Tháng %d · %d",d.month,d.year);note(s,fui::makeRect(left.x,left.y+154,left.width,30),value,0,true,fui::TextAlign::Center);
+  almanac::canChiYear(l.year,cc,sizeof(cc));std::snprintf(value,sizeof(value),"%d.%d âm · %s",l.day,l.month,cc);note(s,fui::makeRect(left.x,left.y+190,left.width,48),value,3,false,fui::TextAlign::Center);
+  const int x=left.right()+16,width=body.right()-x;int y=body.y;
+  if(data){
+   std::snprintf(value,sizeof(value),"%s · %s",almanac::auspiciousDay(m.selected,l)?"Hoàng đạo":"Hắc đạo",almanac::daySpirit(m.selected,l));note(s,fui::makeRect(x,y,width,30),value,0,true);y+=32;
+   almanac::canChiDay(m.selected,cc,sizeof(cc));std::snprintf(value,sizeof(value),"%s · %s · Trực %s",almanac::solarTerm(data->term),cc,almanac::officer(data->officer));note(s,fui::makeRect(x,y,width,30),value,3);y+=34;
+   for(int c=0;c<2;++c){const auto* mask=c?data->ji:data->yi;int id=almanac::activityAt(mask,0);std::snprintf(value,sizeof(value),"%s: %s",c?"Nên tránh":"Nên làm",id>=0?almanac::activity(id):"Không ghi mục cụ thể");note(s,fui::makeRect(x,y,width,42),value,0);y+=46;}
+   control(s,w,fui::makeRect(x,body.bottom()-90,width,36),"Xem đầy đủ · Lịch dân gian",DayMore);
+  }else note(s,fui::makeRect(x,y,width,80),"Dữ liệu dân gian chỉ có trong 2026–2028.");
+  dateFooter(s,m,w,body);return;
+ }
+ if(m.moreDay){
+  std::snprintf(value,sizeof(value),"%02d.%02d.%d · %d.%d âm lịch",d.day,d.month,d.year,l.day,l.month);
+  note(s,fui::makeRect(body.x,body.y,body.width,32),value,1,true);
+  almanac::canChiDay(m.selected,cc,sizeof(cc));std::snprintf(value,sizeof(value),"Ngày %s · %s",cc,data?almanac::solarTerm(data->term):"Ngoài dữ liệu 2026–2028");
+  note(s,fui::makeRect(body.x,body.y+38,body.width,36),value);
+  almanac::canChiMonth(l,cc,sizeof(cc));std::snprintf(value,sizeof(value),"Tháng %s · Trực %s",cc,data?almanac::officer(data->officer):"—");note(s,fui::makeRect(body.x,body.y+76,body.width,32),value);
+  std::snprintf(value,sizeof(value),"Ngày kỵ: %s",almanac::avoidedDay(l));note(s,fui::makeRect(body.x,body.y+110,body.width,42),value);
+  if(data){
+   const int areaTop=body.y+162,areaH=body.height-248,rows=std::max(1,areaH/38),half=(body.width-12)/2;
+   const unsigned total=std::max(almanac::activityTotal(data->yi),almanac::activityTotal(data->ji));const int pages=std::max(1,(int(total)+std::max(1,rows-1)-1)/std::max(1,rows-1));const int page=std::min(m.almanacPage,pages-1);
+   for(int col=0;col<2;++col){const auto* mask=col?data->ji:data->yi;const int x=body.x+col*(half+12);note(s,fui::makeRect(x,areaTop,half,28),col?"NÊN TRÁNH":"NÊN LÀM",0,true);
+    for(int n=0;n<rows-1;++n){const int id=almanac::activityAt(mask,page*(rows-1)+n);if(id<0)break;note(s,fui::makeRect(x,areaTop+30+n*38,half,36),almanac::activity(id));}
+   }
+   const int maxPages=std::max(1,(int(total)+std::max(1,rows-1)-1)/std::max(1,rows-1));
+   control(s,w,fui::makeRect(body.x,body.bottom()-84,64,36),"‹",AlmanacPage,std::max(0,page-1));
+   std::snprintf(value,sizeof(value),"%d / %d · Theo lịch dân gian",std::min(page+1,maxPages),maxPages);note(s,fui::makeRect(body.x+70,body.bottom()-84,body.width-140,36),value,3,false,fui::TextAlign::Center);
+   control(s,w,fui::makeRect(body.right()-64,body.bottom()-84,64,36),"›",AlmanacPage,std::min(page+1,maxPages-1));
+  }else note(s,fui::makeRect(body.x,body.y+180,body.width,70),"Chưa có dữ liệu dân gian ngoài 2026–2028.");
+  dateFooter(s,m,w,body);return;
+ }
+ const int top=body.y,headerH=wide?116:274;const auto head=fui::makeRect(body.x,top,body.width,headerH);
+ calendarart::draw(s.target(),fui::makeRect(head.x,head.y+30,head.width,headerH-76));
+ note(s,fui::makeRect(head.x,head.y,head.width,32),I18N.get(weekdays[readingstats::weekday(m.selected)]),1,true,fui::TextAlign::Center);
+ std::snprintf(value,sizeof(value),"%d",d.day);numerals::draw(s.target(),fui::makeRect(head.x+70,head.y+36,head.width-140,headerH-98),value,fui::Color::Black,lunarSleepCalendar::coverFace);
+ std::snprintf(value,sizeof(value),"Tháng %d · %d",d.month,d.year);note(s,fui::makeRect(head.x,head.bottom()-58,head.width,28),value,0,true,fui::TextAlign::Center);
+ almanac::canChiYear(l.year,cc,sizeof(cc));std::snprintf(value,sizeof(value),"%d tháng %d%s · %s",l.day,l.month,l.leap?" nhuận":"",cc);note(s,fui::makeRect(head.x,head.bottom()-28,head.width,28),value,0,false,fui::TextAlign::Center);
+ int y=head.bottom()+8;const int available=body.bottom()-48-y;const int compact=available<400;
+ s.target().line({head.x,int16_t(y)},{head.right(),int16_t(y)},1,ink);y+=8;
+ if(!data){note(s,fui::makeRect(body.x,y,body.width,100),"Lịch âm xem được bình thường. Dữ liệu tốt/xấu chỉ có trong 2026–2028.");dateFooter(s,m,w,body);return;}
+ std::snprintf(value,sizeof(value),"%s · %s",almanac::auspiciousDay(m.selected,l)?"HOÀNG ĐẠO":"HẮC ĐẠO",almanac::daySpirit(m.selected,l));note(s,fui::makeRect(body.x,y,body.width,32),value,0,true,fui::TextAlign::Center);y+=34;
+ almanac::canChiDay(m.selected,cc,sizeof(cc));std::snprintf(value,sizeof(value),"%s · Ngày %s · Trực %s",almanac::solarTerm(data->term),cc,almanac::officer(data->officer));note(s,fui::makeRect(body.x,y,body.width,compact?28:38),value,0,false,fui::TextAlign::Center);y+=compact?30:40;
+ value[0]=0;size_t at=0;for(int h=0;h<12;++h)if(almanac::auspiciousHour(m.selected,h)){const int start=h?2*h-1:23,end=h?2*h+1:1;const int written=std::snprintf(value+at,sizeof(value)-at,"%s%s %02d–%02d",at?" · ":"",almanac::branch(h),start,end);if(written>0)at=std::min(sizeof(value)-1,at+size_t(written));}
+ note(s,fui::makeRect(body.x,y,body.width,22),"Giờ hoàng đạo",0,true);y+=24;note(s,fui::makeRect(body.x,y,body.width,compact?38:52),value,3);y+=compact?42:56;
+ for(int col=0;col<2;++col){const auto* mask=col?data->ji:data->yi;value[0]=0;size_t nchar=0;for(int n=0;n<3;++n){const int id=almanac::activityAt(mask,n);if(id<0)break;const int wrote=std::snprintf(value+nchar,sizeof(value)-nchar,"%s%s",n?" · ":"",almanac::activity(id));if(wrote>0)nchar=std::min(sizeof(value)-1,nchar+size_t(wrote));}
+  const int h=compact?42:54;note(s,fui::makeRect(body.x,y,body.width,20),col?"NÊN TRÁNH":"NÊN LÀM",3,true);note(s,fui::makeRect(body.x,y+20,body.width,h-20),value,3);y+=h+4;
+ }
+ const int buttonY=std::max(y,body.bottom()-86);control(s,w,fui::makeRect(body.x,buttonY,body.width,34),"Xem đầy đủ · Theo lịch dân gian",DayMore);
+ dateFooter(s,m,w,body);
+}
+void monthPicker(toybox::Screen& s,const Model& m,Work& w,fui::Rect body){
+ text(s,fui::makeRect(body.x,body.y,body.width,42),"Chọn tháng và năm",1);
+ button(s,w,fui::makeRect(body.x,body.y+50,52,44),"‹",Previous);button(s,w,fui::makeRect(body.right()-52,body.y+50,52,44),"›",Next);
+ char value[24];std::snprintf(value,sizeof(value),"%d",m.year);text(s,fui::makeRect(body.x+60,body.y+50,body.width-120,44),value,1);
+ const bool wide=body.width>body.height;const int cols=wide?4:3,rows=wide?3:4;
+ const int gridTop=body.y+(wide?100:110),rowH=std::min(66,std::max(30,(body.height-(wide?210:240))/rows)),width=(body.width-(cols-1)*8)/cols;
+ for(int month=1;month<=12;++month){std::snprintf(value,sizeof(value),"Tháng %d",month);control(s,w,fui::makeRect(body.x+((month-1)%cols)*(width+8),gridTop+((month-1)/cols)*(rowH+6),width,rowH),value,PickMonth,month,month==m.month);}
+ const int half=(body.width-10)/2;button(s,w,fui::makeRect(body.x,body.bottom()-96,half,42),"Tra ngày dương",GoToSolar);button(s,w,fui::makeRect(body.x+half+10,body.bottom()-96,half,42),"Tra ngày âm",GoToLunar);button(s,w,fui::makeRect(body.x,body.bottom()-42,body.width,42),"Quay về lịch tháng",CloseCalendarPanel);
+}
+void holidays(toybox::Screen& s,const Model& m,Work& w,fui::Rect body){
+ note(s,fui::makeRect(body.x,body.y,body.width,34),"Ngày lễ và ngày đáng nhớ",1,true);
+ struct Event{int month,day;const char* name;bool lunar;};
+ constexpr Event events[]={{1,1,"Tết Dương lịch",false},{1,1,"Tết Nguyên đán",true},{3,10,"Giỗ Tổ Hùng Vương",true},{4,30,"Ngày Thống nhất",false},{5,1,"Ngày Quốc tế Lao động",false},{9,2,"Quốc khánh",false},{8,15,"Tết Trung thu",true},{11,20,"Ngày Nhà giáo Việt Nam",false},{12,22,"Ngày thành lập QĐND Việt Nam",false}};
+ const int cols=body.width>body.height?2:1,rows=(9+cols-1)/cols;const int rowH=std::max(28,(body.height-88)/rows),width=(body.width-(cols-1)*12)/cols;int n=0;for(const auto& e:events){char value[128];std::snprintf(value,sizeof(value),"%02d.%02d%s · %s",e.day,e.month,e.lunar?" âm":"",e.name);note(s,fui::makeRect(body.x+(n/rows)*(width+12),body.y+46+(n%rows)*rowH,width,rowH),value,0);++n;}
+ note(s,fui::makeRect(body.x,body.bottom()-38,body.width,30),"Ngày kỷ niệm, không phải lịch nghỉ bù.",3);(void)m;(void)w;
+}
+void calendar(toybox::Screen& s,const Model& m,Work& w,fui::Rect body){
+ if(m.dayDetail){dayDetails(s,m,w,body);return;}if(m.monthPicker){monthPicker(s,m,w,body);return;}
+ const auto tabs=fui::makeRect(body.x,body.y,body.width,38);const int half=(body.width-8)/2;
+ control(s,w,fui::makeRect(tabs.x,tabs.y,half,38),"Tháng",CalendarMonths,0,!m.holidays);control(s,w,fui::makeRect(tabs.x+half+8,tabs.y,half,38),"Ngày lễ",CalendarHolidays,0,m.holidays);
+ body.y+=48;body.height-=48;
+ if(m.holidays)holidays(s,m,w,body);else legacyCalendar(s,m,w,body);
 }
 void face(toybox::Screen& s, fui::Rect box, const Model& m) {
   const int size = std::min(int(box.width), int(box.height)), cx = box.x + box.width / 2, cy = box.y + box.height / 2,
@@ -267,6 +363,7 @@ int calendarDayAt(const fui::DeviceContext& device, const Model& m, int x, int y
     body.y += 50;
     body.height -= 50;
   }
+  body.y+=48;body.height-=48;
   const auto layout = calendarGrid(body, m);
   const auto grid = layout.rect;
   if (x < grid.x || x >= grid.right() || y < grid.y || y >= grid.bottom()) return 0;
@@ -276,6 +373,14 @@ int calendarDayAt(const fui::DeviceContext& device, const Model& m, int x, int y
   return day >= 1 && day <= layout.days ? day : 0;
 }
 void build(toybox::Screen& s, const Model& m, Work& w) {
+  if(m.kind==Kind::Calendar&&m.dayDetail){
+    const auto safe=s.device().safeRect();const auto paper=fui::makeRect(safe.x+6,safe.y+6,safe.width-12,safe.height-58);
+    s.target().stroke(paper,ink,1);
+    for(int x: {paper.x+paper.width/3,paper.x+2*paper.width/3})s.target().stroke(fui::makeRect(x-3,paper.y+6,6,6),ink,1,3);
+    const auto body=fui::makeRect(safe.x+14,safe.y+24,safe.width-28,safe.height-30);
+    backui::publish(true,fui::makeRect(body.x,body.bottom()-40,48,40));
+    dayDetails(s,m,w,body);return;
+  }
   pixelui::begin(s);
   pixelui::Header header;
   header.back = true;

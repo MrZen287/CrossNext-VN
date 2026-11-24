@@ -20,13 +20,16 @@ enum : freeink::ui::ActionId {
   SelectDay,
   HourFormat,
   GoToSolar,
-  GoToLunar
+  GoToLunar,
+  MonthPicker, PickMonth, CloseCalendarPanel, DayMore, AlmanacPage, CalendarMonths, CalendarHolidays
 };
 struct Model {
   Kind kind = Kind::Calendar;
   int year = 2026, month = 1, day = 1, today = 0, hour = 0, minute = 0;
   int selected = 0;
   int64_t count = 0;
+  bool dayDetail=false, monthPicker=false, moreDay=false, holidays=false;
+  int almanacPage=0;
   bool twelveHour = false;
   bool rotateRight = false;
   bool invalidLookup = false;

@@ -30,7 +30,7 @@ namespace library {
 // two deep (genre/author/book); the cap exists because a corrupted FAT can
 // contain a directory that contains itself — also measured on the same card —
 // and an uncapped walk would never return.
-inline constexpr int LIBRARY_MAX_DEPTH = 5;
+inline constexpr int LIBRARY_MAX_DEPTH = 16;
 
 // Duplicate identities remembered while one directory is enumerated. The
 // fixed, fallible allocation is 8 KiB at this cap; unlike std::vector it cannot

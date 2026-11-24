@@ -8,7 +8,7 @@ inline Layout layout(int width,int height) {
   g.frame=makeRect(8,8,width-16,height-16);
   g.footer=makeRect(g.frame.x+10,g.frame.bottom()-36,g.frame.width-20,28);
   g.divider=g.footer.y-6;
-  g.body=makeRect(g.frame.x+10,g.frame.y+6,g.frame.width-20,g.divider-g.frame.y-16);
+  g.body=makeRect(g.frame.x+10,g.frame.y+30,g.frame.width-20,g.frame.height-54);
   return g;
 }
 }

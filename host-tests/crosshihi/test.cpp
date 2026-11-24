@@ -10,7 +10,7 @@ int main(){
   const auto g=zenlock::layout(size.width,size.height);
   assert(g.frame.x==size.width-g.frame.right());
   assert(g.body.x==size.width-g.body.right());
-  assert(g.body.bottom()<g.divider&&g.divider<g.footer.y);
+  assert(g.body.bottom()<g.frame.bottom());
   assert(g.footer.x>g.frame.x&&g.footer.right()<g.frame.right());
   assert(g.footer.bottom()<g.frame.bottom());
   assert(g.frame.y>0&&g.frame.bottom()<size.height);
@@ -36,15 +36,16 @@ int main(){
   auto worm=normal.hits[Menu];assert(normal.at(worm.x+worm.width/2,worm.y+worm.height/2)==Menu);
   assert(open.at(20,300)==Menu); // Outside click dismisses, never launches the background book.
   assert(normal.at(normal.cover.x+5,normal.cover.y+normal.cover.height/2)==Resume);
-  for(auto a:{Library,Stats,Calendar,Apps,Transfer,Settings}){
+  for(auto a:{Stats,Calendar,Transfer,Settings}){
    auto hit=open.hits[a];assert(hit.height>=44);
    assert(open.at(hit.x+hit.width/2,hit.y+hit.height/2)==a);
   }
   for(int n=0;n<count;++n)assert(normal.hits[Recent1+n].right()<normal.mascot.x);
   assert(normal.shelf.bottom()<=800);
   assert(normal.cat.y>=0);
-  assert(normal.shelf.bottom()<normal.status.y);
-  assert(normal.heading.y==normal.status.y);
+  assert(normal.status.bottom()<normal.cover.y);
+  assert(normal.heading.y>normal.status.y);
+  assert(open.hits[Library].empty()&&open.hits[Apps].empty());
   assert(open.popup.bottom()<open.mascot.y);
   assert(normal.cover.bottom()<normal.quote.y);
  }

@@ -24,21 +24,14 @@ void filterTabs(Screen& screen, int active, fui::ActionId action, fui::ActionId 
   pixelui::copyNatural(recent, sizeof(recent), tr(STR_LIBRARY_TAB_RECENT));
   pixelui::copyNatural(filter, sizeof(filter), tr(STR_LIBRARY_FILTER));
   pixelui::copyNatural(collection, sizeof(collection), tr(STR_COLLECTIONS));
-  fui::TabItem tabs[] = {fui::tabItem(0, active == 0, true, recent), fui::tabItem(1, active == 1, true, collection),
-                         fui::tabItem(2, active == 2, true, filter)};
-  if (reverseAction && active != 1)
-    tabs[active].indicator = descending ? fui::TabIndicator::Down : fui::TabIndicator::Up;
-  pixelui::tabs(screen, tabs, 3, reverseAction ? fui::NO_ACTION : action, 4, height, kTabsGap);
-  if (!reverseAction) return;
-  for (int n = 0; n < 3; ++n) {
-    const auto tab =
-        fui::makeRect(body.x + body.width * n / 3, body.y, body.width * (n + 1) / 3 - body.width * n / 3, height);
-    const int arrow = n == active && n != 1 ? 36 : 0;
-    screen.frame().hit(fui::makeRect(tab.x, tab.y, tab.width - arrow, tab.height), action, n, fui::InputTouch);
-    if (!arrow) continue;
-    const auto hit = fui::makeRect(tab.right() - arrow, tab.y, arrow, height);
-    screen.frame().hit(hit, reverseAction, kReverseSort, fui::InputTouch);
-  }
+  constexpr int order[]={3,0,1,2};
+  const char* labels[]={"Tất cả",recent,collection,filter};
+  fui::TabItem tabs[4];
+  for(int n=0;n<4;++n)tabs[n]=fui::tabItem(order[n],active==order[n],true,labels[n]);
+  pixelui::tabs(screen,tabs,4,action,0,height,kTabsGap);
+  // Sorting/reindex controls remain in the library menu; tabs only switch views.
+  (void)reverseAction;(void)descending;(void)body;
+
 }
 
 template <typename Screen>

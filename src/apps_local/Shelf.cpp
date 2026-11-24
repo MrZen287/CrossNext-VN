@@ -19,7 +19,6 @@
 #include "battleship/BattleshipActivity.h"
 #include "calculator/CalculatorActivity.h"
 #include "carnivoro/CarnivoroActivity.h"
-#include "checkers/DraughtsActivity.h"
 #include "chess/ChessActivity.h"
 #include "connectfour/ConnectFourActivity.h"
 #include "flashcards/FlashcardsActivity.h"
@@ -55,7 +54,6 @@ namespace {
 // Menu artwork uses upright flash masks; game boards own their own art.
 constexpr shelf::Item kGames[] = {
     {"CHESS", &gameicons::Chess40, &ChessActivity::create},
-    {"CHECKERS", &gameicons::Checkers40, &DraughtsActivity::create},
     {"GO", &gameicons::Go40, &GoActivity::create},
     {"MINESWEEPER", &gameicons::Minesweeper40, &MinesweeperActivity::create},
     {"PICROSS", &gameicons::Picross40, &PicrossActivity::create},
@@ -89,7 +87,7 @@ constexpr shelf::Item kApps[] = {
 constexpr auto kAllApps = [] {
   std::array<shelf::Item, std::size(kApps)+std::size(kGames)> all{};
   constexpr int apps[]={3,0,1,4,5,6,2};
-  constexpr int games[]={14,4,5,3,6,0,2,15,1,9,10,8,13,7,11,12,16};
+  constexpr int games[]={13,3,4,2,5,0,1,14,8,9,7,12,6,10,11,15};
   size_t n=0;for(int i:apps)all[n++]=kApps[i];for(int i:games)all[n++]=kGames[i]; return all;
 }();
 constexpr shelf::Folder kFolders[] = {

@@ -52,11 +52,7 @@ void UITheme::setTheme(CrossPointSettings::UI_THEME type) {
 
 void UITheme::setInterfaceSection(menufont::Section section) {
   interfaceSection = section;
-  const auto choice = section == menufont::Section::General || section == menufont::Section::Home
-                          ? 0
-                          : SETTINGS.interfaceThemeOverrides[int(section)];
-  chrome::lightHeader = interfacetheme::light(
-      interfacetheme::resolve(SETTINGS.homeLayout, SETTINGS.interfaceThemeStyle, section, choice));
+  chrome::lightHeader = true;
 }
 
 const ThemeMetrics& UITheme::getMetrics() const {

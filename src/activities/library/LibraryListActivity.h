@@ -231,8 +231,8 @@ class LibraryListActivity final : public UiTabListActivity {
   void refreshOverlap();
 
   library::LibraryIndexFile index;
-  int activeTabIndex = 0;
-  library::SortOrder sortOrder = library::SortOrder::RecentDesc;
+  int activeTabIndex = 3;
+  library::SortOrder sortOrder = library::SortOrder::TitleAsc;
   // One bit per tab; Recent starts descending (newest first).
   uint8_t descendingTabs = 1u << 0;
   // Set when the walk finished but the sort did not, so the screen can say the

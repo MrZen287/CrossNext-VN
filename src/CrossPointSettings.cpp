@@ -503,7 +503,7 @@ CrossPointSettings::StatusBarSpec CrossPointSettings::statusBarSpec() const {
   spec.progressBarMode = statusBarProgressBar;
   spec.progressBarHeightPx =
       statusBarProgressBar != HIDE_PROGRESS ? static_cast<uint8_t>((statusBarProgressBarThickness + 1) * 2) : 0;
-  spec.xtcMode = xtcStatusBarMode;
+  spec.xtcMode = xtcStatusBarMode == XTC_STATUS_BAR_TOP ? XTC_STATUS_BAR_BOTTOM : xtcStatusBarMode;
   return spec;
 }
 

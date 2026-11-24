@@ -1,12 +1,14 @@
-Châm ngôn tiếng Việt trên Home và màn hình khóa CrossNext
+Châm ngôn tiếng Việt trên Home và màn hình khóa CrossZen
 
-400 câu chọn từ Tục ngữ, cổ ngữ, gia ngôn, Paulus Huỳnh Tịnh Của
+400 câu tục ngữ và lời răn độc lập chọn từ Tục ngữ, cổ ngữ, gia ngôn, Paulus Huỳnh Tịnh Của
 (1834–1907), ấn bản Sài Gòn 1897. Bản in thuộc phạm vi công cộng.
 Bản quét: https://commons.wikimedia.org/wiki/File:Tục_ngữ,_cổ_ngữ,_gia_ngôn.djvu
 Bản phiên tại Wikisource: https://vi.wikisource.org/wiki/Tục_ngữ,_cổ_ngữ,_gia_ngôn
 
-Chỉ dùng câu châm ngôn, bỏ chú giải. Có chuẩn hóa khoảng trắng, dấu câu
-và sửa một số lỗi phiên âm. Ghi công cộng tác viên Wikisource theo lịch sử
+Dùng tục ngữ và các câu lời răn độc lập trong phần chú giải của tác giả.
+Mỗi câu có ít nhất 7 từ; danh mục và nguồn từng câu nằm tại
+docs/crosshihi/quote-sources.json. Có chuẩn hóa khoảng trắng, dấu câu
+và sửa một số lỗi phiên âm; không nối thêm chữ để tăng độ dài. Ghi công cộng tác viên Wikisource theo lịch sử
 các trang con tại mục lục. Theo thông báo của Wikisource, phần đóng góp
 được bảo hộ trong bản phiên và bộ dữ liệu này được chia sẻ theo CC BY-SA 4.0.
 https://creativecommons.org/licenses/by-sa/4.0/

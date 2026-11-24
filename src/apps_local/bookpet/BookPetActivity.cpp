@@ -52,14 +52,14 @@ void BookPetActivity::loop(){
  if(mappedInput.wasPressed(MappedInputManager::Button::NavPrevious)){selected=(selected+std::max(1,count)-1)%std::max(1,count);requestUpdate();}
  if(mappedInput.wasReleased(MappedInputManager::Button::Confirm)&&surfaceRevealed()){action(selected);return;}
  int x=0,y=0;if(mappedInput.wasScreenTapped(x,y)&&surfaceRevealed()){
-  if(x<52&&y<56){if(view==Home)shelf::leave(renderer,mappedInput);else {view=Home;selected=0;++revision;requestUpdate();}return;}
+  if(x<60&&y>renderer.getScreenHeight()-52){if(view==Home)shelf::leave(renderer,mappedInput);else {view=Home;selected=0;++revision;requestUpdate();}return;}
   for(int n=0;n<count;++n)if(hits[n].contains(x,y)){selected=n;action(n);return;}
  }
 }
 void BookPetActivity::render(RenderLock&&){
  renderer.clearScreen();auto t=toybox::makeTarget(renderer);pixelui::bindFonts(t,renderer);
  const int w=renderer.getScreenWidth(),h=renderer.getScreenHeight();const bool vi=I18N.getLanguage()==Language::VI;
- copy(t,makeRect(5,10,42,36),"<",1);copy(t,makeRect(50,10,w-100,40),vi?"Mèo & Mọt":"Cat & Worm",1,true);
+ copy(t,makeRect(50,10,w-100,40),vi?"Mèo & Mọt":"Cat & Worm",1,true);
  hits.fill({});count=0;
  auto button=[&](int n,fui::Rect r,const char* label){hits[n]=r;count=std::max(count,n+1);t.stroke(r,ink,n==selected?2:1,4);copy(t,r,label,0,n==selected);};
  const auto& s=pet.state();char buf[160];
@@ -99,5 +99,5 @@ void BookPetActivity::render(RenderLock&&){
   button(n,makeRect(20,110+n*80,w-40,50),vi?"Quay lại":"Back");
   if(notice)copy(t,makeRect(15,h-85,w-30,35),notice);
  }
- lunarSleepCalendar::footer(renderer);renderer.displayBuffer(HalDisplay::FAST_REFRESH);
+ const auto status=toybox::headerStatus(renderer);zenchrome::draw(t,t.deviceContext(),status.clock,status.percent,true);renderer.displayBuffer(HalDisplay::FAST_REFRESH);
 }

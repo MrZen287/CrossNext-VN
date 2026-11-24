@@ -862,10 +862,9 @@ void setup() {
   // Push the saved timezone's POSIX rule into the clock (migrating the legacy
   // UTC-offset setting on first boot after the update).
   timezones::applyToClock();
-  if (SETTINGS.language != static_cast<uint8_t>(Language::EN) && SETTINGS.language != static_cast<uint8_t>(Language::VI))
-    SETTINGS.language = static_cast<uint8_t>(Language::VI);
+  SETTINGS.language = static_cast<uint8_t>(Language::VI);
   SETTINGS.languagePack[0] = '\0';
-  I18N.setLanguage(static_cast<Language>(SETTINGS.language));
+  I18N.setLanguage(Language::VI);
   if (dictionarydefaults::apply(SETTINGS)) SETTINGS.saveToFile();
   UITheme::getInstance().reload();
   ButtonNavigator::setMappedInputManager(mappedInputManager);

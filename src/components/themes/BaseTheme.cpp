@@ -1,3 +1,4 @@
+#include "apps_local/ui/ZenChrome.h"
 #include "BaseTheme.h"
 
 #include <ChromeRegion.h>
@@ -377,118 +378,26 @@ void BaseTheme::applyHeaderStatus(const GfxRenderer& renderer, freeink::ui::Head
       halClock.formatTime(clockText, sizeof(clockText), SETTINGS.clockFormat == 1)) {
     status.clockText = clockText;
   }
+  status.showBattery=false;status.clockText=nullptr;status.stripHeight=0;
+  props.titleOffsetY=0;props.actionOffsetY=0;
+
 }
 
 void BaseTheme::drawHeader(const GfxRenderer& renderer, Rect rect, const char* title, const char* subtitle,
                            const bool backButton) const {
-  chrome::headerHeight = rect.y + rect.height;
-  // Every activity header renders through the FreeInkUI header + battery
-  // indicator components, styled by the active theme's tokens (padding,
-  // centering, underline). Non-interactive frame: no hit rects registered.
-  namespace fui = freeink::ui;
-  const auto spec = uiScaleSpec();
-  fui::GfxRendererFrame<1> ui(renderer, spec.smallFontId, spec.bodyFontId, spec.titleFontId);
-  // Refresh the app-wide shared tokens instead of copying ~1.5KB of
-  // ThemeTokens onto this render-path stack frame; the values derived here
-  // are identical to what every FreeInkApp screen derives. Goes through the
-  // same publish-a-fresh-slot path applySharedUiTheme() uses (see
-  // UiAppHelpers.h) rather than overwriting the previously-published
-  // instance in place, since some other FreeInkApp could be mid-read of it.
-  if (chrome::lightHeader) pixelui::bindFonts(ui.target, const_cast<GfxRenderer&>(renderer));
-  const fui::ThemeTokens& tokens = refreshSharedUiThemeTokens(ui.target);
-  // Header status text (battery percent, right label) stays at the fixed
-  // small font like the legacy headers; the uiScale small font is for list
-  // subtitles.
-  if (!chrome::lightHeader) {
-    ui.target.setFont(fui::GfxRendererTarget::FONT_SMALL, SMALL_FONT_ID);
-    ui.target.setFont(fui::GfxRendererTarget::FONT_LABEL, SMALL_FONT_ID);
-    ui.target.setFont(fui::GfxRendererTarget::FONT_CLOCK, UI_12_FONT_ID);
-  }
-  // Callers pass a full-width header rect, so the battery/title would sit at the
-  // true screen edges — clipped on rounded-corner panels (EEGO A4). Inset the band
-  // horizontally by the board's viewable insets so header chrome clears the bezel.
-  int hMarginTop, hMarginRight, hMarginBottom, hMarginLeft;
-  renderer.getOrientedViewableTRBL(&hMarginTop, &hMarginRight, &hMarginBottom, &hMarginLeft);
-  const fui::Rect band{static_cast<int16_t>(rect.x + hMarginLeft), static_cast<int16_t>(rect.y),
-                       static_cast<int16_t>(rect.width - hMarginLeft - hMarginRight),
-                       static_cast<int16_t>(rect.height)};
-
-  fui::HeaderProps props;
-  // All header draws share the serialized render path.
-  static char naturalTitle[192];
-  if (chrome::lightHeader && title) {
-    pixelui::copyNatural(naturalTitle, sizeof(naturalTitle), title);
-    title = naturalTitle;
-  }
-  props.title = title;
-  props.rightLabel = subtitle;  // firmware headers right-align the secondary text
-  // Battery + clock chrome and their title reserves live in the FreeInkUI
-  // header component; this only fills the values from settings and metrics.
-  applyHeaderStatus(renderer, props);
-  // Outlives the fui::header() call below that reads props.title.
-  std::string fittedTitle;
-  if (rect.height < UITheme::getInstance().getMetrics().headerHeight) {
-    // Short bands (home) are not split into strip + content row: the title
-    // centers on the band, clear of the band's bottom edge.
-    props.titleOffsetY = 0;
-    // fork-local seam: centred on the band, the title shares its row with the
-    // battery, and the header only reserved the battery's own width: RoundedRaff
-    // ran a book title to 9px of "100%". It stops a full side padding short.
-    if (title != nullptr) {
-      const auto& status = props.status;
-      int batteryWidth = status.battery.glyphWidth + status.edgeInset;
-      if (status.battery.label != nullptr) {
-        batteryWidth += renderer.getTextWidth(SMALL_FONT_ID, status.battery.label) + status.battery.gap;
-      }
-      const int headerPadding = UITheme::getInstance().getMetrics().headerSidePadding;
-      const int available = rect.width - headerPadding - batteryWidth - headerPadding;
-      if (available > 0 && renderer.getTextWidth(spec.titleFontId, title, EpdFontFamily::BOLD) > available) {
-        fittedTitle = renderer.truncatedText(spec.titleFontId, title, available, EpdFontFamily::BOLD);
-        props.title = fittedTitle.c_str();
-      }
-    }
-  }
-  // Tappable back button leading the band on touch boards, so every pushed
-  // screen offers a visible way out beside the edge-swipe gesture. This frame
-  // registers no hit rects, so the rect is recorded in HeaderBackTapTarget and
-  // MappedInputManager folds taps on it into Button::Back. Same geometry as
-  // the FUI header's leading slot (applyHeaderStatus set the size/offset) so
-  // the recorded rect matches the drawn button.
-  const int16_t backBtnSize = props.leadingSize;
-  const bool showBackButton = backButton && title != nullptr && gpio.hasTouch();
-  if (showBackButton) {
-    props.leadingIcon = fui::bitmapFromIcon(icon_header_back_32);
-    props.leadingAction = 1;  // any non-NO_ACTION id: paints the button, routing is via HeaderBackTapTarget
-    HeaderBackTapTarget::set(band.x + 4, band.y + 4 + props.actionOffsetY, backBtnSize, backBtnSize);
-  } else {
-    HeaderBackTapTarget::clear();
-  }
-  props.borderEdges = chrome::lightHeader ? 0 : fui::EdgeBottom;
-  props.titleText = tokens.titleText;
-  if (chrome::lightHeader) props.titleText.bold = false;
-  props.titleText.align = tokens.headerTitleAlign;
-  // fork-local seam: a centred title shares its line with the right-hand label
-  // (Wi-Fi's "2 networks found"), and centred it is truncated to make room
-  // ("Wi-Fi Netw..."). When the two would meet, the title moves to the start
-  // of the band, where it fits; Lyra and RoundedRaff place it there anyway.
-  if (title != nullptr && subtitle != nullptr && props.titleText.align == fui::TextAlign::Center) {
-    const int titleWidth = renderer.getTextWidth(spec.titleFontId, title, EpdFontFamily::BOLD);
-    const int labelWidth = renderer.getTextWidth(SMALL_FONT_ID, subtitle);
-    const int centreRight = band.x + band.width / 2 + titleWidth / 2;
-    const int labelLeft = band.x + band.width - tokens.headerSidePadding - labelWidth;
-    if (centreRight + tokens.headerSidePadding > labelLeft) props.titleText.align = fui::TextAlign::Left;
-  }
-  props.subtitleText = tokens.smallText;
-  props.styles = tokens.popup;
-  props.sidePadding = tokens.headerSidePadding;
-  // Underline only under a titled header: an untitled band (Lyra home screen)
-  // historically drew no rule, and the old themes keyed the line on the title.
-  if (title != nullptr && props.styles.normal.border.kind == fui::PaintKind::None && tokens.headerUnderline > 0) {
-    props.styles.normal.border = fui::Paint::solid(fui::Color::Black);
-    props.styles.normal.borderWidth = tokens.headerUnderline;
-  }
-  fui::header(ui.frame, band, props);
+  (void)subtitle;
+  namespace fui=freeink::ui;
+  auto& r=const_cast<GfxRenderer&>(renderer);
+  auto target=toybox::makeTarget(r);pixelui::bindFonts(target,r);
+  const auto device=target.deviceContext();
+  target.fill(fui::makeRect(rect.x,rect.y,rect.width,rect.height),fui::Paint::solid(fui::Color::White));
+  fui::TextStyle style;style.font=1;style.bold=true;style.maxLines=1;
+  target.text(fui::makeRect(rect.x+16,rect.y+12,rect.width-32,rect.height-12),title?title:"",style);
+  char clock[12]="--:--";halClock.formatTime(clock,sizeof(clock),SETTINGS.clockFormat==1);
+  zenchrome::draw(target,device,clock,powerManager.getBatteryPercentage(),backButton);
+  chrome::headerHeight=0;
 }
+
 
 void BaseTheme::drawSubHeader(const GfxRenderer& renderer, Rect rect, const char* label, const char* rightLabel) const {
   constexpr int labelGap = 10;
@@ -918,23 +827,11 @@ void BaseTheme::drawStatusBar(GfxRenderer& renderer, const float bookProgress, c
     renderer.fillRect(barMarginLeft, progressBarY, barWidth, barHeight, true);
   }
 
-  // Draw Battery
-  const bool showBatteryPercentage = sb.showBatteryPercent;
-
-  if (sb.showBattery) {
-    GUI.drawBatteryLeft(renderer,
-                        Rect{leftClusterX + leftClusterWidth, textY, metrics.batteryWidth, metrics.batteryHeight},
-                        showBatteryPercentage);
-    int batteryWidth = metrics.batteryWidth;
-
-    if (showBatteryPercentage) {
-      const uint16_t percentage = powerManager.getBatteryPercentage();
-      // width of icon + spacing + text for layout purposes
-      batteryWidth +=
-          batteryPercentSpacing + renderer.getTextWidth(SMALL_FONT_ID, (std::to_string(percentage) + "%").c_str());
-    }
-
-    leftClusterWidth += batteryWidth;
+  // Reader chrome uses a percentage only, with no battery glyph.
+  if(sb.showBattery) {
+    const auto label=std::to_string(powerManager.getBatteryPercentage())+"%";
+    renderer.drawText(SMALL_FONT_ID,leftClusterX+leftClusterWidth,textY,label.c_str());
+    leftClusterWidth+=renderer.getTextWidth(SMALL_FONT_ID,label.c_str())+8;
   }
 
   // Draw Clock (any board whose RTC probe succeeded)

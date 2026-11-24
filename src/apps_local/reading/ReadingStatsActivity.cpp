@@ -999,7 +999,7 @@ void ReadingStatsActivity::render(RenderLock&&) {
   for (unsigned char c : detail.title) unicode |= c >= 0x80;
   pixelui::bindFonts(target, renderer, unicode);
   const fui::InputSnapshot noInput{};
-  toybox::Frame frame(target, target.deviceContext(), noInput, interactions);
+  toybox::Frame frame(target, target.deviceContext(), noInput, interactions,nullptr,toybox::headerStatus(renderer));
   toybox::Screen screen(frame);
   readingui::Model model;
   uiWork.status.status.battery.label = nullptr;

@@ -25,7 +25,7 @@ inline void homeRow(int i, freeink::ui::ListItem& item) {
     static constexpr StrId help[] = {StrId::STR_SETTINGS_DISPLAY_HELP,  StrId::STR_SETTINGS_READER_HELP,
                                      StrId::STR_SETTINGS_CONTROLS_HELP, StrId::STR_SETTINGS_LIBRARY_HELP,
                                      StrId::STR_SETTINGS_NETWORK_HELP,  StrId::STR_SETTINGS_SYSTEM_HELP,
-                                     StrId::STR_SETTINGS_DEVICE_HELP,   StrId::STR_HOME_THEME_LABEL};
+                                     StrId::STR_SETTINGS_DEVICE_HELP,   StrId::STR_MENU_FONT};
     item.subtitle = I18N.get(help[i]);
     if (chrome::lightHeader) item.value = nullptr;
   }

@@ -17,6 +17,7 @@
 #include "../ui/ToolsDigits.h"
 #include "../ui/ToyboxIcons.h"
 #include "ReadingGoalScreens.h"
+#include "ReadingCharts.h"
 
 namespace readingui {
 namespace {
@@ -42,7 +43,7 @@ void text(Context& s, fui::Rect r, const char* value, fui::FontId font = pixelui
           bool scaleDown = true, bool emphasis = false) {
   if (r.empty()) return;
   char copy[192];
-  pixelui::copyCaps(copy, sizeof(copy), value);
+  pixelui::copyNatural(copy, sizeof(copy), value);
   fui::TextStyle style;
   style.font = font;
   style.bold = emphasis;
@@ -282,7 +283,7 @@ void timeMetric(Context& s, fui::Rect r, const char* label, uint64_t seconds, bo
   timeValue(s, value, seconds, precise, s.device().width > s.device().height ? 40 : 52);
   text(s, fui::makeRect(r.x + 6, r.bottom() - 28, r.width - 12, 24), label, 3);
 }
-void summary(Context& s, fui::Rect r, const Model& m) {
+void legacySummary(Context& s, fui::Rect r, const Model& m) {
   const auto& v = *m.summary;
   const bool annual = m.statsScope == StatsScope::Year && m.annualStats;
   const auto* year = m.annualStats;
@@ -378,7 +379,7 @@ void summary(Context& s, fui::Rect r, const Model& m) {
   else
     text(s, fui::makeRect(finished.right() - 46, finished.y + 6, 36, finishedH - 12), "--");
 }
-void today(Context& s, fui::Rect r, const Model& m) {
+void legacyToday(Context& s, fui::Rect r, const Model& m) {
   const bool wide = r.width > r.height;
   const auto dateValue = readingstats::dateFromDay(m.displayedDay ? m.displayedDay : m.today);
   char label[64];
@@ -419,76 +420,78 @@ void today(Context& s, fui::Rect r, const Model& m) {
   const auto session = fui::makeRect(rest.x, band.bottom() + 10, rest.width, rest.bottom() - band.bottom() - 10);
   goalCard(s.screen, session, m);
 }
+void summary(Context& s,fui::Rect r,const Model& m) {
+ if(r.width>r.height){legacySummary(s,r,m);return;}
+ const auto& v=*m.summary;const bool annual=m.statsScope==StatsScope::Year&&m.annualStats;
+ const auto* a=m.annualStats;char value[112];
+ button(s,fui::makeRect(r.x,r.y,r.width/2-4,36),annual?"Theo năm":"Tất cả",ChooseStatsScope);
+ button(s,fui::makeRect(r.x+r.width/2+4,r.y,r.width/2-4,36),"Chọn thời gian",ChoosePeriod);
+ const auto total=fui::makeRect(r.x,r.y+44,r.width,66);
+ if(annual&&!m.annualKnown){text(s,total,"Chưa có dữ liệu năm",1);return;}
+ timeValue(s,total,annual?a->seconds:v.seconds,false,44);
+ const uint64_t seconds=annual?a->seconds:v.seconds;
+ const int active=annual?a->daysReadThrough(a->last):v.daysRead();
+ const unsigned completed=annual?a->completed:v.completed;
+ std::snprintf(value,sizeof(value),"%u sách · %d ngày đọc · %llu phút/ngày",completed,active,(unsigned long long)(active?seconds/60/active:0));
+ text(s,fui::makeRect(r.x,total.bottom(),r.width,34),value,0);
+ dashboard::hit(s.screen,fui::makeRect(r.x,total.bottom(),r.width,34),PeriodBooks);
+ if(!annual&&m.source==readingstats::Source::Unified&&!m.dailyKnown){text(s,fui::makeRect(r.x,total.bottom()+60,r.width,100),"Nguồn nhập chưa có dữ liệu từng ngày",0);return;}
+ const auto d=readingstats::dateFromDay(m.today);uint64_t monthly[12]{};char labels[12][8];const char* names[12];
+ for(int n=0;n<12;++n){
+  std::snprintf(labels[n],sizeof(labels[n]),"%d",n+1);names[n]=labels[n];
+  if(annual)monthly[n]=a->annualSeconds[n];
+  else for(int day=1;day<=readingstats::daysInMonth(d.year,n+1);++day)monthly[n]+=v.onDay(readingstats::dayIndex({d.year,n+1,day}));
+ }
+ const int top=total.bottom()+44;const int remaining=r.bottom()-top;
+ const int chartH=std::max(130,remaining*55/100);
+ readingcharts::bars(s.target(),fui::makeRect(r.x,top,r.width,chartH),annual?"Thời gian đọc theo tháng":"Theo tháng · năm hiện tại",monthly,12,names,true,annual&&readingstats::dateFromDay(a->first).year!=d.year?-1:d.month-1);
+ uint64_t days[7]{};char dates[7][8];const char* dn[7];
+ for(int n=0;n<7;++n){const int day=m.today-6+n;days[n]=v.onDay(day);const auto date=readingstats::dateFromDay(day);std::snprintf(dates[n],sizeof(dates[n]),"%d",date.day);dn[n]=dates[n];}
+ const int trendTop=top+chartH+8,trendH=std::max(92,r.bottom()-trendTop-46);
+ readingcharts::bars(s.target(),fui::makeRect(r.x,trendTop,r.width,trendH),"Nhịp đọc 7 ngày gần đây",days,7,dn,false,6,true);
+ const unsigned current=annual?a->currentStreak(m.today):v.currentStreak(m.today);
+ const unsigned longest=annual?a->longestStreakThrough(a->last):v.longest;
+ std::snprintf(value,sizeof(value),"Liên tục %u ngày · Kỷ lục %u ngày",current,longest);
+ text(s,fui::makeRect(r.x,r.bottom()-34,r.width,30),value,0);
+}
+void today(Context& s,fui::Rect r,const Model& m) {
+ if(r.width>r.height){legacyToday(s,r,m);return;}
+ if(m.source==readingstats::Source::Unified&&!m.dailyKnown){legacyToday(s,r,m);return;}
+ const auto d=readingstats::dateFromDay(m.displayedDay?m.displayedDay:m.today);char v[112];
+ std::snprintf(v,sizeof(v),"%02d.%02d.%d",d.day,d.month,d.year);
+ text(s,fui::makeRect(r.x+48,r.y,r.width-96,36),v,1);
+ arrow(s,fui::makeRect(r.x,r.y,40,36),Day,-1);arrow(s,fui::makeRect(r.right()-40,r.y,40,36),Day,1);
+ const auto* p=m.periodStats;const uint64_t seconds=p?p->seconds:0;
+ count(s,fui::makeRect(r.x+20,r.y+42,r.width*55/100-20,68),seconds/60);
+ text(s,fui::makeRect(r.x+r.width*55/100,r.y+42,r.width*45/100,68),"phút đọc",1);
+ std::snprintf(v,sizeof(v),"%u phiên · %llu trang · %u sách hoàn thành",p?p->sessions:0,(unsigned long long)(p?p->pages:0),p?p->completed:0);
+ text(s,fui::makeRect(r.x,r.y+112,r.width,34),v,0);
+ const auto goal=fui::makeRect(r.x,r.y+154,r.width,60);
+ const uint64_t target=uint64_t(m.goalMinutes)*60;
+ if(target){std::snprintf(v,sizeof(v),"Mục tiêu: %llu / %u phút",(unsigned long long)(seconds/60),m.goalMinutes);text(s,fui::makeRect(goal.x,goal.y,goal.width,30),v,0);const auto track=fui::makeRect(goal.x+4,goal.bottom()-18,goal.width-8,12);s.target().stroke(track,black,1,6);s.target().fill(fui::makeRect(track.x,track.y,int(track.width*std::min(seconds,target)/target),track.height),black,6);}
+ else text(s,goal,"Đặt mục tiêu đọc mỗi ngày",0);
+ dashboard::hit(s.screen,goal,GoalChoose);
+ uint64_t values[6]{};const char* labels[]={"00–04","04–08","08–12","12–16","16–20","20–24"};
+ for(int n=0;n<6;++n)values[n]=p?p->hours[n]:0;
+ const int chartTop=goal.bottom()+16,chartH=r.bottom()-chartTop-62;
+ readingcharts::bars(s.target(),fui::makeRect(r.x,chartTop,r.width,chartH),"Thời gian đọc theo khung giờ",values,6,labels);
+ button(s,fui::makeRect(r.x,r.bottom()-46,r.width,42),"Sách đã đọc trong ngày",PeriodBooks);
+}
 constexpr StrId months[] = {StrId::STR_READING_MONTH_01, StrId::STR_READING_MONTH_02, StrId::STR_READING_MONTH_03,
                             StrId::STR_READING_MONTH_04, StrId::STR_READING_MONTH_05, StrId::STR_READING_MONTH_06,
                             StrId::STR_READING_MONTH_07, StrId::STR_READING_MONTH_08, StrId::STR_READING_MONTH_09,
                             StrId::STR_READING_MONTH_10, StrId::STR_READING_MONTH_11, StrId::STR_READING_MONTH_12};
-constexpr StrId weekdays[] = {StrId::STR_READING_MON, StrId::STR_READING_TUE, StrId::STR_READING_WED,
-                              StrId::STR_READING_THU, StrId::STR_READING_FRI, StrId::STR_READING_SAT,
-                              StrId::STR_READING_SUN};
-void bars(Context& s, fui::Rect r, const Model& m, bool monthly) {
-  frame(s, r, 2);
-  const int titleH = 40;
-  art(s, fui::makeRect(r.x + 10, r.y + 6, 24, 24), monthly ? statsart::calendar : statsart::sessions);
-  text(s, fui::makeRect(r.x + 48, r.y, r.width - (monthly ? 94 : 130), titleH),
-       monthly ? tr(STR_READING_MONTHLY) : tr(STR_STATS_WEEKLY_READING), 0, fui::TextAlign::Left);
-  if (!monthly)
-    prose(s, fui::makeRect(r.right() - 84, r.y + 7, 32, titleH - 14), tr(STR_STATS_UNIT_MIN), fui::TextAlign::Center,
-          3);
-  s.target().line({r.x, int16_t(r.y + titleH)}, {r.right(), int16_t(r.y + titleH)}, 2, black);
-  const auto current = readingstats::dateFromDay(m.today);
-  const int currentMonth = current.year * 12 + current.month - 1;
-  const int count = monthly ? 6 : 7;
-  uint64_t values[8]{};
-  uint64_t maximum = 1;
-  for (int n = 0; n < count; ++n) {
-    if (monthly) {
-      const int at = currentMonth - (count - 1 - n);
-      for (int d = 1; d <= readingstats::daysInMonth(at / 12, at % 12 + 1); ++d)
-        values[n] += m.summary->onDay(readingstats::dayIndex({at / 12, at % 12 + 1, d})) > 0;
-    } else {
-      const int day = readingstats::weekStart(m.today, m.weekStartsSunday) + n;
-      values[n] = m.summary->onDay(day) / 60;
-    }
-    maximum = std::max(maximum, values[n]);
-  }
-  const auto select = monthly ? SelectMonth : SelectChartDay;
-  const int chosen = monthly ? readingstats::dayIndex({currentMonth / 12, currentMonth % 12 + 1, 1})
-                             : readingstats::weekStart(m.today, m.weekStartsSunday);
-  arrow(s, fui::makeRect(r.right() - 44, r.y, 44, titleH), monthly ? SelectMonth : SelectWeek,
-        std::min(m.today, chosen));
-  const int left = r.x + 42, base = r.bottom() - 28, top = r.y + titleH + 30, height = std::max(6, base - top),
-            width = (r.right() - left - 10) / count;
-  s.target().line({int16_t(left), int16_t(top)}, {int16_t(left), int16_t(base)}, 2, black);
-  s.target().line({int16_t(left), int16_t(base)}, {int16_t(r.right() - 10), int16_t(base)}, 2, black);
-  for (int n = 0; n < 3; ++n) {
-    char label[16];
-    std::snprintf(label, sizeof(label), "%llu", static_cast<unsigned long long>(maximum * n / 2));
-    text(s, fui::makeRect(r.x + 3, base - height * n / 2 - 10, 34, 20), label, 3, fui::TextAlign::Right);
-  }
-  for (int n = 0; n < count; ++n) {
-    const int x = left + n * width, bh = values[n] ? std::max(2, int(height * values[n] / maximum)) : 0;
-    if (bh) s.target().fill(fui::makeRect(x + width / 5, base - bh, width * 3 / 5, bh), black);
-    char label[24];
-    const int at = currentMonth - (count - 1 - n);
-    const int start = monthly ? readingstats::dayIndex({at / 12, at % 12 + 1, 1})
-                              : readingstats::weekStart(m.today, m.weekStartsSunday) + n;
-    if (monthly || start <= m.today)
-      dashboard::hit(s.screen, fui::makeRect(x, r.y + titleH, width, r.height - titleH), select, start);
-    if (monthly) {
-      char full[40];
-      dashboard::date(full, sizeof(full), at / 12, at % 12 + 1, 1);
-      const char* begin = full + 3;
-      const char* end = begin;
-      while (*end && *end != ' ') ++end;
-      std::snprintf(label, sizeof(label), "%.*s", int(end - begin), begin);
-    } else
-      std::snprintf(label, sizeof(label), "%s", I18N.get(weekdays[(n + (m.weekStartsSunday ? 6 : 0)) % 7]));
-    text(s, fui::makeRect(x, base + 2, width, 24), label, 3);
-    char amount[20];
-    std::snprintf(amount, sizeof(amount), "%llu", static_cast<unsigned long long>(values[n]));
-    text(s, fui::makeRect(x, base - bh - 22, width, 20), amount, 3);
-  }
+constexpr const char* weekdays[]={"T2","T3","T4","T5","T6","T7","CN"};
+void bars(Context& s,fui::Rect r,const Model& m,bool monthly){
+ const auto current=readingstats::dateFromDay(m.today);const int currentMonth=current.year*12+current.month-1;
+ const int count=monthly?6:7;uint64_t values[7]{};char labels[7][12];const char* names[7];int starts[7]{};
+ for(int n=0;n<count;++n){
+  if(monthly){const int at=currentMonth-(count-1-n);starts[n]=readingstats::dayIndex({at/12,at%12+1,1});for(int d=1;d<=readingstats::daysInMonth(at/12,at%12+1);++d)values[n]+=m.summary->onDay(starts[n]+d-1);std::snprintf(labels[n],sizeof(labels[n]),"T%d",at%12+1);}
+  else{starts[n]=readingstats::weekStart(m.today,m.weekStartsSunday)+n;values[n]=m.summary->onDay(starts[n]);std::snprintf(labels[n],sizeof(labels[n]),"%s",weekdays[readingstats::weekday(starts[n]) ]);}
+  names[n]=labels[n];
+ }
+ readingcharts::bars(s.target(),r,monthly?"Thời gian đọc theo tháng":"Thời gian đọc trong tuần",values,count,names,monthly,-1);
+ for(int n=0;n<count;++n)if(starts[n]<=m.today)dashboard::hit(s.screen,fui::makeRect(r.x+r.width*n/count,r.y+30,r.width/count,r.height-30),monthly?SelectMonth:SelectChartDay,starts[n]);
 }
 void periodPicker(Context& s, fui::Rect r, const Model& m) {
   button(s, fui::makeRect(r.x, r.y, r.width, 44), tr(STR_STATS_BACK_DATA), BackToData);
@@ -547,7 +550,7 @@ void calendar(Context& s, fui::Rect r, const Model& m) {
                                 importedOffset < readingstats::kHistoryDays &&
                                 (m.importedActive[importedOffset / 8] & (1u << (importedOffset % 8)));
     if (seconds || activeImported)
-      s.target().fill(inner, seconds >= 1800 ? black : fui::Paint::dither(fui::Color::LightGray));
+      s.target().fill(inner, seconds >= 3600 ? black : fui::Paint::dither(seconds >= 1800 ? fui::Color::DarkGray : fui::Color::LightGray));
     if (first + d - 1 == m.today) {
       s.target().stroke(box, black, 2);
       s.target().stroke(inner.inset(fui::Insets{2, 2, 2, 2}), black, 1);
@@ -555,13 +558,13 @@ void calendar(Context& s, fui::Rect r, const Model& m) {
     std::snprintf(label, sizeof(label), "%d", d);
     text(s, inner, label, 0, fui::TextAlign::Center, seconds >= 1800 ? fui::Color::White : fui::Color::Black);
   }
-  const StrId ranges[] = {StrId::STR_STATS_NO_READING, StrId::STR_STATS_UNDER30, StrId::STR_STATS_30PLUS};
-  for (int n = 0; n < 3; ++n) {
-    const int w = (cal.width - 16) / 3, x = cal.x + 8 + n * w;
+  const char* ranges[]={"0","1–29","30–59","60+ phút"};
+  for (int n = 0; n < 4; ++n) {
+    const int w = (cal.width - 16) / 4, x = cal.x + 8 + n * w;
     const auto box = fui::makeRect(x, cal.bottom() - 26, 18, 18);
-    if (n) s.target().fill(box, n == 1 ? fui::Paint::dither(fui::Color::LightGray) : black);
+    if (n) s.target().fill(box, n == 1 ? fui::Paint::dither(fui::Color::LightGray) : n == 2 ? fui::Paint::dither(fui::Color::DarkGray) : black);
     s.target().stroke(box, black, 1);
-    prose(s, fui::makeRect(x + 24, cal.bottom() - 28, w - 26, 24), I18N.get(ranges[n]), fui::TextAlign::Left, 3);
+    prose(s, fui::makeRect(x + 24, cal.bottom() - 28, w - 26, 24), ranges[n], fui::TextAlign::Left, 3);
   }
   const auto charts = wide ? fui::makeRect(cal.right() + 12, r.y, r.right() - cal.right() - 12, r.height)
                            : fui::makeRect(r.x, cal.bottom() + 12, r.width, r.bottom() - cal.bottom() - 12);
@@ -618,7 +621,7 @@ void periodChart(Context& s, fui::Rect r, const Model& m, bool daily) {
     else if (daily)
       std::snprintf(label, sizeof(label), "%02d–%02d", n * 4, (n + 1) * 4);
     else
-      std::snprintf(label, sizeof(label), "%s", I18N.get(weekdays[readingstats::weekday(m.periodStats->first + n)]));
+      std::snprintf(label, sizeof(label), "%s", weekdays[readingstats::weekday(m.periodStats->first + n)]);
     text(s, fui::makeRect(x, base + 3, width, 24), label, 3);
   }
 }
@@ -887,7 +890,7 @@ void books(Context& s, fui::Rect r, const Model& m) {
     r.height -= 40;
   } else if (!wide) {
     text(s, fui::makeRect(r.x, r.y, r.width - 48, 32),
-         finished                                    ? tr(STR_STATS_FINISHED_BOOKS)
+         finished                                    ? "Thời gian đọc theo sách"
          : m.source == readingstats::Source::Unified ? tr(STR_READING_SYNC_UNFINISHED)
                                                      : tr(STR_STATS_RECENT_BOOKS),
          1, fui::TextAlign::Left);
@@ -914,13 +917,18 @@ void books(Context& s, fui::Rect r, const Model& m) {
   const int columns = 1, rows = wide ? (periodList ? 2 : 3) : 5, gap = 10;
   const int rowH = std::min(108, (r.height - footerH - footerInset - 16) / rows),
             rowW = (r.width - (columns - 1) * gap) / columns;
+  uint64_t longest=1;for(int n=0;n<bookCount;++n)longest=std::max(longest,m.bookDays?uint64_t(m.bookDays->entries[n].seconds):m.books[n].seconds);
   for (int n = 0; n < bookCount; ++n) {
     const auto row =
         fui::makeRect(r.x + (n % columns) * (rowW + gap), r.y + (n / columns) * rowH, rowW, rowH - (wide ? 8 : 10));
     const auto& b = m.books[n];
-    frame(s, row, 2);
+    // A ranked, comparable time bar with one common scale for this page.
     if (!m.bookDays) dashboard::hit(s.screen, row, OpenBook, n);
     const auto seconds = m.bookDays ? m.bookDays->entries[n].seconds : b.seconds;
+    const auto track=fui::makeRect(row.x+58,row.bottom()-8,row.width-70,5);
+    s.target().fill(track,fui::Paint::dither(fui::Color::LightGray),2);
+    if(seconds)s.target().fill(fui::makeRect(track.x,track.y,std::max(2,int(float(seconds)/longest*track.width)),track.height),black,2);
+
     int digits = 1;
     for (uint64_t value = seconds / 60; value >= 10; value /= 10) ++digits;
     const int side = wide ? 24 : 32;

@@ -217,7 +217,7 @@ void SettingsActivity::rebuildSettingsLists() {
     if (setting.category == StrId::STR_CAT_INTERFACE) {
       return;
     } else if (setting.category == StrId::STR_CAT_DISPLAY) {
-      if (setting.valuePtr == &CrossPointSettings::uiTheme) {
+      if (setting.valuePtr == &CrossPointSettings::uiTheme || setting.action == SettingAction::UiPresentation || setting.action == SettingAction::HomeMenu) {
         return;
       }
       // The sunlight fading fix is a grayscale-waveform compensation that does
@@ -292,7 +292,7 @@ void SettingsActivity::rebuildSettingsLists() {
   // looking for a CrossPoint setting never scrolls past one of ours to reach
   // it. host-tests/settingsorder/ holds the line. See LOCAL_SCOPE.md.
   for (auto& setting : forkSystemSettings) systemSettings.push_back(std::move(setting));
-  systemSettings.insert(systemSettings.begin(), SettingInfo::Action(StrId::STR_LANGUAGE, SettingAction::Language));
+  // CrossZen ships Vietnamese only; no language picker.
   systemSettings.push_back(SettingInfo::Action(StrId::STR_CHECK_UPDATES, SettingAction::CrossHihiOta));
   displaySettings.push_back(SettingInfo::Action(StrId::STR_SLEEP_SCREEN, SettingAction::ZenLock));
   readerSettings.insert(readerSettings.begin(),
@@ -303,6 +303,12 @@ void SettingsActivity::rebuildSettingsLists() {
   readerSettings.push_back(SettingInfo::Action(StrId::STR_CUSTOMISE_STATUS_BAR, SettingAction::CustomiseStatusBar));
   displaySettings.push_back(SettingInfo::Action(StrId::STR_QUICK_CUSTOMISE, SettingAction::QuickSettings));
 
+  displaySettings.erase(std::remove_if(displaySettings.begin(),displaySettings.end(),[](const auto& row){
+    return row.action==SettingAction::UiPresentation || row.action==SettingAction::HomeMenu;
+  }),displaySettings.end());
+  systemSettings.erase(std::remove_if(systemSettings.begin(),systemSettings.end(),[](const auto& row){
+    return row.action==SettingAction::Language || row.action==SettingAction::HomeMenu;
+  }),systemSettings.end());
   // Stable insertion ordering uses the existing vectors without a sorting allocation.
   std::vector<SettingInfo>* categories[] = {&displaySettings, &readerSettings, &controlsSettings, &systemSettings};
   for (int category = 0; category < 4; ++category) {

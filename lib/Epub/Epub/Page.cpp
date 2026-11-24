@@ -67,6 +67,19 @@ void drawBorderEdge(const GfxRenderer& renderer, const int x, const int y, const
 
 void PageLine::render(GfxRenderer& renderer, const int fontId, const int xOffset, const int yOffset) {
   block->render(renderer, fontId, xPos + xOffset, yPos + yOffset);
+  if(block->wordCount()) {
+    int left=renderer.getScreenWidth(),right=0,bottom=0;
+    for(uint16_t i=0;i<block->wordCount();++i){
+      const auto g=block->wordGeometry(renderer,fontId,i);
+      left=std::min(left,xOffset+xPos+int(block->wordXpos(i)));
+      right=std::max(right,xOffset+xPos+int(block->wordXpos(i))+g.width);
+      bottom=std::max(bottom,yOffset+yPos+g.y+g.height);
+    }
+    // Sparse marks beneath actual glyph extents, avoiding descenders and images.
+    for(int x=std::max(0,left);x< std::min(renderer.getScreenWidth(),right);x+=6)
+      renderer.drawPixel(x,bottom+2);
+  }
+
 }
 
 bool PageLine::serialize(Print& file) {

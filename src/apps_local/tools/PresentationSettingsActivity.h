@@ -6,7 +6,7 @@ class PresentationSettingsActivity final : public UiListActivity {
  public:
   enum class Kind { Theme, ReadingFormats, FontOverview, GameFonts, AppFonts, ThemeOverview, CoverLoading };
   PresentationSettingsActivity(GfxRenderer& r, MappedInputManager& i, Kind k)
-      : UiListActivity("PresentationSettings", r, i), kind(k) {}
+      : UiListActivity("PresentationSettings", r, i), kind(k == Kind::Theme || k == Kind::ThemeOverview || k == Kind::CoverLoading ? Kind::FontOverview : k) {}
 
   void onEnter() override;
   void loop() override;

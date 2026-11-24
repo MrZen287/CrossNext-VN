@@ -193,6 +193,7 @@ void button(Screen& screen, Work& work, fui::Rect rect, const char* label, fui::
   p.text.font = chrome::lightHeader ? pixelui::kBody : pixelui::kSmall;
   p.text.align = fui::TextAlign::Center;
   p.minTouchSize = 0;
+  p.radius=std::min(rect.width,rect.height)/2;
   screen.button(p, rect);
 }
 template <typename Screen>
@@ -207,21 +208,12 @@ void slider(Screen& screen, const Model& model, Work& work, fui::Rect box, bool 
            10);
     const auto action = warmth ? Warmth : Brightness;
     const auto band = fui::makeRect(box.x + 62, y, box.width - 124, 52);
-    const auto track = fui::makeRect(band.x, y + 12, band.width, 28);
-    screen.target().fill(track, lightui::paper, 4);
-    const int filled = (track.width - 2) * value / 100;
-    if (filled) {
-      const auto previousClip = screen.target().clipRect();
-      screen.target().setClipRect(
-          intersect(previousClip, fui::makeRect(track.x + 1, track.y + 1, filled, track.height - 2)));
-      screen.target().fill(track.inset({1, 1, 1, 1}), lightui::ink, 3);
-      screen.target().setClipRect(previousClip);
-    }
-    screen.target().stroke(track, lightui::ink, 1, 4);
-    for (int n = 1; n < 10; ++n)
-      screen.target().fill(fui::makeRect(track.x + track.width * n / 10, track.y + 7, 1, 14),
-                           n * 10 <= value ? lightui::paper : lightui::ink);
-    screen.frame().hit(band, action, value, fui::InputTouch | fui::InputDrag);
+    fui::SliderProps slider;
+    slider.value=value;slider.action=action;slider.inputMask=fui::InputTouch|fui::InputDrag;
+    slider.track=lightui::paper;slider.fill=lightui::ink;slider.knob=lightui::paper;
+    slider.knobWidth=slider.knobHeight=32;slider.trackHeight=4;slider.radius=16;
+    slider.border=lightui::ink;
+    fui::slider(screen.frame(),band,slider);
     return;
   }
   const auto& controlIcon = icon(warmth ? Shortcut::Warm : Shortcut::Light, warmth ? model.warmth > 0 : model.lightOn);
@@ -244,8 +236,9 @@ void slider(Screen& screen, const Model& model, Work& work, fui::Rect box, bool 
   p.track = fui::Paint::solid(fui::Color::White);
   p.fill = fui::Paint::solid(fui::Color::Black);
   p.knob = fui::Paint::solid(fui::Color::White);
-  p.knobWidth = 22;
-  p.knobHeight = 44;
+  p.knobWidth = 36;
+  p.knobHeight = 36;
+  p.radius=18;
   p.trackHeight = 10;
   p.horizontalPadding = 0;
   p.minTouchSize = 0;
@@ -287,12 +280,12 @@ void build(Screen& screen, const Model& model, Work& work) {
   const auto wifi = fui::makeRect(battery.x - 126, bar.y, 44, bar.height);
   auto clock = fui::makeRect(chrome::lightHeader ? bar.x : bar.x + bar.width / 3, bar.y, bar.width / 3, bar.height);
   if (model.wifiConnected) clock.width = std::min<int>(clock.width, wifi.x - 8 - clock.x);
-  pixelui::text(screen.target(), clock, model.time, pixelui::kSmall, fui::Color::Black,
+  pixelui::text(screen.target(), clock, "", pixelui::kSmall, fui::Color::Black,
                 chrome::lightHeader ? fui::TextAlign::Left : fui::TextAlign::Center);
-  std::snprintf(work.label, sizeof(work.label), "%d%%", model.battery);
+  std::snprintf(work.label, sizeof(work.label), "%s", "");
   pixelui::text(screen.target(), fui::makeRect(battery.x - 74, bar.y, 66, bar.height), work.label,
                 chrome::lightHeader ? 0 : 3, fui::Color::Black, fui::TextAlign::Right);
-  statusbattery::draw(screen.target(), battery, model.battery, model.charging, fui::Color::Black);
+  // Percentage is displayed in the bottom strip, without a battery glyph.
   if (model.wifiConnected) {
     const auto glyph = fui::makeRect(wifi.x + 2, wifi.y + (wifi.height - 40) / 2, 40, 40);
     screen.target().bitmap(glyph, fui::bitmapFromIcon(icon(Shortcut::Wifi)), fui::BitmapMode::Contain);
@@ -339,6 +332,9 @@ void build(Screen& screen, const Model& model, Work& work) {
       work.button.action = Tile;
       work.button.value = model.shortcuts[n];
       work.button.minTouchSize = 0;
+      work.button.radius=size/2;
+      work.button.styles.normal.border=lightui::ink;
+      work.button.styles.normal.borderWidth=1;
       screen.button(work.button, box);
       if (shortcut == Shortcut::Bluetooth)
         std::snprintf(work.label, sizeof(work.label), "%s\n%s", tr(STR_BT_SHORT_NAME),
@@ -370,20 +366,12 @@ void build(Screen& screen, const Model& model, Work& work) {
     slider(screen, model, work, g.brightness, false);
     if (model.temperature) slider(screen, model, work, g.warmth, true);
   }
-  work.button = {};
-  work.button.styles.explicitlySet = true;
-  work.button.action = Tile;
-  work.button.value = -1;
-  work.button.minTouchSize = 0;
-  const int x = screen.device().width / 2, y = g.bottom - (chrome::lightHeader ? 22 : 28);
-  screen.button(work.button,
-                fui::makeRect(x - 48, g.bottom - (chrome::lightHeader ? 44 : 50), 96, chrome::lightHeader ? 44 : 46));
-  const auto ink = fui::Paint::solid(fui::Color::Black);
-  if (chrome::lightHeader)
-    screen.target().fill(fui::makeRect(x - 28, y - 2, 56, 4), ink, 2);
-  else {
-    screen.target().line({int16_t(x - 20), int16_t(y + 5)}, {int16_t(x), int16_t(y - 5)}, 4, ink);
-    screen.target().line({int16_t(x), int16_t(y - 5)}, {int16_t(x + 20), int16_t(y + 5)}, 4, ink);
-  }
+  const auto footer=fui::makeRect(g.header.x,g.bottom-46,g.header.width,44);
+  screen.target().fill(footer,lightui::paper);
+  screen.target().line({footer.x,footer.y},{footer.right(),footer.y},1,lightui::ink);
+  button(screen,work,fui::makeRect(footer.x,footer.y,70,44),"Đóng",Tile,-1);
+  pixelui::text(screen.target(),fui::makeRect(footer.x+76,footer.y,footer.width-152,44),model.time,0,fui::Color::Black,fui::TextAlign::Center);
+  std::snprintf(work.label,sizeof(work.label),"%d%%",model.battery);
+  pixelui::text(screen.target(),fui::makeRect(footer.right()-74,footer.y,74,44),work.label,0,fui::Color::Black,fui::TextAlign::Right);
 }
 }  // namespace quickui

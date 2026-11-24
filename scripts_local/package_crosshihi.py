@@ -35,7 +35,7 @@ with zipfile.ZipFile(args.resources) as old,zipfile.ZipFile(archive,'w',zipfile.
   z.writestr(item.filename,old.read(item.filename))
  z.writestr(name,data)
  z.writestr('HUONG-DAN-CrossZen.txt',(ROOT/f'docs/crosshihi/release-{version}.md').read_text())
- for file in ['LICENSE','THIRD-PARTY-NOTICES.md','licenses/BookPet-MIT.txt','licenses/CrossHihi-Mascots.txt']:
+ for file in ['LICENSE','THIRD-PARTY-NOTICES.md','licenses/BookPet-MIT.txt','licenses/CrossHihi-Mascots.txt','licenses/Lunar-Javascript-MIT.txt','licenses/VietnameseHomeQuotes.txt']:
   z.writestr(file,(ROOT/file).read_bytes())
 rows=[]
 for f in sorted(out.iterdir()):

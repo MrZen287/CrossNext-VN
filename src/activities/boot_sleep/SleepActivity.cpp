@@ -1,3 +1,6 @@
+#include "apps_local/ui/CompanionArt.h"
+#include "apps_local/ui/CrossZenArt.h"
+#include "apps_local/ui/PixelMenuTheme.h"
 #include "SleepActivity.h"
 #include "LunarSleepCalendar.h"
 
@@ -537,7 +540,7 @@ void SleepActivity::onEnter() {
     releaseSdFontCachesForDecode(renderer);
     renderer.clearScreen();
     if(FsHelpers::hasPngExtension(std::string_view(path))) {
-      RenderConfig config;config.x=0;config.y=0;config.maxWidth=renderer.getScreenWidth();config.maxHeight=renderer.getScreenHeight()-40;config.useDithering=true;
+      RenderConfig config;config.x=0;config.y=0;config.maxWidth=renderer.getScreenWidth();config.maxHeight=renderer.getScreenHeight();config.useDithering=true;
       HalFile source;
       const bool valid=Storage.openFileForRead("SLP",path,source)&&isValidPngHeader(source);
       source.close();
@@ -546,12 +549,12 @@ void SleepActivity::onEnter() {
       HalFile file;
       if(Storage.openFileForRead("SLP",path,file)) {
         Bitmap bitmap(file);
-        if(bitmap.parseHeaders()==BmpReaderError::Ok)image=renderer.drawBitmap(bitmap,0,0,renderer.getScreenWidth(),renderer.getScreenHeight()-40);
+        if(bitmap.parseHeaders()==BmpReaderError::Ok)image=renderer.drawBitmap(bitmap,0,0,renderer.getScreenWidth(),renderer.getScreenHeight());
       }
     }
   }
   if(!image)lunarSleepCalendar::draw(renderer);
-  lunarSleepCalendar::footer(renderer,true);
+  // Calendar and user wallpaper have no clock/battery footer.
   renderer.displayBuffer(HalDisplay::FULL_REFRESH);
 }
 
@@ -886,7 +889,18 @@ void SleepActivity::renderCoverSleepScreen() const {
 
 void SleepActivity::renderLastScreenSleepScreen() const {
   const auto pageHeight = renderer.getScreenHeight();
-  renderer.drawImage(MoonIcon, 0, pageHeight - MOONICON_HEIGHT, MOONICON_WIDTH, MOONICON_HEIGHT);
+  auto target=toybox::makeTarget(renderer);pixelui::bindFonts(target,renderer);
+  const int x=renderer.getScreenWidth()-146,y=pageHeight-160;
+  // The existing masks paint opaque character silhouettes without a white panel.
+  companionart::cat(target,freeink::ui::makeRect(x,y,104,104),3);
+  zenart::wormHappy(target,freeink::ui::makeRect(x+83,y+44,49,49));
+  const auto paper=freeink::ui::Paint::solid(freeink::ui::Color::White);
+  const auto ink=freeink::ui::Paint::solid(freeink::ui::Color::Black);
+  auto book=freeink::ui::makeRect(x+34,y+79,82,39);
+  target.fill(book,paper,2);target.stroke(book,ink,1,2);
+  target.line({int16_t(book.x+41),book.y},{int16_t(book.x+41),book.bottom()},1,ink);
+  for(int n=0;n<3;++n)for(int col=0;col<2;++col)
+    target.line({int16_t(book.x+8+col*41),int16_t(book.y+10+n*8)},{int16_t(book.x+32+col*41),int16_t(book.y+10+n*8)},1,ink);
   // Only the moon differs from the displayed frame, so a differential FAST
   // update adds it without the flashing clean pass (which sweeps the panel
   // through the inverse — a full white flash on a night-mode page).

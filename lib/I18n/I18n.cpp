@@ -37,9 +37,8 @@ const char* I18n::get(StrId id) const {
 }
 
 void I18n::setLanguage(Language lang) {
-#ifdef CROSSNEXT_VIETNAMESE_ONLY
+  // Vietnamese is the only exposed firmware language.
   lang = Language::VI;
-#endif
   if (lang >= Language::_COUNT) {
     return;
   }
@@ -48,20 +47,8 @@ void I18n::setLanguage(Language lang) {
 }
 
 bool I18n::loadLanguagePack(const char* filename) {
-#ifdef CROSSNEXT_VIETNAMESE_ONLY
   (void)filename;
   return false;
-#else
-  if (externalPack.loaded()) return false;
-  if (!externalPack.load(filename)) {
-    _language = Language::EN;
-    externalActive = false;
-    return false;
-  }
-  _language = languageFromCode(externalPack.info().code);
-  externalActive = true;
-  return true;
-#endif
 }
 
 const char* I18n::getLanguageName() const {

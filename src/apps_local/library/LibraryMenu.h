@@ -63,17 +63,18 @@ void header(Screen& screen, HeaderWork& work, const char* title, bool actions, f
   pixelui::header(screen.target(), device, work.heading);
   backui::publish(work.heading.back, pixelui::geometry(device).back);
   const auto back = pixelui::geometry(device).back;
-  const int actionY = back.y + (back.height - buttonSize) / 2;
+  const auto headerBand=pixelui::geometry(device).header;
+  const int actionY = safe.y+(headerBand.bottom()-safe.y-buttonSize)/2;
   const int menuShift = menuAction ? buttonSize + buttonGap : 0;
   if (menuAction) {
     const auto box = fui::makeRect(safe.right() - edge - buttonSize, actionY, buttonSize, buttonSize);
     for (int n = 0; n < 3; ++n)
-      screen.target().fill(fui::makeRect(box.x + 21, box.y + 10 + n * 11, 5, 5), fui::Paint::solid(fui::Color::White));
+      screen.target().fill(fui::makeRect(box.x + 21, box.y + 10 + n * 11, 5, 5), fui::Paint::solid(fui::Color::Black));
     screen.frame().hit(box, menuAction, -3, fui::InputTouch);
   }
   if (viewAction) {
     const auto box = fui::makeRect(safe.right() - edge - buttonSize - menuShift, actionY, buttonSize, buttonSize);
-    const auto white = fui::Paint::solid(fui::Color::White);
+    const auto white = fui::Paint::solid(fui::Color::Black);
     if (grid) {
       for (int n = 0; n < 3; ++n) screen.target().fill(fui::makeRect(box.x + 12, box.y + 13 + n * 9, 24, 4), white);
     } else {
@@ -86,7 +87,7 @@ void header(Screen& screen, HeaderWork& work, const char* title, bool actions, f
   if (!actions) return;
   auto& button = work.button;
   button = {};
-  button.styles = fui::plainStyles(fui::Paint::solid(fui::Color::White));
+  button.styles = fui::plainStyles(fui::Paint::solid(fui::Color::Black));
   button.borderEdges = fui::EdgesNone;
   button.minTouchSize = buttonSize;
   button.icon = search;
@@ -139,7 +140,7 @@ inline void lightRows(fui::ListProps& props) {
   props.valueText.font = 3;
   props.sidePadding = 12;
   props.rowStyles.normal.borderWidth = 0;
-  props.rowStyles.normal.background = fui::Paint::solid(fui::Color::White);
+  props.rowStyles.normal.background = fui::Paint::solid(fui::Color::Black);
   props.rowStyles.normal.foreground = fui::Paint::solid(fui::Color::Black);
   props.rowStyles.selected = props.rowStyles.focused = props.rowStyles.active = props.rowStyles.normal;
   props.separatorPaint = fui::Paint::dither(fui::Color::DarkGray);

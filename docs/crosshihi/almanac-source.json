@@ -1,0 +1,16 @@
+{
+  "source": "https://github.com/6tail/lunar-javascript",
+  "input_file": "lunar.js",
+  "sha256": "84f0105dd1c0be1c39990a0f38084f857901b1368c787c70b5687c8afd02298a",
+  "license": "MIT",
+  "years": [
+    2026,
+    2027,
+    2028
+  ],
+  "days": 1096,
+  "activities": 114,
+  "timezone": "UTC+7",
+  "day_boundary": "00:00",
+  "generator": "scripts_local/generate_almanac.cjs"
+}

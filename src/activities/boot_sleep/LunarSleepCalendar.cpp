@@ -1,5 +1,6 @@
 #include "LunarSleepCalendar.h"
 #include "ZenLockLayout.h"
+#include "apps_local/ui/CalendarIllustration.h"
 #include "LunarCoverDigits.h"
 #include <I18n.h>
 #include <HalClock.h>
@@ -30,6 +31,15 @@ bool draw(GfxRenderer& r) {
   const auto geometry=zenlock::layout(r.getScreenWidth(),r.getScreenHeight());
   const auto page=geometry.body;
   t.stroke(geometry.frame,ink,1);
+  // Printed paper edge, two binding holes and a perforated tear line.
+  for (int x=geometry.frame.x+12;x<geometry.frame.right()-8;x+=9)
+    t.line({int16_t(x),int16_t(geometry.frame.y+24)},{int16_t(x+3),int16_t(geometry.frame.y+24)},1,ink);
+  for (int x : {geometry.frame.x+geometry.frame.width/3,geometry.frame.x+geometry.frame.width*2/3})
+    t.stroke(fui::makeRect(x-4,geometry.frame.y+9,8,8),ink,1,4);
+  for (int x=geometry.frame.x+10;x<geometry.frame.right()-10;x+=16) {
+    t.line({int16_t(x),int16_t(geometry.frame.bottom()-5)},{int16_t(x+8),int16_t(geometry.frame.bottom()-8)},1,ink);
+    t.line({int16_t(x+8),int16_t(geometry.frame.bottom()-8)},{int16_t(x+16),int16_t(geometry.frame.bottom()-5)},1,ink);
+  }
   const bool vi=I18N.getLanguage()==Language::VI;
   const int today=readingstats::today();
   if(!today) {
@@ -42,6 +52,7 @@ bool draw(GfxRenderer& r) {
   std::snprintf(s,sizeof(s),"%s",vi?viDays[readingstats::weekday(today)]:enDays[readingstats::weekday(today)]);
   text(t,fui::makeRect(page.x+6,page.y+12,page.width-12,40),s,1,true);
   const int dateTop=page.y+62,dateHeight=page.height*24/100;
+  calendarart::draw(t,fui::makeRect(page.x+4,dateTop,page.width-8,dateHeight));
   std::snprintf(s,sizeof(s),"%d",d.day);
   numerals::draw(t,fui::makeRect(page.x+70,dateTop,page.width-140,dateHeight),s,fui::Color::Black,coverFace);
   int afterDate=dateTop+dateHeight+7;
@@ -53,6 +64,10 @@ bool draw(GfxRenderer& r) {
   const int mid=page.x+page.width/2;
   t.line({int16_t(page.x+30),int16_t(afterDate)},{int16_t(mid-10),int16_t(afterDate)},1,ink);
   t.line({int16_t(mid+10),int16_t(afterDate)},{int16_t(page.right()-30),int16_t(afterDate)},1,ink);
+  t.line({int16_t(mid),int16_t(afterDate-4)},{int16_t(mid+4),int16_t(afterDate)},1,ink);
+  t.line({int16_t(mid+4),int16_t(afterDate)},{int16_t(mid),int16_t(afterDate+4)},1,ink);
+  t.line({int16_t(mid),int16_t(afterDate+4)},{int16_t(mid-4),int16_t(afterDate)},1,ink);
+  t.line({int16_t(mid-4),int16_t(afterDate)},{int16_t(mid),int16_t(afterDate-4)},1,ink);
   vietnamesequotes::drawSingle(t,fui::makeRect(page.x+24,afterDate+8,page.width-48,64),vietnamesequotes::next(),1);
   const auto grid=fui::makeRect(page.x+18,afterDate+86,page.width-36,page.bottom()-afterDate-104);
   constexpr const char* vn[]={"T2","T3","T4","T5","T6","T7","CN"};

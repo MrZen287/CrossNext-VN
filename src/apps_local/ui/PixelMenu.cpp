@@ -8,6 +8,7 @@
 
 #include "../../../lib/GfxRenderer/ChromeRegion.h"
 #include "BackButton.h"
+#include "ZenChrome.h"
 #include "FitText.h"
 #include "LightUi.h"
 #include "StatusBattery.h"
@@ -39,10 +40,10 @@ Geometry geometry(const fui::DeviceContext& device, int bottomReserve) {
   const auto safe = device.safeRect();
   Geometry out;
   out.header = fui::makeRect(0, 0, device.width, safe.y + toybox::kMenuHeaderVisibleHeight);
-  out.back = fui::makeRect(safe.x + 6, safe.y + 14, 44, 44);
+  out.back = fui::makeRect(safe.x + 6, safe.bottom()-46, 44, 44);
   const int top = out.header.bottom() + 14;
   out.body = fui::makeRect(safe.x + kMargin, top, safe.width - kMargin * 2,
-                           std::max(0, safe.bottom() - 8 - bottomReserve - top));
+                           std::max(0, safe.bottom() - 8 - std::max(bottomReserve,zenchrome::height) - top));
   return out;
 }
 
@@ -122,45 +123,23 @@ static fui::Rect paintHeader(fui::DrawTarget& target, const fui::DeviceContext& 
   const auto safe = device.safeRect();
   const int top = geometry.header.bottom() - 72;
   chrome::headerHeight = geometry.header.height;
-  target.fill(geometry.header, black);
-  int right = safe.right() - (model.homeBattery ? 20 : 14);
-  if (model.battery >= 0) {
-    const auto icon = statusbattery::headerIcon(right, top);
-    const int percent = std::clamp(model.battery, 0, 100);
-    statusbattery::draw(target, icon, percent, model.charging, fui::Color::White);
-    right = icon.x - 8;
-    if (model.showPercent) {
-      char percentLabel[8];
-      std::snprintf(percentLabel, sizeof(percentLabel), "%d%%", percent);
-      const auto font = model.compactBattery && !model.homeBattery ? 3 : kSmall;
-      const int width = model.compactPercent ? target.measureText(font, percentLabel, {}).width : 62;
-      const auto label =
-          model.homeBattery ? statusbattery::headerPercent(icon, top) : fui::makeRect(right - width, top, width, 72);
-      if (model.homeBattery) {
-        fui::TextStyle style;
-        style.font = kSmall;
-        style.color = fui::Color::White;
-        style.align = fui::TextAlign::Right;
-        style.maxLines = 1;
-        target.text(label, percentLabel, style);
-      } else {
-        text(target, label, percentLabel, font, fui::Color::White, fui::TextAlign::Right);
-      }
-      right = model.homeBattery ? label.x - 10 : right - width - 10;
-    }
-  }
+  chrome::headerHeight=0;
+  target.fill(geometry.header, white);
+  zenchrome::draw(target,device,model.clockText,model.battery,model.back);
+  target.line({int16_t(safe.x+10),int16_t(geometry.header.bottom()-1)},{int16_t(safe.right()-10),int16_t(geometry.header.bottom()-1)},1,black);
+  int right=safe.right()-14;
   if (model.trailingLabel) {
     fui::TextStyle style;
     style.font = kSmall;
     const int width = target.measureText(style.font, model.trailingLabel, style).width + 12;
-    text(target, fui::makeRect(right - width, top, width, 72), model.trailingLabel, kSmall, fui::Color::White,
+    text(target, fui::makeRect(right - width, top, width, 72), model.trailingLabel, kSmall, fui::Color::Black,
          fui::TextAlign::Right);
     right -= width + 12;
   }
   if (model.mark) {
     const auto icon = fui::makeRect(right - 32, top + 20, 32, 32);
     mark = icon.inset({-6, -6, -6, -6});
-    target.bitmap(icon, model.mark, fui::BitmapMode::Contain, white);
+    target.bitmap(icon, model.mark, fui::BitmapMode::Contain, black);
     right = icon.x - 12;
   }
   if (model.secondaryLabel) {
@@ -169,45 +148,31 @@ static fui::Rect paintHeader(fui::DrawTarget& target, const fui::DeviceContext& 
     const int width = std::clamp(int(target.measureText(style.font, model.secondaryLabel, style).width) + 24, 44, 160);
     const auto button = fui::makeRect(right - width, top + 14, width, 44);
     if (secondary) *secondary = button;
-    target.stroke(button, white, 1, chrome::lightHeader ? lightui::kControlRadius : 0);
-    text(target, button.inset({2, 8, 2, 8}), model.secondaryLabel, kSmall, fui::Color::White, fui::TextAlign::Center);
+    target.stroke(button, black, 1, chrome::lightHeader ? lightui::kControlRadius : 0);
+    text(target, button.inset({2, 8, 2, 8}), model.secondaryLabel, kSmall, fui::Color::Black, fui::TextAlign::Center);
     right = button.x - 12;
   } else if (model.secondaryMark) {
     const auto icon = fui::makeRect(right - 32, top + 20, 32, 32);
     if (secondary) *secondary = icon.inset({-6, -6, -6, -6});
-    target.bitmap(icon, model.secondaryMark, fui::BitmapMode::Contain, white);
+    target.bitmap(icon, model.secondaryMark, fui::BitmapMode::Contain, black);
     right = icon.x - 12;
   }
   if (model.rightLabel) {
     fui::TextStyle style;
     style.font = kBody;
     const int width = target.measureText(style.font, model.rightLabel, style).width + 8;
-    text(target, fui::makeRect(right - width, top, width, 72), model.rightLabel, kBody, fui::Color::White,
+    text(target, fui::makeRect(right - width, top, width, 72), model.rightLabel, kBody, fui::Color::Black,
          fui::TextAlign::Right);
     right -= width + 12;
   }
   int left = safe.x + 14;
-  if (model.back) {
-    backui::paint(target, geometry.back);
-    left = geometry.back.right() + 4;
-  }
   right -= model.titleReserve;
   fui::TextStyle titleStyle;
   titleStyle.font = kBody;
   titleStyle.bold = !chrome::lightHeader && !model.regularTitle;
   char title[192];
   copyNatural(title, sizeof(title), model.title, model.titleCase);
-  const int titleEnd = left + target.measureText(titleStyle.font, title, titleStyle).width + 14;
-  fui::TextStyle clockStyle;
-  clockStyle.font = fui::HEADER_CLOCK_FONT;
-  clockStyle.color = fui::Color::White;
-  const auto clock = fui::headerClockRect(target, fui::makeRect(titleEnd, top, std::max(0, right - titleEnd), 72),
-                                          model.clockText, clockStyle);
-  if (!clock.empty()) {
-    target.text(clock, model.clockText, clockStyle);
-    right = clock.x - 14;
-  }
-  titleStyle.color = fui::Color::White;
+  titleStyle.color = fui::Color::Black;
   fittext::draw(target, fui::makeRect(left, top, std::max(0, right - left), 72), title, titleStyle, 2);
   return mark;
 }
