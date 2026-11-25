@@ -1,5 +1,9 @@
 #include "ActivityManager.h"
 
+#include <esp_random.h>
+
+#include "apps_local/ui/MenuCompanions.h"
+
 #include <BlePageTurner.h>
 #include <BoardConfig.h>
 #include <FontCacheManager.h>
@@ -165,6 +169,11 @@ void ActivityManager::renderTaskLoop() {
       paintclock::panelBusy().reset();
       const uint32_t renderingVisit = screenVisit;
       const auto operation = performance::current();
+      static uint32_t companionVisit = 0;
+      if (companionVisit != renderingVisit) {
+        companionVisit = renderingVisit;
+        menucompanions::pose = esp_random() % 6;
+      }
       currentActivity->render(std::move(lock));
       if (currentActivity->presentationComplete()) performance::finish(operation, currentActivity.get());
       paintedVisit.store(renderingVisit, std::memory_order_release);

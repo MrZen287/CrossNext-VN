@@ -1,6 +1,6 @@
 #pragma once
 #include <FreeInkUI.h>
-#include "../ui/ZenCompanions.h"
+#include "../ui/MenuCompanions.h"
 #include <string>
 namespace zendictionary {
 namespace ui=freeink::ui;
@@ -11,7 +11,7 @@ struct Ui {
  void line(int x,int y,int xx,int yy,int width=1){t.line({int16_t(x),int16_t(y)},{int16_t(xx),int16_t(yy)},width,ink);}
  void box(int x,int y,int w,int h,bool filled=false,int rad=8){auto r=ui::makeRect(x,y,w,h);if(filled)t.fill(r,ink,rad);else t.stroke(r,ink,1,rad);}
  void key(int x,int y,int w,const char*s,bool fill=false){box(x,y,w,48,fill,7);txt(x,y+11,w,31,s,1,true,fill);}
- void header(bool vi,const char*query){txt(20,22,310,40,"Từ Điển",2);line(20,65,460,65);zenart::draw(t,ui::makeRect(344,3,112,65),zencompanions::Header);
+ void header(bool vi,const char*query){txt(20,22,310,40,"Từ Điển",2);line(20,65,460,65);menucompanions::draw(t,344,65);
  for(int n=0;n<2;++n){int x=n?253:20;bool selected=n?vi:!vi;box(x,78,207,38,selected);txt(x+16,86,66,27,n?"Việt":"Anh",1,true,selected);txt(x+127,86,66,27,n?"Anh":"Việt",1,true,selected);auto p=selected?white:ink;t.line({int16_t(x+88),97},{int16_t(x+116),97},1,p);t.line({int16_t(x+111),92},{int16_t(x+116),97},1,p);t.line({int16_t(x+111),102},{int16_t(x+116),97},1,p);}
  box(20,130,440,56);t.stroke(ui::makeRect(34,147,16,16),ink,2,8);line(48,161,55,169,2);txt(68,145,344,32,*query?query:"Nhập từ cần tra",1);line(433,151,443,161);line(443,151,433,161);
  }

@@ -11,6 +11,7 @@
 #include "ZenChrome.h"
 #include "FitText.h"
 #include "LightUi.h"
+#include "MenuCompanions.h"
 #include "StatusBattery.h"
 #include "ToyboxScreen.h"
 #include "ToyboxTokens.h"
@@ -167,6 +168,12 @@ static fui::Rect paintHeader(fui::DrawTarget& target, const fui::DeviceContext& 
   }
   int left = safe.x + 14;
   right -= model.titleReserve;
+  if (right - left >= 270 && geometry.header.height > menucompanions::baseline && !model.secondaryLabel &&
+      !model.secondaryMark && !model.rightLabel && !model.trailingLabel) {
+    const int artLeft = right - menucompanions::width;
+    menucompanions::draw(target, artLeft, geometry.header.bottom() - 1);
+    right = artLeft - 12;
+  }
   fui::TextStyle titleStyle;
   titleStyle.font = kBody;
   titleStyle.bold = !chrome::lightHeader && !model.regularTitle;
