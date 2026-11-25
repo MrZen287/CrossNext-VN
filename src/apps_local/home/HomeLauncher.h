@@ -17,7 +17,7 @@ enum class Widget:uint8_t {Date,Clock,Reading,Month};
 inline Widget widget(unsigned value){return value<=3?Widget(value):Widget::Date;}
 inline int action(Widget w){return w==Widget::Clock?Clock:w==Widget::Reading?Stats:Calendar;}
 struct Layout {
-  fui::Rect safe,status,picker,widgets,date,stats,grid,dock;
+  fui::Rect safe,picker,widgets,date,stats,grid,dock;
   std::array<fui::Rect,12> cells{};
   std::array<fui::Rect,4> shortcuts{};
   int at(int x,int y,int page,int count,const std::array<Widget,3>& types={Widget::Date,Widget::Clock,Widget::Reading})const{
@@ -31,14 +31,13 @@ struct Layout {
 };
 inline Layout layout(fui::Rect safe){
   Layout g;g.safe=safe;int margin=16,gap=12;
-  g.status=fui::makeRect(safe.x+margin,safe.y+4,safe.width-2*margin,30);
-  g.picker=fui::makeRect(safe.x+(safe.width-110)/2,safe.y,110,40);
   int wh=std::clamp(int(safe.height)*31/100,190,250);
-  g.widgets=fui::makeRect(safe.x+margin,g.status.bottom()+10,safe.width-2*margin,wh);
+  g.widgets=fui::makeRect(safe.x+margin,safe.y+8,safe.width-2*margin,wh);
   g.date=fui::makeRect(g.widgets.x,g.widgets.y,(g.widgets.width-gap)/2,wh);
   g.stats=fui::makeRect(g.date.right()+gap,g.widgets.y,g.widgets.right()-g.date.right()-gap,wh);
   g.dock=fui::makeRect(safe.x+margin,safe.bottom()-86,safe.width-2*margin,70);
-  g.grid=fui::makeRect(g.widgets.x,g.widgets.bottom()+12,g.widgets.width,g.dock.y-g.widgets.bottom()-24);
+  g.picker=fui::makeRect(safe.x+(safe.width-110)/2,g.widgets.bottom()+2,110,28);
+  g.grid=fui::makeRect(g.widgets.x,g.picker.bottom()+4,g.widgets.width,g.dock.y-g.picker.bottom()-16);
   for(int n=0;n<12;++n){int c=n%4,r=n/4;g.cells[n]=fui::makeRect(g.grid.x+c*g.grid.width/4,g.grid.y+r*g.grid.height/3,(c+1)*g.grid.width/4-c*g.grid.width/4,(r+1)*g.grid.height/3-r*g.grid.height/3);}
   for(int n=0;n<4;++n)g.shortcuts[n]=fui::makeRect(g.dock.x+n*g.dock.width/4,g.dock.y,g.dock.width/4,g.dock.height);
   return g;
@@ -46,7 +45,6 @@ inline Layout layout(fui::Rect safe){
 struct Tile{const char* title="";const freeink::Icon* icon=nullptr;};
 struct Model{
   int page=0,count=0,today=0,battery=0;
-  const char* time="";
   bool statsReady=false,statsFailed=false,clockKnown=false;
   uint8_t hour=0,minute=0;
   unsigned goal=0;
@@ -85,10 +83,17 @@ inline void analogClock(fui::DrawTarget& t,fui::Rect box,const Model& m){
   text(t,fui::makeRect(left+2,box.y+box.height/2-14,28,28),"9",0,true);text(t,fui::makeRect(right-30,box.y+box.height/2-14,28,28),"3",0,true);
   if(m.clockKnown){
     const fui::Point center{int16_t(cx),int16_t(cy)};
-    t.line(center,clockPoint(cx,cy,radius*50/100,(m.hour%12)*5+m.minute/12.0),5,ink);
-    t.line(center,clockPoint(cx,cy,radius*74/100,m.minute),3,ink);
+    t.line(center,clockPoint(cx,cy,radius*50/100,(m.hour%12)*5+m.minute/12.0),9,ink);
+    t.line(center,clockPoint(cx,cy,radius*74/100,m.minute),6,ink);
     t.fill(fui::makeRect(cx-4,cy-4,8,8),ink,4);
   }else text(t,fui::makeRect(cx-radius+10,cy-13,2*radius-20,26),"Chưa đặt giờ",0);
+  if(m.battery>=0){
+    char percent[8];
+    std::snprintf(percent,sizeof(percent),"%d%%",m.battery);
+    const auto badge=fui::makeRect(cx-30,bottom-55,60,23);
+    t.fill(badge,fui::Paint::solid(fui::Color::White));
+    text(t,badge,percent,0,true);
+  }
 }
 inline void drawWidget(fui::DrawTarget& t,fui::Rect box,Widget kind,const Model& m){
   const auto ink=fui::Paint::solid(fui::Color::Black);t.stroke(box,ink,1,20);
@@ -137,10 +142,8 @@ inline void drawWidget(fui::DrawTarget& t,fui::Rect box,Widget kind,const Model&
 }
 inline void draw(fui::DrawTarget& t,const Layout& g,const Model& m){
   auto ink=fui::Paint::solid(fui::Color::Black),white=fui::Paint::solid(fui::Color::White);
-  t.fill(g.safe,white);char s[32];
-  text(t,fui::makeRect(g.status.x,g.status.y,90,g.status.height),m.time,0,true);
+  t.fill(g.safe,white);
   text(t,g.picker,"Widget",0,true);
-  std::snprintf(s,sizeof(s),"%d%%",m.battery);text(t,fui::makeRect(g.status.right()-70,g.status.y,70,g.status.height),s);
   if(m.page)drawWidget(t,g.widgets,m.widgets[2],m);else{drawWidget(t,g.date,m.widgets[0],m);drawWidget(t,g.stats,m.widgets[1],m);}
   for(int n=0;n<m.count&&n<12;++n){auto c=g.cells[n];int size=std::min({64,int(c.width)-20,int(c.height)-40});auto icon=fui::makeRect(c.x+(c.width-size)/2,c.y+5,size,size);t.stroke(icon,ink,1,14);if(m.tiles[n].icon)t.bitmap(icon.inset({8,8,8,8}),fui::bitmapFromIcon(*m.tiles[n].icon),fui::BitmapMode::Contain,ink);text(t,fui::makeRect(c.x+2,icon.bottom()+4,c.width-4,c.bottom()-icon.bottom()-5),m.tiles[n].title);}
   t.stroke(g.dock,ink,1,22);

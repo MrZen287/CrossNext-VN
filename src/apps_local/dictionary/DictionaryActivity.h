@@ -9,7 +9,9 @@ class ZenDictionaryActivity final:public Activity {
  static std::unique_ptr<Activity> create(GfxRenderer&,MappedInputManager&);
  void onEnter()override;void onExit()override;void loop()override;void render(RenderLock&&)override;
  private:
- zendictionary::Store store;std::array<zendictionary::Entry,3> entries;int count=0,page=0;bool vi=false,telex=false,opened=false,detail=false,pending=false;
+ zendictionary::Store store;std::array<zendictionary::Entry,6> entries;int count=0,page=0;bool vi=false,telex=false,opened=false,detail=false,pending=false;
+ bool keyboardOpen=false;
+ int previewKey=0;
  std::string raw,query,status,heading;std::vector<std::string> lines;
  void changed();void lookup(int);void wrap(const std::string&);
 };

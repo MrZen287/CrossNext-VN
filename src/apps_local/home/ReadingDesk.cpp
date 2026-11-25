@@ -51,7 +51,7 @@ void text(fui::DrawTarget& t,fui::Rect r,const char* s,int font=0,int lines=1,bo
 }
 }
 void draw(GfxRenderer& r,Layout& g,const RecentBook* featured,const std::vector<RecentBook>& shelf,
-          int,Action focus,const char* quote,unsigned pose) {
+          int,Action focus,const char* quote,unsigned pose,unsigned wormPose) {
   r.clearScreen();auto t=toybox::makeTarget(r);pixelui::bindFonts(t,r);
   const bool native=r.getScreenWidth()==480 && r.getScreenHeight()==800;
   char s[160]{},chapterCopy[80]{},remainingCopy[80]{},estimateCopy[160]{};
@@ -153,8 +153,9 @@ void draw(GfxRenderer& r,Layout& g,const RecentBook* featured,const std::vector<
   for(int n=0;!native&&n<int(shelf.size())&&n<shelfSize;++n){const auto b=g.hits[Recent1+n];painter.paint(shelf[n],b,0,BookCoverPainter::Fit::Contain);if(focus==Recent1+n)t.stroke(b.inset({-2,-2,-2,-2}),ink,2);}
   r.drawLine(g.shelf.x,g.shelf.bottom(),g.shelf.right(),g.shelf.bottom());
   r.drawLine(g.shelf.x,g.shelf.bottom()+3,g.shelf.right(),g.shelf.bottom()+3);
-  if(g.popup.empty()) companionart::worm(t,g.mascot);
-  else if(pose%2) zenart::wormRest(t,g.mascot);else zenart::wormHappy(t,g.mascot);
+  if(wormPose==0) companionart::worm(t,g.mascot);
+  else if(wormPose==1) zenart::wormHappy(t,g.mascot);
+  else zenart::wormRest(t,g.mascot);
   const auto battery=toybox::headerStatus(r);
   if(battery.percent>=0){
     const auto bubble=makeRect(g.mascot.x-4,g.mascot.y-52,76,36);
@@ -168,6 +169,12 @@ void draw(GfxRenderer& r,Layout& g,const RecentBook* featured,const std::vector<
 
   if(native){
     approvedhome::draw(t,makeRect(0,0,480,800));
+    if(wormPose!=0){
+      t.fill(g.mascot,white);
+      const auto sprite=g.mascot.inset({5,8,5,0});
+      if(wormPose==1) zenart::wormHappy(t,sprite);
+      else zenart::wormRest(t,sprite);
+    }
     BookCoverPainter nativePainter(r,t);
     if(featured)nativePainter.paintFace(*featured,homecover::mainFace,g.cover.height);
     else {text(t,g.cover,"Mở sách từ Thư viện",1,3,false,fui::TextAlign::Center);}

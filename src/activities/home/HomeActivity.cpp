@@ -816,9 +816,6 @@ void HomeActivity::renderLauncher() {
   launcherModel.page=launcherPage;
   launcherModel.widgets={homelauncher::widget(SETTINGS.zenWidgetLeft),homelauncher::widget(SETTINGS.zenWidgetRight),homelauncher::widget(SETTINGS.zenWidgetWide)};
   launcherModel.count=std::clamp(launcherCount-launcherPage*12,0,12);
-  char clock[16]{};
-  halClock.formatTime(clock,sizeof(clock),SETTINGS.clockFormat==1);
-  launcherModel.time=clock;
   freeink::ui::HeaderProps header;
   GUI.applyHeaderStatus(renderer,header);
   launcherModel.battery=header.status.battery.percent;
@@ -830,7 +827,6 @@ void HomeActivity::renderLauncher() {
     launcherModel.tiles[n]={shelf::label(item.title),item.icon};
   }
   homelauncher::draw(target,launcherLayout,launcherModel);
-  launcherModel.time="";
 }
 
 void HomeActivity::loopReadingDesk() {
@@ -978,7 +974,7 @@ int HomeActivity::nextDeskShelfCover() const {
 }
 
 void HomeActivity::activateReadingDesk(readingdesk::Action action) {
-  if (action == readingdesk::Menu) { deskMenuOpen=!deskMenuOpen;  deskFocus=readingdesk::None; requestUpdate(); return; }
+  if (action == readingdesk::Menu) { deskWormPose=(deskWormPose+1)%3; deskMenuOpen=!deskMenuOpen;  deskFocus=readingdesk::None; requestUpdate(); return; }
   if (action == readingdesk::Cat) {deskCatPose=rememberedCatExpression=catexpressions::next(rememberedCatExpression);requestUpdate();return;}
   if (action == readingdesk::Quote) {deskQuote=vietnamesequotes::next();requestUpdate();return;}
   if (action == readingdesk::Stats) { deskMenuOpen=false; activityManager.replaceActivity(std::make_unique<ReadingStatsActivity>(renderer,mappedInput)); return; }
@@ -1210,7 +1206,7 @@ void HomeActivity::render(RenderLock&&) {
     const auto* book = deskBook();
     deskLayout = readingdesk::screenLayout(target.deviceContext(), static_cast<int>(deskShelf.size()), book != nullptr,
                                      deskPage > 0, deskNextPageStart >= 0, deskMenuOpen);
-    readingdesk::draw(renderer, deskLayout, book, deskShelf, deskFeatured, deskFocus, deskQuote, deskCatPose);
+    readingdesk::draw(renderer, deskLayout, book, deskShelf, deskFeatured, deskFocus, deskQuote, deskCatPose, deskWormPose);
     renderer.displayBuffer(cleanInitialRefresh && !firstRenderDone ? HalDisplay::HALF_REFRESH
                                                                    : HalDisplay::FAST_REFRESH);
     firstRenderDone = true;

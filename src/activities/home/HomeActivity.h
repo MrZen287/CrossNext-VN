@@ -68,6 +68,7 @@ class HomeActivity final : public Activity {
   std::array<int, readingdesk::shelfSize> deskShelfHeights{};
   bool deskMenuOpen = false;
   unsigned deskCatPose = 0;
+  unsigned deskWormPose = 0;
   const char* deskQuote = "";
   uint32_t deskMinute = 0;
   static bool readingDeskEnabled() { return true; }

@@ -80,6 +80,21 @@ bool draw(GfxRenderer& r) {
   constexpr const char* vn[]={"T2","T3","T4","T5","T6","T7","CN"};
   constexpr const char* en[]={"Mo","Tu","We","Th","Fr","Sa","Su"};
   constexpr int header=30;
+  // Sparse one-bit dots keep the distant ridges lighter than the calendar text.
+  constexpr int peaks[3][9]={{7,10,4,13,8,3,11,5,8},{8,4,10,6,12,7,3,9,5},{4,8,5,9,4,7,10,6,8}};
+  for(int ridge=0;ridge<3;++ridge){
+    for(int x=0;x<grid.width;x+=4){
+      const int position=x*8*64/grid.width;
+      const int segment=position/64, fraction=position%64;
+      const int rise=(peaks[ridge][segment]*(64-fraction)+peaks[ridge][segment+1]*fraction)/64;
+      const int y=grid.bottom()-grid.height*(29-ridge*8)/100-rise*2;
+      for(int shade=0;shade<3;++shade){
+        const int dotY=y+shade*4+(x/4+ridge*3+shade)%3;
+        if(dotY>=grid.y+header && dotY<grid.bottom() && (x/4+shade)%4!=0)
+          t.fill(fui::makeRect(grid.x+x,dotY,1,1),ink);
+      }
+    }
+  }
   for(int col=0;col<7;++col)text(t,fui::makeRect(grid.x+col*grid.width/7,grid.y,grid.width/7,header),vi?vn[col]:en[col],0,col>=5);
   r.drawLine(grid.x,grid.y+header,grid.right(),grid.y+header);
   const int first=readingstats::dayIndex({d.year,d.month,1}),offset=readingstats::weekday(first);
