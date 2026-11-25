@@ -1,4 +1,6 @@
 #include "HomeActivity.h"
+#include <esp_random.h>
+#include "../../apps_local/home/HomeTheme.h"
 #include "../../apps_local/home/CatExpressions.h"
 
 #include <Bitmap.h>
@@ -357,13 +359,22 @@ bool HomeActivity::loadRecentCovers(int coverHeight) {
   return changed;
 }
 
-namespace {unsigned rememberedCatExpression=0;}
-void HomeActivity::onReturnFromChild(){std::optional<RenderLock> lock;if(!RenderLock::heldByCurrentTask())lock.emplace();deskCatPose=rememberedCatExpression=catexpressions::next(rememberedCatExpression);requestUpdate();}
+namespace {unsigned rememberedCatExpression=0;unsigned rememberedDeskTheme=0;}
+void HomeActivity::chooseDeskTheme(){
+  deskTheme=hometheme::choose(esp_random());
+  if(deskTheme!=rememberedDeskTheme){
+    rememberedDeskPage=0;rememberedDeskStarts.clear();deskPageStarts.clear();deskPage=0;deskNextPageStart=-1;
+    deskPrefetch={};deskPrefetchCover=0;deskShelf.clear();deskShelfHeights.fill(0);deskPrepared=-2;
+  }
+  rememberedDeskTheme=deskTheme;
+}
+void HomeActivity::onReturnFromChild(){std::optional<RenderLock> lock;if(!RenderLock::heldByCurrentTask())lock.emplace();chooseDeskTheme();loadDeskShelfPage(0,true);deskCatPose=rememberedCatExpression=catexpressions::next(rememberedCatExpression);requestUpdate();}
 
 void HomeActivity::onEnter() {
   Activity::onEnter();
   if (readingDeskEnabled()) {
     renderer.setOrientation(GfxRenderer::Orientation::Portrait);
+    chooseDeskTheme();
     launcherOpen = false;
     launcherStatsPending = false;
     deskMenuOpen = false;
@@ -897,7 +908,7 @@ HomeActivity::DeskPage HomeActivity::collectDeskPage(int start, bool useLibrary)
     RecentBook book;
     if (row < recentCount) {
       book = recents[row];
-      if (!recentBooks.empty() && recentBooks.front() == book) continue;
+      if (deskTheme!=1 && !recentBooks.empty() && recentBooks.front() == book) continue;
     } else {
       library::ClixRecord record;
       const auto ordinal = index->ordinalForRow(library::SortOrder::DateAddedDesc, static_cast<uint16_t>(row - recentCount));
@@ -911,7 +922,7 @@ HomeActivity::DeskPage HomeActivity::collectDeskPage(int start, bool useLibrary)
       if (index->ioFailed()) break;
     }
     if (!availableRecent(book)) continue;
-    if (books.size() == readingdesk::shelfSize) {
+    if (books.size() == (deskTheme==1?4u:3u)) {
       next = row;
       break;
     }
@@ -1007,7 +1018,8 @@ void HomeActivity::activateReadingDesk(readingdesk::Action action) {
       return;
     case readingdesk::Recent1:
     case readingdesk::Recent2:
-    case readingdesk::Recent3: {
+    case readingdesk::Recent3:
+    case readingdesk::Recent4: {
       const int selected = action - readingdesk::Recent1;
       if (selected >= static_cast<int>(deskShelf.size())) return;
       onSelectBook(deskShelf[selected].path);
@@ -1206,6 +1218,7 @@ void HomeActivity::render(RenderLock&&) {
     const auto* book = deskBook();
     deskLayout = readingdesk::screenLayout(target.deviceContext(), static_cast<int>(deskShelf.size()), book != nullptr,
                                      deskPage > 0, deskNextPageStart >= 0, deskMenuOpen);
+    deskLayout=readingdesk::themedLayout(deskLayout,deskTheme,static_cast<int>(deskShelf.size()),book!=nullptr,deskPage>0,deskNextPageStart>=0);
     readingdesk::draw(renderer, deskLayout, book, deskShelf, deskFeatured, deskFocus, deskQuote, deskCatPose, deskWormPose);
     renderer.displayBuffer(cleanInitialRefresh && !firstRenderDone ? HalDisplay::HALF_REFRESH
                                                                    : HalDisplay::FAST_REFRESH);

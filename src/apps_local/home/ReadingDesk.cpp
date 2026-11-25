@@ -1,5 +1,6 @@
 #include "ReadingDesk.h"
 #include "ApprovedHomeUi.h"
+#include "DragonHome.h"
 #include "HomePaws.h"
 #include "CatExpressions.h"
 #include <GfxRenderer.h>
@@ -150,7 +151,7 @@ void draw(GfxRenderer& r,Layout& g,const RecentBook* featured,const std::vector<
   // One layout and one quote paint path, regardless of popup state.
   vietnamesequotes::drawSingle(t,g.quote,quote,pixelui::kSmall);
   BookCoverPainter painter(r,t);
-  for(int n=0;!native&&n<int(shelf.size())&&n<shelfSize;++n){const auto b=g.hits[Recent1+n];painter.paint(shelf[n],b,0,BookCoverPainter::Fit::Contain);if(focus==Recent1+n)t.stroke(b.inset({-2,-2,-2,-2}),ink,2);}
+  for(int n=0;!native&&n<int(shelf.size())&&n<3;++n){const auto b=g.hits[Recent1+n];painter.paint(shelf[n],b,0,BookCoverPainter::Fit::Contain);if(focus==Recent1+n)t.stroke(b.inset({-2,-2,-2,-2}),ink,2);}
   r.drawLine(g.shelf.x,g.shelf.bottom(),g.shelf.right(),g.shelf.bottom());
   r.drawLine(g.shelf.x,g.shelf.bottom()+3,g.shelf.right(),g.shelf.bottom()+3);
   if(wormPose==0) companionart::worm(t,g.mascot);
@@ -167,7 +168,12 @@ void draw(GfxRenderer& r,Layout& g,const RecentBook* featured,const std::vector<
   }
   if(focus==Menu)t.stroke(g.hits[Menu],ink,1,3);
 
-  if(native){
+  if(native && g.theme){
+    t.setFont(5,toybox::kHugeFontId);
+    t.setFont(6,toybox::kReadingBoldFontId);
+    dragonhome::draw(r,t,g,featured,shelf,livePercent,chapterCopy,remainingCopy,estimateCopy,quote,battery.percent,today,focus);
+  }
+  if(native && !g.theme){
     approvedhome::draw(t,makeRect(0,0,480,800));
     if(wormPose!=0){
       t.fill(g.mascot,white);
@@ -178,7 +184,7 @@ void draw(GfxRenderer& r,Layout& g,const RecentBook* featured,const std::vector<
     BookCoverPainter nativePainter(r,t);
     if(featured)nativePainter.paintFace(*featured,homecover::mainFace,g.cover.height);
     else {text(t,g.cover,"Mở sách từ Thư viện",1,3,false,fui::TextAlign::Center);}
-    for(int n=0;n<int(shelf.size())&&n<shelfSize;++n)nativePainter.paintFace(shelf[n],homecover::shelfFaces[n],g.hits[Recent1+n].height);
+    for(int n=0;n<int(shelf.size())&&n<3;++n)nativePainter.paintFace(shelf[n],homecover::shelfFaces[n],g.hits[Recent1+n].height);
     homepaws::draw(t);catexpressions::draw(t,pose);
     t.setFont(5,toybox::kHugeFontId);t.setFont(6,toybox::kReadingBoldFontId);
     char time[16]{},date[40]{},lunar[40]{};

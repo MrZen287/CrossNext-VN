@@ -1,0 +1,7 @@
+CrossZen dragon Home artwork
+
+Cloud dragon: generated for this project using the built-in OpenAI image generation tool, November 25, 2026.
+Coiled dragon: adapted from the reference image supplied by the repository owner for this project, using the same tool.
+Approved 480x800 native templates are versioned in assets_local/crosszen/dragon/. Larger generation originals are retained in the local project.
+DragonHomeArt.h contains the packed 480x800 1-bit images and foreground masks used by firmware.
+No sample book covers or sample book text are included in the compiled templates.

@@ -42,7 +42,7 @@ with zipfile.ZipFile(args.resources) as old,zipfile.ZipFile(archive,'w',zipfile.
     if not item.is_dir() and (path.parts[0]=='dictionaries' or path.name=='manifest-dictionaries.json'):z.writestr(item.filename,dictionaries.read(item.filename))
  z.writestr(name,data)
  z.writestr('HUONG-DAN-CrossZen.txt',(ROOT/f'docs/crosshihi/release-{version}.md').read_text())
- for file in ['LICENSE','THIRD-PARTY-NOTICES.md','licenses/BookPet-MIT.txt','licenses/CrossHihi-Mascots.txt','licenses/Lunar-Javascript-MIT.txt','licenses/VietnameseHomeQuotes.txt']:
+ for file in ['LICENSE','THIRD-PARTY-NOTICES.md','licenses/BookPet-MIT.txt','licenses/CrossHihi-Mascots.txt','licenses/Lunar-Javascript-MIT.txt','licenses/VietnameseHomeQuotes.txt','licenses/CrossZen-Dragon-Art.txt']:
   z.writestr(file,(ROOT/file).read_bytes())
 if args.dictionaries:shutil.copy2(args.dictionaries,out/'CrossZen-Tu-Dien-Anh-Viet.zip')
 rows=[]
