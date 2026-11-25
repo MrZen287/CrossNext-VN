@@ -19,9 +19,7 @@ void ZenDictionaryActivity::loop(){RenderLock lock;using Button=MappedInputManag
  if(keyboardOpen && !detail){
    int held=0;
    if(mappedInput.isScreenTouchHeld(x,y)){
-     const if(!keyboardOpen)return;
- if(y>=479&&y<517&&x>=280){keyboardOpen=false;previewKey=0;requestUpdate();return;}
- int key=zendictionary::keyAt(x,y);
+     const int key=zendictionary::keyAt(x,y);
      if(key>='a'&&key<='z') held=key;
    }
    if(previewKey!=held){previewKey=held;requestUpdate();}
