@@ -49,7 +49,8 @@ jobs:
           for file in vnedict.idx vnedict.dict.dz; do curl --fail --location --retry 3 -o "/tmp/zen-dictionary-inputs/$file" "https://raw.githubusercontent.com/cer28/stardict-vnedict/main/compiled/$file"; done
           curl --fail --location --retry 3 -o /tmp/zen-dictionary-inputs/VNEDICT-README.md https://raw.githubusercontent.com/cer28/stardict-vnedict/main/README.md
           curl --fail --location --retry 3 -o /tmp/zen-dictionary-inputs/LICENSE-FVDP-GPL3.txt https://raw.githubusercontent.com/tecxmate/vnme-data/main/LICENSE
-          python scripts_local/package_zen_dictionaries.py --database /tmp/vn_en_dictionary.db --vnedict /tmp/zen-dictionary-inputs --output /tmp/zen-dictionary-pack
+          curl --fail --location --retry 3 -o /tmp/viwiktionary.jsonl.gz https://kaikki.org/viwiktionary/raw-wiktextract-data.jsonl.gz
+          python scripts_local/package_zen_dictionaries.py --database /tmp/vn_en_dictionary.db --vnedict /tmp/zen-dictionary-inputs --viwiktionary /tmp/viwiktionary.jsonl.gz --output /tmp/zen-dictionary-pack
           c++ -std=c++20 -O1 -Ihost-tests/dictionary-zen/stubs -Isrc host-tests/dictionary-zen/store.cpp -o /tmp/zen-dictionary-store-test
           ZEN_DICT_ROOT=/tmp/zen-dictionary-pack /tmp/zen-dictionary-store-test
       - name: Package licensed SD resources and verify ESP image

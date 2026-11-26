@@ -927,13 +927,13 @@ void BaseTheme::drawSelectionHandle(const GfxRenderer& renderer, const Rect rect
 
 void BaseTheme::drawSelectionActions(const GfxRenderer& renderer, const Rect rect, const bool singleWord) {
   const auto& metrics = UITheme::getInstance().getMetrics();
-  const char* labels[] = {tr(STR_WORD_TRANSLATE), tr(STR_WORD_DEFINE), tr(STR_WORD_QUOTE)};
+  const char* labels[] = {tr(STR_LOOKUP), tr(STR_WORD_QUOTE)};
   const int count = singleWord ? 2 : 1;
   for (int i = 0; i < count; ++i) {
     const Rect button = selectionGeometry::button(rect, i, metrics.menuSpacing, count);
     renderer.fillRoundedRect(button.x, button.y, button.width, button.height, metrics.controlRadius, Color::White);
     renderer.drawRoundedRect(button.x, button.y, button.width, button.height, 1, metrics.controlRadius, true);
-    UITheme::drawCenteredWrappedText(renderer, button, uiScaleSpec().smallFontId, labels[singleWord ? i : 2], 2, true,
+    UITheme::drawCenteredWrappedText(renderer, button, uiScaleSpec().smallFontId, labels[singleWord ? i : 1], 2, true,
                                      EpdFontFamily::REGULAR, UITheme::TextVerticalAlignment::CENTER);
   }
 }

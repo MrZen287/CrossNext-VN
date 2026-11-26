@@ -2,13 +2,12 @@
 
 #include <GfxRenderer.h>
 #include <FreeInkUI.h>
-#include "../ui/CrossZenArt.h"
+#include "ZodiacMasks.h"
 #include "HomeTheme.h"
 #include "ReadingDesk.h"
 
 namespace zodiacart {
 namespace fui = freeink::ui;
-#include "ZodiacArt.inc"
 static_assert(sizeof(mainArt)/sizeof(*mainArt) == hometheme::zodiacCount);
 static_assert(sizeof(cloudArt)/sizeof(*cloudArt) == hometheme::zodiacCount);
 
@@ -34,8 +33,7 @@ inline void clearOldMascots(GfxRenderer& renderer, fui::DrawTarget& target, cons
 inline void draw(fui::DrawTarget& target, const readingdesk::Layout& layout, unsigned index, unsigned wormPose) {
   index %= hometheme::zodiacCount;
   zenart::draw(target, fui::makeRect(0, 0, 288, 520), *mainArt[index]);
-  zenart::draw(target, fui::makeRect(306, 418, 78, 59), *cloudArt[index]);
-  zenart::wormHappy(target, fui::makeRect(402, 426, 45, 50));
+  zenart::draw(target, fui::makeRect(303, 410, 151, 73), *cloudArt[index]);
   const auto area = layout.mascot.inset({5, 3, 5, 0});
   if (wormPose == 2) zenart::wormRest(target, area);
   else zenart::wormHappy(target, wormPose == 1 ? area.inset({2, 0, 2, 6}) : area);

@@ -75,7 +75,7 @@ bool draw(GfxRenderer& r) {
   t.line({int16_t(mid+4),int16_t(afterDate)},{int16_t(mid),int16_t(afterDate+4)},1,ink);
   t.line({int16_t(mid),int16_t(afterDate+4)},{int16_t(mid-4),int16_t(afterDate)},1,ink);
   t.line({int16_t(mid-4),int16_t(afterDate)},{int16_t(mid),int16_t(afterDate-4)},1,ink);
-  vietnamesequotes::drawSingle(t,fui::makeRect(page.x+24,afterDate+8,page.width-48,64),vietnamesequotes::next(),1);
+  vietnamesequotes::draw(t,fui::makeRect(page.x+24,afterDate+8,page.width-48,64),vietnamesequotes::next(),1);
   const auto grid=fui::makeRect(page.x+18,afterDate+86,page.width-36,page.bottom()-afterDate-104);
   constexpr const char* vn[]={"T2","T3","T4","T5","T6","T7","CN"};
   constexpr const char* en[]={"Mo","Tu","We","Th","Fr","Sa","Su"};

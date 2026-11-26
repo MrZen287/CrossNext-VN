@@ -34,6 +34,7 @@
 #include "BookmarkEntry.h"
 #include "ChapterBuildGate.h"
 #include "ClipSelectionActivity.h"
+#include "apps_local/dictionary/ReaderDictionary.h"
 #include "ClippingStore.h"
 #include "CrossPointSettings.h"
 #include "CrossPointState.h"
@@ -498,6 +499,12 @@ void EpubReaderActivity::startClipSelection(const int initialX, const int initia
       return;
     }
     const auto& clipping = std::get<ClippingResult>(result.data);
+    if (clipping.action == ClippingResult::Action::Lookup) {
+      auto lookup = makeUniqueNoThrow<ReaderDictionary>(renderer, mappedInput, clipping.text);
+      if (lookup) startActivityForResult(std::move(lookup), [this](const ActivityResult&) { requestUpdate(); });
+      else requestUpdate();
+      return;
+    }
     const uint16_t startPage = static_cast<uint16_t>(pageNumber + clipping.startPageOffset);
     const uint16_t endPage = static_cast<uint16_t>(pageNumber + clipping.endPageOffset);
     if (section && currentSpineIndex == spineIndex && endPage < section->pageCount) {
@@ -761,7 +768,7 @@ void EpubReaderActivity::loop() {
   if (!atEndOfBook && SETTINGS.touchReaderControls && mappedInput.wasScreenLongPress(selectionX, selectionY)) {
     automaticPageTurnActive = false;
     pendingManualTurn = 0;
-    startClipSelection(selectionX, selectionY);
+    startClipSelection(selectionX, selectionY, ClipSelectionActivity::Mode::Lookup);
     return;
   }
 

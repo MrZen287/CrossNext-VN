@@ -12,6 +12,9 @@
 #include "FitText.h"
 #include "LightUi.h"
 #include "MenuCompanions.h"
+#ifndef ZEN_SCREENS_TEST
+#include "../home/ZodiacMasks.h"
+#endif
 #include "StatusBattery.h"
 #include "ToyboxScreen.h"
 #include "ToyboxTokens.h"
@@ -171,7 +174,13 @@ static fui::Rect paintHeader(fui::DrawTarget& target, const fui::DeviceContext& 
   if (right - left >= 270 && geometry.header.height > menucompanions::baseline && !model.secondaryLabel &&
       !model.secondaryMark && !model.rightLabel && !model.trailingLabel) {
     const int artLeft = right - menucompanions::width;
-    menucompanions::draw(target, artLeft, geometry.header.bottom() - 1);
+#ifndef ZEN_SCREENS_TEST
+    if (menucompanions::settingsHeader)
+      zenart::draw(target, fui::makeRect(artLeft, geometry.header.bottom() - 54, menucompanions::width, 58),
+                   *zodiacart::cloudArt[menucompanions::pose]);
+    else
+#endif
+      menucompanions::draw(target, artLeft, geometry.header.bottom() - 1);
     right = artLeft - 12;
   }
   fui::TextStyle titleStyle;

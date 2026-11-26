@@ -172,9 +172,11 @@ void ActivityManager::renderTaskLoop() {
       static uint32_t companionVisit = 0;
       if (companionVisit != renderingVisit) {
         companionVisit = renderingVisit;
-        menucompanions::pose = esp_random() % 6;
+        menucompanions::pose = esp_random() % 12;
       }
+      menucompanions::settingsHeader = currentActivity->name.find("Settings") != std::string::npos;
       currentActivity->render(std::move(lock));
+      menucompanions::settingsHeader = false;
       if (currentActivity->presentationComplete()) performance::finish(operation, currentActivity.get());
       paintedVisit.store(renderingVisit, std::memory_order_release);
       reportRepaint(currentActivity->name.c_str(), requestedAtMs, repaintStartMs);

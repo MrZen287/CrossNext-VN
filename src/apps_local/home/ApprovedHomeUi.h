@@ -5,6 +5,7 @@
 #include "ReadingDesk.h"
 #include "WidgetDigits.h"
 #include "../ui/FitText.h"
+#include "../ui/VietnameseQuotes.h"
 namespace approvedhome {
 namespace fui=freeink::ui;
 struct Info {
@@ -34,9 +35,7 @@ inline void overlay(fui::DrawTarget& t,const readingdesk::Layout& g,const Info& 
  text(t,fui::makeRect(g.remaining.x,g.remaining.y,g.remaining.width,24),m.remaining);
  text(t,fui::makeRect(g.remaining.x,g.remaining.y+25,g.remaining.width,40),m.estimate,3,false,fui::TextAlign::Left,2);
  text(t,fui::makeRect(319,485,132,50),"Đọc tiếp",6,true,fui::TextAlign::Center);
- fui::TextStyle qs;qs.font=0;qs.italic=true;qs.align=fui::TextAlign::Center;qs.maxLines=1;
- char quote[400];std::snprintf(quote,sizeof(quote),"“%s”",m.quote?m.quote:"");
- fittext::draw(t,g.quote,quote,qs,1);
+ vietnamesequotes::draw(t,g.quote,m.quote,0);
  if(m.battery>=0){char s[12];std::snprintf(s,sizeof(s),"%d%%",m.battery);text(t,fui::makeRect(389,644,64,31),s,1,true,fui::TextAlign::Center);}
 }
 }

@@ -1,5 +1,5 @@
 
-param([Parameter(Mandatory)][string[]]$Sheets,[Parameter(Mandatory)][string]$Output)
+param([Parameter(Mandatory)][string[]]$Sheets,[Parameter(Mandatory)][string]$Output,[Parameter(Mandatory)][string]$Pairs)
 Add-Type -AssemblyName System.Drawing
 $ErrorActionPreference='Stop'
 function Write-Mask($out,$name,$w,$h,[byte[]]$ink,[byte[]]$opaque){
@@ -42,11 +42,11 @@ function Build-Mask($out,$name,$w,$h,$sample){
  Write-Mask $out $name $w $h $ink $opaque
 }
 # Source coordinates measured against the approved illustration boards.
-$back=@(149,548,1010,1458,112,538,994,1429,218,720,1262,1790)
-$front=@(181,584,1036,1488,153,580,1024,1465,243,745,1289,1820)
-$right=@(417,852,1287,1717,414,843,1290,1739,477,975,1505,2037)
-$edge=@(205,207,209,210,230,234,236,236,183,186,187,184)
-$end=@(568,568,568,568,623,623,625,625,472,472,472,472)
+$back=@(178,589,1025,1477,155,543,999,1453,230,751,1274,1830)
+$front=@(214,627,1062,1510,191,583,1039,1492,273,785,1316,1866)
+$right=@(419,856,1290,1744,424,843,1288,1745,476,992,1530,2087)
+$edge=@(254,255,254,254,256,255,255,255,225,225,225,225)
+$end=@(567,567,567,567,594,593,594,594,475,475,475,475)
 $smallX=@(123,546,978,1414,27,483,894,1351,169,681,1194,1727)
 $smallEnd=@(278,726,1150,1570,162,591,1024,1492,317,809,1353,1878)
 $smallY=@(615,615,615,615,677,677,677,677,504,504,504,504)
@@ -55,6 +55,7 @@ $out=[IO.StreamWriter]::new($Output,$false,[Text.UTF8Encoding]::new($false))
 try{
  $out.WriteLine('// Generated from the approved zodiac concept boards.')
  $images=@($Sheets | ForEach-Object { [Drawing.Bitmap]::new($_) })
+ $pairsImage=[Drawing.Bitmap]::new($Pairs)
  for($n=0;$n -lt 12;$n++){
   $im=$images[$n -shr 2];$tileWidth=$im.Width/4.0;$tileStart=[int]($tileWidth*($n%4))
   Build-Mask $out "Main$n" 144 260 {
@@ -71,11 +72,14 @@ try{
    if($sx -lt $tileStart -or $sx -ge [Math]::Min($im.Width-1,$tileStart+$tileWidth) -or $sy -ge $im.Height){return $false}
    return $im.GetPixel([int]$sx,[int]$sy).R -lt 175
   }
-  Build-Mask $out "Cloud$n" 72 53 {
+  Build-Mask $out "Cloud$n" 112 63 {
    param($x,$y)
-   $sx=$smallX[$n]+($smallEnd[$n]-$smallX[$n])*$x/71.0
-   $sy=$smallY[$n]+($smallBottom[$n]-$smallY[$n])*$y/52.0
-   return $im.GetPixel([int]$sx,[int]$sy).R -lt 168
+   $tileX=($n%4)*362
+   $sy0=@(35,372,730)[$n -shr 2]
+   $sy1=@(206,568,914)[$n -shr 2]
+   $sx=$tileX+18+318*$x/111.0
+   $sy=$sy0+($sy1-$sy0)*$y/62.0
+   return $pairsImage.GetPixel([int]$sx,[int]$sy).R -lt 175
   }
  }
  $out.WriteLine('inline constexpr const zenart::Mask* mainArt[] = {'+ ((0..11 | ForEach-Object {"&Main$_"}) -join ', ') + '};')
@@ -83,4 +87,5 @@ try{
 }finally{
  $out.Dispose()
  foreach($im in $images){$im.Dispose()}
+ if($pairsImage){$pairsImage.Dispose()}
 }

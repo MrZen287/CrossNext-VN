@@ -352,9 +352,11 @@ bool ClipSelectionActivity::buildSelectedText(const int first, const int last, s
   return true;
 }
 
-int ClipSelectionActivity::selectionActionCount() const { return 1; }
+int ClipSelectionActivity::selectionActionCount() const { return mode == Mode::Lookup ? 2 : 1; }
 
-ClippingResult::Action ClipSelectionActivity::selectionAction(const int) const { return ClippingResult::Action::Clip; }
+ClippingResult::Action ClipSelectionActivity::selectionAction(const int index) const {
+  return mode == Mode::Lookup && index == 0 ? ClippingResult::Action::Lookup : ClippingResult::Action::Clip;
+}
 
 void ClipSelectionActivity::confirmSelection(const ClippingResult::Action action) {
   if (rangeStart < 0) {
@@ -365,7 +367,6 @@ void ClipSelectionActivity::confirmSelection(const ClippingResult::Action action
 
   const int first = std::min(rangeStart, selected);
   const int last = std::max(rangeStart, selected);
-  if ((selectionActionCount() == 1) != (action == ClippingResult::Action::Clip)) return;
   int before = first, after = last;
   if ((action == ClippingResult::Action::Lookup || action == ClippingResult::Action::Translate)) {
     while (before > 0 && !words[before].paragraphStart && !vocabulary::sentenceEnd(words[before - 1].text)) --before;
@@ -609,9 +610,9 @@ bool ClipSelectionActivity::handleButtons(const uint8_t buttons) {
       requestUpdate();
       return true;
     }
-    static constexpr StrId choices[] = {StrId::STR_WORD_TRANSLATE, StrId::STR_WORD_DEFINE, StrId::STR_WORD_QUOTE};
+    static constexpr StrId choices[] = {StrId::STR_LOOKUP, StrId::STR_WORD_QUOTE};
     const int count = selectionActionCount();
-    actionPopup.show(StrId::STR_SELECT, count == 2 ? choices : choices + 2, count, 0, [this](int index) {
+    actionPopup.show(StrId::STR_SELECT, count == 2 ? choices : choices + 1, count, 0, [this](int index) {
       if (index >= 0 && index < selectionActionCount()) confirmSelection(selectionAction(index));
     });
     requestUpdate();
@@ -664,8 +665,8 @@ Rect ClipSelectionActivity::actionRect() const {
   safe.height = bottomEdge - safe.y;
   const int font = uiScaleSpec().smallFontId;
   const int count = selectionActionCount();
-  const int labelWidth = count == 2 ? std::max(renderer.getTextWidth(font, tr(STR_WORD_TRANSLATE)),
-                                               renderer.getTextWidth(font, tr(STR_WORD_DEFINE)))
+  const int labelWidth = count == 2 ? std::max(renderer.getTextWidth(font, tr(STR_LOOKUP)),
+                                               renderer.getTextWidth(font, tr(STR_WORD_QUOTE)))
                                     : renderer.getTextWidth(font, tr(STR_WORD_QUOTE));
   const int padding = metrics.menuSpacing;
   const int width = std::min(safe.width, count * (labelWidth + padding * 2) + padding * (count + 1));

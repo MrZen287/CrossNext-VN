@@ -152,7 +152,7 @@ void draw(GfxRenderer& r,Layout& g,const RecentBook* featured,const std::vector<
     if(focus==Resume)t.stroke(b.inset({3,3,3,3}),ink,1,16);
   }
   // One layout and one quote paint path, regardless of popup state.
-  vietnamesequotes::drawSingle(t,g.quote,quote,pixelui::kSmall);
+  vietnamesequotes::draw(t,g.quote,quote,pixelui::kSmall);
   BookCoverPainter painter(r,t);
   for(int n=0;!native&&n<int(shelf.size())&&n<3;++n){const auto b=g.hits[Recent1+n];painter.paint(shelf[n],b,0,BookCoverPainter::Fit::Contain);if(focus==Recent1+n)t.stroke(b.inset({-2,-2,-2,-2}),ink,2);}
   r.drawLine(g.shelf.x,g.shelf.bottom(),g.shelf.right(),g.shelf.bottom());

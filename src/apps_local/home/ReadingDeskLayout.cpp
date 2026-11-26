@@ -37,7 +37,7 @@ Layout layout(fui::Rect safe,int count,bool hasBook,bool prev,bool next,bool men
   g.heading=makeRect(g.status.x+4,g.status.y+44,g.status.width-8,48);
   const int shelfH=wide?120:174;
   g.shelf=makeRect(x,safe.bottom()-shelfH-12,w,shelfH);
-  const int quoteH=34;
+  const int quoteH=48;
   g.quote=makeRect(x,g.shelf.y-quoteH-18,w,quoteH);
   const int top=safe.y+(wide?80:130);
   g.reading=makeRect(x,top,w,g.quote.y-top-12);
@@ -78,7 +78,7 @@ Layout layout(fui::Rect safe,int count,bool hasBook,bool prev,bool next,bool men
     g.title=makeRect(296,198,177,65);g.author=makeRect(296,267,177,34);
     g.position=makeRect(296,306,177,28);g.progress=makeRect(296,334,177,29);
     g.remaining=makeRect(296,363,177,63);g.hits[Resume]=hasBook?makeRect(290,475,181,70):fui::Rect{};
-    g.duo=makeRect(308,417,145,63);g.quote=makeRect(18,582,444,38);
+    g.duo=makeRect(308,417,145,63);g.quote=makeRect(18,573,444,51);
     g.shelf=makeRect(5,627,470,168);g.mascot=makeRect(354,706,96,69);g.hits[Menu]=g.mascot;
     const fui::Rect covers[]={makeRect(24,644,86,117),makeRect(132,643,88,118),makeRect(239,642,89,119)};
     for(int n=0;n<count&&n<3;++n)g.hits[Recent1+n]=covers[n];
