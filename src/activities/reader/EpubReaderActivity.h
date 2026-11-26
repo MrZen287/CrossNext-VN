@@ -47,7 +47,7 @@ class EpubReaderActivity final : public ReaderActivity {
   static constexpr size_t PREFETCH_FREE_RESERVE = 64 * 1024;
   static constexpr size_t PREFETCH_INTERNAL_RESERVE = 48 * 1024;
   static constexpr size_t PREFETCH_MIN_BLOCK = 32 * 1024;
-  static constexpr unsigned long PREFETCH_IDLE_MS = 400;
+  static constexpr unsigned long PREFETCH_IDLE_MS = 240;
   static constexpr unsigned long PREFETCH_WORK_MS = 1500;
   void clearPrefetchedPage();
   void releasePageReuse();

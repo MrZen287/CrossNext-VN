@@ -86,7 +86,8 @@ struct Model {
   // -1 is a plain row; 0/1 display an unchecked/checked option.
   int (*listCheck)(const void*, int) = nullptr;
   bool fixed = false, statusAvailable = true, paragraphs = false, focus = false, hyphenation = false, embedded = false,
-       antialiasing = false, percentage = true, night = false, bold = false;
+       antialiasing = false, percentage = true, night = false;
+  int weightIndex = 2;
 };
 struct Work {
   freeink::ui::ButtonProps button;

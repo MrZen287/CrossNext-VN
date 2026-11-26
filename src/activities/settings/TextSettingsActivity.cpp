@@ -340,7 +340,10 @@ void TextSettingsActivity::drawChrome() {
     previewHeight = std::max(0, previewBottom() - afterHeader - 4);
   }
   if (previewHeight < renderer.getTextHeight(UI_10_FONT_ID) + metrics_.previewPadding * 2) return;
+  const auto previousWeight = renderer.readerGlyphWeight();
+  renderer.setReaderGlyphWeight(SETTINGS.glyphWeightAdjustment());
   textsettings::renderPreview(renderer, previewLayout_, metrics_.previewPadding, afterHeader, previewHeight);
+  renderer.setReaderGlyphWeight(previousWeight);
 }
 
 void TextSettingsActivity::drawFooter() {
@@ -641,7 +644,7 @@ void TextSettingsActivity::buildSheet(UiScreen& screen) {
   model.size = SETTINGS.fontPointSize;
   model.sizeIndex = currentSizeIndex_;
   model.sizeCount = int(sizes_.size());
-  model.bold = SETTINGS.fontWeight == CrossPointSettings::FONT_WEIGHT_BOLD;
+  model.weightIndex = SETTINGS.weightIndex();
   model.spacing = SETTINGS.lineSpacing;
   model.spacingCount = CrossPointSettings::LINE_COMPRESSION_COUNT;
   model.spacingLabel = I18N.get(LINE_SPACING_IDS[SETTINGS.lineSpacing % std::size(LINE_SPACING_IDS)]);
@@ -730,8 +733,7 @@ void TextSettingsActivity::sheetControl(int control) {
         break;
       case readertext::WeightDown:
       case readertext::WeightUp:
-        SETTINGS.fontWeight = control == readertext::WeightUp ? CrossPointSettings::FONT_WEIGHT_BOLD
-                                                              : CrossPointSettings::FONT_WEIGHT_REGULAR;
+        SETTINGS.fontWeight = SETTINGS.weightAt(SETTINGS.weightIndex() + (control == readertext::WeightUp ? 1 : -1));
         booktext::persist();
         break;
       case readertext::SpacingDown:

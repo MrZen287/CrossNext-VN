@@ -129,13 +129,21 @@ __attribute__((noinline)) inline void drawMonoHorizontal(const uint8_t* bitmap, 
 //   every plane.
 // Clipping happens before pixel decoding, so fully hidden glyphs cost nothing.
 inline void draw(const uint8_t* bitmap, int width, int height, bool twoBit, Plane plane, bool state,
-                 const Target& target, Clip clip) {
+                 const Target& target, Clip clip, int8_t weight = 0) {
   // Bit n of levels set means source value n is painted.
   uint8_t levels = 0x02;
   bool clearBits = state;
   if (twoBit) {
     levels = plane == Plane::BW ? 0x0e : plane == Plane::GrayMSB ? 0x06 : 0x04;
     if (plane != Plane::BW) clearBits = false;
+    // Keep fully inked pixels intact, including small Vietnamese diacritics.
+    // Only reinterpret the two fractional-coverage values.
+    if (weight == -2)
+      levels &= 0x08;
+    else if (weight == -1)
+      levels = plane == Plane::BW ? 0x0c : plane == Plane::GrayMSB ? 0x04 : 0;
+    else if (weight == 1)
+      levels = plane == Plane::BW ? 0x0e : 0x02;
   }
 
   // Intersect with the glyph bounds, then with the panel width and the

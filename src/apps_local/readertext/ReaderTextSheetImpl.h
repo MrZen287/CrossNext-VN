@@ -496,30 +496,12 @@ void build(Screen& screen, const Model& model, Work& work) {
     row(screen, work, family, tr(STR_TEXT_FONT_FAMILY), model.family, Family);
     std::snprintf(work.label, sizeof(work.label), "%d pt", model.size);
     stepper(screen, work, size, tr(STR_TEXT_FONT_SIZE), work.label, model.sizeIndex, model.sizeCount, SizeDown, SizeUp);
-    stepper(screen, work, weight, tr(STR_TEXT_FONT_WEIGHT),
-            model.bold ? tr(STR_TEXT_WEIGHT_BOLD) : tr(STR_TEXT_WEIGHT_REGULAR), model.bold ? 1 : 0, 2, WeightDown,
-            WeightUp);
-    if (wide) return;
-    const int half = samples.width / 2;
-    const int labelHeight = 22;
-    if (samples.height < 44) return;
-    const int sampleHeight = std::max(0, samples.height - labelHeight);
-    for (int n = 0; n < 2; ++n) {
-      const auto sample = fui::makeRect(samples.x + n * half, samples.y, half, sampleHeight);
-      const auto choice = fui::makeRect(sample.x + 4, samples.y, half - 8, samples.height);
-      screen.frame().hit(choice, 6, n == 0 ? WeightDown : WeightUp, fui::InputTouch);
-      if (model.bold == (n == 1)) {
-        screen.target().stroke(choice, ink, 2, chrome::lightHeader ? lightui::kControlRadius : 0);
-      }
-      fui::TextStyle style;
-      style.font = pixelui::kTitle;
-      style.bold = n == 1;
-      style.align = fui::TextAlign::Center;
-      style.maxLines = 1;
-      screen.target().text(sample, "Aa", style);
-      pixelui::text(screen.target(), fui::makeRect(sample.x, sample.bottom(), half, labelHeight),
-                    n == 0 ? tr(STR_TEXT_WEIGHT_REGULAR) : tr(STR_TEXT_WEIGHT_BOLD), 3, fui::Color::Black,
-                    fui::TextAlign::Center);
+    constexpr const char* weights[] = {"Mảnh", "Hơi mảnh", "Thường", "Hơi đậm", "Đậm"};
+    stepper(screen, work, weight, tr(STR_TEXT_FONT_WEIGHT), weights[model.weightIndex],
+            model.weightIndex, 5, WeightDown, WeightUp);
+    if (!wide && samples.height >= 28) {
+      pixelui::text(screen.target(), samples, "Tiếng Việt", 3, fui::Color::Black, fui::TextAlign::Center,
+                    model.weightIndex == 4);
     }
   } else if (model.tab == 1) {
     const int pagerHeight = 44, gap = 8;

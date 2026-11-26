@@ -49,6 +49,7 @@ class GfxRenderer {
 
   HalDisplay& display;
   RenderMode renderMode;
+  int8_t readerGlyphWeight_ = 0;
   mutable bool absoluteGrayPlanes = false;
   bool ditherImagesInBw = false;
   Orientation orientation;
@@ -315,6 +316,8 @@ class GfxRenderer {
     clipRight_ = x + width;
     clipBottom_ = y + height;
   }
+  int8_t readerGlyphWeight() const { return readerGlyphWeight_; }
+  void setReaderGlyphWeight(int8_t weight) { readerGlyphWeight_ = weight; }
   void drawPixel(int x, int y, bool state = true) const;
   // Draw glyph ink with clipping and orientation resolved once per glyph.
   void drawGlyphBitmap(const uint8_t* bitmap, int width, int height, const glyphBitmap::Frame& frame, bool twoBit,

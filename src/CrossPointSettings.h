@@ -342,7 +342,26 @@ class CrossPointSettings : public PersistableStore<CrossPointSettings> {
   // are selectable; SdCardFontSystem::ensureLoaded() snaps this to the nearest
   // available size (and persists the snap) whenever the family changes.
   uint8_t fontPointSize = DEFAULT_FONT_POINT_SIZE;
-  enum FONT_WEIGHT { FONT_WEIGHT_REGULAR = 0, FONT_WEIGHT_BOLD = 1, FONT_WEIGHT_COUNT };
+  // Keep the original persisted IDs for existing device and per-book settings.
+  enum FONT_WEIGHT {
+    FONT_WEIGHT_REGULAR = 0, FONT_WEIGHT_BOLD = 1, FONT_WEIGHT_THIN = 2,
+    FONT_WEIGHT_LIGHT = 3, FONT_WEIGHT_MEDIUM = 4, FONT_WEIGHT_COUNT
+  };
+  static constexpr uint8_t weightAt(int index) {
+    constexpr uint8_t order[] = {FONT_WEIGHT_THIN, FONT_WEIGHT_LIGHT, FONT_WEIGHT_REGULAR,
+                                 FONT_WEIGHT_MEDIUM, FONT_WEIGHT_BOLD};
+    return order[index < 0 ? 0 : index >= FONT_WEIGHT_COUNT ? FONT_WEIGHT_COUNT - 1 : index];
+  }
+  int weightIndex() const {
+    for (int n = 0; n < FONT_WEIGHT_COUNT; ++n)
+      if (weightAt(n) == fontWeight) return n;
+    return 2;
+  }
+  int8_t glyphWeightAdjustment() const {
+    if (fontWeight == FONT_WEIGHT_THIN) return -2;
+    if (fontWeight == FONT_WEIGHT_LIGHT) return -1;
+    return fontWeight == FONT_WEIGHT_MEDIUM ? 1 : 0;
+  }
   uint8_t fontWeight = FONT_WEIGHT_REGULAR;
   uint8_t lineSpacing = LINE_SPACING_120;
   uint8_t paragraphAlignment = JUSTIFIED;

@@ -2409,6 +2409,15 @@ void EpubReaderActivity::rememberCurrentContentOffset() {
 void EpubReaderActivity::renderContents(Page& content, const int orientedMarginTop, const int orientedMarginRight,
                                         const int orientedMarginBottom, const int orientedMarginLeft) {
   auto* page = &content;
+  const auto renderTextPage = [&](int fontId, bool placeholders = false) {
+    const auto previous = renderer.readerGlyphWeight();
+    renderer.setReaderGlyphWeight(SETTINGS.glyphWeightAdjustment());
+    if (placeholders)
+      page->renderWithImagePlaceholders(renderer, fontId, orientedMarginLeft, orientedMarginTop);
+    else
+      page->render(renderer, fontId, orientedMarginLeft, orientedMarginTop);
+    renderer.setReaderGlyphWeight(previous);
+  };
   performance::Scope drawing(performance::Stage::Draw);
   const auto t0 = millis();
   const int fontId = SETTINGS.getReaderFontId();
@@ -2428,7 +2437,7 @@ void EpubReaderActivity::renderContents(Page& content, const int orientedMarginT
 
   auto* fcm = renderer.getFontCacheManager();
   auto scope = fcm->createPrewarmScope(FontCacheManager::ScopeCache::Reader);
-  page->render(renderer, fontId, orientedMarginLeft, orientedMarginTop);
+  renderTextPage(fontId);
   // Scan the status bar too: a CJK book/chapter title redirected to the SD
   // fallback font joins the page's single batch prewarm instead of triggering
   // its own SD pass after the scope ends.
@@ -2460,7 +2469,7 @@ void EpubReaderActivity::renderContents(Page& content, const int orientedMarginT
     // A4 gray planes replace the full page, including its clipping highlights.
     if (BoardConfig::isEegoA4()) drawClippingHighlights(*page, fontId, orientedMarginTop, orientedMarginLeft);
     if (absoluteImageGrayscale || needsTextGrayscale) {
-      page->render(renderer, fontId, orientedMarginLeft, orientedMarginTop);
+      renderTextPage(fontId);
     } else {
       page->renderImages(renderer, fontId, orientedMarginLeft, orientedMarginTop);
     }
@@ -2472,14 +2481,14 @@ void EpubReaderActivity::renderContents(Page& content, const int orientedMarginT
   };
 
   if (pageHasImagesNeedingDecode) {
-    page->renderWithImagePlaceholders(renderer, fontId, orientedMarginLeft, orientedMarginTop);
+    renderTextPage(fontId, true);
     renderStatusBar();
     renderer.displayBuffer(HalDisplay::FAST_REFRESH);
     renderer.clearScreen();
   }
 
   drawClippingHighlights(*page, fontId, orientedMarginTop, orientedMarginLeft);
-  page->render(renderer, fontId, orientedMarginLeft, orientedMarginTop);
+  renderTextPage(fontId);
   renderStatusBar();
   const auto tBwRender = millis();
 
@@ -3116,7 +3125,7 @@ void EpubReaderActivity::renderOverlay() {
     };
     text.family = SETTINGS.sdFontFamilyName[0] ? SETTINGS.sdFontFamilyName : tr(STR_MENU_FONT_CLASSIC);
     text.size = SETTINGS.fontPointSize;
-    text.bold = SETTINGS.fontWeight == CrossPointSettings::FONT_WEIGHT_BOLD;
+    text.weightIndex = SETTINGS.weightIndex();
     text.sizeCount = static_cast<int>(textSheetSizeCount);
     for (size_t n = 0; n < textSheetSizeCount; ++n)
       if (textSheetSizes[n] <= SETTINGS.fontPointSize) text.sizeIndex = static_cast<int>(n);
@@ -3425,8 +3434,7 @@ void EpubReaderActivity::handleTextSheetInput(const ReaderToolbarUi::Routed& rou
       }
       case readertext::WeightDown:
       case readertext::WeightUp: {
-        const auto weight = routed.value == readertext::WeightUp ? CrossPointSettings::FONT_WEIGHT_BOLD
-                                                                 : CrossPointSettings::FONT_WEIGHT_REGULAR;
+        const auto weight = SETTINGS.weightAt(SETTINGS.weightIndex() + (routed.value == readertext::WeightUp ? 1 : -1));
         changed = SETTINGS.fontWeight != weight;
         SETTINGS.fontWeight = weight;
         break;

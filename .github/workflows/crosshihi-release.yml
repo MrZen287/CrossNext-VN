@@ -1,13 +1,13 @@
 name: CrossZen build and release
 on:
   push:
-    branches: [crosshihi]
+    branches: [crosshihi, crosszen-reader-preview]
     paths-ignore: ['ota.json']
   workflow_dispatch:
 permissions:
   contents: write
 concurrency:
-  group: crosshihi-release
+  group: crosshihi-release-${{ github.ref_name }}
   cancel-in-progress: true
 jobs:
   x4pro:
@@ -60,16 +60,17 @@ jobs:
           cp crosshihi-build.log dist/CrossZen/
       - uses: actions/upload-artifact@v4
         with:
-          name: CrossZen-X4Pro-1.1.1.13
+          name: CrossZen-X4Pro-1.1.1.14
           path: dist/CrossZen/
       - name: Publish tested build as a public pre-release
+        if: github.ref == 'refs/heads/crosshihi'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           current=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/crosshihi" --jq .object.sha)
           test "$current" = "$GITHUB_SHA" || exit 0
-          gh release create v1.1.1.13 --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title "CrossZen 1.1.1.13 — Bản thử X4 Pro" --notes-file docs/crosshihi/release-1.1.1.13.md --prerelease --draft
-          gh release upload v1.1.1.13 dist/CrossZen/* docs/crosshihi/crosszen-demo.png docs/crosshihi/home2-native.png docs/crosshihi/home-approved-native.png docs/crosshihi/dictionary-demo.png docs/crosshihi/idle-companions-native.png --repo "$GITHUB_REPOSITORY"
-          gh release edit v1.1.1.13 --repo "$GITHUB_REPOSITORY" --draft=false
+          gh release create v1.1.1.14 --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title "CrossZen 1.1.1.14 — Bản thử X4 Pro" --notes-file docs/crosshihi/release-1.1.1.14.md --prerelease --draft
+          gh release upload v1.1.1.14 dist/CrossZen/* docs/crosshihi/crosszen-demo.png docs/crosshihi/home2-native.png docs/crosshihi/home-approved-native.png docs/crosshihi/dictionary-demo.png docs/crosshihi/idle-companions-native.png --repo "$GITHUB_REPOSITORY"
+          gh release edit v1.1.1.14 --repo "$GITHUB_REPOSITORY" --draft=false
           manifest_sha=$(gh api "repos/$GITHUB_REPOSITORY/contents/ota.json?ref=crosshihi" --jq .sha)
           gh api --silent --method PUT "repos/$GITHUB_REPOSITORY/contents/ota.json" -f message="Update CrossZen OTA manifest after verified release" -f branch=crosshihi -f sha="$manifest_sha" -f content="$(base64 -w0 dist/CrossZen/ota.json)"
