@@ -28,7 +28,9 @@ print('Bluetooth, sync device name and system info use CrossZen')
 
 assert "CrossHihi-X4PRO-OTA.bin" in (root/"src/network/FirmwareBoardTag.h").read_text()
 assert "pinItemToFront" not in (root/"src/apps_local/ShelfFolderActivity.cpp").read_text()
-assert "drawSingle" in (root/"src/apps_local/home/ReadingDesk.cpp").read_text()
+assert "vietnamesequotes::draw(t,g.quote" in (root/"src/apps_local/home/ApprovedHomeUi.h").read_text()
+assert "vietnamesequotes::draw(t," in (root/"src/activities/boot_sleep/LunarSleepCalendar.cpp").read_text()
+assert "style.maxLines = 2" in (root/"src/apps_local/ui/VietnameseQuotes.cpp").read_text()
 print("CrossZen retains the legacy OTA alias; no icon long-press pinning")
 
 pet=(root/"src/apps_local/bookpet/BookPetActivity.cpp").read_text()
