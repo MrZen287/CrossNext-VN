@@ -6,6 +6,9 @@ int main(){
  using namespace readingdesk;
  namespace fui=freeink::ui;
  std::array<int,3> counts{};
+ unsigned zodiac=0;
+ for(unsigned n=0;n<12;++n){assert(zodiac==n);zodiac=hometheme::nextZodiac(zodiac);}
+ assert(zodiac==0);
  for(unsigned r=0;r<1000;++r)++counts[hometheme::choose(r)];
  assert(counts[0]==400&&counts[1]==200&&counts[2]==400);
  for(unsigned theme=0;theme<3;++theme)for(int count=0;count<=(theme==1?4:3);++count){

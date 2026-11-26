@@ -1,6 +1,9 @@
 #include "ReadingDesk.h"
 #include "ApprovedHomeUi.h"
-#include "DragonHome.h"
+#include "ZodiacHome.h"
+#include "BookCoverPainter.h"
+#include "CoverSceneCache.h"
+#include <functional>
 #include "HomePaws.h"
 #include "CatExpressions.h"
 #include <GfxRenderer.h>
@@ -52,7 +55,7 @@ void text(fui::DrawTarget& t,fui::Rect r,const char* s,int font=0,int lines=1,bo
 }
 }
 void draw(GfxRenderer& r,Layout& g,const RecentBook* featured,const std::vector<RecentBook>& shelf,
-          int,Action focus,const char* quote,unsigned pose,unsigned wormPose) {
+          int,Action focus,const char* quote,unsigned pose,unsigned wormPose,unsigned zodiac) {
   r.clearScreen();auto t=toybox::makeTarget(r);pixelui::bindFonts(t,r);
   const bool native=r.getScreenWidth()==480 && r.getScreenHeight()==800;
   char s[160]{},chapterCopy[80]{},remainingCopy[80]{},estimateCopy[160]{};
@@ -168,24 +171,36 @@ void draw(GfxRenderer& r,Layout& g,const RecentBook* featured,const std::vector<
   }
   if(focus==Menu)t.stroke(g.hits[Menu],ink,1,3);
 
-  if(native && g.theme){
-    t.setFont(5,toybox::kHugeFontId);
-    t.setFont(6,toybox::kReadingBoldFontId);
-    dragonhome::draw(r,t,g,featured,shelf,livePercent,chapterCopy,remainingCopy,estimateCopy,quote,battery.percent,today,focus);
-  }
-  if(native && !g.theme){
+  if(native){
     approvedhome::draw(t,makeRect(0,0,480,800));
-    if(wormPose!=0){
-      t.fill(g.mascot,white);
-      const auto sprite=g.mascot.inset({5,8,5,0});
-      if(wormPose==1) zenart::wormHappy(t,sprite);
-      else zenart::wormRest(t,sprite);
+    zodiacart::clearOldMascots(r,t,g);
+    // The scene stores only the fixed book artwork, before any zodiac mask.
+    const auto scene = makeRect(16, 180, 312, 588);
+    uint64_t coverKey = 0x5a6f64696163ULL;
+    const auto mix = [&](uint64_t value) { coverKey = (coverKey ^ value) * 1099511628211ULL; };
+    const auto mixBook = [&](const RecentBook& item) {
+      const std::hash<std::string> hash;
+      mix(hash(item.path));
+      mix(hash(item.coverBmpPath));
+      mix(hash(item.title));
+    };
+    mix(static_cast<unsigned>(r.getOrientation()));
+    mix(SETTINGS.screenInverted);
+    mix(SETTINGS.xtcCoverRotation);
+    mix(featured != nullptr);
+    if(featured) mixBook(*featured);
+    const int coverCount = std::min(int(shelf.size()), 3);
+    mix(coverCount);
+    for(int n=0;n<coverCount;++n) mixBook(shelf[n]);
+    if(!homecover::restoreScene(r,scene,coverKey)){
+      BookCoverPainter nativePainter(r,t);
+      if(featured) nativePainter.paintFace(*featured,homecover::mainFace,g.cover.height);
+      else text(t,g.cover,"Mở sách từ Thư viện",1,3,false,fui::TextAlign::Center);
+      for(int n=0;n<coverCount;++n)
+        nativePainter.paintFace(shelf[n],homecover::shelfFaces[n],g.hits[Recent1+n].height);
+      homecover::storeScene(r);
     }
-    BookCoverPainter nativePainter(r,t);
-    if(featured)nativePainter.paintFace(*featured,homecover::mainFace,g.cover.height);
-    else {text(t,g.cover,"Mở sách từ Thư viện",1,3,false,fui::TextAlign::Center);}
-    for(int n=0;n<int(shelf.size())&&n<3;++n)nativePainter.paintFace(shelf[n],homecover::shelfFaces[n],g.hits[Recent1+n].height);
-    homepaws::draw(t);catexpressions::draw(t,pose);
+    zodiacart::draw(t,g,zodiac,wormPose);
     t.setFont(5,toybox::kHugeFontId);t.setFont(6,toybox::kReadingBoldFontId);
     char time[16]{},date[40]{},lunar[40]{};
     halClock.formatTime(time,sizeof(time),SETTINGS.clockFormat==1);

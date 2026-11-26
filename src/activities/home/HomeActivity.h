@@ -67,7 +67,7 @@ class HomeActivity final : public Activity {
   int deskFeatured = -1, deskPrepared = -2, deskCoverHeight = 0;
   std::array<int, readingdesk::shelfSize> deskShelfHeights{};
   bool deskMenuOpen = false;
-  unsigned deskTheme=0;
+  unsigned deskZodiac=0;
   void chooseDeskTheme();
   unsigned deskCatPose = 0;
   unsigned deskWormPose = 0;

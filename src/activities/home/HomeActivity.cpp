@@ -1,5 +1,4 @@
 #include "HomeActivity.h"
-#include <esp_random.h>
 #include "../../apps_local/home/HomeTheme.h"
 #include "../../apps_local/home/CatExpressions.h"
 
@@ -359,16 +358,12 @@ bool HomeActivity::loadRecentCovers(int coverHeight) {
   return changed;
 }
 
-namespace {unsigned rememberedCatExpression=0;unsigned rememberedDeskTheme=0;}
+namespace {unsigned rememberedCatExpression=0;unsigned nextDeskZodiac=0;}
 void HomeActivity::chooseDeskTheme(){
-  deskTheme=hometheme::choose(esp_random());
-  if(deskTheme!=rememberedDeskTheme){
-    rememberedDeskPage=0;rememberedDeskStarts.clear();deskPageStarts.clear();deskPage=0;deskNextPageStart=-1;
-    deskPrefetch={};deskPrefetchCover=0;deskShelf.clear();deskShelfHeights.fill(0);deskPrepared=-2;
-  }
-  rememberedDeskTheme=deskTheme;
+  deskZodiac=nextDeskZodiac;
+  nextDeskZodiac=hometheme::nextZodiac(nextDeskZodiac);
 }
-void HomeActivity::onReturnFromChild(){std::optional<RenderLock> lock;if(!RenderLock::heldByCurrentTask())lock.emplace();chooseDeskTheme();loadDeskShelfPage(0,true);deskCatPose=rememberedCatExpression=catexpressions::next(rememberedCatExpression);requestUpdate();}
+void HomeActivity::onReturnFromChild(){std::optional<RenderLock> lock;if(!RenderLock::heldByCurrentTask())lock.emplace();chooseDeskTheme();deskCatPose=rememberedCatExpression=catexpressions::next(rememberedCatExpression);requestUpdate();}
 
 void HomeActivity::onEnter() {
   Activity::onEnter();
@@ -908,7 +903,7 @@ HomeActivity::DeskPage HomeActivity::collectDeskPage(int start, bool useLibrary)
     RecentBook book;
     if (row < recentCount) {
       book = recents[row];
-      if (deskTheme!=1 && !recentBooks.empty() && recentBooks.front() == book) continue;
+      if (!recentBooks.empty() && recentBooks.front() == book) continue;
     } else {
       library::ClixRecord record;
       const auto ordinal = index->ordinalForRow(library::SortOrder::DateAddedDesc, static_cast<uint16_t>(row - recentCount));
@@ -922,7 +917,7 @@ HomeActivity::DeskPage HomeActivity::collectDeskPage(int start, bool useLibrary)
       if (index->ioFailed()) break;
     }
     if (!availableRecent(book)) continue;
-    if (books.size() == (deskTheme==1?4u:3u)) {
+    if (books.size() == 3u) {
       next = row;
       break;
     }
@@ -986,7 +981,7 @@ int HomeActivity::nextDeskShelfCover() const {
 
 void HomeActivity::activateReadingDesk(readingdesk::Action action) {
   if (action == readingdesk::Menu) { deskWormPose=(deskWormPose+1)%3; deskMenuOpen=!deskMenuOpen;  deskFocus=readingdesk::None; requestUpdate(); return; }
-  if (action == readingdesk::Cat) {deskCatPose=rememberedCatExpression=catexpressions::next(rememberedCatExpression);requestUpdate();return;}
+  if (action == readingdesk::Cat) {chooseDeskTheme();requestUpdate();return;}
   if (action == readingdesk::Quote) {deskQuote=vietnamesequotes::next();requestUpdate();return;}
   if (action == readingdesk::Stats) { deskMenuOpen=false; activityManager.replaceActivity(std::make_unique<ReadingStatsActivity>(renderer,mappedInput)); return; }
   if (action == readingdesk::Transfer) { deskMenuOpen=false; onFileTransferOpen(); return; }
@@ -1218,8 +1213,7 @@ void HomeActivity::render(RenderLock&&) {
     const auto* book = deskBook();
     deskLayout = readingdesk::screenLayout(target.deviceContext(), static_cast<int>(deskShelf.size()), book != nullptr,
                                      deskPage > 0, deskNextPageStart >= 0, deskMenuOpen);
-    deskLayout=readingdesk::themedLayout(deskLayout,deskTheme,static_cast<int>(deskShelf.size()),book!=nullptr,deskPage>0,deskNextPageStart>=0);
-    readingdesk::draw(renderer, deskLayout, book, deskShelf, deskFeatured, deskFocus, deskQuote, deskCatPose, deskWormPose);
+    readingdesk::draw(renderer, deskLayout, book, deskShelf, deskFeatured, deskFocus, deskQuote, deskCatPose, deskWormPose, deskZodiac);
     renderer.displayBuffer(cleanInitialRefresh && !firstRenderDone ? HalDisplay::HALF_REFRESH
                                                                    : HalDisplay::FAST_REFRESH);
     firstRenderDone = true;
